@@ -1,0 +1,23 @@
+<?php namespace ProcessWire;
+
+class GraphQL extends WireData implements Module {
+
+	/**
+	 * getModuleInfo is a module required by all modules to tell ProcessWire about them
+	 *
+	 * @return array
+	 *
+	 */
+	public static function getModuleInfo() {
+
+		return array(
+			'title' => 'GraphQL',
+			'version' => 001, 
+			'summary' => 'GraphQL for ProcessWire.',
+			'href' => 'https://github.com/dadish/pw-graphql',
+			'singular' => true, 
+			'autoload' => false, 
+			);
+	}
+  
+}
