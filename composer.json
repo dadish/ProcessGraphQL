@@ -1,0 +1,14 @@
+{
+    "name": "dadish/pw-graphql",
+    "type": "processwire-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nurguly Ashyrov",
+            "email": "nurguly.ashyrov@gmail.com"
+        }
+    ],
+    "require": {
+        "youshido/graphql": "v1.4.2.8"
+    }
+}
