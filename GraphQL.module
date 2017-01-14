@@ -1,5 +1,10 @@
 <?php namespace ProcessWire;
 
+use Youshido\GraphQL\Execution\Processor;
+use Youshido\GraphQL\Schema\Schema;
+use Youshido\GraphQL\Type\Object\ObjectType;
+use Youshido\GraphQL\Type\Scalar\StringType;
+
 class GraphQL extends WireData implements Module {
 
 	/**
@@ -18,6 +23,52 @@ class GraphQL extends WireData implements Module {
 			'singular' => true, 
 			'autoload' => false, 
 			);
+	}
+
+	public function init()
+	{
+		// including autoloader
+		require_once $this->config->paths->site . 'modules/GraphQL/vendor/autoload.php';
+	}
+
+	public function execute()
+	{
+		// instantiating Processor and setting the schema
+		$processor = new Processor(new Schema([
+				'query' => new ObjectType([
+						// root query by convention has a name RootQueryType
+						'name'   => 'RootQueryType',
+						'fields' => [
+								'latestPost' => [
+										'type'    => new ObjectType([ // Post type is being created as ObjectType
+												'name'    => 'Post', // name of our type – "Post"
+												'fields'  => [
+														'title'   => new StringType(),  // defining "title" field, type - String
+														'summary' => new StringType(),  // defining "summary" field, type - String
+												],
+										]),
+										'resolve' => function () {          // resolver for latestPost field
+												return [                        // for now it returns a static array with data
+														"title"   => "New approach in API has been revealed",
+														"summary" => "In two words - GraphQL Rocks!",
+												];
+										}
+								]
+						]
+				])
+		]));
+
+		if (isset($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] === 'application/json') {
+				$rawBody     = file_get_contents('php://input');
+				$requestData = json_decode($rawBody ?: '', true);
+		} else {
+				$requestData = $_POST;
+		}
+		$payload   = isset($requestData['query']) ? $requestData['query'] : null;
+		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
+		$response = $processor->processPayload($payload, $variables)->getResponseData();
+		header('Content-Type: application/json');
+		echo json_encode($response);
 	}
   
 }
