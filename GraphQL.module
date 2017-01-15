@@ -1,11 +1,19 @@
 <?php namespace ProcessWire;
 
 use Youshido\GraphQL\Execution\Processor;
-use Youshido\GraphQL\Schema\Schema;
 use Youshido\GraphQL\Type\Object\ObjectType;
 use Youshido\GraphQL\Type\Scalar\StringType;
+use ProcessWire\GraphQL\Schema;
 
 class GraphQL extends WireData implements Module {
+
+	/**
+	 * Files that need to be loaded
+	 */
+	protected $files = [
+		'vendor/autoload',
+		'src/Schema',
+	];
 
 	/**
 	 * getModuleInfo is a module required by all modules to tell ProcessWire about them
@@ -25,38 +33,31 @@ class GraphQL extends WireData implements Module {
 			);
 	}
 
+	/**
+	 * Bootstrap the module
+	 * 
+	 * 
+	 */
 	public function init()
 	{
-		// including autoloader
-		require_once $this->config->paths->site . 'modules/GraphQL/vendor/autoload.php';
+		$this->loadFiles();
+	}
+
+	/**
+	 * Loads the composed vendor library
+	 * 
+	 */
+	public function loadFiles()
+	{
+		foreach ($this->files as $file) {
+			require_once $this->config->paths->site . 'modules/GraphQL/' . $file . '.php';
+		}
 	}
 
 	public function execute()
 	{
 		// instantiating Processor and setting the schema
-		$processor = new Processor(new Schema([
-				'query' => new ObjectType([
-						// root query by convention has a name RootQueryType
-						'name'   => 'RootQueryType',
-						'fields' => [
-								'latestPost' => [
-										'type'    => new ObjectType([ // Post type is being created as ObjectType
-												'name'    => 'Post', // name of our type – "Post"
-												'fields'  => [
-														'title'   => new StringType(),  // defining "title" field, type - String
-														'summary' => new StringType(),  // defining "summary" field, type - String
-												],
-										]),
-										'resolve' => function () {          // resolver for latestPost field
-												return [                        // for now it returns a static array with data
-														"title"   => "New approach in API has been revealed",
-														"summary" => "In two words - GraphQL Rocks!",
-												];
-										}
-								]
-						]
-				])
-		]));
+		$processor = new Processor(new Schema());
 
 		if (isset($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] === 'application/json') {
 				$rawBody     = file_get_contents('php://input');
