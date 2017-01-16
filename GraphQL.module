@@ -8,14 +8,6 @@ use ProcessWire\GraphQL\Schema;
 class GraphQL extends WireData implements Module {
 
 	/**
-	 * Files that need to be loaded
-	 */
-	protected $files = [
-		'vendor/autoload',
-		'src/Schema',
-	];
-
-	/**
 	 * getModuleInfo is a module required by all modules to tell ProcessWire about them
 	 *
 	 * @return array
@@ -32,6 +24,17 @@ class GraphQL extends WireData implements Module {
 			'autoload' => false, 
 			);
 	}
+
+	/**
+	 * Files that need to be loaded
+	 */
+	protected $files = [
+		'vendor/autoload',
+		'src/Functions',
+		'src/Type/TemplateObject',
+		'src/Field/Template',
+		'src/Schema',
+	];
 
 	/**
 	 * Bootstrap the module
