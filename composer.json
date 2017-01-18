@@ -10,5 +10,8 @@
     ],
     "require": {
         "youshido/graphql": "v1.4.2.8"
+    },
+    "require-dev": {
+        "ccampbell/chromephp": "^4.1"
     }
 }
