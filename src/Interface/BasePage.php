@@ -7,6 +7,14 @@ use Youshido\GraphQL\Type\Scalar\IntType;
 use Youshido\GraphQL\Type\NonNullType;
 
 class BasePageInterface extends AbstractInterfaceType {
+
+  protected $name;
+
+  public function __construct($config = [])
+  {
+    $this->name = wire('modules')->get('GraphQL')->baseInterfaceName;
+    parent::__construct($config);
+  }
   
   /**
    * 
@@ -43,7 +51,7 @@ class BasePageInterface extends AbstractInterfaceType {
 
   public function getName()
   {
-    return 'basePage';
+    return $this->name;
   }
 
 }
