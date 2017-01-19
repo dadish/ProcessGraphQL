@@ -2,7 +2,7 @@
 
 use Youshido\GraphQL\Config\Schema\SchemaConfig;
 use Youshido\GraphQL\Schema\AbstractSchema;
-use ProcessWire\GraphQL\Field\Pages\Pages;
+use ProcessWire\GraphQL\Field\Pages\PagesField;
 
 class Schema extends AbstractSchema {
 
@@ -11,7 +11,7 @@ class Schema extends AbstractSchema {
   public function build(SchemaConfig $config)
   {
     $config->getQuery()->addFields([
-      new Pages()
+      new PagesField()
     ]);
   }
 
