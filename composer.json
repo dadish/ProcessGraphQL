@@ -13,5 +13,13 @@
     },
     "require-dev": {
         "ccampbell/chromephp": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "ProcessWire\\GraphQL\\": "src/"
+        },
+        "files": [
+            "src/Functions.php"
+        ]
     }
 }

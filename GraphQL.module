@@ -1,39 +1,9 @@
 <?php namespace ProcessWire;
 
 use Youshido\GraphQL\Execution\Processor;
-use Youshido\GraphQL\Type\Object\ObjectType;
-use Youshido\GraphQL\Type\Scalar\StringType;
 use ProcessWire\GraphQL\Schema;
 
 class GraphQL extends WireData implements Module {
-
-	/**
-	 * Files that need to be loaded
-	 */
-	protected $files = [
-		'vendor/autoload',
-		'src/Functions',
-		'src/Type/Scalar/FieldtypeCheckbox',
-		'src/Type/Scalar/FieldtypeDatetime',
-		'src/Type/Scalar/FieldtypeEmail',
-		'src/Type/Scalar/FieldtypeFile',
-		'src/Type/Scalar/FieldtypeFloat',
-		'src/Type/Scalar/FieldtypeImage',
-		'src/Type/Scalar/FieldtypeInteger',
-		'src/Type/Scalar/FieldtypeModule',
-		'src/Type/Scalar/FieldtypePageTitle',
-		'src/Type/Scalar/FieldtypePassword',
-		'src/Type/Scalar/FieldtypeSelector',
-		'src/Type/Scalar/FieldtypeText',
-		'src/Type/Scalar/FieldtypeTextarea',
-		'src/Type/Scalar/FieldtypeURL',
-		'src/Type/List/FieldtypePage',
-		'src/Type/Object/Page',
-		'src/Type/Union/Page',
-		'src/Field/Pages',
-		'src/Interface/BasePage',
-		'src/Schema',
-	];
 
 	/**
 	 * Bootstrap the module
@@ -42,18 +12,7 @@ class GraphQL extends WireData implements Module {
 	 */
 	public function init()
 	{
-		$this->loadFiles();
-	}
-
-	/**
-	 * Loads the composed vendor library
-	 * 
-	 */
-	public function loadFiles()
-	{
-		foreach ($this->files as $file) {
-			require_once $this->config->paths->site . 'modules/GraphQL/' . $file . '.php';
-		}
+		require_once $this->config->paths->site . 'modules/GraphQL/vendor/autoload.php';
 	}
 
 	public function execute()

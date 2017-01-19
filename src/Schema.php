@@ -2,8 +2,7 @@
 
 use Youshido\GraphQL\Config\Schema\SchemaConfig;
 use Youshido\GraphQL\Schema\AbstractSchema;
-use Youshido\GraphQL\Type\Scalar\StringType;
-use ProcessWire\ProcessWire;
+use ProcessWire\GraphQL\Field\Pages\Pages;
 
 class Schema extends AbstractSchema {
 
@@ -12,8 +11,13 @@ class Schema extends AbstractSchema {
   public function build(SchemaConfig $config)
   {
     $config->getQuery()->addFields([
-      new PagesField()
+      new Pages()
     ]);
+  }
+
+  public function getName()
+  {
+    return 'Root';
   }
 
 }
