@@ -26,7 +26,9 @@ class PageNumChildrenField extends AbstractField {
 
   public function getDescription()
   {
-    return "The number of children (subpages) this page has.";
+    $description = "The number of children (subpages) this page has, optionally limiting to visible pages. ";
+    $description .= "When argument `visible` true, number includes only visible children (excludes unpublished, hidden, no-access, etc.)";
+    return $description;
   }
 
   public function build(FieldConfig $config)
