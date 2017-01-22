@@ -20,6 +20,7 @@ class PageType extends AbstractInterfaceType {
   public function build($config)
   {
     $pageTypeFieldClassNames = [
+      'PageChildField',
       'PageChildrenField',
       'PageHttpUrlField',
       'PageIdField',
