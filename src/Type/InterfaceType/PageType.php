@@ -20,14 +20,17 @@ class PageType extends AbstractInterfaceType {
   public function build($config)
   {
     $pageTypeFieldClassNames = [
-      'PageNameField',
-      'PageIdField',
-      'PagePathField',
-      'PageUrlField',
+      'PageChildrenField',
       'PageHttpUrlField',
+      'PageIdField',
+      'PageNameField',
+      'PageNumChildrenField',
       'PageParentField',
       'PageParentIdField',
       'PageParentsField',
+      'PagePathField',
+      'PageRootParentField',
+      'PageUrlField',
     ];
     foreach ($pageTypeFieldClassNames as $pageTypeFieldClassName) {
       $className = "ProcessWire\\GraphQL\\Field\\Page\\$pageTypeFieldClassName";
