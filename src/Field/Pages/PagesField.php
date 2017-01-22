@@ -10,21 +10,19 @@ use ProcessWire\GraphQL\Type\Object\PagesType;
 
 class PagesField extends AbstractField {
 
-  protected $type;
-
-  public function __construct(array $config = [])
-  {
-    $this->type = new PagesType();
-    parent::__construct($config);
-  }
-
   public function getType()
   {
-    return $this->type;
+    return new PagesType();
+  }
+
+  public function getName()
+  {
+    return 'pages';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    return $this->type->resolve($value, $args, $info);
+    return  \Processwire\wire('pages');
   }
+
 }

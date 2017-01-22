@@ -9,7 +9,6 @@ use Youshido\GraphQL\Field\InputField;
 use Youshido\GraphQL\Type\NonNullType;
 use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\GraphQL\Type\Scalar\SelectorType;
-use ProcessWire\WireArray;
 
 class WireArrayFindField extends AbstractField {
 

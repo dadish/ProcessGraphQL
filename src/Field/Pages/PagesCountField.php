@@ -9,12 +9,7 @@ class PagesCountField extends WireArrayFindfield {
 
   public function getDescription()
   {
-    return 'Count and return how many pages will match the given selector.';
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    parent::resolve(\ProcessWire\wire('pages'), $args, $info);
+    return 'Count and return how many pages will match the given selector or all pages if no selector given.';
   }
 
 }

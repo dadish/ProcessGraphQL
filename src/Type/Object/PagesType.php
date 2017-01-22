@@ -2,6 +2,7 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
+use Youshido\GraphQL\Execution\ResolveInfo;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Field\Pages\PagesCountField;
 use ProcessWire\GraphQL\Field\Pages\PagesFindField;

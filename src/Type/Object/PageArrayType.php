@@ -2,9 +2,10 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
-use Youshido\GraphQL\Execution\ResolveInfo;
-use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\PageArray;
+use ProcessWire\GraphQL\Type\Object\WireArrayType;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayListField;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;
 
 class PageArrayType extends WireArrayType {
 
@@ -18,10 +19,11 @@ class PageArrayType extends WireArrayType {
     return 'A WireArray that stores PageTypes';
   }
 
-  public function resolve($value, array $args, ResolveInfo $info)
+  public function build($config)
   {
-    if ($value instanceof PageArray) return $value;
-    return  \Processwire\wire('pages');
+    parent::build($config);
+    $config->addField(new PageArrayListField());
+    $config->addField(new PageArrayFindField());
   }
 
 }
