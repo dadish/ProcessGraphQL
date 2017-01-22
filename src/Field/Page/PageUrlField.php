@@ -20,7 +20,7 @@ class PageUrlField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The absolute url of the page.';
+    return "The page's URL path from the server's document root (may be the same as the `path`)";
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

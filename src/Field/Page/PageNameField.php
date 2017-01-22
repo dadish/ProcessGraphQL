@@ -20,7 +20,7 @@ class PageNameField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The name of the page.';
+    return 'The name assigned to the page, as it appears in the URL.';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

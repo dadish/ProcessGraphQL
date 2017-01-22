@@ -20,7 +20,7 @@ class PagePathField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The path of the page.';
+    return "The page's URL path from the homepage (i.e. /about/staff/ryan/)";
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

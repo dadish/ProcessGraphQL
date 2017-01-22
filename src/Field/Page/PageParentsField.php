@@ -20,7 +20,7 @@ class PageParentsField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The ancester pages of the page.';
+    return "Return this page's parent pages as PageArray.";
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

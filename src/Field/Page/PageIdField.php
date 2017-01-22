@@ -20,7 +20,7 @@ class PageIdField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The id of the page.';
+    return 'The numbered ID of the page.';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

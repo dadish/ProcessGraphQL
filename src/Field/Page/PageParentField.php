@@ -5,6 +5,7 @@ namespace ProcessWire\GraphQL\Field\Page;
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use ProcessWire\GraphQL\Type\Object\PageType as PageObjectType;
+use ProcessWire\NullPage;
 
 class PageParentField extends AbstractField {
 
@@ -20,12 +21,14 @@ class PageParentField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The parent page of the page.';
+    return 'The parent Page object or a `null` if there is no parent.';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    return $value->parent;
+    $parent = $value->parent;
+    if ($parent instanceof NullPage) return null;
+    return $parent;
   }
 
 }

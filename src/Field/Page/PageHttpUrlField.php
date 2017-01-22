@@ -20,7 +20,7 @@ class PageHttpUrlField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The http url of the page. Includes the protocol & hostname.';
+    return 'Same as `url`, except includes protocol (http or https) and hostname.';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

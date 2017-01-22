@@ -20,7 +20,7 @@ class PageParentIdField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The id of the parent page.';
+    return 'The numbered ID of the parent page or 0 if none.';
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
