@@ -4,13 +4,14 @@ namespace ProcessWire\GraphQL\Field\Page;
 
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
+use Youshido\GraphQL\Type\NonNullType;
 use ProcessWire\GraphQL\Type\Object\PageType as PageObjectType;
 
 class PageRootParentField extends AbstractField {
 
   public function getType()
   {
-    return new PageObjectType();
+    return new NonNullType(new PageObjectType());
   }
 
   public function getName()
