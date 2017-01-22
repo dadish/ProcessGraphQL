@@ -25,6 +25,7 @@ class PageType extends AbstractInterfaceType {
       'PageHttpUrlField',
       'PageIdField',
       'PageNameField',
+      'PageNextField',
       'PageNumChildrenField',
       'PageParentField',
       'PageParentIdField',
