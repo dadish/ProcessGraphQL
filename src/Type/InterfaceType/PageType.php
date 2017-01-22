@@ -31,6 +31,7 @@ class PageType extends AbstractInterfaceType {
       'PageParentsField',
       'PagePathField',
       'PageRootParentField',
+      'PageSiblingsField',
       'PageUrlField',
     ];
     foreach ($pageTypeFieldClassNames as $pageTypeFieldClassName) {
