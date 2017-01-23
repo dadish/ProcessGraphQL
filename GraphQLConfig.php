@@ -5,7 +5,7 @@ class GraphQLConfig extends Moduleconfig {
   public function getDefaults()
   {
     return array(
-      'baseInterfaceName' => 'page',
+      'maxLimit' => 100,
     );
   }
 
@@ -13,9 +13,10 @@ class GraphQLConfig extends Moduleconfig {
   {
     $inputfields = parent::getInputFields();
 
-    $f = $this->modules->get('InputfieldText');
-    $f->attr('name', 'baseInterfaceName');
-    $f->label = 'Base Interface Name';
+    $f = $this->modules->get('InputfieldInteger');
+    $f->attr('name', 'maxLimit');
+    $f->label = 'Max Limit';
+    $f->description = 'Set the maximum value for `limit` selector field.';
     $f->required = true;
     $inputfields->add($f);
 
