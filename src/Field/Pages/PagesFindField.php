@@ -2,14 +2,13 @@
 
 namespace ProcessWire\GraphQL\Field\Pages;
 
-use ProcessWire\GraphQL\Field\WireArray\WireArrayFindField;
-use ProcessWire\GraphQL\Type\Object\PageArrayType;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;
 
-class PagesFindField extends WireArrayFindField {
+class PagesFindField extends PageArrayFindField {
 
-  public function getType()
+  public function getDescription()
   {
-    return new PageArrayType();
+    return 'Allows to search for all pages in the ProcessWire app.';
   }
 
 }
