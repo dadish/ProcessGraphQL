@@ -12,4 +12,9 @@ class PageArrayFindField extends WireArrayFindField {
     return new PageArrayType();
   }
 
+  public function getDescription()
+  {
+    return 'Return all pages that match the given selector, or a blank PageArray if none found.';
+  }
+
 }
