@@ -29,11 +29,5 @@ class WireArrayType extends AbstractObjectType {
     $config->addField(new WireArrayListField());
     $config->addField(new WireArrayFindField());
   }
-
-  public function resolveType($object)
-  {
-    if ($object instanceof Pages) return new PagesType();
-    if ($object instanceof PageArray) return new PageArrayType();
-  }
   
 }
