@@ -20,6 +20,11 @@ class PagesField extends AbstractField {
     return 'pages';
   }
 
+  public function getDescription()
+  {
+    return 'The ProcessWire `pages` API.';
+  }
+
   public function resolve($value, array $args, ResolveInfo $info)
   {
     return  \Processwire\wire('pages');
