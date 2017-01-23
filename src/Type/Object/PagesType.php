@@ -9,9 +9,14 @@ use ProcessWire\GraphQL\Field\Pages\PagesFindField;
 
 class PagesType extends PageArrayType {
 
+  public function getName()
+  {
+    return 'PagesType';
+  }
+
   public function getDescription()
   {
-    return 'Enables loading and manipulation of Page objects, to and from the database.';
+    return 'Represents ProcessWire `Pages` class.';
   }
 
   public function build($config)

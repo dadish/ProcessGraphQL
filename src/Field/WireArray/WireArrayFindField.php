@@ -22,6 +22,11 @@ class WireArrayFindField extends AbstractField {
     return 'find';
   }
 
+  public function getDescription()
+  {
+    return 'Return all items that match the given selector, or a blank WireArray if none found.';
+  }
+
   public function build(FieldConfig $config)
   {
     $config->addArgument(new InputField([
