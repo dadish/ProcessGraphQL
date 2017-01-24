@@ -2,7 +2,6 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
-use ProcessWire\PageArray;
 use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayListField;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;

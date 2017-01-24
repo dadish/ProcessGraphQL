@@ -6,10 +6,6 @@ use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\GraphQL\Field\WireArray\WireArrayFindField;
 use ProcessWire\GraphQL\Field\WireArray\WireArrayCountField;
 use ProcessWire\GraphQL\Field\WireArray\WireArrayListField;
-use ProcessWire\GraphQL\Type\Object\PagesType;
-use ProcessWire\GraphQL\Type\Object\PageArrayType;
-use ProcessWire\Pages;
-use ProcessWire\PageArray;
 
 class WireArrayType extends AbstractObjectType {
 
