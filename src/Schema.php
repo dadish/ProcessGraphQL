@@ -21,8 +21,11 @@ class Schema extends AbstractSchema {
     ]);
 
     $templates = \ProcessWire\wire('templates');
+    $user = \ProcessWire\Wire('user');
     foreach ($templates as $template) {
-      $query->addField(new TemplatedPageArrayField($template));
+      if ($user->hasPermission('page-view', $template)) {
+        $query->addField(new TemplatedPageArrayField($template));
+      }
     }
 
     if (Settings::module()->debug) {
