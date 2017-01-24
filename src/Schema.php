@@ -3,10 +3,10 @@
 use Youshido\GraphQL\Config\Schema\SchemaConfig;
 use Youshido\GraphQL\Schema\AbstractSchema;
 use ProcessWire\GraphQL\Field\Pages\PagesField;
-
+use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayField;
+use ProcessWire\GraphQL\Field\Debug\DbQueryCountField;
 use ProcessWire\GraphQL\Settings;
 
-use ProcessWire\GraphQL\Field\Debug\DbQueryCountField;
 
 class Schema extends AbstractSchema {
 
@@ -14,12 +14,19 @@ class Schema extends AbstractSchema {
   
   public function build(SchemaConfig $config)
   {
-    $config->getQuery()->addFields([
+    $query = $config->getQuery();
+
+    $query->addFields([
       new PagesField()
     ]);
 
+    $templates = \ProcessWire\wire('templates');
+    foreach ($templates as $template) {
+      $query->addField(new TemplatedPageArrayField($template));
+    }
+
     if (Settings::module()->debug) {
-      $config->getQuery()->addFields([
+      $query->addFields([
         new DbQueryCountField()
       ]);
     }
