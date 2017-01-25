@@ -4,6 +4,7 @@ namespace ProcessWire\GraphQL\Type\Object;
 
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayFindField;
+use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayListField;
 
 use ProcessWire\Template;
 
@@ -38,6 +39,7 @@ class TemplatedPageArrayType extends PageArrayType {
   {
     parent::build($config);
     $config->addField(new TemplatedPageArrayFindField($this->template));
+    $config->addField(new TemplatedPageArrayListField($this->template));
   }
 
 }
