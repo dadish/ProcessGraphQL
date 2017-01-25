@@ -4,25 +4,26 @@ namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
+use ProcessWire\Field;
 
 abstract class AbstractFieldtype extends AbstractField {
 
-  protected $name;
+  protected $field;
 
-  public function __construct(string $name)
+  public function __construct(Field $field)
   {
-    $this->name = $name;
+    $this->field = $field;
     parent::__construct([]);
   }
 
   public function getName()
   {
-    return $this->name;
+    return $this->field->name;
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $fieldName = $this->name;
+    $fieldName = $this->field->name;
     return $value->$fieldName;
   }
 

@@ -37,7 +37,7 @@ class TemplatedPageType extends PageType {
     foreach ($this->template->fields as $field) {
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
-      $config->addField(new $className($field->name));
+      $config->addField(new $className($field));
     }
     parent::build($config);
   }

@@ -15,7 +15,7 @@ class FieldtypeInteger extends AbstractFieldtype {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $fieldName = $this->name;
+    $fieldName = $this->field->name;
     return (integer) $value->$fieldName;
   }
 
