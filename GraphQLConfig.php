@@ -7,6 +7,7 @@ class GraphQLConfig extends Moduleconfig {
     return array(
       'maxLimit' => 100,
       'debug' => false,
+      'includeSystemTemplates' => false,
     );
   }
 
@@ -25,6 +26,12 @@ class GraphQLConfig extends Moduleconfig {
     $f->attr('name', 'debug');
     $f->label = 'Debug';
     $f->description = 'When you turn on debug mode some extra fields will be available. Like `dbQueryCount` etc.';
+    $inputfields->add($f);
+
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'includeSystemTemplates');
+    $f->label = 'Include system templates';
+    $f->description = 'Check this option if you want GraphQL module to add system templates like `admin`, `role`, `user`, `permissions` to the QuerySchema.';
     $inputfields->add($f);
 
     return $inputfields;

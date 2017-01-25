@@ -19,13 +19,9 @@ class Schema extends AbstractSchema {
     $query->addFields([
       new PagesField()
     ]);
-
-    $templates = \ProcessWire\wire('templates');
-    $user = \ProcessWire\Wire('user');
-    foreach ($templates as $template) {
-      if ($user->hasPermission('page-view', $template)) {
-        $query->addField(new TemplatedPageArrayField($template));
-      }
+    
+    foreach (Settings::getLegalTemplates() as $template) {
+      $query->addField(new TemplatedPageArrayField($template));
     }
 
     if (Settings::module()->debug) {
