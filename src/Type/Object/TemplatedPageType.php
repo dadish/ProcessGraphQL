@@ -2,7 +2,6 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
-use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Object\PageType;
 use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
 
