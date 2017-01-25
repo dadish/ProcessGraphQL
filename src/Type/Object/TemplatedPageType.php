@@ -2,10 +2,11 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
-use ProcessWire\GraphQL\Type\Object\PageType;
+use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
+use ProcessWire\GraphQL\Type\InterfaceType\PageType as PageInterfaceType;
 
-class TemplatedPageType extends PageType {
+class TemplatedPageType extends AbstractObjectType {
 
   use TemplateAwareTrait;
 
@@ -28,12 +29,17 @@ class TemplatedPageType extends PageType {
 
   public function build($config)
   {
+    $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
       $config->addField(new $className($field));
     }
-    parent::build($config);
+  }
+
+  public function getInterfaces()
+  {
+      return [new PageInterfaceType()];
   }
 
 }

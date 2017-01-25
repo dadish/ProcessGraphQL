@@ -3,7 +3,7 @@
 namespace ProcessWire\GraphQL\Type\InterfaceType;
 
 use Youshido\GraphQL\Type\InterfaceType\AbstractInterfaceType;
-use ProcessWire\GraphQL\Type\Object\PageType as PageObjectType;
+use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
 
 class PageType extends AbstractInterfaceType {
 
@@ -49,7 +49,7 @@ class PageType extends AbstractInterfaceType {
 
   public function resolveType($page)
   {
-    return new PageObjectType();
+    return new TemplatedPageType($page->template);
   }
 
 }
