@@ -4,16 +4,11 @@ namespace ProcessWire\GraphQL\Type\Object;
 
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Object\PageType;
+use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
 
 class TemplatedPageType extends PageType {
 
-  protected $template;
-
-  public function __construct(Template $template)
-  {
-    $this->template = $template;
-    parent::__construct([]);
-  }
+  use TemplateAwareTrait;
 
   public Static function normalizeName(string $name)
   {
