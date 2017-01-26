@@ -28,15 +28,40 @@ class ProcessGraphQL extends Process implements Module {
 		require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 	}
 
-  public function execute()
+  public function ___execute()
   {
-    return $this->executeGraphiQL();
+    if ($this->config->ajax) return $this->executeGraphQL();
+		return $this->executeGraphiQLPartial();
   }
 
   public function executeGraphiQL()
   {
-    return 'People are awesome!';
+    $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/full.php';
+		return wireRenderFile($fullFilename, $this->getGraphiQLVariables());
   }
+
+	public function executeGraphiQLPartial()
+	{
+		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/partial.php';
+		return wireRenderFile($partialFilename, $this->getGraphiQLVariables());
+	}
+
+	public function getGraphiQLVariables()
+	{
+		$js = $this->getGraphiQLAsset('js/main.059c7daf.js');
+		$css = $this->getGraphiQLAsset('css/main.a7124171.css');
+		return [
+			'JavaScript' => $js,
+			'CSS' => $css,
+			'GraphQLServerUrl' => $this->pages->get('template=admin, name=' . self::pageName)->url,
+		];
+	}
+
+	public function getGraphiQLAsset(string $path)
+	{
+		$assetFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/build/static/' . $path;
+		return wireRenderFile($assetFilename);
+	}
 
 	public function executeGraphQL()
 	{

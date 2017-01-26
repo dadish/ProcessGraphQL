@@ -67,6 +67,7 @@ function graphQLFetcher(graphQLParams) {
     .send(JSON.stringify(graphQLParams))
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
+    .set('X-Requested-With', 'XMLHttpRequest')
     .withCredentials()
     .then(response => JSON.parse(response.text))
 }

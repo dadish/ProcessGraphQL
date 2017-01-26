@@ -14,7 +14,22 @@
     -->
     <title>React App</title>
   </head>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+    #graphiql {
+      height: 100vh;
+    }
+  </style>
   <body>
+    <script>
+      var GraphQLServerUrl = 'http://www.skyscrapers.dev/graphql/';
+    </script>
+    <div id="graphiql"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
