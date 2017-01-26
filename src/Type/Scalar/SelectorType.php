@@ -37,43 +37,36 @@ class SelectorType extends StringType {
       $selectors->add($limitSelector);
     }
 
-    // make sure to limit the search to templates that the 
-    // user has page-view permission to
-    $user = \ProcessWire\wire('user');
-    if (!$user->isSuperuser()) {
-      $templateSelector = self::findSelectorByField($selectors, 'template');
-      $templates = \ProcessWire\wire('templates');
-      $names = [];
-      
-      if ($templateSelector instanceof Selector) {
-        // the user did specify `template` field in selector string
-        foreach ($templateSelector->values as $templateName) {
-          $template = $templates->get($templateName);
-          if ($template instanceof Template && $user->hasPermission('page-view', $template)) {
-            $names[] = $template->name;
-          }
-        }
-
-        if (count($names)) {
-          // at least one of the templates the user chose is viewable by her.
-          $templateSelector->set('value', $names);
-        } else {
-          // none of the templates the user chose is viewable by her.
-          // This means the result of the search should be empty PageArrayType;
-          $selectors = new Selectors("name=''");
-        }
-
-      } else {
-        // the user did not specify the template field in selector string.
-        // In this case we add template field and set all the templates
-        // viewable by her as the value
-        $names = [];
-        foreach ($templates->getAll() as $template) {
-          if ($user->hasPermission('page-view', $template)) $names[] = $template->name;
-        }
-        $templateSelector = new SelectorEqual('template', $names);
-        $selectors->add($templateSelector);
+    // make sure to limit the search to legal templates only
+    $templateSelector = self::findSelectorByField($selectors, 'template');
+    $legalTemplates = Settings::getLegalTemplates();
+    $names = [];
+    
+    if ($templateSelector instanceof Selector) {
+      // the user did specify `template` field in selector string
+      // filter out templates that are not legal
+      foreach ($templateSelector->values as $templateName) {
+        $template = $legalTemplates->get($templateName);
+        if ($template instanceof Template) $names[] = $template->name;
       }
+
+      if (count($names)) {
+        // at least one of the templates the user chose is legal
+        // let the user search those
+        $templateSelector->set('value', $names);
+      } else {
+        // none of the templates the user chose is viewable by her.
+        // This means the result of the search should be empty PageArrayType;
+        $selectors = new Selectors("name=''");
+      }
+
+    } else {
+      // The user did not specify the template field in selector string.
+      // That means she wants to see all the matching pages, but we add
+      // template field and set all the legal templates to narrow the
+      // search only to viewable pages
+      $templateSelector = new SelectorEqual('template', $legalTemplates->explode('name'));
+      $selectors->add($templateSelector);
     }
 
     // return normalized selectors
