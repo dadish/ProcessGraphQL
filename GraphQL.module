@@ -3,19 +3,42 @@
 use Youshido\GraphQL\Execution\Processor;
 use ProcessWire\GraphQL\Schema;
 
-class GraphQL extends WireData implements Module {
+class GraphQL extends Process implements Module {
+
+	const pageName = 'graphql';
+
+	public static function getModuleInfo()
+	{
+		return array(
+			'title' => 'GraphQL',
+			'version' => 002, 
+			'summary' => 'GraphQL for ProcessWire.',
+			'href' => 'https://github.com/dadish/pw-graphql',
+			'singular' => true, 
+			'autoload' => false, 
+			'icon' => 'object-group',
+			);
+	}
 
 	/**
 	 * Bootstrap the module
-	 * 
-	 * 
 	 */
 	public function init()
 	{
 		require_once $this->config->paths->site . 'modules/GraphQL/vendor/autoload.php';
 	}
 
-	public function execute()
+  public function execute()
+  {
+    return $this->executeGraphiQL();
+  }
+
+  public function executeGraphiQL()
+  {
+    return 'People are awesome!';
+  }
+
+	public function executeGraphQL()
 	{
 		// instantiating Processor and setting the schema
 		$processor = new Processor(new Schema());
@@ -32,5 +55,42 @@ class GraphQL extends WireData implements Module {
 		header('Content-Type: application/json');
 		echo json_encode($response);
 	}
-  
+
+	/**
+	 * Install the module page under setup
+	 *
+	 */
+	public function ___install()
+	{
+		// create the page
+		$page = new Page();
+		$page->template = 'admin';
+		$page->name = self::pageName;
+
+		// set parent to the home->admin->setup
+		$page->parent = $this->pages->get($this->config->adminRootPageID)->child('name=setup');
+		$page->process = $this;
+
+		// set the page title as module title
+		$info = self::getModuleInfo();
+		$page->title = $info['title'];
+
+		// save the page and tell the user about it
+		$page->save();
+		$this->message("Created page at: {$page->path}");
+	}
+
+	public function ___uninstall()
+	{
+		// find page by process field
+		$moduleID = $this->modules->getModuleID($this);
+		$page = $this->pages->get("process=$moduleID, name=" . self::pageName);
+
+		// if the page exists then delete it and tell the user about it
+		if ($page->id) {
+			$this->message("Deleting page: {$page->path}");
+			$page->delete();
+		}
+	}
+
 }
