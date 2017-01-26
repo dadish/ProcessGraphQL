@@ -20,7 +20,7 @@ ProcessGraphQL supports complex fields like FieldtypeImage or FieldtypePage.
 
 ![ProcessGraphQL Supporting FieldtypeImage and FieldtypePage][img-fieldtypes]
 
-### Installation
+## Installation
 To install module place the contents of this directory into your `/site/modules/`
 directory and go to `Setup -> Modules` in your ProcessWire admin panel and click
 __Refresh__ button. You should see the ProcessGraphQL module that you can install
@@ -29,12 +29,30 @@ by clicking the __Install__ button next to it.
 After you installed the ProcessGraphQL, you can go to `Setup -> GraphQL` in your
 admin panel and you will see the GraphiQL where you can perform queries to your
 GraphQL api.
-directory. 
+
+## API
+If you wish to expose your GraphQL api, you can do so by calling a single method on
+ProcessGraphQL module in your template file. Here is what it might look like
 ```php
-$modules->get('GraphQL')->execute();
+<?php
+
+// /site/templates/graphql.php
+
+$modules->get('ProcessGraphQL')->executeGraphQL();
 ```
-This will handle the GraphQL queries for you. You checkout my
-[GraphiQL][graphiql] module for ProcessWire for GraphQL explorer.
+
+You can also expose the GraphiQL from within your template. Here is how you can do that.
+```php
+<?php
+
+// /site/templates/graphiql.php
+
+$modules->get('ProcessGraphQL')->executeGraphiQL();
+```
+> Please note that GraphiQL is a full web page. Meaning it includes `header`,
+> `title` and so on. Depending on your site configuration you might want to
+> disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
+> for the template that exposes GraphiQL.
 
 [graphql]: http://graphql.org/
 [graphiql]: https://github.com/graphql/graphiql/
