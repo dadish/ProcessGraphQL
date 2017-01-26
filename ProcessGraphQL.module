@@ -3,7 +3,7 @@
 use Youshido\GraphQL\Execution\Processor;
 use ProcessWire\GraphQL\Schema;
 
-class GraphQL extends Process implements Module {
+class ProcessGraphQL extends Process implements Module {
 
 	const pageName = 'graphql';
 
@@ -13,7 +13,7 @@ class GraphQL extends Process implements Module {
 			'title' => 'GraphQL',
 			'version' => 002, 
 			'summary' => 'GraphQL for ProcessWire.',
-			'href' => 'https://github.com/dadish/pw-graphql',
+			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true, 
 			'autoload' => false, 
 			'icon' => 'object-group',
@@ -25,7 +25,7 @@ class GraphQL extends Process implements Module {
 	 */
 	public function init()
 	{
-		require_once $this->config->paths->site . 'modules/GraphQL/vendor/autoload.php';
+		require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 	}
 
   public function execute()

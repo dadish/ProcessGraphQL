@@ -1,6 +1,6 @@
 <?php namespace ProcessWire;
 
-class GraphQLConfig extends Moduleconfig {
+class ProcessGraphQLConfig extends Moduleconfig {
 
   public function getDefaults()
   {

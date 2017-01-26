@@ -1,5 +1,5 @@
-GraphQL
-=======
+ProcessGraphQL
+==============
 
 A GraphQL for ProcessWire.
 

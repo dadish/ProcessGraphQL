@@ -6,7 +6,7 @@ class Settings {
 
   public static function module()
   {
-    return \Processwire\wire('modules')->get('GraphQL');
+    return \Processwire\wire('modules')->get('ProcessGraphQL');
   }
 
   public static function getLegalTemplates()
