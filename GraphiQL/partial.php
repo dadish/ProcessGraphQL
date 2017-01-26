@@ -2,12 +2,9 @@
   #content.pw-content{
     padding: 0px;
   }
-  #content .pw-container, #content .container{
-    width: 100%;
-    max-width: none;
-  }
   #graphiql {
-    height: 100vh;
+    height: 80vh;
+    border-right: 1px solid #efefef;
   }
   #graphiql * {
     box-sizing: content-box;
@@ -17,6 +14,9 @@
   }
   #graphiql .doc-explorer-title{
     overflow: hidden;
+  }
+  #graphiql .graphiql-container .doc-explorer-back{
+    line-height: 0.85rem;
   }
   #graphiql .doc-explorer-contents{
     padding: 5px 20px 15px;
