@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import GraphiQL from 'graphiql';
+import request from 'superagent';
+import 'es6-promise/auto';
 import './index.css';
+import 'graphiql/graphiql.css';
 
 /**
  * This GraphiQL example illustrates how to use some of GraphiQL's props
@@ -60,37 +63,26 @@ function updateURL() {
 function graphQLFetcher(graphQLParams) {
   // This example expects a GraphQL server at the path /graphql.
   // Change this to point wherever you host your GraphQL server.
-  return fetch('/graphql', {
-    method: 'post',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(graphQLParams),
-    credentials: 'include',
-  }).then(function (response) {
-    return response.text();
-  }).then(function (responseBody) {
-    try {
-      return JSON.parse(responseBody);
-    } catch (error) {
-      return responseBody;
-    }
-  });
+  return request.post(GraphQLServerUrl) // eslint-disable-line no-undef
+    .send(JSON.stringify(graphQLParams))
+    .set('Accept', 'application/json')
+    .set('Content-Type', 'application/json')
+    .withCredentials()
+    .then(response => JSON.parse(response.text))
 }
 // Render <GraphiQL /> into the body.
 // See the README in the top level of this module to learn more about
 // how you can customize GraphiQL by providing different values or
 // additional child elements.
 ReactDOM.render(
-  React.createElement(GraphiQL, {
-    fetcher: graphQLFetcher,
-    query: parameters.query,
-    variables: parameters.variables,
-    operationName: parameters.operationName,
-    onEditQuery: onEditQuery,
-    onEditVariables: onEditVariables,
-    onEditOperationName: onEditOperationName
-  }),
+  <GraphiQL
+    fetcher={graphQLFetcher}
+    query={parameters.query}
+    variables={parameters.variables}
+    operationName={parameters.operationName}
+    onEditQuery={onEditQuery}
+    onEditVariables={onEditVariables}
+    onEditOperationName={onEditOperationName}
+  />,
   document.getElementById('graphiql')
 );
