@@ -3,12 +3,18 @@
 namespace ProcessWire\GraphQL\Type\Object;
 
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
-use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\InterfaceType\PageType as PageInterfaceType;
 
 class TemplatedPageType extends AbstractObjectType {
 
-  use TemplateAwareTrait;
+  protected $template;
+
+  public function __construct(Template $template)
+  {
+    $this->template = $template;
+    parent::__construct([]);
+  }
 
   public Static function normalizeName(string $name)
   {

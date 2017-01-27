@@ -5,11 +5,17 @@ namespace ProcessWire\GraphQL\Type\Object;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayFindField;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayListField;
-use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
+use ProcessWire\Template;
 
 class TemplatedPageArrayType extends PageArrayType {
 
-  use TemplateAwareTrait;
+  protected $template;
+
+  public function __construct(Template $template)
+  {
+    $this->template = $template;
+    parent::__construct([]);
+  }
 
   public Static function normalizeName(string $name)
   {

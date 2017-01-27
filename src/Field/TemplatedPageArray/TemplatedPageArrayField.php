@@ -6,13 +6,19 @@ use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Field\InputField;
-use ProcessWire\GraphQL\Traits\TemplateAwareTrait;
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Scalar\TemplatedSelectorType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 
 class TemplatedPageArrayField extends AbstractField {
 
-  use TemplateAwareTrait;
+  protected $template;
+
+  public function __construct(Template $template)
+  {
+    $this->template = $template;
+    parent::__construct([]);
+  }
 
   public function getType()
   {
