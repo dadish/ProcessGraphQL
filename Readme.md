@@ -55,7 +55,7 @@ $modules->get('ProcessGraphQL')->executeGraphiQL();
 > for the template that exposes GraphiQL.
 
 ### Limitations
-At this stage the module only supports the `Query` schema. There is not `Mutation` for now.
+At this stage the module only supports the `Query` schema. There is no `Mutation` for now.
 It will be implemented as soon as people will request this feature.
 
 ### Permissions
