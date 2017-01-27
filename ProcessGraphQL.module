@@ -50,10 +50,12 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		$js = $this->getGraphiQLAsset('js/main.059c7daf.js');
 		$css = $this->getGraphiQLAsset('css/main.a7124171.css');
+		$url = $this->GraphQLServerUrl;
+		if (!$url) $url = $this->pages->get('template=admin, name=' . self::pageName)->url;
 		return [
 			'JavaScript' => $js,
 			'CSS' => $css,
-			'GraphQLServerUrl' => $this->pages->get('template=admin, name=' . self::pageName)->url,
+			'GraphQLServerUrl' => $url,
 		];
 	}
 
