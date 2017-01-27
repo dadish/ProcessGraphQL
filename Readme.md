@@ -54,6 +54,15 @@ $modules->get('ProcessGraphQL')->executeGraphiQL();
 > disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
 > for the template that exposes GraphiQL.
 
+### Limitations
+At this stage the module only supports the `Query` schema. There is not `Mutation` for now.
+It will be implemented as soon as people will request this feature.
+
+### Permissions
+ProcessGraphQL respects the ProcessWire permissions on template level. It basicly does that
+via `$user->hasPermission('page-view', $template)`. So as long as the client does not have
+that permission she won't be able to query it.
+
 [graphql]: http://graphql.org/
 [graphiql]: https://github.com/graphql/graphiql/
 [pw]: https://processwire.com
