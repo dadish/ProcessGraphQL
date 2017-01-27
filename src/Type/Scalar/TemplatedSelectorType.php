@@ -3,6 +3,7 @@
 namespace ProcessWire\GraphQL\Type\Scalar;
 
 use ProcessWire\Template;
+use ProcessWire\Selector;
 use ProcessWire\SelectorEqual;
 use ProcessWire\GraphQL\Type\Scalar;
 
@@ -19,7 +20,7 @@ class TemplatedSelectorType extends SelectorType {
   {
     $selectors = parent::serialize($selectors);
     $templateSelector = self::findSelectorByField($selectors, 'template');
-    if ($templateSelector) $selectors->remove($templateSelector);
+    if ($templateSelector instanceof Selector) $selectors->remove($templateSelector);
     $templateSelector = new SelectorEqual('template', $this->template->name);
     $selectors->add($templateSelector);
     return $selectors;
