@@ -64,7 +64,7 @@ via `$user->hasPermission('page-view', $template)`. So as long as the client doe
 that permission she won't be able to query it.
 
 ## License
-[MIT][https://github.com/dadish/ProcessGraphQL/blob/master/LICENSE]
+[MIT](https://github.com/dadish/ProcessGraphQL/blob/master/LICENSE)
 
 [graphql]: http://graphql.org/
 [graphiql]: https://github.com/graphql/graphiql/
