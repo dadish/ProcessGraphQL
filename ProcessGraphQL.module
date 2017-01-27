@@ -80,7 +80,7 @@ class ProcessGraphQL extends Process implements Module {
 		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
 		$response = $processor->processPayload($payload, $variables)->getResponseData();
 		header('Content-Type: application/json');
-		echo json_encode($response);
+		return json_encode($response);
 	}
 
 	/**
