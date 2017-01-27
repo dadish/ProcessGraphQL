@@ -17,7 +17,7 @@ class TemplatedPageArrayType extends PageArrayType {
     parent::__construct([]);
   }
 
-  public Static function normalizeName(string $name)
+  public Static function normalizeName($name)
   {
     return str_replace('-', '_', $name);
   }

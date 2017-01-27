@@ -59,7 +59,7 @@ class ProcessGraphQL extends Process implements Module {
 		];
 	}
 
-	public function getGraphiQLAsset(string $path)
+	public function getGraphiQLAsset($path)
 	{
 		$assetFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/build/static/' . $path;
 		return wireRenderFile($assetFilename);

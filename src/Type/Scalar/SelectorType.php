@@ -73,7 +73,7 @@ class SelectorType extends StringType {
     return $selectors;
   }
 
-  public static function findSelectorByField(Selectors $selectors, string $target)
+  public static function findSelectorByField(Selectors $selectors, $target)
   {
     foreach ($selectors as $selector) {
       foreach ($selector->fields as $field) {
