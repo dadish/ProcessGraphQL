@@ -38,7 +38,7 @@ ProcessGraphQL module in your template file. Here is what it might look like
 
 // /site/templates/graphql.php
 
-$modules->get('ProcessGraphQL')->executeGraphQL();
+$modules->get('ProcessGraphQL')->executeGraphQL(); // you do not need to echo it
 ```
 
 You can also expose the GraphiQL from within your template. Here is how you can do that.
@@ -47,12 +47,26 @@ You can also expose the GraphiQL from within your template. Here is how you can 
 
 // /site/templates/graphiql.php
 
-$modules->get('ProcessGraphQL')->executeGraphiQL();
+echo $modules->get('ProcessGraphQL')->executeGraphiQL(); // note that you need to echo it
 ```
 > Please note that GraphiQL is a full web page. Meaning it includes `header`,
 > `title` and so on. Depending on your site configuration you might want to
 > disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
 > for the template that exposes GraphiQL.
+
+By default the GraphiQL is pointed to your admin GraphQL server, which is 
+`/processwire/setup/graphql/`. You might want to change that because ProcessWire
+will not allow guest users to access that url. You can point GraphiQL to whatever adress
+you want by a property `GraphQLServerUrl`. ProcessGraphQL will respect that property
+when exposing GraphiQL.
+Here is how you might do this in your template file.
+```php
+// /site/templates/graphiql.php
+
+$ProcessGraphQL = $modules->get('ProcessGraphQL');
+$ProcessGraphQL->GraphQLServerUrl = '/graphql/';
+echo $ProcessGraphQL->executeGraphiQL();
+```
 
 ### Limitations
 At this stage the module only supports the `Query` schema. There is no `Mutation` for now.
