@@ -16,14 +16,15 @@ class Schema extends AbstractSchema {
   {
     $query = $config->getQuery();
 
-    $query->addFields([
-      new PagesField()
-    ]);
+    // $pages API
+    $query->addField(new PagesField());
     
+    // $templates
     foreach (Settings::getLegalTemplates() as $template) {
       $query->addField(new TemplatedPageArrayField($template));
     }
 
+    // Debugging
     if (Settings::module()->debug) {
       $query->addFields([
         new DbQueryCountField()
