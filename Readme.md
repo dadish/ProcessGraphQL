@@ -20,6 +20,10 @@ ProcessGraphQL supports complex fields like FieldtypeImage or FieldtypePage.
 
 ![ProcessGraphQL Supporting FieldtypeImage and FieldtypePage][img-fieldtypes]
 
+## Requirements
+The module is compatible only with the ProcessWire version 3.x.x and up.
+There are no plans to support the older versions. 
+
 ## Installation
 To install module place the contents of this directory into your `/site/modules/`
 directory and go to `Setup -> Modules` in your ProcessWire admin panel and click
@@ -38,7 +42,7 @@ ProcessGraphQL module in your template file. Here is what it might look like
 
 // /site/templates/graphql.php
 
-$modules->get('ProcessGraphQL')->executeGraphQL(); // you do not need to echo it
+echo $modules->get('ProcessGraphQL')->executeGraphQL();
 ```
 
 You can also expose the GraphiQL from within your template. Here is how you can do that.
@@ -47,7 +51,7 @@ You can also expose the GraphiQL from within your template. Here is how you can 
 
 // /site/templates/graphiql.php
 
-echo $modules->get('ProcessGraphQL')->executeGraphiQL(); // note that you need to echo it
+echo $modules->get('ProcessGraphQL')->executeGraphiQL();
 ```
 > Please note that GraphiQL is a full web page. Meaning it includes `header`,
 > `title` and so on. Depending on your site configuration you might want to
