@@ -20,6 +20,9 @@ ProcessGraphQL supports complex fields like FieldtypeImage or FieldtypePage.
 
 ![ProcessGraphQL Supporting FieldtypeImage and FieldtypePage][img-fieldtypes]
 
+Documentation for your api is easily accessible via GraphiQL interface.
+![ProcessGraphQL Schema Documentation][img-documentation]
+
 ## Requirements
 The module is compatible only with the ProcessWire version 3.x.x and up.
 There are no plans to support the older versions. 
@@ -92,3 +95,4 @@ that permission she won't be able to query it.
 [img-query]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Query.gif
 [img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Filtering.gif
 [img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Fieldtypes.gif
+[img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Documentation.gif
