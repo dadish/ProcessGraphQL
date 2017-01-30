@@ -2,12 +2,11 @@
 
 namespace ProcessWire\GraphQL\Field\Page;
 
-use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\Scalar\IntType;
 use Youshido\GraphQL\Type\NonNullType;
+use ProcessWire\GraphQL\Field\Page\AbstractPageField;
 
-class PageModifiedField extends AbstractField {
+class PageModifiedField extends AbstractPageField {
 
   public function getType()
   {
@@ -22,11 +21,6 @@ class PageModifiedField extends AbstractField {
   public function getDescription()
   {
     return "Unix timestamp of when the page was last modified.";
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    return $value->modified;
   }
 
 }

@@ -2,12 +2,11 @@
 
 namespace ProcessWire\GraphQL\Field\Page;
 
-use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\NonNullType;
+use ProcessWire\GraphQL\Field\Page\AbstractPageField;
 
-class PageNameField extends AbstractField {
+class PageNameField extends AbstractPageField {
 
   public function getType()
   {
@@ -22,11 +21,6 @@ class PageNameField extends AbstractField {
   public function getDescription()
   {
     return 'The name assigned to the page, as it appears in the URL.';
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    return $value->name;
   }
 
 }

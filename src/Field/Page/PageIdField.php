@@ -2,12 +2,11 @@
 
 namespace ProcessWire\GraphQL\Field\Page;
 
-use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\Scalar\IdType;
 use Youshido\GraphQL\Type\NonNullType;
+use ProcessWire\GraphQL\Field\Page\AbstractPageField;
 
-class PageIdField extends AbstractField {
+class PageIdField extends AbstractPageField {
 
   public function getType()
   {
@@ -22,11 +21,6 @@ class PageIdField extends AbstractField {
   public function getDescription()
   {
     return 'The numbered ID of the page.';
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    return $value->id;
   }
 
 }

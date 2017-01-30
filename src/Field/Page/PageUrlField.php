@@ -2,12 +2,11 @@
 
 namespace ProcessWire\GraphQL\Field\Page;
 
-use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\NonNullType;
+use ProcessWire\GraphQL\Field\Page\AbstractPageField;
 
-class PageUrlField extends AbstractField {
+class PageUrlField extends AbstractPageField {
 
   public function getType()
   {
@@ -22,11 +21,6 @@ class PageUrlField extends AbstractField {
   public function getDescription()
   {
     return "The page's URL path from the server's document root (may be the same as the `path`)";
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    return $value->url;
   }
 
 }
