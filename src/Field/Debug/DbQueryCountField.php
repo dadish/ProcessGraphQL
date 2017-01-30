@@ -20,7 +20,7 @@ class DBQueryCountField extends AbstractField {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    return count(\ProcessWire\wire('database')->queryLog());
+    return count(\ProcessWire\Database::getQueryLog());
   }
 
 }
