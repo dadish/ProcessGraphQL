@@ -36,7 +36,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     }
     $f->optionColumns = 4;
     $f->attr('name', 'legalTemplates');
-    $f->label = 'Include system templates';
+    $f->label = 'Legal Templates';
     $f->description = 'The pages with the templates that you select below will be available via your GraphQL api.';
     $f->notes = 'Please be careful with you are exposing to the public. Choosing templates marked as system can lead security issues.';
     $inputfields->add($f);
