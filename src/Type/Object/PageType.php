@@ -4,7 +4,6 @@ namespace ProcessWire\GraphQL\Type\Object;
 
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\GraphQL\Type\InterfaceType\PageType as PageInterfaceType;
-use ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypePageTitle;
 
 class PageType extends AbstractObjectType {
   

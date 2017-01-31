@@ -70,7 +70,7 @@ class SelectorType extends StringType {
     }
 
     // return normalized selectors
-    return $selectors;
+    return (string) $selectors;
   }
 
   public static function findSelectorByField(Selectors $selectors, $target)

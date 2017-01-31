@@ -11,16 +11,18 @@ class Settings {
 
   public static function getLegalTemplates()
   {
-    $templates = \ProcessWire\wire('templates')->getAll();
+    
+    $legalTemplates = self::module()->legalTemplates;
+    $templates = \ProcessWire\wire('templates')->find("name=" . implode('|', $legalTemplates));
+    
     $user = \ProcessWire\wire('user');
-    $includeSystems = (boolean) self::module()->includeSystemTemplates;
-    $viewableTemplateNames = [];
+    
     foreach ($templates as $template) {
-      if (!$user->hasPermission('page-view', $template)) continue;
-      $viewableTemplateNames[] = $template->name;
+      if (!$user->hasPermission('page-view', $template)) {
+        $templates->remove($template);
+      }
     }
-    if (count($viewableTemplateNames)) $templates = $templates->filter("name=" . implode('|', $viewableTemplateNames));
-    if (!$includeSystems) $templates = $templates->filter("flags!=8");
+
     return $templates;
   }
 

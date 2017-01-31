@@ -7,7 +7,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     return array(
       'maxLimit' => 100,
       'debug' => false,
-      'includeSystemTemplates' => false,
+      'legalTemplates' => [],
     );
   }
 
@@ -20,18 +20,25 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Max Limit';
     $f->description = 'Set the maximum value for `limit` selector field.';
     $f->required = true;
+    $f->columnWidth = 50;
     $inputfields->add($f);
 
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'debug');
     $f->label = 'Debug';
     $f->description = 'When you turn on debug mode some extra fields will be available. Like `dbQueryCount` etc.';
+    $f->columnWidth = 50;
     $inputfields->add($f);
 
-    $f = $this->modules->get('InputfieldCheckbox');
-    $f->attr('name', 'includeSystemTemplates');
+    $f = $this->modules->get('InputfieldCheckboxes');
+    foreach (\ProcessWire\wire('templates') as $template) {
+      $f->addOption($template->name, $template->flags === 8 ? "{$template->name} (system)" : $template->name);
+    }
+    $f->optionColumns = 4;
+    $f->attr('name', 'legalTemplates');
     $f->label = 'Include system templates';
-    $f->description = 'Check this option if you want GraphQL module to add system templates like `admin`, `role`, `user`, `permissions` to the QuerySchema.';
+    $f->description = 'The pages with the templates that you select below will be available via your GraphQL api.';
+    $f->notes = 'Please be careful with you are exposing to the public. Choosing templates marked as system can lead security issues.';
     $inputfields->add($f);
 
     return $inputfields;

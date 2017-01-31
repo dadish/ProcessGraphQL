@@ -2,16 +2,14 @@
 
 namespace ProcessWire\GraphQL\Field\Page;
 
-use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
-use ProcessWire\GraphQL\Type\Object\PageType as PageObjectType;
-use ProcessWire\NullPage;
+use ProcessWire\GraphQL\Field\Page\AbstractPageField;
+use ProcessWire\GraphQL\Type\Union\PageUnion;
 
-class PagePrevField extends AbstractField {
+class PagePrevField extends AbstractPageField {
 
   public function getType()
   {
-    return new PageObjectType();
+    return new PageUnion();
   }
 
   public function getName()
@@ -22,13 +20,6 @@ class PagePrevField extends AbstractField {
   public function getDescription()
   {
     return "This page's previous sibling page, or null if it is the first sibling.";
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    $prev = $value->prev;
-    if ($prev instanceof NullPage) return null;
-    return $prev;
   }
 
 }

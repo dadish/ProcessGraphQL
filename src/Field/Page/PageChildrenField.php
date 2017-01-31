@@ -3,14 +3,13 @@
 namespace ProcessWire\GraphQL\Field\Page;
 
 use Youshido\GraphQL\Field\AbstractField;
-use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\NonNullType;
-use Youshido\GraphQL\Field\InputField;
-use Youshido\GraphQL\Config\Field\FieldConfig;
-use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 use ProcessWire\GraphQL\Type\Object\PageArrayType as PageArrayObjectType;
+use ProcessWire\GraphQL\Field\Traits\OptionalSelectorTrait;
 
 class PageChildrenField extends AbstractField {
+
+  use OptionalSelectorTrait;
 
   public function getType()
   {
@@ -25,21 +24,6 @@ class PageChildrenField extends AbstractField {
   public function getDescription()
   {
     return "All the children (subpages) of this page, optionally filtered by a selector.";
-  }
-
-  public function build(FieldConfig $config)
-  {
-    $config->addArgument(new InputField([
-      'name' => SelectorType::ARGUMENT_NAME,
-      'type' => new SelectorType(),
-    ]));
-  }
-
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    $s = SelectorType::ARGUMENT_NAME;
-    if (isset($args[$s])) return $value->children($args[$s]);
-    return $value->children;
   }
 
 }
