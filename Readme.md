@@ -39,6 +39,22 @@ After you installed the ProcessGraphQL, you can go to `Setup -> GraphQL` in your
 admin panel and you will see the GraphiQL where you can perform queries to your
 GraphQL api.
 
+## Configuration
+There are some options to configure the ProcessGraphQL module.
+### MaxLimit
+The MaxLimit option allows you to set the ProcessWire's [limit][pw-api-selectors-limit] slelector. So that 
+client is not able to more than that. While client can set values less than MaxLimit, if
+she requests more it will be overwritten and set to MaxLimit. Default is 100.
+
+### Legal Templates
+Legal Templates are the templates that can be fetched via ProcessGraphQL. You have explicitly
+tell ProcessGraphQL which templates you wish to declare as public api.
+
+Please bear in mind that making a template legal does not neccessarily mean it is
+open to everyone. The user permissions still apply. If you selected template __user__
+as legal but the requesting user does not have permissions to view it. She won't be
+able to retrieve that data.
+
 ## API
 If you wish to expose your GraphQL api, you can do so by calling a single method on
 ProcessGraphQL module in your template file. Here is what it might look like
@@ -94,6 +110,7 @@ that permission she won't be able to query it.
 [pw]: https://processwire.com
 [pw-skyscrapers]: http://demo.processwire.com/
 [pw-selectors]: https://processwire.com/api/selectors/
+[pw-api-selectors-limit]: https://processwire.com/api/selectors#limit
 [img-query]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Query.gif
 [img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Filtering.gif
 [img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Fieldtypes.gif
