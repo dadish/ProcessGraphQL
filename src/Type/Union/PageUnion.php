@@ -4,8 +4,10 @@ namespace ProcessWire\GraphQL\Type\Union;
 
 use Youshido\GraphQL\Type\Union\AbstractUnionType;
 use ProcessWire\TemplatesArray;
+use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Settings;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
+use ProcessWire\GraphQL\Type\Object\NullPageType;
 
 class PageUnion extends AbstractUnionType {
 
@@ -29,11 +31,13 @@ class PageUnion extends AbstractUnionType {
     foreach ($this->getTemplates() as $template) {
       $types[] = new TemplatedPageType($template);
     }
+    $types[] = new NullPageType();
     return $types;
   }
 
   public function resolveType($page)
   {
+    if (is_null($page) || $page instanceof NullPage) return new NullPageType();
     return new TemplatedPageType($page->template);
   }
 
