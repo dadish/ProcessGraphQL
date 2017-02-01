@@ -31,7 +31,7 @@ Documentation for your api is easily accessible via GraphiQL interface.
 > environment incompatibilities.
 
 ## Installation
-To install module place the contents of this directory into your `/site/modules/`
+To install the module, place the contents of this directory into your `/site/modules/`
 directory and go to `Setup -> Modules` in your ProcessWire admin panel and click
 __Refresh__ button. You should see the ProcessGraphQL module that you can install
 by clicking the __Install__ button next to it.
@@ -42,12 +42,12 @@ GraphQL api.
 
 ## Configuration
 There are some options to configure the ProcessGraphQL module.
-### MaxLimit
+#### MaxLimit
 The MaxLimit option allows you to set the ProcessWire's [limit][pw-api-selectors-limit] slelector. So that 
 client is not able to more than that. While client can set values less than MaxLimit, if
 she requests more it will be overwritten and set to MaxLimit. Default is 100.
 
-### Legal Templates
+#### Legal Templates
 Legal Templates are the templates that can be fetched via ProcessGraphQL. You have explicitly
 tell ProcessGraphQL which templates you wish to declare as public api.
 
