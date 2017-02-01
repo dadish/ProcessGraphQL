@@ -26,6 +26,7 @@ Documentation for your api is easily accessible via GraphiQL interface.
 ## Requirements
 - ProcessWire version 3.x.x and up. There are no plans to support the older versions. 
 - PHP version 5.4 and up.
+
 > It would be very helpful if you open an issue when encounter errors regarding
 > environment incompatibilities.
 
