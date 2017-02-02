@@ -26,4 +26,11 @@ class Settings {
     return $templates;
   }
 
+  public static function getLegalFields()
+  {
+    $legalFields = self::module()->legalFields;
+    $fields = \ProcessWire\wire('fields')->find("name=" . implode('|', $legalFields));
+    return $fields;
+  }
+
 }
