@@ -42,19 +42,50 @@ GraphQL api.
 
 ## Configuration
 There are some options to configure the ProcessGraphQL module.
-#### MaxLimit
+
+### MaxLimit
 The MaxLimit option allows you to set the ProcessWire's [limit][pw-api-selectors-limit] slelector. So that 
 client is not able to more than that. While client can set values less than MaxLimit, if
 she requests more it will be overwritten and set to MaxLimit. Default is 100.
+#### Type
+`Integer`
+#### Api Property
+`maxLimit`
+#### Api Usage
+```php
+$ProcessGraphQL = $modules->get('ProcessGraphQL');
+$ProcessGraphQL->maxLimit = 50;
+```
 
-#### Legal Templates
+### Legal Templates
 Legal Templates are the templates that can be fetched via ProcessGraphQL. You have explicitly
 tell ProcessGraphQL which templates you wish to declare as public api.
 
-Please bear in mind that making a template legal does not neccessarily mean it is
-open to everyone. The user permissions still apply. If you selected template __user__
-as legal but the requesting user does not have permissions to view it. She won't be
-able to retrieve that data.
+Please note that making a template legal does not neccessarily mean it is open to everyone.
+The user permissions still apply. If you selected template __user__ as legal but the
+requesting user does not have permissions to view it. She won't be able to retrieve that data.
+#### Type
+`Array`
+#### Api Property
+`legalTemplates`
+#### Api Usage
+```php
+$ProcessGraphQL = $modules->get('ProcessGraphQL');
+$ProcessGraphQL->legalTemplates = array('skyscraper', 'city', 'architect', 'basic-page');
+```
+
+### Legal Fields
+Provides same functionality as for Legal Templates. Only the selected fields will be available
+via GraphQL api.
+#### Type
+`Array`
+#### Api Property
+`legalFields`
+#### Api Usage
+```php
+$ProcessGraphQL = $modules->get('ProcessGraphQL');
+$ProcessGraphQL->legalFields = array('title', 'year', 'height', 'floors');
+```
 
 ## API
 If you wish to expose your GraphQL api, you can do so by calling a single method on
