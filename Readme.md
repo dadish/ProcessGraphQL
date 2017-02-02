@@ -95,8 +95,8 @@ echo $ProcessGraphQL->executeGraphiQL();
 ```
 
 ### Limitations
-At this stage the module only supports the `Query` schema. There is no `Mutation` for now.
-It will be implemented as soon as people will request this feature.
+At this stage the module only supports the `Query` schema. The support for `Mutation` will come
+soon.
 
 ### Permissions
 ProcessGraphQL respects the ProcessWire permissions on template level. It basicly does that
