@@ -3,7 +3,7 @@
 - Added option for full width GraphiQL.
 
 ### 0.0.5
-- Added support for FieldtypePage.
+- Added support for FieldtypeFile.
 - Added more properties for FieldtypeImage.
 
 ### 0.0.4
