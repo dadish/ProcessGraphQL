@@ -4,6 +4,7 @@ namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
 use Youshido\GraphqL\Execution\ResolveInfo;
 use ProcessWire\Template;
+use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
@@ -24,20 +25,9 @@ class FieldtypePage extends AbstractFieldtype {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    // first we turn of output formatting because we handle
-    // FeildtypePage as a PageArray/WireArray
-    $value->of(false);
-
-    // get the desired value
-    $fieldName = $this->field->name;
-    $images = $value->$fieldName;
-
-    // turn the output formatting back on so that other fieldtypes
-    // are handled properly
-    $value->of(true);
-
-    // return the value
-    return $images;
+    $field = \ProcessWire\wire('fields')->get($this->field->name);
+    $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
+    $value->$fieldName;
   }
 
 }
