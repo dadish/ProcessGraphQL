@@ -1,3 +1,6 @@
+### 0.0.6
+- Added support for field permissions.
+
 ### 0.0.5
 - Added support for FieldtypePage.
 - Added more properties for FieldtypeImage.
