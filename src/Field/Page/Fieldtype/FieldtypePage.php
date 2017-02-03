@@ -25,9 +25,10 @@ class FieldtypePage extends AbstractFieldtype {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $field = \ProcessWire\wire('fields')->get($this->field->name);
+    $fieldName = $this->field->name;
+    $field = \ProcessWire\wire('fields')->get($fieldName);
     $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
-    $value->$fieldName;
+    return $value->$fieldName;
   }
 
 }

@@ -21,6 +21,11 @@ abstract class AbstractFieldtype extends AbstractField {
     return $this->field->name;
   }
 
+  public function getDescription()
+  {
+    return $this->field->description;
+  }
+
   public function resolve($value, array $args, ResolveInfo $info)
   {
     $fieldName = $this->field->name;
