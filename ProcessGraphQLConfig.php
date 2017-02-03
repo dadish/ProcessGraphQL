@@ -9,6 +9,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
       'debug' => false,
       'legalTemplates' => [],
       'legalFields' => [],
+      'fullWidthGraphiql' => false,
     );
   }
 
@@ -21,14 +22,21 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Max Limit';
     $f->description = 'Set the maximum value for `limit` selector field.';
     $f->required = true;
-    $f->columnWidth = 50;
+    $f->columnWidth = 35;
     $inputfields->add($f);
 
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'debug');
     $f->label = 'Debug';
     $f->description = 'When you turn on debug mode some extra fields will be available. Like `dbQueryCount` etc.';
-    $f->columnWidth = 50;
+    $f->columnWidth = 35;
+    $inputfields->add($f);
+
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'fullWidthGraphiQL');
+    $f->label = 'Full width GraphiQL';
+    $f->description = 'Check this if you want GraphiQL on the backend to stretch to full width.';
+    $f->columnWidth = 30;
     $inputfields->add($f);
 
     $f = $this->modules->get('InputfieldCheckboxes');

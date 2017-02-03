@@ -2,6 +2,15 @@
   #content.pw-content{
     padding: 0px;
   }
+  
+  <?php if($fullWidth): ?>
+  #content .container.pw-container{
+    max-width: none;
+    margin: 0px;
+    width: 100%;
+  }
+  <?php endif; ?>
+
   #graphiql {
     height: 80vh;
     border-right: 1px solid #efefef;
