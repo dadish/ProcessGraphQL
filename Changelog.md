@@ -1,5 +1,6 @@
 ### 0.0.6
 - Added support for field permissions.
+- Added option for full width GraphiQL.
 
 ### 0.0.5
 - Added support for FieldtypePage.
