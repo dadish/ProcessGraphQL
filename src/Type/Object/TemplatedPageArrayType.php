@@ -2,10 +2,10 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayFindField;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayListField;
-use ProcessWire\Template;
 
 class TemplatedPageArrayType extends PageArrayType {
 

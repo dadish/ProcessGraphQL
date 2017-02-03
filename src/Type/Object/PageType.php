@@ -24,7 +24,7 @@ class PageType extends AbstractObjectType {
 
   public function getInterfaces()
   {
-      return [new PageInterfaceType()];
+      return [ new PageInterfaceType() ];
   }
 
 }
