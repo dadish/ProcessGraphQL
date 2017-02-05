@@ -31,10 +31,13 @@ Documentation for your api is easily accessible via GraphiQL interface.
 > environment incompatibilities.
 
 ## Installation
-To install the module, place the contents of this directory into your `/site/modules/`
-directory and go to `Setup -> Modules` in your ProcessWire admin panel and click
-__Refresh__ button. You should see the ProcessGraphQL module that you can install
-by clicking the __Install__ button next to it.
+To install the module, go to __Modules -> Install -> Add New__. Scroll down to get
+to the section __Add Module from URL__. Paste this URL into the __Module ZIP file URL__ field
+`https://github.com/dadish/ProcessGraphQL/archive/master.zip` then press __Download__.
+ProcessWire will download this module and place it at `/site/modules/` directory for you.
+After you did that, you should see __GraphQL__ module among others. Go ahead and press __Install__
+button next to it. Choose the templates and fields you want to access through your GaphQL api and
+you are good to go.
 
 After you installed the ProcessGraphQL, you can go to `Setup -> GraphQL` in your
 admin panel and you will see the GraphiQL where you can perform queries to your
