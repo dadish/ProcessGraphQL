@@ -2,10 +2,12 @@
 
 use Youshido\GraphQL\Config\Schema\SchemaConfig;
 use Youshido\GraphQL\Schema\AbstractSchema;
+use ProcessWire\GraphQL\Settings;
 use ProcessWire\GraphQL\Field\Pages\PagesField;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayField;
 use ProcessWire\GraphQL\Field\Debug\DbQueryCountField;
-use ProcessWire\GraphQL\Settings;
+use ProcessWire\GraphQL\Field\Auth\LoginField;
+
 
 
 class Schema extends AbstractSchema {
@@ -26,10 +28,11 @@ class Schema extends AbstractSchema {
 
     // Debugging
     if (Settings::module()->debug) {
-      $query->addFields([
-        new DbQueryCountField()
-      ]);
+      $query->addField(new DbQueryCountField());
     }
+
+    // Auth
+    $query->addfield(new LoginField());
   }
 
   public function getName()
