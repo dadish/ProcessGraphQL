@@ -1,3 +1,6 @@
+### 0.0.7
+- Added authentication support.
+
 ### 0.0.6
 - Added support for field permissions.
 - Added option for full width GraphiQL.
