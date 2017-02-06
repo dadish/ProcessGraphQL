@@ -7,12 +7,14 @@ use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Execution\ResolveInfo;
+use ProcessWire\GraphQL\Type\Object\AuthResponseType;
+use ProcessWire\WireData;
 
 class LoginField extends AbstractField {
 
   public function getType()
   {
-    return new StringType();
+    return new NonNullType(new AuthResponseType());
   }
 
   public function getName()
@@ -37,11 +39,15 @@ class LoginField extends AbstractField {
     $username = $args['username'];
     $password = $args['password'];
     $user = $session->login($username, $password);
+    $response = new WireData();
     if (is_null($user)) {
-      return 'Failed to login';
+      $response->statusCode = 401;
+      $response->message = 'Wrong username and/or password.';
     } else {
-      return 'Login successful';
+      $response->statusCode = 200;
+      $response->message = 'Successful login!';
     }
+    return $response;
   }
 
 }
