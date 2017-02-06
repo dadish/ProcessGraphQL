@@ -29,15 +29,15 @@ class LoginField extends AbstractField {
 
   public function build(FieldConfig $config)
   {
-    $config->addArgument('username', new NonNullType(new StringType()));
-    $config->addArgument('password', new NonNullType(new StringType()));
+    $config->addArgument('name', new NonNullType(new StringType()));
+    $config->addArgument('pass', new NonNullType(new StringType()));
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
     $session = \ProcessWire\wire('session');
-    $username = $args['username'];
-    $password = $args['password'];
+    $username = $args['name'];
+    $password = $args['pass'];
     $user = $session->login($username, $password);
     $response = new WireData();
     if (is_null($user)) {
