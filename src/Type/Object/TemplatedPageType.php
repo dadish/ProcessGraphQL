@@ -4,6 +4,7 @@ namespace ProcessWire\GraphQL\Type\Object;
 
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\Template;
+use ProcessWire\Field;
 use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
 use ProcessWire\GraphQL\Settings;
 
@@ -40,6 +41,7 @@ class TemplatedPageType extends AbstractObjectType {
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       if (!$legalFields->has($field)) continue;
+      if ($field->flags & Field::flagGlobal) continue; // global fields are already added via PageTypeInterface
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
       $config->addField(new $className($field));
