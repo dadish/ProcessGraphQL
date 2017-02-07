@@ -16,7 +16,7 @@ class UserField extends AbstractField {
 
   public function getName()
   {
-    return 'user';
+    return 'me';
   }
 
   public function getDescription()
