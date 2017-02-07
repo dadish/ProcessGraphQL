@@ -7,7 +7,7 @@ use ProcessWire\Field;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
 use ProcessWire\GraphQL\Settings;
 
-class PageType extends AbstractInterfaceType {
+class PageInterfaceType extends AbstractInterfaceType {
 
   public function getName()
   {

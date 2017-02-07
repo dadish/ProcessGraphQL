@@ -4,7 +4,7 @@ namespace ProcessWire\GraphQL\Type\Object;
 
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\Template;
-use ProcessWire\GraphQL\Type\InterfaceType\PageType as PageInterfaceType;
+use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
 use ProcessWire\GraphQL\Settings;
 
 class TemplatedPageType extends AbstractObjectType {
