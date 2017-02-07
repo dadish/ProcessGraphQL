@@ -26,6 +26,7 @@ class PageImageType extends AbstractObjectType {
 
     $config->addfield('width', [
       'type' => new IntType(),
+      'description' => 'The width of the image.',
       'resolve' => function ($value) {
         return (integer) $value->width;
       }
@@ -33,6 +34,7 @@ class PageImageType extends AbstractObjectType {
 
     $config->addfield('height', [
       'type' => new IntType(),
+      'description' => 'The height of the image.',
       'resolve' => function ($value) {
         return (integer) $value->height;
       }

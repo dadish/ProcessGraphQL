@@ -44,4 +44,9 @@ class Settings {
     return self::module()->legalPageFields;
   }
 
+  public static function getLegalPageFileFields()
+  {
+    return self::module()->legalPageFileFields;
+  }
+
 }

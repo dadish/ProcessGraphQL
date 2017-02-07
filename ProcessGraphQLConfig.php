@@ -1,6 +1,7 @@
 <?php namespace ProcessWire;
 
 use \ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
+use \ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
 
 require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 
@@ -9,7 +10,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
   public function getDefaults()
   {
     return array(
-      'maxLimit' => 100,
+      'maxLimit' => 50,
       'debug' => false,
       'legalTemplates' => [],
       'legalFields' => [],
@@ -21,6 +22,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'name',
         'httpUrl',
         ],
+      'legalPageFileFields' => [
+        'url',
+        'httpUrl',
+        'description',
+      ],
       'fullWidthGraphiql' => false,
     );
   }
@@ -35,7 +41,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Max Limit';
     $f->description = 'Set the maximum value for `limit` selector field.';
     $f->required = true;
-    $f->columnWidth = 35;
+    $f->columnWidth = 50;
     $inputfields->add($f);
 
     // GraphiQL full width
@@ -43,7 +49,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->attr('name', 'fullWidthGraphiQL');
     $f->label = 'Full width GraphiQL';
     $f->description = 'Check this if you want GraphiQL on the backend to stretch to full width.';
-    $f->columnWidth = 30;
+    $f->columnWidth = 50;
     $inputfields->add($f);
 
     // legalTemplates
@@ -78,9 +84,20 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->optionColumns = 4;
     $f->attr('name', 'legalPageFields');
     $f->label = 'Legal Page Fields';
-    $f->description = 'Choose which built in page fields you wish to be available via GraphQL api.';
+    $f->description = 'Choose which built in `Page` fields you wish to be available via GraphQL api.';
     $f->notes = 'Be careful with fields like `parents` & `children` that will allow user to construct deeply nested queries that might be very expensive for your server to fulfill.';
     foreach (PageInterfaceType::getPageFields() as $fieldName => $fieldClassName) {
+      $f->addOption($fieldName);
+    }
+    $inputfields->add($f);
+
+    // legalPageFileFields
+    $f = $this->modules->get('InputfieldCheckboxes');
+    $f->optionColumns = 4;
+    $f->attr('name', 'legalPageFileFields');
+    $f->label = 'Legal PageFile Fields';
+    $f->description = 'Choose which built in `PageFile` fields you wish to be available via GraphQL api.';
+    foreach (PageFileInterfaceType::getPageFileFields() as $fieldName => $fieldClassName) {
       $f->addOption($fieldName);
     }
     $inputfields->add($f);
