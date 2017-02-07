@@ -2,11 +2,12 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
+use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\Scalar\IntType;
-use ProcessWire\GraphQL\Type\Object\PageFileType;
+use ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
 
-class PageImageType extends PageFileType {
+class PageImageType extends AbstractObjectType {
 
   public function getName()
   {
@@ -21,7 +22,7 @@ class PageImageType extends PageFileType {
   public function build($config)
   {
       
-    parent::build($config);
+    $config->applyInterface(new PageFileInterfaceType());
 
     $config->addfield('width', [
       'type' => new IntType(),
@@ -36,6 +37,11 @@ class PageImageType extends PageFileType {
         return (integer) $value->height;
       }
     ]);
+  }
+
+  public function getInterfaces()
+  {
+    return [ new PageFileInterfaceType() ];
   }
 
 }
