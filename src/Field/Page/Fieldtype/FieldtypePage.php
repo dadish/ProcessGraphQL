@@ -8,6 +8,7 @@ use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
+use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 
 class FieldtypePage extends AbstractFieldtype {
 
@@ -25,10 +26,11 @@ class FieldtypePage extends AbstractFieldtype {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
+    $defaultSelector = new SelectorType();
     $fieldName = $this->field->name;
     $field = \ProcessWire\wire('fields')->get($fieldName);
     $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
-    return $value->$fieldName;
+    return $value->$fieldName->find($defaultSelector->serialize(""));
   }
 
 }
