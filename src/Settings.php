@@ -39,4 +39,9 @@ class Settings {
     return $fields;
   }
 
+  public static function getLegalPageFields()
+  {
+    return self::module()->legalPageFields;
+  }
+
 }
