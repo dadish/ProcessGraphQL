@@ -1,7 +1,9 @@
 <?php namespace ProcessWire;
 
 use Youshido\GraphQL\Execution\Processor;
+use ProcessWire\HookEvent;
 use ProcessWire\GraphQL\Schema;
+use Processwire\ProcessGraphQLConfig;
 
 class ProcessGraphQL extends Process implements Module {
 
@@ -15,7 +17,7 @@ class ProcessGraphQL extends Process implements Module {
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true, 
-			'autoload' => false, 
+			'autoload' => 'process=ProcessTemplate', 
 			'icon' => 'object-group',
 			);
 	}
@@ -25,7 +27,37 @@ class ProcessGraphQL extends Process implements Module {
 	 */
 	public function init()
 	{
+		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
 		require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
+	}
+
+	public function hookTemplateNameChange(HookEvent $event)
+	{
+		// require_once $this->config->paths->site . 'modules/ProcessGraphQL/ProcessGraphQLConfig.php';
+		$whatChanged = $event->arguments[0];
+		$oldName = $event->arguments[1];
+		$newName = $event->arguments[2];
+
+		// do nothing if name has not changed
+		if ($whatChanged !== 'name') return;
+		
+		// do nothing if template is not in legalTemplates
+		if (!in_array($oldName, $this->legalTemplates)) return;
+		
+		// remove the oldName from the legalTemplates
+		$index = array_search($oldName, $this->legalTemplates);
+		$legalTemplates = array_slice($this->legalTemplates, 0);
+		array_splice($legalTemplates, $index, 1);
+		$this->message("Removed `$oldName` from the legalTemplates.");
+
+		// if newName is compatible with the module then add it into legalTemplates
+		if (ProcessGraphQLConfig::isLegalTemplateName($newName)) {
+			$legalTemplates[] = $newName;
+			$this->message("Added `$newName` into legalTemplaes.");
+		}
+
+		// make sure to remember changes!
+		$this->modules->saveConfig($this, 'legalTemplates', $legalTemplates);
 	}
 
   public function ___execute()

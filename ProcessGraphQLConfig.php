@@ -28,7 +28,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'httpUrl',
         'description',
       ],
-      'fullWidthGraphiql' => false,
+      'fullWidthGraphiQL' => false,
     );
   }
 
@@ -37,6 +37,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
 		if (!$name) return false;
 		if (preg_match('/^[_A-Za-z][-_0-9A-Za-z]*$/', $name) !== 1) return false; // the GraphQL naming requirement
 		if (strpos($name, '__') === 0) return false; // the names with `__` prefix are reserved by GraphQL
+    if (strpos($name, '--') === 0) return false; // as we change the `-` symbols to `_` for field names the `--` becomes `__` and it also reserved by GraphQL
 		if (in_array($name, Settings::getReservedWords())) return false; // some words that used now and might be for future
     return true;
 	}
