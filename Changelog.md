@@ -1,3 +1,6 @@
+### 0.9.1
+- Fix GraphQLServerUrl property bug.
+
 ### 0.9.0
 - Made GraphiQL assets load in traditional Process module way.
 - Added template name change tracking support.
