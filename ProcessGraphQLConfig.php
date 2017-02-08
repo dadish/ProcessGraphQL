@@ -2,6 +2,7 @@
 
 use \ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
 use \ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
+use \ProcessWire\GraphQL\Settings;
 
 require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 
@@ -31,6 +32,15 @@ class ProcessGraphQLConfig extends Moduleconfig {
     );
   }
 
+	public static function isLegalTemplateName($name)
+	{
+		if (!$name) return false;
+		if (preg_match('/^[_A-Za-z][-_0-9A-Za-z]*$/', $name) !== 1) return false; // the GraphQL naming requirement
+		if (strpos($name, '__') === 0) return false; // the names with `__` prefix are reserved by GraphQL
+		if (in_array($name, Settings::getReservedWords())) return false; // some words that used now and might be for future
+    return true;
+	}
+
   public function getInputFields()
   {
     $inputfields = parent::getInputFields();
@@ -58,10 +68,22 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->attr('name', 'legalTemplates');
     $f->label = 'Legal Templates';
     $f->description = 'The pages with the templates that you select below will be available via your GraphQL api.';
-    $f->notes = 'Please be careful with what you are exposing to the public. Choosing templates marked as `system` can lead to security vulnerabilities.';
-        foreach (\ProcessWire\wire('templates') as $template) {
-      $f->addOption($template->name, $template->flags & Template::flagSystem ? "{$template->name} `(system)`" : $template->name);
+    $gotDisabledFields = false;
+    foreach (\ProcessWire\wire('templates') as $template) {
+      $attributes = [];
+      if (!self::isLegalTemplateName($template->name)) {
+        $attributes['disabled'] = true;
+        $gotDisabledFields = true;
+      }
+      $label = $template->flags & Template::flagSystem ? "{$template->name} `(system)`" : $template->name;
+      $f->addOption($template->name, $label, $attributes);
     }
+    $notes = "Please be careful with what you are exposing to the public. Choosing templates marked as `system` can lead to security vulnerabilities.";
+    if ($gotDisabledFields) {
+      $notes .= PHP_EOL;
+      $notes .= "The template is disabled if it's name is incompatible or reserved for ProcessGraphQL module.";
+    }
+    $f->notes = $notes;
     $inputfields->add($f);
 
     // legalFields
@@ -71,7 +93,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Legal Fields';
     $f->description = 'The fields that you select below will be available via your GraphQL api.';
     $f->notes = 'Please be careful with what you are exposing to the public. Choosing fields marked as `system` can to lead security vulnerabilities.';
-        foreach (\ProcessWire\wire('fields')->find("name!=pass") as $field) {
+    foreach (\ProcessWire\wire('fields')->find("name!=pass") as $field) {
       if ($field->type instanceof FieldtypeFieldsetOpen) continue;
       if ($field->type instanceof FieldtypeFieldsetClose) continue;
       if ($field->type instanceof FieldtypeFieldsetTabOpen) continue;

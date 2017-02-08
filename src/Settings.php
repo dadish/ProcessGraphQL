@@ -49,4 +49,16 @@ class Settings {
     return self::module()->legalPageFileFields;
   }
 
+  public static function getReservedWords()
+  {
+    return [ 
+      'me', 'debug', 'login', 'logout',
+      'pages','templates','template','fields',
+      'roles', 'permissions', 'config', 'system',
+      'wire', 'enum', 'trash', 'users', 'setup',
+      'modules', 'access', 'find', 'logs', 'site',
+      'core',
+    ];
+  }
+
 }
