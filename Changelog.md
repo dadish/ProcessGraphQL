@@ -1,3 +1,9 @@
+### 0.9.0
+- Made GraphiQL assets load in traditional Process module way.
+- Added template name change tracking support.
+- Incompatible template names now cannot be selected as legalTemplates.
+- 
+
 ### 0.8.0
 - Global fields now are included into PageInterface.
 - Added `me` field that represents the current user.
