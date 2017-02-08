@@ -1,3 +1,7 @@
+#### Sanitize the selector
+The selector string provided by user should be sanitized. Take a look at Ryan's
+PageService module to get clue on how to properly do that.
+
 #### Template name incompatibility
 We map ProcessWire templates as types in GraphQL and create fields that corrspond
 to them. The name of those fields are the names of the templates. While ProcessWire
