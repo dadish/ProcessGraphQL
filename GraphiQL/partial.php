@@ -41,10 +41,5 @@
     width: 94%;
     background: none;
   }
-  <?= $CSS ?>
 </style>
 <div id="graphiql">Loading...</div>
-<script>
-  var GraphQLServerUrl = "<?= $GraphQLServerUrl ?>";
-  <?= $JavaScript ?>
-</script>

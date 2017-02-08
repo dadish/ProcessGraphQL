@@ -27,13 +27,17 @@ class ProcessGraphQL extends Process implements Module {
 	 */
 	public function init()
 	{
-		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
 		require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
+		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
+		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.a8a92523.js');
+		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.a7124171.css');
+		$this->config->js($this->className, [
+			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
+		]);
 	}
 
 	public function hookTemplateNameChange(HookEvent $event)
 	{
-		// require_once $this->config->paths->site . 'modules/ProcessGraphQL/ProcessGraphQLConfig.php';
 		$whatChanged = $event->arguments[0];
 		$oldName = $event->arguments[1];
 		$newName = $event->arguments[2];
@@ -69,33 +73,22 @@ class ProcessGraphQL extends Process implements Module {
   public function executeGraphiQL()
   {
     $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/full.php';
-		return wireRenderFile($fullFilename, $this->getGraphiQLVariables());
+		return wireRenderFile($fullFilename);
   }
 
 	public function executeGraphiQLPartial()
 	{
 		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/partial.php';
-		return wireRenderFile($partialFilename, $this->getGraphiQLVariables());
+		return wireRenderFile($partialFilename, [
+			'fullWidth' => $this->fullWidthGraphiQL,
+		]);
 	}
 
-	public function getGraphiQLVariables()
+	public function getGraphQLServerUrl()
 	{
-		$js = $this->getGraphiQLAsset('js/main.059c7daf.js');
-		$css = $this->getGraphiQLAsset('css/main.a7124171.css');
 		$url = $this->GraphQLServerUrl;
 		if (!$url) $url = $this->pages->get('template=admin, name=' . self::pageName)->url;
-		return [
-			'JavaScript' => $js,
-			'CSS' => $css,
-			'GraphQLServerUrl' => $url,
-			'fullWidth' => $this->fullWidthGraphiQL,
-		];
-	}
-
-	public function getGraphiQLAsset($path)
-	{
-		$assetFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/build/static/' . $path;
-		return wireRenderFile($assetFilename);
+		return $url;
 	}
 
 	public function executeGraphQL()

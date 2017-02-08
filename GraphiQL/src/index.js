@@ -63,7 +63,7 @@ function updateURL() {
 function graphQLFetcher(graphQLParams) {
   // This example expects a GraphQL server at the path /graphql.
   // Change this to point wherever you host your GraphQL server.
-  return request.post(GraphQLServerUrl) // eslint-disable-line no-undef
+  return request.post(config.ProcessGraphQL.GraphQLServerUrl) // eslint-disable-line no-undef
     .send(JSON.stringify(graphQLParams))
     .set('Accept', 'application/json')
     .set('Content-Type', 'application/json')
@@ -75,15 +75,17 @@ function graphQLFetcher(graphQLParams) {
 // See the README in the top level of this module to learn more about
 // how you can customize GraphiQL by providing different values or
 // additional child elements.
-ReactDOM.render(
-  <GraphiQL
-    fetcher={graphQLFetcher}
-    query={parameters.query}
-    variables={parameters.variables}
-    operationName={parameters.operationName}
-    onEditQuery={onEditQuery}
-    onEditVariables={onEditVariables}
-    onEditOperationName={onEditOperationName}
-  />,
-  document.getElementById('graphiql')
-);
+window.onload = () => {
+  ReactDOM.render(
+    <GraphiQL
+      fetcher={graphQLFetcher}
+      query={parameters.query}
+      variables={parameters.variables}
+      operationName={parameters.operationName}
+      onEditQuery={onEditQuery}
+      onEditVariables={onEditVariables}
+      onEditOperationName={onEditOperationName}
+    />,
+    document.getElementById('graphiql')
+  );
+};
