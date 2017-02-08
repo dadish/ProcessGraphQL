@@ -29,11 +29,6 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
-		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.a8a92523.js');
-		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.a7124171.css');
-		$this->config->js($this->className, [
-			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
-		]);
 	}
 
 	public function hookTemplateNameChange(HookEvent $event)
@@ -72,15 +67,26 @@ class ProcessGraphQL extends Process implements Module {
 
   public function executeGraphiQL()
   {
+		$this->setupGraphiQLAssets();
     $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/full.php';
 		return wireRenderFile($fullFilename);
   }
 
 	public function executeGraphiQLPartial()
 	{
+		$this->setupGraphiQLAssets();
 		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/partial.php';
 		return wireRenderFile($partialFilename, [
 			'fullWidth' => $this->fullWidthGraphiQL,
+		]);
+	}
+
+	public function setupGraphiQLAssets()
+	{
+		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.a8a92523.js');
+		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.a7124171.css');
+		$this->config->js($this->className, [
+			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
 		]);
 	}
 
