@@ -3,7 +3,7 @@
 namespace ProcessWire\GraphQL\Field\Page;
 
 use Youshido\GraphQL\Field\AbstractField;
-use ProcessWire\GraphQL\Type\Object\PageType as PageObjectType;
+use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
 use ProcessWire\GraphQL\Field\Traits\OptionalSelectorTrait;
 
 class PageChildField extends AbstractField {
@@ -12,7 +12,7 @@ class PageChildField extends AbstractField {
 
   public function getType()
   {
-    return new PageObjectType();
+    return new PageInterfaceType();
   }
 
   public function getName()
