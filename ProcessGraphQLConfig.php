@@ -67,7 +67,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->optionColumns = 4;
     $f->attr('name', 'legalTemplates');
     $f->label = 'Legal Templates';
-    $f->description = 'The pages with the templates that you select below will be available via your GraphQL api.';
+    $f->description = 'Only the templates that are selected here and have Access Control enabled will be handled by this module.';
     $gotDisabledFields = false;
     foreach (\ProcessWire\wire('templates') as $template) {
       $attributes = [];
