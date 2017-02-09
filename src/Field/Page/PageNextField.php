@@ -3,13 +3,13 @@
 namespace ProcessWire\GraphQL\Field\Page;
 
 use ProcessWire\GraphQL\Field\Page\AbstractPageField;
-use ProcessWire\GraphQL\Type\Union\PageUnion;
+use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
 
 class PageNextField extends AbstractPageField {
 
   public function getType()
   {
-    return new PageUnion();
+    return new PageInterfaceType();
   }
 
   public function getName()
