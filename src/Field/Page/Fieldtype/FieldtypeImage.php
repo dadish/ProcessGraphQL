@@ -8,7 +8,7 @@ use ProcessWire\GraphQL\Type\Object\PageImageType;
 
 class FieldtypeImage extends FieldtypeFile {
 
-  public function getType()
+  public function getDefaultType()
   {
     return new ListType(new PageImageType());
   }

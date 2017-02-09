@@ -2,16 +2,17 @@
 
 namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
-use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Execution\ResolveInfo;
-use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
+use Youshido\GraphQL\Type\ListType\ListType;
 use ProcessWire\FieldtypeFile as PWFieldtypeFile;
+use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
+use ProcessWire\GraphQL\Type\Object\PageFileType;
 
 class FieldtypeFile extends AbstractFieldtype {
 
-  public function getType()
+  public function getDefaultType()
   {
-    return new StringType();
+    return new ListType(new PageFileType());
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

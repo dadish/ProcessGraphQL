@@ -12,7 +12,7 @@ use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 
 class FieldtypePage extends AbstractFieldtype {
 
-  public function getType()
+  public function getDefaultType()
   {
     // if template is chosen for the FieldtypePage
     // then we resolve to TemplatedPageArrayType

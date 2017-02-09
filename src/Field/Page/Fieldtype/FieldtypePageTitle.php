@@ -7,7 +7,7 @@ use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
 
 class FieldtypePageTitle extends AbstractFieldtype {
 
-  public function getType()
+  public function getDefaultType()
   {
     return new StringType();
   }
