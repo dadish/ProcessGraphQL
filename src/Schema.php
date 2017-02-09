@@ -29,7 +29,7 @@ class Schema extends AbstractSchema {
     }
 
     // Debugging
-    if (Settings::module()->debug) {
+    if (\ProcessWire\Wire('config')->debug) {
       $query->addField(new DbQueryCountField());
     }
 

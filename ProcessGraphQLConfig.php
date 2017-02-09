@@ -12,7 +12,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
   {
     return array(
       'maxLimit' => 50,
-      'debug' => false,
+      'fullWidthGraphiQL' => false,
       'legalTemplates' => [],
       'legalFields' => [],
       'legalPageFields' => [
@@ -28,7 +28,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'httpUrl',
         'description',
       ],
-      'fullWidthGraphiQL' => false,
     );
   }
 
