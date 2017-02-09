@@ -16,7 +16,7 @@ class PageArrayType extends WireArrayType {
 
   public function getDescription()
   {
-    return 'A WireArray that stores PageTypes';
+    return 'A WireArray that stores Pages';
   }
 
   public function build($config)

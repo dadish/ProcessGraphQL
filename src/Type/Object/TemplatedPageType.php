@@ -41,7 +41,7 @@ class TemplatedPageType extends AbstractObjectType {
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       if (!$legalFields->has($field)) continue;
-      if ($field->flags & Field::flagGlobal) continue; // global fields are already added via PageTypeInterface
+      if ($field->flags & Field::flagGlobal) continue; // global fields are already added via PageInterfaceType
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
       $config->addField(new $className($field));
