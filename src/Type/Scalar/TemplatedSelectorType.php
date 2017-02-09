@@ -19,12 +19,13 @@ class TemplatedSelectorType extends SelectorType {
 
   public function serialize($selectors)
   {
+    $selectors = parent::serialize($selectors);
     $selectors = new Selectors($selectors);
     $templateSelector = self::findSelectorByField($selectors, 'template');
     if ($templateSelector instanceof Selector) $selectors->remove($templateSelector);
     $templateSelector = new SelectorEqual('template', $this->template->name);
     $selectors->add($templateSelector);
-    return parent::serialize($selectors);
+    return (string) $selectors;
   }
 
 }

@@ -25,6 +25,7 @@ class SelectorType extends StringType {
 
   public function serialize($selectors)
   {
+    $selectors = parent::serialize($selectors);
     $selectors = new Selectors($selectors);
 
     // make sure the limit field is not greater than max allowed
