@@ -20,10 +20,7 @@ class Settings {
     \ProcessWire\wire('roles')->find("");
     
     foreach ($templates as $template) {
-      // we serve templates with access control disabled
-      if (!$template->useRoles) continue;
-
-      // if enabled we serve only those that user has permission to view
+      // We serve only those that user has permission to view
       if (!$user->hasTemplatePermission('page-view', $template)) {
         $templates->remove($template);
       }
