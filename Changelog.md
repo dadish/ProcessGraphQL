@@ -1,3 +1,11 @@
+### 0.10.1
+- Remove debug option from module settigs in favor of `$config-debug = true|false` API.
+- From now only templates selected as legal and those that have Access control enabled will be served.
+- Remove PageUnionType in favor of PageIntefaceType.
+- Introduce UserType for pages that represent system users.
+- Mark fields NonNull if they are marked as `$field->required = true`.
+- Implement simple create Mutation on a per template basis.
+
 ### 0.9.1
 - Fix GraphQLServerUrl property bug.
 
