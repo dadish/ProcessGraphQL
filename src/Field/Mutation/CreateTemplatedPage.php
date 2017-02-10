@@ -5,6 +5,7 @@ namespace ProcessWire\GraphQL\Field\Mutation;
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Exception\ValidationException;
+use Youshido\GraphQL\Exception\ResolveException;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Field\InputField;
 
