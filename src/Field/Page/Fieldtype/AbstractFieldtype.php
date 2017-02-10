@@ -23,6 +23,13 @@ abstract class AbstractFieldtype extends AbstractField {
     return $this->getDefaultType();
   }
 
+  public function getInputfieldType($type = null)
+  {
+    if (is_null($type)) return $this->getType();
+    if ($this->field->required) return new NonNullType($type);
+    return $type;
+  }
+
   public function getName()
   {
     return $this->field->name;
@@ -30,7 +37,9 @@ abstract class AbstractFieldtype extends AbstractField {
 
   public function getDescription()
   {
-    return $this->field->description;
+    $desc = $this->field->description;
+    if ($desc) return $desc;
+    return "Field with the type of {$this->field->type}";
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

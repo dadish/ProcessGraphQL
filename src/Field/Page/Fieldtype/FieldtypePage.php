@@ -2,7 +2,9 @@
 
 namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
-use Youshido\GraphqL\Execution\ResolveInfo;
+use Youshido\GraphQL\Execution\ResolveInfo;
+use Youshido\GraphQL\Type\ListType\ListType;
+use Youshido\GraphQL\Type\Scalar\IntType;
 use ProcessWire\Template;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
@@ -22,6 +24,11 @@ class FieldtypePage extends AbstractFieldtype {
     }
       
     return new PageArrayType();   
+  }
+
+  public function getInputfieldType($type = null)
+  {
+    return parent::getInputfieldType(new ListType(new IntType()));
   }
 
   public function resolve($value, array $args, ResolveInfo $info)

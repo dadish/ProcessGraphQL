@@ -9,20 +9,23 @@ use ProcessWire\GraphQL\Field\Debug\DbQueryCountField;
 use ProcessWire\GraphQL\Field\Auth\LoginField;
 use ProcessWire\GraphQL\Field\Auth\LogoutField;
 use ProcessWire\GraphQL\Field\User\UserField;
-
+use ProcessWire\GraphQL\Field\Mutation\CreateTemplatedPage;
 
 
 class Schema extends AbstractSchema {
 
   protected $fields = [];
-  
+
   public function build(SchemaConfig $config)
   {
+    /**
+     * Query
+     */
     $query = $config->getQuery();
 
     // $pages API
     $query->addField(new PagesField());
-    
+
     // $templates
     foreach (Settings::getLegalTemplates() as $template) {
       $query->addField(new TemplatedPageArrayField($template));
@@ -39,6 +42,18 @@ class Schema extends AbstractSchema {
 
     // User
     $query->addField(new UserField());
+
+
+    /**
+     * Mutation
+     */
+    $mutation = $config->getMutation();
+
+    // CreatePage
+    foreach (Settings::getLegalTemplates() as $template) {
+      $mutation->addField(new CreateTemplatedPage($template));
+    }
+
   }
 
   public function getName()
