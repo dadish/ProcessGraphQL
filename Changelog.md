@@ -1,4 +1,7 @@
 ### 0.10.1
+- Fix missed class import.
+
+### 0.10.0
 - Remove debug option from module settigs in favor of `$config-debug = true|false` API.
 - From now only templates selected as legal and those that have Access control enabled will be served.
 - Remove PageUnionType in favor of PageIntefaceType.
