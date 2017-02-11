@@ -86,6 +86,7 @@ class CreateTemplatedPage extends AbstractField {
     // check if the name is valid
     $name = $sanitizer->pageName($values['name']);
     if (!$name) throw new ValidationException('value for `name` field is invalid,');
+    // find out if the name is taken
     $taken = $pages->find("parent=$parent, name=$name")->count();
     if ($taken) throw new ValidationException('`name` is already taken.');
 
