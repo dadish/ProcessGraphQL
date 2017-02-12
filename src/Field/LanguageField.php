@@ -19,7 +19,7 @@ class LanguageField extends AbstractField {
 
   public function getType()
   {
-    return new StrinType();
+    return new StringType();
   }
 
   public function getDescription()
