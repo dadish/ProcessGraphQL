@@ -13,7 +13,7 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '0.11.0', 
+			'version' => '0.11.0',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
@@ -31,6 +31,13 @@ class ProcessGraphQL extends Process implements Module {
 		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
 	}
 
+  /**
+   * Updates the legalTemplates on name change. Template names for ProcessWire
+   * are not necessarily valid for GraphQL field naming. Those names that are
+   * not compatible are removed from legalFields, those that are compatible
+   * are updated when changed.
+   * @param  HookEvent $event ProcessWire hook $event object.
+   */
 	public function hookTemplateNameChange(HookEvent $event)
 	{
 		$whatChanged = $event->arguments[0];
@@ -59,12 +66,22 @@ class ProcessGraphQL extends Process implements Module {
 		$this->modules->saveConfig($this, 'legalTemplates', $legalTemplates);
 	}
 
+  /**
+   * Returns the GraphiQL GUI for ProcessWire admin when request's header is not
+   * set to AJAX. Executes GraphQL api if it is AJAX.
+   * @return string The rendered string of either GraphiQL GUI or GraphQL json
+   * response
+   */
   public function ___execute()
   {
     if ($this->config->ajax) return $this->executeGraphQL();
 		return $this->executeGraphiQLPartial();
   }
 
+  /**
+   * Returns a GraphiQL page.
+   * @return string An HTML string.
+   */
   public function executeGraphiQL()
   {
 		$this->setupGraphiQLAssets();
@@ -72,6 +89,10 @@ class ProcessGraphQL extends Process implements Module {
 		return wireRenderFile($fullFilename);
   }
 
+  /**
+   * Returns only the necessary parts for the GraphiQL GUI.
+   * @return string An HTML strin.
+   */
 	public function executeGraphiQLPartial()
 	{
 		$this->setupGraphiQLAssets();
@@ -81,6 +102,9 @@ class ProcessGraphQL extends Process implements Module {
 		]);
 	}
 
+  /**
+   * Setups the GraphiQL js/css assets for ProcessWire to handle in the admin.
+   */
 	public function setupGraphiQLAssets()
 	{
 		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.a8a92523.js');
@@ -90,6 +114,10 @@ class ProcessGraphQL extends Process implements Module {
 		]);
 	}
 
+  /**
+   * Returns the server url from where the GraphiQL GUI will fetch the api.
+   * @return string Url of the GraphQL server.
+   */
 	public function getGraphQLServerUrl()
 	{
 		$url = $this->GraphQLServerUrl;
@@ -97,6 +125,10 @@ class ProcessGraphQL extends Process implements Module {
 		return $url;
 	}
 
+  /**
+   * Executes GraphQL api.
+   * @return string GraphQL api JSON response.
+   */
 	public function executeGraphQL()
 	{
 		// instantiating Processor and setting the schema
@@ -117,7 +149,6 @@ class ProcessGraphQL extends Process implements Module {
 
 	/**
 	 * Install the module page under setup
-	 *
 	 */
 	public function ___install()
 	{
@@ -139,6 +170,9 @@ class ProcessGraphQL extends Process implements Module {
 		$this->message("Created page at: {$page->path}");
 	}
 
+  /**
+   * Delete the module page
+   */
 	public function ___uninstall()
 	{
 		// find page by process field

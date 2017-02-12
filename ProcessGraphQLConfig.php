@@ -31,6 +31,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
     );
   }
 
+  /**
+   * Checks if the given name is compatible with GraphQL.
+   * @param  string  $name The name against the check will be performed.
+   * @return boolean True if the name is compatible, false otherwise.
+   */
 	public static function isLegalTemplateName($name)
 	{
 		if (!$name) return false;
@@ -41,6 +46,10 @@ class ProcessGraphQLConfig extends Moduleconfig {
     return true;
 	}
 
+  /**
+   * Build module configuration.
+   * @return InputFields ProcessWire Inputfields form.
+   */
   public function getInputFields()
   {
     $inputfields = parent::getInputFields();
