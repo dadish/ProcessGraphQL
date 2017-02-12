@@ -13,11 +13,11 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '0.10.1', 
+			'version' => '0.11.0', 
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
-			'singular' => true, 
-			'autoload' => 'process=ProcessTemplate', 
+			'singular' => true,
+			'autoload' => 'process=ProcessTemplate',
 			'icon' => 'object-group',
 			);
 	}
@@ -39,10 +39,10 @@ class ProcessGraphQL extends Process implements Module {
 
 		// do nothing if name has not changed
 		if ($whatChanged !== 'name') return;
-		
+
 		// do nothing if template is not in legalTemplates
 		if (!in_array($oldName, $this->legalTemplates)) return;
-		
+
 		// remove the oldName from the legalTemplates
 		$index = array_search($oldName, $this->legalTemplates);
 		$legalTemplates = array_slice($this->legalTemplates, 0);
