@@ -1,6 +1,6 @@
 <?php
 
-namespace ProcessWire\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
 use ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeTextarea;
 
