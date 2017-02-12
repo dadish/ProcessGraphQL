@@ -8,6 +8,7 @@
 
 namespace ProcessWire\GraphQL;
 
+use ProcessWire\Languages;
 use ProcessWire\GraphQL\Config;
 
 class Utils {
@@ -17,7 +18,7 @@ class Utils {
   * @param  string $name The name of the api. E.g. `pages`, `modules`, `templates`.
   * @return mixed       Returns the ProcessWire API variable.
   */
-  static function wire($name='wire')
+  public static function wire($name='wire')
   {
     return \ProcessWire\wire($name);
   }
@@ -26,7 +27,7 @@ class Utils {
   * Shortcut for wire('user')
   * @return \ProcessWire\User The ProcessWire $user API variable.
   */
-  static function user()
+  public static function user()
   {
     return self::wire('user');
   }
@@ -35,7 +36,7 @@ class Utils {
   * Shortcut for wire('users')
   * @return \ProcessWire\Users The ProcessWire $users variable.
   */
-  static function users()
+  public static function users()
   {
     return self::wire('users');
   }
@@ -44,7 +45,7 @@ class Utils {
   * Shortcut for wire('modules')
   * @return \ProcessWire\Modules The ProcessWire $modules API variable
   */
-  static function modules()
+  public static function modules()
   {
     return self::wire('modules');
   }
@@ -53,7 +54,7 @@ class Utils {
   * Shortcut for wire('fields')
   * @return \ProcessWire\Fields The ProcessWire $fields API variable.
   */
-  static function fields()
+  public static function fields()
   {
     return self::wire('fields');
   }
@@ -62,7 +63,7 @@ class Utils {
   * Shortcut for wire('sanitizer')
   * @return \ProcessWire\Sanitizer The ProcessWire $sanitizer variable.
   */
-  static function sanitizer()
+  public static function sanitizer()
   {
     return self::wire('sanitizer');
   }
@@ -71,7 +72,7 @@ class Utils {
   * Shortcut for wire('config')
   * @return \ProcessWire\Config The ProcessWire $config API variable.
   */
-  static function config()
+  public static function config()
   {
     return self::wire('config');
   }
@@ -80,7 +81,7 @@ class Utils {
   * Shortcut for wire('session')
   * @return \ProcessWire\session The ProcessWire $session variable.
   */
-  static function session()
+  public static function session()
   {
     return self::wire('session');
   }
@@ -89,7 +90,7 @@ class Utils {
   * Shortcut for wire('users')
   * @return \ProcessWire\Users The ProcessWire $users variabe.
   */
-  static function roles()
+  public static function roles()
   {
     return self::wire('roles');
   }
@@ -98,7 +99,7 @@ class Utils {
   * Shortcut for wire('permissions')
   * @return \ProcessWire\Permissions The ProcessWire $permissions variable.
   */
-  static function permissions()
+  public static function permissions()
   {
     return self::wire('permissions');
   }
@@ -107,9 +108,18 @@ class Utils {
   * Returns the ProcessGraphQL module instance.
   * @return \ProcessWire\ProcessGraphQL The ProcessGraphQL module instance
   */
-  static function module()
+  public static function module()
   {
     return self::modules()->get('ProcessGraphQL');
+  }
+
+  /**
+   * Shortcut for wire('languages')
+   * @return ProcessWire\Languages The ProcessWire $languages API variable.
+   */
+  public static function languages()
+  {
+    return self::wire('languages');
   }
 
  /**
@@ -117,11 +127,28 @@ class Utils {
   *
   * @return \ProcessWire\GraphQL\Config The ProcessGaphQL module runtime configuration
   */
-  static function setupModuleConfig()
+  public static function setupModuleConfig()
   {
     $module = self::module();
     $config = new Config($module);
+    self::setupModuleLanguageConfig($config);
     return $module->Config;
+  }
+
+  /**
+   * Sets the `languageEnabled` property for Config
+   * @param  Config $config The ProcessGraphQL runtime configuration
+   * @return boolean        Returns true if LanguageSupport is enabled, false otherwise.
+   */
+  public static function setupModuleLanguageConfig(Config $config)
+  {
+    $languages = self::languages();
+    if (is_null($languages) || !$languages instanceof Languages) {
+      $config->languageEnabled = false;
+      return false;
+    }
+    $config->languageEnabled = true;
+    return true;
   }
 
   /**
@@ -130,7 +157,7 @@ class Utils {
    * @return \ProcessWire\GraphQL\Config
    *
    */
-  static function moduleConfig()
+  public static function moduleConfig()
   {
     $module = self::module();
     if ($module->Config instanceof Config) return $module->Config;
@@ -141,7 +168,7 @@ class Utils {
   * An array of reserved words for future use
   * @return array Array of strings.
   */
-  static function getReservedWords()
+  public static function getReservedWords()
   {
     return [
       'me', 'debug', 'login', 'logout',

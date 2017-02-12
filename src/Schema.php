@@ -10,6 +10,7 @@ use ProcessWire\GraphQL\Field\Auth\LoginField;
 use ProcessWire\GraphQL\Field\Auth\LogoutField;
 use ProcessWire\GraphQL\Field\User\UserField;
 use ProcessWire\GraphQL\Field\Mutation\CreateTemplatedPage;
+use ProcessWire\GraphQL\Field\LanguageField;
 
 class Schema extends AbstractSchema {
 
@@ -42,6 +43,10 @@ class Schema extends AbstractSchema {
     // User
     $query->addField(new UserField());
 
+    // Language support
+    if (Utils::moduleConfig()->languageEnabled) {
+      $query->addField(new LanguageField());
+    }
 
     /**
      * Mutation
