@@ -3,9 +3,9 @@
 namespace ProcessWire\GraphQL\Type\InterfaceType;
 
 use Youshido\GraphQL\Type\InterfaceType\AbstractInterfaceType;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\Field;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
-use ProcessWire\GraphQL\Settings;
 
 class PageInterfaceType extends AbstractInterfaceType {
 
@@ -22,7 +22,7 @@ class PageInterfaceType extends AbstractInterfaceType {
   public function build($config)
   {
     $fields = self::getPageFields();
-    $legalPageFields = Settings::getLegalPageFields();
+    $legalPageFields = Utils::moduleConfig()->legalPageFields;
     
     foreach ($fields as $fieldName => $fieldClassName) {
       if (!in_array($fieldName, $legalPageFields)) continue;
@@ -31,7 +31,7 @@ class PageInterfaceType extends AbstractInterfaceType {
     }
 
     // add global fields too
-    $legalFields = Settings::getLegalFields();
+    $legalFields = Utils::moduleConfig()->legalFields;
     foreach ($legalFields as $field) {
       if ($field->flags & Field::flagGlobal) {
         $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();

@@ -4,7 +4,7 @@ namespace ProcessWire\GraphQL\Type\InterfaceType;
 
 use Youshido\GraphQL\Type\InterfaceType\AbstractInterfaceType;
 use Youshido\GraphQL\Type\Scalar\IntType;
-use ProcessWire\GraphQL\Settings;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
@@ -23,7 +23,7 @@ class PaginatedArrayType extends AbstractInterfaceType {
 
   public function build($config)
   {
-    $maxLimit = Settings::module()->maxLimit;
+    $maxLimit = Utils::moduleConfig()->maxLimit;
     $config->addFields([
       
       // \ProcessWire\PaginatedArray::getTotal()
@@ -68,7 +68,7 @@ class PaginatedArrayType extends AbstractInterfaceType {
 
     // if there is only one template selected then we can assume it is a TemplatedPageArray
     if (count($templateSelector->values) === 1) {
-      $template = Settings::getLegalTemplates()->get($templateSelector->values[0]);
+      $template = Utils::moduleConfig()->legalTemplates->get($templateSelector->values[0]);
       return new TemplatedPageArrayType($template);
     }
     return new PageArrayType();

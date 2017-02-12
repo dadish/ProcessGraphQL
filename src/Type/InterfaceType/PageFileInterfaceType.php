@@ -5,10 +5,10 @@ namespace ProcessWire\GraphQL\Type\InterfaceType;
 use Youshido\GraphQL\Type\InterfaceType\AbstractInterfaceType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\Scalar\IntType;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\Pageimage;
 use ProcessWire\GraphQL\Type\Object\PageFileType;
 use ProcessWire\GraphQL\Type\Object\PageImageType;
-use ProcessWire\GraphQL\Settings;
 
 class PageFileInterfaceType extends AbstractInterfaceType {
 
@@ -25,7 +25,7 @@ class PageFileInterfaceType extends AbstractInterfaceType {
   public function build($config)
   {
     $fields = self::getPageFileFields();
-    $legalPageFileFields = Settings::getLegalPageFileFields();
+    $legalPageFileFields = Utils::moduleConfig()->legalPageFileFields;
     foreach ($fields as $fieldName => $fieldConfig) {
       if (!in_array($fieldName, $legalPageFileFields)) continue;
       $config->addField($fieldName, $fieldConfig);

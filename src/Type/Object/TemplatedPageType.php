@@ -5,8 +5,8 @@ namespace ProcessWire\GraphQL\Type\Object;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\Template;
 use ProcessWire\Field;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
-use ProcessWire\GraphQL\Settings;
 
 class TemplatedPageType extends AbstractObjectType {
 
@@ -37,7 +37,7 @@ class TemplatedPageType extends AbstractObjectType {
 
   public function build($config)
   {
-    $legalFields = Settings::getLegalFields();
+    $legalFields = Utils::moduleConfig()->legalFields;
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       if (!$legalFields->has($field)) continue;

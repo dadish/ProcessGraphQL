@@ -7,7 +7,7 @@ use ProcessWire\Template;
 use ProcessWire\Selectors;
 use ProcessWire\Selector;
 use ProcessWire\SelectorEqual;
-use ProcessWire\GraphQL\Settings;
+use ProcessWire\GraphQL\Utils;
 
 class SelectorType extends StringType {
 
@@ -29,7 +29,7 @@ class SelectorType extends StringType {
     $selectors = new Selectors($selectors);
 
     // make sure the limit field is not greater than max allowed
-    $maxLimit = Settings::module()->maxLimit;
+    $maxLimit = Utils::moduleConfig()->maxLimit;
     $limitSelector = self::findSelectorByField($selectors, 'limit');
     if ($limitSelector) {
       if ($maxLimit < $limitSelector->value) $limitSelector->set('value', $maxLimit);
@@ -40,7 +40,7 @@ class SelectorType extends StringType {
 
     // make sure to limit the search to legal templates only
     $templateSelector = self::findSelectorByField($selectors, 'template');
-    $legalTemplates = Settings::getLegalTemplates();
+    $legalTemplates = Utils::moduleConfig()->legalTemplates;
     $names = [];
     
     if ($templateSelector instanceof Selector) {

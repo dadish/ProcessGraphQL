@@ -2,7 +2,7 @@
 
 use Youshido\GraphQL\Config\Schema\SchemaConfig;
 use Youshido\GraphQL\Schema\AbstractSchema;
-use ProcessWire\GraphQL\Settings;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Field\Pages\PagesField;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayField;
 use ProcessWire\GraphQL\Field\Debug\DbQueryCountField;
@@ -10,7 +10,6 @@ use ProcessWire\GraphQL\Field\Auth\LoginField;
 use ProcessWire\GraphQL\Field\Auth\LogoutField;
 use ProcessWire\GraphQL\Field\User\UserField;
 use ProcessWire\GraphQL\Field\Mutation\CreateTemplatedPage;
-
 
 class Schema extends AbstractSchema {
 
@@ -27,7 +26,7 @@ class Schema extends AbstractSchema {
     $query->addField(new PagesField());
 
     // $templates
-    foreach (Settings::getLegalTemplates() as $template) {
+    foreach (Utils::moduleConfig()->legalTemplates as $template) {
       $query->addField(new TemplatedPageArrayField($template));
     }
 
@@ -50,7 +49,7 @@ class Schema extends AbstractSchema {
     $mutation = $config->getMutation();
 
     // CreatePage
-    foreach (Settings::getLegalTemplates() as $template) {
+    foreach (Utils::moduleConfig()->legalTemplates as $template) {
       $mutation->addField(new CreateTemplatedPage($template));
     }
 

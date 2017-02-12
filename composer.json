@@ -2,6 +2,7 @@
     "name": "dadish/ProcessGraphql",
     "type": "processwire-plugin",
     "license": "MIT",
+    "description": "GraphQL for ProcessWire",
     "authors": [
         {
             "name": "Nurguly Ashyrov",
