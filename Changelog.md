@@ -1,5 +1,5 @@
 ### 0.11.0
-- Implement basic language support.
+- Implement minimal language support.
 
 ### 0.10.1
 - Fix missed class import.
