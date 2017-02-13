@@ -20,9 +20,6 @@ with particular height and/or width. If there isn't a thumbnail variation with s
 size, then create it.
 - Mind permissions for thumbnail creation.
 
-### Add support for LanguageFields
-By default the content of the LanguageFields should resolve to the `$user->language`.
-In addition to that there will be a top level field called `language` which will
-allow the client to choose the language for each request.
+#### Make GraphQL processing a hookable method for extra user control
 
 [n1-problem]: https://secure.phabricator.com/book/phabcontrib/article/n_plus_one/
