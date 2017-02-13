@@ -23,7 +23,7 @@ class PageInterfaceType extends AbstractInterfaceType {
   {
     $fields = self::getPageFields();
     $legalPageFields = Utils::moduleConfig()->legalPageFields;
-    
+
     foreach ($fields as $fieldName => $fieldClassName) {
       if (!in_array($fieldName, $legalPageFields)) continue;
       $className = "ProcessWire\\GraphQL\\Field\\Page\\$fieldClassName";
@@ -31,7 +31,7 @@ class PageInterfaceType extends AbstractInterfaceType {
     }
 
     // add global fields too
-    $legalFields = Utils::moduleConfig()->legalFields;
+    $legalFields = Utils::moduleConfig()->legalViewFields;
     foreach ($legalFields as $field) {
       if ($field->flags & Field::flagGlobal) {
         $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();

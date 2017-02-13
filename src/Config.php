@@ -24,25 +24,27 @@ class Config extends WireData {
 
   public function get($key)
   {
+    $super = Utils::user()->isSuperuser();
     switch ($key) {
       case 'maxLimit':
       case 'fullWidthGraphiQL':
       case 'legalPageFields':
       case 'legalPageFileFields':
         return $this->module->$key;
-      case 'legalTemplates':
-        return $this->getLegalTemplates();
       case 'legalViewTemplates':
+        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-view');
       case 'legalCreateTemplates':
+        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-create');
       case 'legalEditTemplates':
+        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-edit');
-      case 'legalFields':
-        return $this->getLegalFields();
       case 'legalViewFields':
+        if ($super) return $this->getLegalFields();
         return $this->getLegalFieldsForPermission('view');
       case 'legalEditFields':
+        if ($super) return $this->getLegalFields();
         return $this->getLegalFieldsForPermission('edit');
       default:
         return parent::get($key);
@@ -52,13 +54,12 @@ class Config extends WireData {
   protected function getLegalTemplates()
   {
     $legalTemplates = $this->module->legalTemplates;
-    $templates = Utils::templates()->find("name=" . implode('|', $legalTemplates));
-    return $templates;
+    return Utils::templates()->find("name=" . implode('|', $legalTemplates));
   }
 
   protected function getLegalTemplatesForPermission($permission = 'page-view')
   {
-    $templates = $this->getLegalTemplates();
+    $templates = $this->getLegalTemplates()->find("useRoles=1");
     foreach ($templates as $template) {
       if (!Utils::user()->hasTemplatePermission($permission, $template)) {
         $templates->remove($template);
@@ -70,14 +71,12 @@ class Config extends WireData {
   protected function getLegalFields()
   {
     $legalFields = $this->module->legalFields;
-    $fields = Utils::fields()->find("name=" . implode('|', $legalFields));
-    if (Utils::user()->isSuperuser()) return $fields;
-    return $fields->find("useRoles=1");
+    return Utils::fields()->find("name=" . implode('|', $legalFields));
   }
 
   protected function getLegalFieldsForPermission($permission = 'view')
   {
-    $fields = $this->getLegalFields();
+    $fields = $this->getLegalFields()->find("useRoles=1");
     $rolesType = $permission . "Roles";
     foreach ($fields as $field) {
       if (!$this->userHasPermission($field->$rolesType)) {
