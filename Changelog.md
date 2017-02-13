@@ -1,6 +1,7 @@
 ### 0.11.1
 - Fixed bug for issue #2
 - Updated PHP requirements for module. The module requires PHP version >= 5.5
+
 ### 0.11.0
 - Implement minimal language support.
 
