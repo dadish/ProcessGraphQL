@@ -7,6 +7,7 @@ use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\Scalar\IntType;
 use Youshido\GraphQL\Type\ListType\ListType;
 use ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
+use ProcessWire\GraphQL\Field\PageImage\PageImageSizeField;
 
 class PageImageType extends AbstractObjectType {
 
@@ -48,6 +49,8 @@ class PageImageType extends AbstractObjectType {
         return $value->getVariations();
       }
     ]);
+
+    $config->addField(new PageImageSizeField());
   }
 
   public function getInterfaces()
