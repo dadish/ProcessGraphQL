@@ -68,7 +68,7 @@ class PaginatedArrayType extends AbstractInterfaceType {
 
     // if there is only one template selected then we can assume it is a TemplatedPageArray
     if (count($templateSelector->values) === 1) {
-      $template = Utils::moduleConfig()->legalTemplates->get($templateSelector->values[0]);
+      $template = Utils::moduleConfig()->legalViewTemplates->get($templateSelector->values[0]);
       return new TemplatedPageArrayType($template);
     }
     return new PageArrayType();

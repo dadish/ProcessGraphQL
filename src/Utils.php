@@ -51,6 +51,15 @@ class Utils {
   }
 
  /**
+  * Shortcut for wire('templates')
+  * @return \ProcessWire\Fields The ProcessWire $templates API variable.
+  */
+  public static function templates()
+  {
+    return self::wire('templates');
+  }
+
+ /**
   * Shortcut for wire('fields')
   * @return \ProcessWire\Fields The ProcessWire $fields API variable.
   */
