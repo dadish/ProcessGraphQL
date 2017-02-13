@@ -5,9 +5,9 @@ A GraphQL for ProcessWire.
 
 The module seamlessly integrates to your [ProcessWire][pw] web app and allowa you to
 serve the GraphQL api of your existing app. You don't need to apply changes to
-your content or it's structure. 
+your content or it's structure.
 
-Here is an example of ProcessGraphQL in action after installing it to 
+Here is an example of ProcessGraphQL in action after installing it to
 [skyscrapers][pw-skyscrapers] profile.
 
 ![ProcessGraphQL Simple Query][img-query]
@@ -24,8 +24,8 @@ Documentation for your api is easily accessible via GraphiQL interface.
 ![ProcessGraphQL Schema Documentation][img-documentation]
 
 ## Requirements
-- ProcessWire version 3.x.x and up. There are no plans to support the older versions. 
-- PHP version 5.4 and up.
+- ProcessWire version 3.x.x and up. There are no plans to support the older versions.
+- PHP version 5.5 and up.
 
 > It would be very helpful if you open an issue when encounter errors regarding
 > environment incompatibilities.
@@ -47,7 +47,7 @@ GraphQL api.
 There are some options to configure the ProcessGraphQL module.
 
 ### MaxLimit
-The MaxLimit option allows you to set the ProcessWire's [limit][pw-api-selectors-limit] slelector. So that 
+The MaxLimit option allows you to set the ProcessWire's [limit][pw-api-selectors-limit] slelector. So that
 client is not able to more than that. While client can set values less than MaxLimit, if
 she requests more it will be overwritten and set to MaxLimit. Default is 100.
 #### Type
@@ -114,7 +114,7 @@ echo $modules->get('ProcessGraphQL')->executeGraphiQL();
 > disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
 > for the template that exposes GraphiQL.
 
-By default the GraphiQL is pointed to your admin GraphQL server, which is 
+By default the GraphiQL is pointed to your admin GraphQL server, which is
 `/processwire/setup/graphql/`. You might want to change that because ProcessWire
 will not allow guest users to access that url. You can point GraphiQL to whatever adress
 you want by a property `GraphQLServerUrl`. ProcessGraphQL will respect that property
