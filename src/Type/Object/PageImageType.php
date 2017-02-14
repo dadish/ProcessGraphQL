@@ -5,7 +5,9 @@ namespace ProcessWire\GraphQL\Type\Object;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 use Youshido\GraphQL\Type\Scalar\IntType;
+use Youshido\GraphQL\Type\ListType\ListType;
 use ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
+use ProcessWire\GraphQL\Field\PageImage\PageImageSizeField;
 
 class PageImageType extends AbstractObjectType {
 
@@ -21,7 +23,7 @@ class PageImageType extends AbstractObjectType {
 
   public function build($config)
   {
-      
+
     $config->applyInterface(new PageFileInterfaceType());
 
     $config->addfield('width', [
@@ -39,6 +41,16 @@ class PageImageType extends AbstractObjectType {
         return (integer) $value->height;
       }
     ]);
+
+    $config->addField('variations', [
+      'type' => new ListType(new PageImageType()),
+      'description' => 'Returns all size variations of the image.',
+      'resolve' => function ($value) {
+        return $value->getVariations();
+      }
+    ]);
+
+    $config->addField(new PageImageSizeField());
   }
 
   public function getInterfaces()

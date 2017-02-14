@@ -37,7 +37,7 @@ class TemplatedPageType extends AbstractObjectType {
 
   public function build($config)
   {
-    $legalFields = Utils::moduleConfig()->legalFields;
+    $legalFields = Utils::moduleConfig()->legalViewFields;
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       if (!$legalFields->has($field)) continue;

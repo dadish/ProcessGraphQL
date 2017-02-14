@@ -53,7 +53,7 @@ class PageFileInterfaceType extends AbstractInterfaceType {
         'type' => new StringType(),
         'description' => 'The web accessible URL (with scheme and hostname) to this Pagefile.',
         'resolve' => function ($value) {
-          return (string) $value->httpUrl();
+          return (string) $value->httpUrl;
         }
       ],
 

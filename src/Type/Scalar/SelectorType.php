@@ -40,7 +40,7 @@ class SelectorType extends StringType {
 
     // make sure to limit the search to legal templates only
     $templateSelector = self::findSelectorByField($selectors, 'template');
-    $legalTemplates = Utils::moduleConfig()->legalTemplates;
+    $legalTemplates = Utils::moduleConfig()->legalViewTemplates;
     $names = [];
     
     if ($templateSelector instanceof Selector) {

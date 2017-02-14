@@ -27,7 +27,7 @@ class Schema extends AbstractSchema {
     $query->addField(new PagesField());
 
     // $templates
-    foreach (Utils::moduleConfig()->legalTemplates as $template) {
+    foreach (Utils::moduleConfig()->legalViewTemplates as $template) {
       $query->addField(new TemplatedPageArrayField($template));
     }
 
@@ -54,7 +54,7 @@ class Schema extends AbstractSchema {
     $mutation = $config->getMutation();
 
     // CreatePage
-    foreach (Utils::moduleConfig()->legalTemplates as $template) {
+    foreach (Utils::moduleConfig()->legalCreateTemplates as $template) {
       $mutation->addField(new CreateTemplatedPage($template));
     }
 
