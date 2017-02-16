@@ -30,6 +30,7 @@ class Config extends WireData {
       case 'fullWidthGraphiQL':
       case 'legalPageFields':
       case 'legalPageFileFields':
+      case 'legalPageImageFields':
       case 'grantTemplatesAccess':
       case 'grantFieldsAccess':
       case 'pagesQuery':

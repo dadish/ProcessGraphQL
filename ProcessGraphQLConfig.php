@@ -1,7 +1,8 @@
 <?php namespace ProcessWire;
 
 use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
-use ProcessWire\GraphQL\Type\InterfaceType\PageFileInterfaceType;
+use ProcessWire\GraphQL\Type\Object\PageFileType;
+use ProcessWire\GraphQL\Type\Object\PageImageType;
 use ProcessWire\GraphQL\Utils;
 
 require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
@@ -59,6 +60,17 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'url',
         'httpUrl',
         'description',
+      ],
+
+      /**
+       * An array of built-in PageImage field names that will be considered for
+       * schema createtion.
+       * @var array
+       */
+      'legalPageImageFields' => [
+        'width',
+        'height',
+        'variations',
       ],
 
       /**
@@ -190,7 +202,19 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->attr('name', 'legalPageFileFields');
     $f->label = 'Legal PageFile Fields';
     $f->description = 'Choose which built in `PageFile` fields you wish to be available via GraphQL api.';
-    foreach (PageFileInterfaceType::getPageFileFields() as $fieldName => $fieldClassName) {
+    $f->notes = 'These fields are also inherited by `PageImage`.';
+    foreach (PageFileType::getPageFileFields() as $fieldName => $fieldConfig) {
+      $f->addOption($fieldName);
+    }
+    $inputfields->add($f);
+
+    // legalPageImageFields
+    $f = $this->modules->get('InputfieldCheckboxes');
+    $f->optionColumns = 4;
+    $f->attr('name', 'legalPageImageFields');
+    $f->label = 'Legal PageImage Fields';
+    $f->description = 'Choose which built in `PageImage` fields you wish to be available via GraphQL api.';
+    foreach (PageImageType::getPageImageFields() as $fieldName => $fieldConfig) {
       $f->addOption($fieldName);
     }
     $inputfields->add($f);
