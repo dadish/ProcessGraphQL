@@ -11,10 +11,36 @@ class ProcessGraphQLConfig extends Moduleconfig {
   public function getDefaults()
   {
     return array(
+      /**
+       * Sets the max for ProcessWire's limit selector field.
+       * @var integer
+       */
       'maxLimit' => 50,
+
+      /**
+       * Wheather the GraphiQL GUI should be stretched to full width or centered
+       * like other parts of the ProcessWire's admin back-end.
+       * @var boolean
+       */
       'fullWidthGraphiQL' => false,
+
+      /**
+       * An array of template names that will be concidered for schema generation.
+       * @var array
+       */
       'legalTemplates' => [],
+
+      /**
+       * An array of field names that will be considered for schema generation.
+       * @var array
+       */
       'legalFields' => [],
+
+      /**
+       * An array of built-in Page field names that will be considered for schema
+       * generation.
+       * @var array
+       */
       'legalPageFields' => [
         'created',
         'modified',
@@ -23,11 +49,29 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'name',
         'httpUrl',
         ],
+
+      /**
+       * An array of built-in PageFile field names that will be considered for
+       * schema createtion.
+       * @var array
+       */
       'legalPageFileFields' => [
         'url',
         'httpUrl',
         'description',
       ],
+
+      /**
+       * Grant access to everyone on a template level.
+       * @var boolean
+       */
+      'grantTemplatesAccess' => false,
+
+      /**
+       * Grant access to everyone on a field level.
+       * @var boolean
+       */
+      'grantFieldsAccess' => false,
     );
   }
 
@@ -132,6 +176,35 @@ class ProcessGraphQLConfig extends Moduleconfig {
       $f->addOption($fieldName);
     }
     $inputfields->add($f);
+
+    $fSet = $this->modules->get('InputfieldFieldset');
+    $fSet->label = 'Advanced';
+    $fSet->collapsed = Inputfield::collapsedYes;
+
+    // templateAccessControl
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'grantTemplatesAccess');
+    $f->label = 'Grant Templates Access';
+    $f->columnWidth = 50;
+    $desc = "By default only `superuser` can access pages with template that ";
+    $desc .= "does not have `Access` settings enabled. If you wish to grant ";
+    $desc .= "access to pages without `Access` settings, check this field. ";
+    $desc .= "(not recommended)";
+    $f->description = $desc;
+    $fSet->add($f);
+
+    // fieldAccessControl
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'grantFieldsAccess');
+    $f->label = 'Grant Fields Access';
+    $f->columnWidth = 50;
+    $desc = "By default only `superuser` can access fields that does not have `Access` ";
+    $desc .= "settings enabled. If you wish to grant access to fields without `Access` ";
+    $desc .= "settings, check this field. (not recommended)";
+    $f->description = $desc;
+    $fSet->add($f);
+
+    $inputfields->add($fSet);
 
     return $inputfields;
   }

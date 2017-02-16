@@ -32,19 +32,14 @@ class Config extends WireData {
       case 'legalPageFileFields':
         return $this->module->$key;
       case 'legalViewTemplates':
-        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-view');
       case 'legalCreateTemplates':
-        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-create');
       case 'legalEditTemplates':
-        if ($super) return $this->getLegalTemplates();
         return $this->getLegalTemplatesForPermission('page-edit');
       case 'legalViewFields':
-        if ($super) return $this->getLegalFields();
         return $this->getLegalFieldsForPermission('view');
       case 'legalEditFields':
-        if ($super) return $this->getLegalFields();
         return $this->getLegalFieldsForPermission('edit');
       default:
         return parent::get($key);
@@ -59,12 +54,33 @@ class Config extends WireData {
 
   protected function getLegalTemplatesForPermission($permission = 'page-view')
   {
-    $templates = $this->getLegalTemplates()->find("useRoles=1");
-    foreach ($templates as $template) {
-      if (!Utils::user()->hasTemplatePermission($permission, $template)) {
-        $templates->remove($template);
+    $user = Utils::user();
+    $templates = $this->getLegalTemplates();
+
+    // if superuser give access to everything
+    if ($user->isSuperuser()) return $templates;
+
+    // if access is granted then templates are accessable by default
+    // but if a template has Access settings, user should have relevant
+    // permissions
+    if (Utils::moduleConfig()->grantTemplateAccess) {
+      foreach ($templates as $template) {
+        if ($template->useRoles && !$user->hasTemplatePermission($permission, $template)) {
+          $templates->remove($template);
+        }
+      }
+
+    // if access is not granted then user can see only those templates that
+    // she has explicit access to.
+    } else {
+      $templates->filter("useRoles=1");
+      foreach ($templates as $template) {
+        if (!$user->hasTemplatePermission($permission, $template)) {
+          $templates->remove($template);
+        }
       }
     }
+
     return $templates;
   }
 
@@ -76,17 +92,27 @@ class Config extends WireData {
 
   protected function getLegalFieldsForPermission($permission = 'view')
   {
-    $fields = $this->getLegalFields()->find("useRoles=1");
-    $rolesType = $permission . "Roles";
-    foreach ($fields as $field) {
-      if (!$this->userHasPermission($field->$rolesType)) {
-        $fields->remove($field);
+    $fields = $this->getLegalFields();
+    $roles = $permission . "Roles";
+
+    if (Utils::moduleConfig()->grantFieldAccess) {
+      foreach ($fields as $field) {
+        if ($field->useRoles && !$this->userHasRoleIn($field->$roles)) {
+          $fields->remove($field);
+        }
+      }
+    } else {
+      $fields->find("useRoles=1");
+      foreach ($fields as $field) {
+        if (!$this->userHasRoleIn($field->$roles)) {
+          $fields->remove($field);
+        }
       }
     }
     return $fields;
   }
 
-  protected function userHasPermission($rolesID)
+  protected function userHasRoleIn($rolesID)
   {
     $userRolesID = Utils::user()->roles->explode('id');
     foreach ($userRolesID as $userRoleID) {
