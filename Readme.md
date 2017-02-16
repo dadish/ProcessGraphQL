@@ -163,6 +163,7 @@ you can perform most common operations.
 - Page creation. You can create pages via GraphQL API.
 - Language support. If your site uses ProcessWire's core LanguageSupport module, you can fetch data
   in your desired language.
+- `me` field. Allows the user to query her credentials.
 - `pages` field. _Experimental_. Allows you to fetch any page in your website, just like
   `$pages->find()`
 
