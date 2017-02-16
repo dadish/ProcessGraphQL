@@ -53,14 +53,12 @@ class PageImageSizeField extends AbstractField{
 
     // if user has no rights to create the image then she
     // might be asking for variation already created
-    $options = [];
-    if ($width) $options['width'] = $width;
-    if ($height) $options['height'] = $height;
-    $thumbs = $value->getVariations($options);
-
-    // If we find the variation then return it
-    // otherwise return empty
-    if ($thumbs->count()) return $thumbs->first();
+    $variations = $value->getVariations();
+    foreach ($variations as $variation) {
+      if ($width && $variation->width !== $width) continue;
+      if ($height && $variations->height !== $height) continue;
+      return $variation;
+    }
     return new EmptyPageImage();
   }
 }
