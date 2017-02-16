@@ -40,11 +40,13 @@ class Config extends WireData {
       case 'legalViewTemplates':
         return $this->getLegalTemplatesForPermission('page-view');
       case 'legalCreateTemplates':
-        return $this->getLegalTemplatesForPermission('page-create');
+        return $this->getLegalCreateTemplates();
       case 'legalEditTemplates':
         return $this->getLegalTemplatesForPermission('page-edit');
       case 'legalViewFields':
         return $this->getLegalFieldsForPermission('view');
+        case 'legalCreateFields':
+          return $this->getLegalFields();
       case 'legalEditFields':
         return $this->getLegalFieldsForPermission('edit');
       default:
@@ -55,7 +57,7 @@ class Config extends WireData {
   protected function getLegalTemplates()
   {
     $legalTemplates = $this->module->legalTemplates;
-    return Utils::templates()->find("name=" . implode('|', $legalTemplates));
+    return Utils::templates()->getAll()->find("name=" . implode('|', $legalTemplates));
   }
 
   protected function getLegalTemplatesForPermission($permission = 'page-view')
@@ -69,7 +71,7 @@ class Config extends WireData {
     // if access is granted then templates are accessable by default
     // but if a template has Access settings, user should have relevant
     // permissions
-    if (Utils::moduleConfig()->grantTemplateAccess) {
+    if (Utils::moduleConfig()->grantTemplatesAccess) {
       foreach ($templates as $template) {
         if ($template->useRoles && !$user->hasTemplatePermission($permission, $template)) {
           $templates->remove($template);
@@ -90,10 +92,38 @@ class Config extends WireData {
     return $templates;
   }
 
+  /**
+   * Page cannot be created without it's required field
+   * populated with value. Therefore only templates that
+   * has all required fields as legal will be allowed for
+   * create operation
+   * @return TemplatesArray Templates that are legal for create operation
+   */
+  protected function getLegalCreateTemplates() {
+    $templates = $this->getLegalTemplatesForPermission('page-create');
+    $legalFields = Utils::module()->legalFields;
+
+    // go over each templates
+    foreach ($templates as $template) {
+      // get the required fields of each template
+      foreach ($template->fields->find("required=1") as $field) {
+        // check if the required field of the tempate is legal
+        if (!in_array($field->name, $legalFields)) {
+          // if not legal then the page associeated with this template cannot be created
+          // remove the template & stop checking rest of the fields of this template
+          $templates->remove($template);
+          break;
+        }
+      }
+    }
+
+    return $templates;
+  }
+
   protected function getLegalFields()
   {
     $legalFields = $this->module->legalFields;
-    return Utils::fields()->find("name=" . implode('|', $legalFields));
+    return Utils::fields()->getAll()->find("name=" . implode('|', $legalFields));
   }
 
   protected function getLegalFieldsForPermission($permission = 'view')

@@ -6,6 +6,7 @@ use Youshido\GraphQL\Type\InputObject\AbstractInputObjectType;
 use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Type\Scalar\StringType;;
 use ProcessWire\Template;
+use ProcessWire\GraphQL\Utils;
 
 class TemplatedPageInputType extends AbstractInputObjectType {
 
@@ -51,8 +52,9 @@ class TemplatedPageInputType extends AbstractInputObjectType {
       'FieldtypeImage',
     ];
 
+    $legalFieldsName = Utils::moduleConfig()->legalCreateFields->implode('|', 'name');
     // the template fields
-    foreach ($this->template->fields as $field) {
+    foreach ($this->template->fields->find("name=$legalFieldsName") as $field) {
       $className = $field->type->className();
       if (in_array($className, $unsupportedFieldtypes)) continue;
       $Class = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $className;
