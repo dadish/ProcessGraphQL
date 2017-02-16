@@ -1,12 +1,12 @@
 ProcessGraphQL
 ==============
 
-The GraphQL for ProcessWire.
+GraphQL for ProcessWire.
 
 ## Table of Contents
 1. [About](#about-processgraphql)
 2. [Requirements](#requirements)
-3. [Installation](#nstallation)
+3. [Installation](#installation)
 4. [Configuration](#configuration)
 5. [Access Control](#access-control)
 6. [API](#api)
@@ -67,19 +67,21 @@ will immediately be available to the _superuser_.
 > potentially expose very sensitive information and undermine security of your website.
 
 #### Legal Page Fields
-These are the built-in fields of the ProcessWire Page. You should choose only the ones you will certainly
-need in your API.
+These are the built-in fields of the ProcessWire Page. You should choose only the ones you will
+certainly need in your API. E.g. `created`, `id`, `name`, `url`, `path`, `createdUser`, `parent`,
+`siblings` and so on.
 
 #### Legal PageFile Fields
-Built-in fields of the FieldtypeFile and FieldtypeImage.
+Built-in fields of the FieldtypeFile and FieldtypeImage. E.g. `filesize`, `url`, `ext`, `basename`
+and so on.
 
-Don't mind the __Advanced__ section for now. We will come to that later. After you have chosen all
-parts you need, submit the module configuration. Now you can go to _Setup -> GraphQL_ and you will see
+Don't mind the __Advanced__ section for now. We will come to that later. After you chose all parts
+you need, submit the module configuration. Now you can go to _Setup -> GraphQL_ and you will see
 the GraphiQL GUI where you can query your GraphQL api. Go ahead and play with it.
 
 ## Access Control
 As mentioned earlier, the GraphQL API will be accessible only by _superuser_. To grant access to users
-with different roles, you need to use __Access__ settings in your templates and fields. Say you want
+with different roles, you need to use __Access__ settings in your templates and fields. Say you want a
 user with role `skyscraper-editor` to be able to view pages with template `skyscraper`. Go to _Setup ->
 Templates -> skyscraper -> Access_, enable access settings, and make sure that `skyscraper-editor`
 role has `View Page` rule.
@@ -88,26 +90,28 @@ role has `View Page` rule.
 > the way you want. You will use it to control your GraphQL API as well. Learn more about ProcessWire's
 > Access Control system [here][pw-access].
 
-While the above configuration will allow the `skyscraper-editor` to view `skyscraper` pages' built-in
-fields that you have enabled, but that's not the end of it. If you want the `skyscraper-editor`
-user to view the template fields, like _title, headline, body_, you will need to make those fields
-viewable in their respective __Access__ settings.
+The above configuration will allow the `skyscraper-editor` to view `skyscraper` pages' built-in fields
+that you have enabled, but that's not the end of it. If you want the `skyscraper-editor` user to view
+the template fields like _title, headline, body_, you will need to make those fields viewable in
+their respective __Access__ settings.
 
 You might say that this much restriction is too much. It is true, but no worries we got you covered.
 This is just the default behavior and set that way to ensure maximum security. If you don't want to
 go over fields' Access settings and setup rules for each of them manually, you can change the module's
-behavior in the __Advanced__ section of the module configuration page. There are two options you can
-enable.
+behavior in the __Advanced__ section of the module configuration page. There are two options that change
+the module's behavior regarding security.
 
 #### Grant Template Access
-If you check this field, all the legal templates that do not have their Access settings enabled, will
+If you check this field, all the legal templates that do not have their __Access__ settings enabled, will
 be available to everyone. But they will still conform to __Access__ settings when they are enabled.
 So you can restrict each template via their __Access__ settings.
 
 #### Grant Field Access
 This works the same as the above. Grants access to all fields that do not have __Access__ settings
 enabled. This option could be useful in cases where you have 20 or something fields and you want
-all of them be accessible and add restrictions to only few via field's Access settings.
+all of them be accessible and add restrictions to only few via field's Access settings. Remember that
+you can also configure field Access rules in template context. That means you can make _images_ field
+viewable in _skyscraper_ template and closed in others.
 
 ## API
 If you wish to expose your GraphQL api, you can do so by calling a single method on
@@ -128,8 +132,8 @@ You can also expose the GraphiQL from within your template. Here is how you can 
 
 echo $modules->get('ProcessGraphQL')->executeGraphiQL();
 ```
-> Please note that GraphiQL is a full web page. Meaning it includes `header`,
-> `title` and so on. Depending on your site configuration you might want to
+> Please note that GraphiQL is a full web page. Meaning it includes `<header>`,
+> `<title>` and so on. Depending on your site configuration you might want to
 > disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
 > for the template that exposes GraphiQL.
 
@@ -169,7 +173,18 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeEmail
 - FieldtypeFile
 - FieldtypeFloat
-- Fieldtype
+- FieldtypeImage
+- FieldtypeInteger
+- FieldtypePage
+- FieldtypePageTitle
+- FieldtypePageTitleLanguage
+- FieldtypeSelector
+- FieldtypeText
+- FieldtypeTextLanguage
+- FieldtypeTextarea
+- FieldtypeTextareaLanguage
+- FieldtypeURL
+
 All the core ProcessWire fields will eventually be supported.
 
 ## License
