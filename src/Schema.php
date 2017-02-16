@@ -18,16 +18,20 @@ class Schema extends AbstractSchema {
 
   public function build(SchemaConfig $config)
   {
+    $moduleConfig = Utils::moduleconfig();
+
     /**
      * Query
      */
     $query = $config->getQuery();
 
     // $pages API
-    $query->addField(new PagesField());
+    if ($moduleConfig->pagesQuery) {
+      $query->addField(new PagesField());
+    }
 
     // $templates
-    foreach (Utils::moduleConfig()->legalViewTemplates as $template) {
+    foreach ($moduleConfig->legalViewTemplates as $template) {
       $query->addField(new TemplatedPageArrayField($template));
     }
 
@@ -37,14 +41,21 @@ class Schema extends AbstractSchema {
     }
 
     // Auth
-    $query->addfield(new LoginField());
-    $query->addfield(new LogoutField());
+    if ($moduleConfig->authQuery) {
+      if (Utils::user()->isLoggedin()) {
+        $query->addfield(new LogoutField());
+      } else {
+        $query->addfield(new LoginField());
+      }
+    }
 
-    // User
-    $query->addField(new UserField());
+    // User. The `me`
+    if ($moduleConfig->meQuery) {
+      $query->addField(new UserField());
+    }
 
     // Language support
-    if (Utils::moduleConfig()->languageEnabled) {
+    if ($moduleConfig->languageEnabled) {
       $query->addField(new LanguageField());
     }
 
@@ -54,7 +65,7 @@ class Schema extends AbstractSchema {
     $mutation = $config->getMutation();
 
     // CreatePage
-    foreach (Utils::moduleConfig()->legalCreateTemplates as $template) {
+    foreach ($moduleConfig->legalCreateTemplates as $template) {
       $mutation->addField(new CreateTemplatedPage($template));
     }
 

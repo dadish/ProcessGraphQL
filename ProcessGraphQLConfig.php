@@ -22,7 +22,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
        * like other parts of the ProcessWire's admin back-end.
        * @var boolean
        */
-      'fullWidthGraphiQL' => false,
+      'fullWidthGraphiQL' => true,
 
       /**
        * An array of template names that will be concidered for schema generation.
@@ -72,6 +72,24 @@ class ProcessGraphQLConfig extends Moduleconfig {
        * @var boolean
        */
       'grantFieldsAccess' => false,
+
+      /**
+       * The `pages` query field. Allows to perform $pages->find queries.
+       * @var boolean
+       */
+      'pagesQuery' => false,
+
+      /**
+       * The `me` query field. Allows the user to query her credentials.
+       * @var boolean
+       */
+      'meQuery' => true,
+
+      /**
+       * The `login` & `logout` fields. Provides authentication methods.
+       * @var boolean
+       */
+      'authQuery' => true,
     );
   }
 
@@ -177,11 +195,30 @@ class ProcessGraphQLConfig extends Moduleconfig {
     }
     $inputfields->add($f);
 
+    // ADVANCED
     $fSet = $this->modules->get('InputfieldFieldset');
     $fSet->label = 'Advanced';
     $fSet->collapsed = Inputfield::collapsedYes;
 
-    // templateAccessControl
+    // meQuery
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'meQuery');
+    $f->label = 'me Query';
+    $f->columnWidth = 50;
+    $desc = "Adds '`me`' query field. Allows user to query her credentials.";
+    $f->description = $desc;
+    $fSet->add($f);
+
+    // authQuery
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'authQuery');
+    $f->label = 'login/logout Query';
+    $f->columnWidth = 50;
+    $desc = "Adds '`login`' & '`logout`' fields. Allows users to authenticate via GraphQL API.";
+    $f->description = $desc;
+    $fSet->add($f);
+
+    // grantTemplatesAccess
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'grantTemplatesAccess');
     $f->label = 'Grant Templates Access';
@@ -193,7 +230,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->description = $desc;
     $fSet->add($f);
 
-    // fieldAccessControl
+    // grantFieldsAccess
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'grantFieldsAccess');
     $f->label = 'Grant Fields Access';
@@ -201,6 +238,17 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $desc = "By default only `superuser` can access fields that does not have `Access` ";
     $desc .= "settings enabled. If you wish to grant access to fields without `Access` ";
     $desc .= "settings, check this field. (not recommended)";
+    $f->description = $desc;
+    $fSet->add($f);
+
+    // pagesQuery
+    $f = $this->modules->get('InputfieldCheckbox');
+    $f->attr('name', 'pagesQuery');
+    $f->label = 'pages Query';
+    $desc = "Experimental!" . PHP_EOL;
+    $desc .= " Adds '`pages`' query field. ";
+    $desc .= 'Allows you to fetch pages in ProcessWire\'s `$pages` style. ';
+    $desc .= 'Like `$pages->find(...)`.';
     $f->description = $desc;
     $fSet->add($f);
 

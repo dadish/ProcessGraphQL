@@ -30,6 +30,11 @@ class Config extends WireData {
       case 'fullWidthGraphiQL':
       case 'legalPageFields':
       case 'legalPageFileFields':
+      case 'grantTemplatesAccess':
+      case 'grantFieldsAccess':
+      case 'pagesQuery':
+      case 'meQuery':
+      case 'authQuery':
         return $this->module->$key;
       case 'legalViewTemplates':
         return $this->getLegalTemplatesForPermission('page-view');
