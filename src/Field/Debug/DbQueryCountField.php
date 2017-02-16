@@ -16,7 +16,7 @@ class DBQueryCountField extends AbstractField {
 
   public function getDescription()
   {
-    return 'The total number of queries to database made to fulfill this request.';
+    return 'The total number of queries to database made to fulfill this request. Available in debug mode.';
   }
 
   public function getType()
