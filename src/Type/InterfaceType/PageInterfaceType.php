@@ -29,16 +29,6 @@ class PageInterfaceType extends AbstractInterfaceType {
       $className = "ProcessWire\\GraphQL\\Field\\Page\\$fieldClassName";
       $config->addField(new $className());
     }
-
-    // add global fields too
-    $legalFields = Utils::moduleConfig()->legalViewFields;
-    foreach ($legalFields as $field) {
-      if ($field->flags & Field::flagGlobal) {
-        $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
-        if (!class_exists($className)) continue;
-        $config->addField(new $className($field));
-      }
-    }
   }
 
   public function resolveType($page)

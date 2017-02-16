@@ -43,12 +43,8 @@ class Config extends WireData {
         return $this->getLegalCreateTemplates();
       case 'legalEditTemplates':
         return $this->getLegalTemplatesForPermission('page-edit');
-      case 'legalViewFields':
-        return $this->getLegalFieldsForPermission('view');
-        case 'legalCreateFields':
-          return $this->getLegalFields();
-      case 'legalEditFields':
-        return $this->getLegalFieldsForPermission('edit');
+      case 'legalFields':
+        return $this->getLegalFields();
       default:
         return parent::get($key);
     }
@@ -124,40 +120,6 @@ class Config extends WireData {
   {
     $legalFields = $this->module->legalFields;
     return Utils::fields()->getAll()->find("name=" . implode('|', $legalFields));
-  }
-
-  protected function getLegalFieldsForPermission($permission = 'view')
-  {
-    $fields = $this->getLegalFields();
-    $roles = $permission . "Roles";
-    // if superuser give access to everything
-    if (Utils::user()->isSuperuser()) return $fields;
-
-    if (Utils::moduleConfig()->grantFieldsAccess) {
-      foreach ($fields as $field) {
-        if ($field->useRoles && !$this->userHasRoleIn($field->$roles)) {
-          $fields->remove($field);
-        }
-      }
-    } else {
-      $fields->find("useRoles=1");
-      foreach ($fields as $field) {
-        if (!$this->userHasRoleIn($field->$roles)) {
-          $fields->remove($field);
-        }
-      }
-    }
-
-    return $fields;
-  }
-
-  protected function userHasRoleIn($rolesID)
-  {
-    $userRolesID = Utils::user()->roles->explode('id');
-    foreach ($userRolesID as $userRoleID) {
-      if (in_array($userRoleID, $rolesID)) return true;
-    }
-    return false;
   }
 
 }

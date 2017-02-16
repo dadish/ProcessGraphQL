@@ -9,6 +9,8 @@
 namespace ProcessWire\GraphQL;
 
 use ProcessWire\Languages;
+use ProcessWire\Field;
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Config;
 
 class Utils {
@@ -187,6 +189,30 @@ class Utils {
       'modules', 'access', 'find', 'logs', 'site',
       'core',
     ];
+  }
+
+  /**
+   * Determines whether the current user has given permission on $field within
+   * $template's context.
+   * @param  string   $permission The permission type. Either 'view' or 'edit'
+   * @param  Field    $field      The field against the check is performed
+   * @param  Template $template   The context of the field.
+   * @return boolean              Returns true if user has rights and false otherwise
+   */
+  public static function hasFieldPermission($permission = 'view', Field $field, Template $template)
+  {
+    $field = $template->fields->getFieldContext($field);
+    if ($field->useRoles) {
+      $roles = $permission . 'Roles';
+      foreach (Utils::user()->roles as $role) {
+        if (in_array($role->id, $field->$roles)) return true;
+      }
+      return false;
+    } else if (Utils::moduleConfig()->grantFieldsAccess) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

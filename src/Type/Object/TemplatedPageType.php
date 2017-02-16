@@ -37,11 +37,14 @@ class TemplatedPageType extends AbstractObjectType {
 
   public function build($config)
   {
-    $legalFields = Utils::moduleConfig()->legalViewFields;
+    $legalFields = Utils::moduleConfig()->legalFields;
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
+      // skip illigal fields
       if (!$legalFields->has($field)) continue;
-      if ($field->flags & Field::flagGlobal) continue; // global fields are already added via PageInterfaceType
+      // check if user has permission to view this field
+      if (!Utils::hasFieldPermission('view', $field, $this->template)) continue;
+      // skip if the field type is not supported
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
       $config->addField(new $className($field));

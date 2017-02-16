@@ -52,7 +52,7 @@ class TemplatedPageInputType extends AbstractInputObjectType {
       'FieldtypeImage',
     ];
 
-    $legalFieldsName = Utils::moduleConfig()->legalCreateFields->implode('|', 'name');
+    $legalFieldsName = Utils::moduleConfig()->legalFields->implode('|', 'name');
     // the template fields
     foreach ($this->template->fields->find("name=$legalFieldsName") as $field) {
       $className = $field->type->className();
