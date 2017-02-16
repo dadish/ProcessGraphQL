@@ -1,3 +1,9 @@
+### 0.12.0
+- Implemented `variations` field for PageImageType.
+- Implemented `size` field for PageImageType.
+- Changed security behavior. See ???
+- Updated documentation.
+
 ### 0.11.1
 - Fixed bug for issue #2
 - Updated PHP requirements for module. The module requires PHP version >= 5.5
