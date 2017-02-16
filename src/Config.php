@@ -100,6 +100,9 @@ class Config extends WireData {
     $fields = $this->getLegalFields();
     $roles = $permission . "Roles";
 
+    // if superuser give access to everything
+    if (Utils::user()->isSuperuser()) return $fields;
+
     if (Utils::moduleConfig()->grantFieldAccess) {
       foreach ($fields as $field) {
         if ($field->useRoles && !$this->userHasRoleIn($field->$roles)) {
@@ -114,6 +117,7 @@ class Config extends WireData {
         }
       }
     }
+
     return $fields;
   }
 
