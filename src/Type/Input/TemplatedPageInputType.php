@@ -49,7 +49,6 @@ class TemplatedPageInputType extends AbstractInputObjectType {
     $unsupportedFieldtypes = [
       'FieldtypeFile',
       'FieldtypeImage',
-      ''
     ];
 
     // the template fields
