@@ -5,7 +5,7 @@ namespace ProcessWire\GraphQL\Type\Object;
 use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayListField;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;
-use ProcessWire\GraphQL\Type\InterfaceType\PaginatedArrayType as PaginatedArrayInterfaceType;
+use ProcessWire\GraphQL\Type\InterfaceType\PaginatedArrayInterfaceType;
 
 class PageArrayType extends WireArrayType {
 

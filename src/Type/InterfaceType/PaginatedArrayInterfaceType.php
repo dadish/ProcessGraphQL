@@ -9,7 +9,7 @@ use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 
-class PaginatedArrayType extends AbstractInterfaceType {
+class PaginatedArrayInterfaceType extends AbstractInterfaceType {
 
   public function getName()
   {
@@ -25,13 +25,13 @@ class PaginatedArrayType extends AbstractInterfaceType {
   {
     $maxLimit = Utils::moduleConfig()->maxLimit;
     $config->addFields([
-      
+
       // \ProcessWire\PaginatedArray::getTotal()
       'getTotal' => [
         'type' => new IntType(),
-        'description' => 'Get the total number of pages that were found from a $pages->find("selectors, limit=n") 
-                          operation that led to this PageArray. The number returned may be greater than the number 
-                          of pages actually in PageArray, and is used for calculating pagination. 
+        'description' => 'Get the total number of pages that were found from a $pages->find("selectors, limit=n")
+                          operation that led to this PageArray. The number returned may be greater than the number
+                          of pages actually in PageArray, and is used for calculating pagination.
                           Whereas `count` will always return the number of pages actually in PageArray.',
         'resolve' => function ($value) {
           return (integer) $value->getTotal();
@@ -52,7 +52,7 @@ class PaginatedArrayType extends AbstractInterfaceType {
       // \ProcessWire\PaginatedArray::getStart()
       'getStart' => [
         'type' => new IntType(),
-        'description' => "Get the number of the starting result that led to the PageArray in pagination. 
+        'description' => "Get the number of the starting result that led to the PageArray in pagination.
                           Returns 0 if in the first page of results.",
         'resolve' => function ($value) {
           return (integer) $value->getStart();
