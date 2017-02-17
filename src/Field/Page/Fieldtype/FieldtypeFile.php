@@ -19,7 +19,7 @@ class FieldtypeFile extends AbstractFieldtype {
   {
     $fieldName = $this->field->name;
     
-    // we set the outputFormat for fieldtypeImage as
+    // we set the outputFormat as
     // FieldtypeFile::outputFormatArray, because we always
     // handle file/image fields as arrays
     $field = \ProcessWire\wire('fields')->get($fieldName);
