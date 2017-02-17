@@ -201,7 +201,7 @@ class Utils {
    */
   public static function hasFieldPermission($permission = 'view', Field $field, Template $template)
   {
-    $user = Utils::user();
+    $user = self::user();
     if ($user->isSuperuser()) return true;
     $field = $template->fields->getFieldContext($field);
     if ($field->useRoles) {
@@ -210,11 +210,10 @@ class Utils {
         if (in_array($role->id, $field->$roles)) return true;
       }
       return false;
-    } else if (Utils::moduleConfig()->grantFieldsAccess) {
+    } else if (self::moduleConfig()->grantFieldsAccess) {
       return true;
     } else {
       return false;
     }
   }
-
 }
