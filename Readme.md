@@ -80,7 +80,7 @@ you need, submit the module configuration. Now you can go to _Setup -> GraphQL_ 
 the GraphiQL GUI where you can query your GraphQL api. Go ahead and play with it.
 
 ## Access Control
-As mentioned earlier, the GraphQL API will be accessible only by _superuser_. To grant access to users
+As mentioned above, the GraphQL API will be accessible only by _superuser_. To grant access to users
 with different roles, you need to use __Access__ settings in your templates and fields. Say you want a
 user with role `skyscraper-editor` to be able to view pages with template `skyscraper`. Go to _Setup ->
 Templates -> skyscraper -> Access_, enable access settings, and make sure that `skyscraper-editor`
