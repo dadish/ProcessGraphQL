@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.12.1
+- Fixed bugs
+
 ### 0.12.0
 - Implemented `variations` field for PageImageType.
 - Implemented `size` field for PageImageType.
