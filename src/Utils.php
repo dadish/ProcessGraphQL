@@ -25,6 +25,15 @@ class Utils {
     return \ProcessWire\wire($name);
   }
 
+  /**
+   * Shorcut for wire('pages')
+   * @return \ProcessWire\Pages The ProcessWire $pages API variable.
+   */
+  public static function pages()
+  {
+    return self::wire('pages');
+  }
+
  /**
   * Shortcut for wire('user')
   * @return \ProcessWire\User The ProcessWire $user API variable.
