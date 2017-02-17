@@ -201,10 +201,12 @@ class Utils {
    */
   public static function hasFieldPermission($permission = 'view', Field $field, Template $template)
   {
+    $user = Utils::user();
+    if ($user->isSuperuser()) return true;
     $field = $template->fields->getFieldContext($field);
     if ($field->useRoles) {
       $roles = $permission . 'Roles';
-      foreach (Utils::user()->roles as $role) {
+      foreach ($user->roles as $role) {
         if (in_array($role->id, $field->$roles)) return true;
       }
       return false;
