@@ -2,12 +2,14 @@
 
 namespace ProcessWire\GraphQL\Type\Object;
 
+use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayListField;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayCountField;
 use ProcessWire\GraphQL\Type\InterfaceType\PaginatedArrayInterfaceType;
 
-class PageArrayType extends WireArrayType {
+class PageArrayType extends AbstractObjectType {
 
   public function getName()
   {
@@ -21,10 +23,14 @@ class PageArrayType extends WireArrayType {
 
   public function build($config)
   {
-    parent::build($config);
     $config->applyInterface(new PaginatedArrayInterfaceType());
     $config->addField(new PageArrayListField());
     $config->addField(new PageArrayFindField());
+  }
+
+  public function getInterfaces()
+  {
+    return [ new PaginatedArrayInterfaceType() ];
   }
 
 }

@@ -2,14 +2,23 @@
 
 namespace ProcessWire\GraphQL\Field\PageArray;
 
-use ProcessWire\GraphQL\Field\WireArray\WireArrayFindField;
+use Youshido\GraphQL\Field\AbstractField;
+use Youshido\GraphQL\Type\NonNullType;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
+use ProcessWire\GraphQL\Field\Traits\RequiredSelectorTrait;
 
-class PageArrayFindField extends WireArrayFindField {
+class PageArrayFindField extends AbstractField {
+
+  use RequiredSelectorTrait;
+
+  public function getName()
+  {
+    return 'find';
+  }
 
   public function getType()
   {
-    return new PageArrayType();
+    return new NonNullType(new PageArrayType());
   }
 
   public function getDescription()
