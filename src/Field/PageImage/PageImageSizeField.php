@@ -41,7 +41,8 @@ class PageImageSizeField extends AbstractField{
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $canCreate = Utils::moduleConfig()->legalEditFields->has($value->field);
+    $legalFields = Utils::moduleConfig()->legalFields;
+    $canCreate = Utils::hasFieldPermission('edit', $value->field, Utils::moduleConfig()->currentTemplateContext);
     $width = isset($args['width']) ? $args['width'] : null;
     $height = isset($args['height']) ? $args['height'] : null;
 

@@ -5,6 +5,7 @@ namespace ProcessWire\GraphQL\Field\TemplatedPageArray;
 use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use ProcessWire\Template;
+use Processwire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 use ProcessWire\GraphQL\Type\Scalar\TemplatedSelectorType;
 use ProcessWire\GraphQL\Field\Traits\OptionalTemplatedSelectorTrait;
@@ -40,6 +41,7 @@ class TemplatedPageArrayField extends AbstractField {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
+    Utils::moduleConfig()->currentTemplateContext = $this->template;
     $pages = \Processwire\wire('pages');
     return $pages->find($args[TemplatedSelectorType::ARGUMENT_NAME]);
   }
