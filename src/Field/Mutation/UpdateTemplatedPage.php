@@ -19,6 +19,7 @@ use ProcessWire\FieldtypePage;
 
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
 use ProcessWire\GraphQL\Type\Input\TemplatedPage\UpdateInputType;
+use ProcessWire\GraphQL\Utils;
 
 class UpdateTemplatedPage extends AbstractField {
 
@@ -98,6 +99,8 @@ class UpdateTemplatedPage extends AbstractField {
       // make sure the page is allowed as a child for parent
       $childTemplates = $parent->template->childTemplates;
       if (count($childTemplates) && !in_array($this->template->id, $childTemplates)) throw new ValidationException("not allowed to be a child for `parent`.");
+
+      $p->parent = $parent;
     }
 
     if (isset($values['name'])) {
@@ -107,9 +110,16 @@ class UpdateTemplatedPage extends AbstractField {
       if (!$name) throw new ValidationException('value for `name` field is invalid,');
       
       // find out if the name is taken
+      if (!isset($values['parent'])) $parent = $p->parent;
       $taken = $pages->find("parent=$parent, name=$name")->count();
       if ($taken) throw new ValidationException('`name` is already taken.');
+
+      $p->name = $name;
     }
+
+    // unset the parent and name as we set them above
+    unset($values['parent']);
+    unset($values['name']);
 
     // update the values from client
     foreach ($values as $fieldName => $value) {
