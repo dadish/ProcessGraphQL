@@ -4,6 +4,7 @@ namespace ProcessWire\GraphQL;
 
 use ProcessWire\WireData;
 use ProcessWire\ProcessGraphQL;
+use ProcessWire\Fieldgroup;
 use ProcessWire\GraphQL\Utils;
 
 class Config extends WireData {
@@ -115,6 +116,13 @@ class Config extends WireData {
       }
     }
 
+    // prevent creation of pages without required fields
+    foreach ($templates as $template) {
+      if (!self::allFieldsAreLegal($template->fields->find("required=1"))) {
+        $templates->remove($template);
+      }
+    }
+
     return $templates;
   }
 
@@ -122,6 +130,15 @@ class Config extends WireData {
   {
     $legalFields = $this->module->legalFields;
     return Utils::fields()->getAll()->find("name=" . implode('|', $legalFields));
+  }
+
+  public static function allFieldsAreLegal(Fieldgroup $fields)
+  {
+    $legalFields = Utils::moduleConfig()->legalFields;
+    foreach ($fields as $field) {
+      if (!$legalFields->has($field)) return false;
+    }
+    return true;
   }
 
 }

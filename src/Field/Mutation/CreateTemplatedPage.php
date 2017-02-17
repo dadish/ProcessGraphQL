@@ -18,7 +18,7 @@ use ProcessWire\FieldtypePage;
 
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
-use ProcessWire\GraphQL\Type\Input\TemplatedPageInputType;
+use ProcessWire\GraphQL\Type\Input\TemplatedPage\CreateInputType;
 
 class CreateTemplatedPage extends AbstractField {
 
@@ -50,7 +50,7 @@ class CreateTemplatedPage extends AbstractField {
   {
     $config->addArgument(new InputField([
       'name' => 'page',
-      'type' => new NonNullType(new TemplatedPageInputType($this->template)),
+      'type' => new NonNullType(new CreateInputType($this->template)),
     ]));
   }
 
@@ -69,21 +69,28 @@ class CreateTemplatedPage extends AbstractField {
     \*********************************************/
     // can new pages be created for this template?
     if ($this->template->noParents === 1) throw new ValidationException("No new pages can be created for the template `{$this->template->name}`.");
+
     // if there could be only one page is there already a page with this template
     if ($this->template->noParents === -1 && !$pages->get("template={$this->template}") instanceof NullPage) throw new ValidationException("Only one page with template `{$this->template->name}` can be created.");
-    // find the parent, make sure it exists
+
+    // find the parent
     $parentSelector = $values['parent'];
     $parent = $pages->get($sanitizer->selectorValue($parentSelector));
+
     // if no parent then no good. No child should born without a parent!
     if (!$parent || $parent instanceof NullPage) throw new ValidationException("Could not find the parent: '$parentSelector'.");
+
     // make sure user is allowed to add children to this parent
     $legalAddTemplates = Utils::moduleConfig()->legalAddTemplates;
     if (!$legalAddTemplates->has($parent->template)) throw new ValidationException("You are not allowed to add children to the parent: '$parentSelector'.");
-    // make sure it is allowed as a parent
+
+    // make sure parent is allowed as a parent for this page
     $parentTemplates = $this->template->parentTemplates;
     if (count($parentTemplates) && !in_array($parent->template->id, $parentTemplates)) throw new ValidationException("`parent` is not allowed as a parent.");
+
     // make sure parent is allowed to have children
     if ($parent->template->noChildren === 1) throw new ValidationException("`parent` is not allowed to have children.");
+
     // make sure the page is allowed as a child for parent
     $childTemplates = $parent->template->childTemplates;
     if (count($childTemplates) && !in_array($this->template->id, $childTemplates)) throw new ValidationException("not allowed to be a child for `parent`.");
@@ -108,14 +115,8 @@ class CreateTemplatedPage extends AbstractField {
     foreach ($values as $fieldName => $value) {
       $field = $fields->get($fieldName);
       if (!$field instanceof Field) continue;
-      switch  ($field->type->className()) {
-        case 'FieldtypePage':
-          $p->setFieldValue($fieldName, implode('|', $value));
-          break;
-        default:
-          $p->setFieldValue($fieldName, $value);
-          break;
-      }
+      if ($field->type->className() === 'FieldtypePage') $value = implode('|', $value);
+      $p->$fieldName = $value;
     }
 
     // save the page to db

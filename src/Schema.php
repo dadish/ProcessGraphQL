@@ -10,6 +10,7 @@ use ProcessWire\GraphQL\Field\Auth\LoginField;
 use ProcessWire\GraphQL\Field\Auth\LogoutField;
 use ProcessWire\GraphQL\Field\User\UserField;
 use ProcessWire\GraphQL\Field\Mutation\CreateTemplatedPage;
+use ProcessWire\GraphQL\Field\Mutation\UpdateTemplatedPage;
 use ProcessWire\GraphQL\Field\LanguageField;
 
 class Schema extends AbstractSchema {
@@ -67,6 +68,11 @@ class Schema extends AbstractSchema {
     // CreatePage
     foreach ($moduleConfig->legalCreateTemplates as $template) {
       $mutation->addField(new CreateTemplatedPage($template));
+    }
+
+    // UpdatePage
+    foreach ($moduleConfig->legalEditTemplates as $template) {
+      $mutation->addField(new UpdateTemplatedPage($template));
     }
 
   }
