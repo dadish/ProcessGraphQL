@@ -1,7 +1,10 @@
+ProcessGraphQL Changelog
+========================
+
 ### 0.12.0
 - Implemented `variations` field for PageImageType.
 - Implemented `size` field for PageImageType.
-- Changed security behavior. See ???
+- Changed security behavior. See [Access Control][module-access-control] in documentations.
 - Updated documentation.
 
 ### 0.11.1
@@ -56,3 +59,6 @@
 - Added NullPageType for consistency with ProcessWire.
 - Fixed some bugs.
 - Added a Changelog file!
+
+
+[module-access-control]: https://github.com/dadish/ProcessGraphQL/tree/master#access-control
