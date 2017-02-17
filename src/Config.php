@@ -43,6 +43,8 @@ class Config extends WireData {
         return $this->getLegalCreateTemplates();
       case 'legalEditTemplates':
         return $this->getLegalTemplatesForPermission('page-edit');
+      case 'legalAddTemplates':
+        return $this->getLegalTemplatesForPermission('page-add');
       case 'legalFields':
         return $this->getLegalFields();
       default:

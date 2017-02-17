@@ -8,6 +8,7 @@ use Youshido\GraphQL\Exception\ValidationException;
 use Youshido\GraphQL\Exception\ResolveException;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Field\InputField;
+use Youshido\GraphQL\Type\NonNullType;
 
 use ProcessWire\Template;
 use ProcessWire\Page;
@@ -15,6 +16,7 @@ use ProcessWire\NullPage;
 use ProcessWire\Field;
 use ProcessWire\FieldtypePage;
 
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
 use ProcessWire\GraphQL\Type\Input\TemplatedPageInputType;
 
@@ -48,16 +50,16 @@ class CreateTemplatedPage extends AbstractField {
   {
     $config->addArgument(new InputField([
       'name' => 'page',
-      'type' => new TemplatedPageInputType($this->template),
+      'type' => new NonNullType(new TemplatedPageInputType($this->template)),
     ]));
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
     // prepare neccessary variables
-    $pages = \ProcessWire\wire('pages');
-    $sanitizer = \ProcessWire\wire('sanitizer');
-    $fields = \ProcessWire\wire('fields');
+    $pages = Utils::pages();
+    $sanitizer = Utils::sanitizer();
+    $fields = Utils::fields();
     $values = (array) $args['page'];
 
     /*********************************************\
@@ -71,9 +73,12 @@ class CreateTemplatedPage extends AbstractField {
     if ($this->template->noParents === -1 && !$pages->get("template={$this->template}") instanceof NullPage) throw new ValidationException("Only one page with template `{$this->template->name}` can be created.");
     // find the parent, make sure it exists
     $parentSelector = $values['parent'];
-    $parent = $pages->find($sanitizer->selectorValue($parentSelector))->first();
+    $parent = $pages->get($sanitizer->selectorValue($parentSelector));
     // if no parent then no good. No child should born without a parent!
-    if (!$parent || $parent instanceof NullPage) throw new ValidationException("Could not find the `parent` page with `$parentSelector`.");
+    if (!$parent || $parent instanceof NullPage) throw new ValidationException("Could not find the parent: '$parentSelector'.");
+    // make sure user is allowed to add children to this parent
+    $legalAddTemplates = Utils::moduleConfig()->legalAddTemplates;
+    if (!$legalAddTemplates->has($parent->template)) throw new ValidationException("You are not allowed to add children to the parent: '$parentSelector'.");
     // make sure it is allowed as a parent
     $parentTemplates = $this->template->parentTemplates;
     if (count($parentTemplates) && !in_array($parent->template->id, $parentTemplates)) throw new ValidationException("`parent` is not allowed as a parent.");
@@ -114,7 +119,7 @@ class CreateTemplatedPage extends AbstractField {
     }
 
     // save the page to db
-    if ($p->save()) return $p;
+    if ($p->save()) return $pages->get("$p");
 
     // If we did not return till now then no good!
     throw new ResolveException("Could not create page `$name` with template `{$this->template->name}`");
