@@ -125,6 +125,13 @@ class UpdateTemplatedPage extends AbstractField {
     foreach ($values as $fieldName => $value) {
       $field = $fields->get($fieldName);
       if (!$field instanceof Field) continue;
+      if ($field->type->className() === 'FieldtypeMapMarker') {
+        $p->$fieldName->lat = $value['lat'];
+        $p->$fieldName->lng = $value['lng'];
+        $p->$fieldName->address = $value['address'];
+        $p->$fieldName->zoom = $value['zoom'];
+        continue;
+      }
       if ($field->type->className() === 'FieldtypePage') $value = implode('|', $value);
       $p->$fieldName = $value;
     }
