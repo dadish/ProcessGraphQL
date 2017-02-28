@@ -52,7 +52,7 @@ class PageInterfaceType extends AbstractInterfaceType {
       'next' => 'PageNextField',
       'numChildren' => 'PageNumChildrenField',
       'parent' => 'PageParentField',
-      'parentId' => 'PageParentIdField',
+      'parentID' => 'PageParentIDField',
       'parents' => 'PageParentsField',
       'path' => 'PagePathField',
       'prev' => 'PagePrevField',
