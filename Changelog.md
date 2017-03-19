@@ -1,6 +1,10 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.13.0
+- Add support for create/update mutation.
+- Add support for FieldtypeMapMarker field.
+
 ### 0.12.1
 - Fixed bugs
 
