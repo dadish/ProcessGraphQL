@@ -9,6 +9,8 @@ require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoloa
 
 class ProcessGraphQLConfig extends Moduleconfig {
 
+  const generatorName = 'graphql_generate_pages';
+
   public function getDefaults()
   {
     return array(
@@ -120,6 +122,74 @@ class ProcessGraphQLConfig extends Moduleconfig {
     return true;
 	}
 
+  public function generatePages()
+  {
+
+    $pageNames = [
+      'graphql' => 'GraphQL',
+      'graphiql' => 'GraphiQL',
+    ];
+
+    // copy the template files to site/templates folder
+    try {
+      $from = $this->config->paths->ProcessGraphQL . 'templates/';
+      $to = $this->config->paths->templates;
+      $this->files->copy($from, $to);
+      $this->message(sprintf($this->_('Created template files: %s'), 'graphql.php & graphiql.php'));
+    } catch(\Exception $e) {
+      $this->error($e->getMessage()); 
+    }
+    
+    foreach($pageNames as $name => $title) {
+
+      // create the templates  
+      try {
+        $template = $this->wire(new Template());
+        $template->name = $name;
+        $fieldgroup = $this->wire(new Fieldgroup());
+        $fieldgroup->name = $template->name;
+        if ($this->fields->get('title') instanceof Field) $fieldgroup->add('title');
+        $fieldgroup->save();
+        $template->fieldgroup = $fieldgroup;
+        $template->roles = array($this->roles->getGuestRole()->id);
+        $template->noAppendTemplateFile = true;
+        $template->noPrependTemplateFile = true;
+        $template->save();
+        $this->message(sprintf($this->_('Added template and fieldgroup: %s'), $name)); 
+      } catch(\Exception $e) {
+        $this->error($e->getMessage()); 
+        continue; 
+      }
+
+      // create the pages
+      try {
+        $p = $this->wire(new Page());
+        $p->template = $this->templates->get($name);
+        $p->name = $name;
+        $p->parent = $this->pages->get(1); // root page
+        $p->title = $title;
+        $p->save();
+        $this->message(sprintf($this->_('Created page: %s'), $name)); 
+      } catch(\Exception $e) {
+        $this->error($e->getMessage()); 
+        continue; 
+      }
+    }
+  }
+
+  public function readyToGeneratePages()
+  {
+    $generatorName = self::generatorName;
+    if ($this->input->post->$generatorName) $this->generatePages();
+    if (is_file($this->config->paths->templates . 'graphql.php')) return false;
+    if (is_file($this->config->paths->templates . 'graphiql.php')) return false;
+    if ($this->templates->get('graphql') instanceof Template) return false;
+    if ($this->templates->get('graphiql') instanceof  Template)  return false;
+    if (!$this->pages->get('/graphql/') instanceof NullPage) return false;
+    if (!$this->pages->get('/graphiql/') instanceof NullPage) return false;
+    return true;
+  }
+
   /**
    * Build module configuration.
    * @return InputFields ProcessWire Inputfields form.
@@ -218,6 +288,23 @@ class ProcessGraphQLConfig extends Moduleconfig {
       $f->addOption($fieldName);
     }
     $inputfields->add($f);
+
+    // GRAPHQL PAGES GENERATOR
+    if ($this->readyToGeneratePages()) {
+      $fSet = $this->modules->get('InputfieldFieldset');
+      $fSet->label = 'GraphQL Pages Generator';
+      $fSet->collapsed = Inputfield::collapsedYes;
+
+      // graphql template name
+      $f = $this->modules->get('InputfieldSubmit');
+      $f->label = 'Generate';
+      $f->description = 'Generates the graphql and graphiql templates, template files and pages.';
+      $f->attr('name', self::generatorName);
+      $f->attr('value', 'Generate');
+      $fSet->add($f);
+
+      $inputfields->add($fSet);
+    }
 
     // ADVANCED
     $fSet = $this->modules->get('InputfieldFieldset');
