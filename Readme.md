@@ -185,6 +185,7 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeTextarea
 - FieldtypeTextareaLanguage
 - FieldtypeURL
+- FieldtypeMapMarker
 
 All the core ProcessWire fields will eventually be supported.
 
