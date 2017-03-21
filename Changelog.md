@@ -1,6 +1,10 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.13.1
+- Make sure to get request data from php://input if Content-type header contains
+	`application/json` string.
+
 ### 0.13.0
 - Add support for create/update mutation.
 - Add support for FieldtypeMapMarker field.
