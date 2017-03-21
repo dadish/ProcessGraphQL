@@ -138,7 +138,7 @@ class ProcessGraphQL extends Process implements Module {
 		// instantiating Processor and setting the schema
 		$processor = new Processor(new Schema());
 
-		if (isset($_SERVER['CONTENT_TYPE']) && $_SERVER['CONTENT_TYPE'] === 'application/json') {
+		if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
 				$rawBody     = file_get_contents('php://input');
 				$requestData = json_decode($rawBody ?: '', true);
 		} else {
