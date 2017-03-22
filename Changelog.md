@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.14.0
+- Add a GraphQL pages generator
+
 ### 0.13.1
 - Make sure to get request data from php://input if Content-type header contains
 	`application/json` string.
