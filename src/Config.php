@@ -9,7 +9,22 @@ use ProcessWire\GraphQL\Utils;
 
 class Config extends WireData {
 
+  /**
+   * Shortcut for our ProcessGraphQL module
+   * @var \ProcessWire\ProcessGraphQL
+   */
   protected $module;
+
+  /**
+   * Maps permission names into template access roles properties.
+   * @var array
+   */
+  protected $permissionToRoles = [
+    'page-view' => 'roles',
+    'page-edit' => 'editRoles',
+    'page-add' => 'addRoles',
+    'page-create' => 'createRoles',
+  ];
 
   public function __construct(ProcessGraphQL $module)
   {
@@ -72,7 +87,7 @@ class Config extends WireData {
     // permissions
     if (Utils::moduleConfig()->grantTemplatesAccess) {
       foreach ($templates as $template) {
-        if ($template->useRoles && !$user->hasTemplatePermission($permission, $template)) {
+        if ($template->useRoles && !$this->hasTemplatePermission($permission, $user, $template)) {
           $templates->remove($template);
         }
       }
@@ -82,13 +97,31 @@ class Config extends WireData {
     } else {
       $templates->filter("useRoles=1");
       foreach ($templates as $template) {
-        if (!$user->hasTemplatePermission($permission, $template)) {
+        if (!$this->hasTemplatePermission($permission, $user, $template)) {
           $templates->remove($template);
         }
       }
     }
 
     return $templates;
+  }
+
+  /**
+   * Checks if the user has a particular permission on the given template
+   * @param  string   $name     The name of the permission. E.g. 'page-view', 'page-add'.
+   * @param  User     $user     The ProcessWire User
+   * @param  Template $template The ProcessWire Template
+   * @return boolean            Returns true if user has a permission on the target template and false otherwise
+   */
+  protected function hasTemplatePermission($name, \ProcessWire\User $user, \ProcessWire\Template $template)
+  {
+    $rolesName = $this->permissionToRoles[$name];
+    $templateRoles = $template->$rolesName;
+    if ($name === 'page-view') $templateRoles = $templateRoles->explode('id');
+    foreach ($user->roles as $role) {
+      if (in_array($role->id, $templateRoles)) return true;
+    }
+    return false;
   }
 
   /**
