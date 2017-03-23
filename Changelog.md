@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.14.1
+- Fix the access rules complience bug.
+
 ### 0.14.0
 - Add a GraphQL pages generator
 
