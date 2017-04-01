@@ -124,16 +124,30 @@ class UpdateTemplatedPage extends AbstractField {
     // update the values from client
     foreach ($values as $fieldName => $value) {
       $field = $fields->get($fieldName);
+      
+      // ignore if field cannot be found
       if (!$field instanceof Field) continue;
-      if ($field->type->className() === 'FieldtypeMapMarker') {
-        $p->$fieldName->lat = $value['lat'];
-        $p->$fieldName->lng = $value['lng'];
-        $p->$fieldName->address = $value['address'];
-        $p->$fieldName->zoom = $value['zoom'];
-        continue;
+      
+      switch ($field->type->className()) {
+        case 'FieldtypeMapMarker':
+          $p->$fieldName->lat = $value['lat'];
+          $p->$fieldName->lng = $value['lng'];
+          $p->$fieldName->address = $value['address'];
+          $p->$fieldName->zoom = $value['zoom'];
+          break;
+        
+        case 'FieldtypePage':
+          $p->$fieldName = implode('|', $value);
+          break;
+
+        case 'FieldtypeDatetime':
+          $p->$fieldName = $value->format('Y-m-d H:i:s');
+          break;
+
+        default:
+          $p->$fieldName = $value;
+          break;
       }
-      if ($field->type->className() === 'FieldtypePage') $value = implode('|', $value);
-      $p->$fieldName = $value;
     }
 
     // save the page to db
