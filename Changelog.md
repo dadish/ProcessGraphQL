@@ -1,6 +1,10 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.15.0
+- Fix the FieldtypeDatetime bug.
+- Upgrade the youshido/graphql dependency. 
+
 ### 0.14.1
 - Fix the access rules complience bug.
 
