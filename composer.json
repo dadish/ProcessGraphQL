@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "youshido/graphql": "v1.4.2.8"
+        "youshido/graphql": "v1.4.2.20"
     },
     "require-dev": {
     },

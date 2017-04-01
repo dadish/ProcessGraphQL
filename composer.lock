@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bceb74534e85d383e7d7e7bffddf7872",
+    "content-hash": "9584c2edb48588ea6202c0e75ce432f8",
     "packages": [
         {
             "name": "youshido/graphql",
-            "version": "v1.4.2.8",
+            "version": "v1.4.2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Youshido/GraphQL.git",
-                "reference": "95db8c277e6b974c857e915ccac7395654710291"
+                "reference": "883d4fc04861bfbb51aa7d6873024f463813c01f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Youshido/GraphQL/zipball/95db8c277e6b974c857e915ccac7395654710291",
-                "reference": "95db8c277e6b974c857e915ccac7395654710291",
+                "url": "https://api.github.com/repos/Youshido/GraphQL/zipball/883d4fc04861bfbb51aa7d6873024f463813c01f",
+                "reference": "883d4fc04861bfbb51aa7d6873024f463813c01f",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
                 }
             ],
             "description": "Pure PHP GraphQL",
-            "time": "2016-12-23T14:27:44+00:00"
+            "time": "2017-03-01T22:01:30+00:00"
         }
     ],
     "packages-dev": [],

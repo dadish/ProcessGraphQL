@@ -14,17 +14,16 @@ use Youshido\GraphQL\Parser\Location;
 class Query extends AbstractAst implements FieldInterface
 {
 
+    use AstArgumentsTrait;
+
     /** @var string */
     protected $name;
 
     /** @var string */
     protected $alias;
 
-    /** @var Argument[] */
-    protected $arguments;
-
     /** @var Field[]|Query[] */
-    protected $fields;
+    protected $fields = [];
 
     /**
      * Query constructor.
@@ -41,8 +40,8 @@ class Query extends AbstractAst implements FieldInterface
 
         $this->name      = $name;
         $this->alias     = $alias;
-        $this->arguments = $arguments;
-        $this->fields    = $fields;
+        $this->setFields($fields);
+        $this->setArguments($arguments);
     }
 
     public function getName()
@@ -50,49 +49,12 @@ class Query extends AbstractAst implements FieldInterface
         return $this->name;
     }
 
-    public function hasArguments()
-    {
-        return (bool)count($this->arguments);
-    }
-
-    /**
-     * @return Argument[]
-     */
-    public function getArguments()
-    {
-        return $this->arguments;
-    }
-
-    /**
-     * @param $arguments Argument[]
-     */
-    public function setArguments($arguments)
-    {
-        $this->arguments = $arguments;
-    }
-
-    public function addArgument(Argument $argument)
-    {
-        $this->arguments[$argument->getName()] = $argument;
-    }
-
-    public function getKeyValueArguments()
-    {
-        $arguments = [];
-
-        foreach ($this->getArguments() as $argument) {
-            $arguments[$argument->getName()] = $argument->getValue()->getValue();
-        }
-
-        return $arguments;
-    }
-
     /**
      * @return Field[]|Query[]|FragmentInterface[]
      */
     public function getFields()
     {
-        return $this->fields;
+        return array_values($this->fields);
     }
 
     /**
@@ -108,8 +70,11 @@ class Query extends AbstractAst implements FieldInterface
      */
     public function setFields($fields)
     {
+        /**
+         * we cannot store fields by name because of TypedFragments
+         */
         $this->fields = $fields;
-    }
+        }
 
     public function getAlias()
     {

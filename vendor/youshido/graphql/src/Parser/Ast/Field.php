@@ -13,16 +13,13 @@ use Youshido\GraphQL\Parser\Location;
 
 class Field extends AbstractAst implements FieldInterface
 {
+    use AstArgumentsTrait;
+
     /** @var string */
     private $name;
 
     /** @var null|string */
     private $alias = null;
-
-    /** @var Argument[] */
-    protected $arguments;
-
-    private $argumentsCache = null;
 
     /**
      * @param string   $name
@@ -30,13 +27,13 @@ class Field extends AbstractAst implements FieldInterface
      * @param array    $arguments
      * @param Location $location
      */
-    public function __construct($name, $alias, $arguments, Location $location)
+    public function __construct($name, $alias, array $arguments, Location $location)
     {
         parent::__construct($location);
 
         $this->name      = $name;
         $this->alias     = $alias;
-        $this->arguments = $arguments;
+        $this->setArguments($arguments);
     }
 
     /**
@@ -71,36 +68,14 @@ class Field extends AbstractAst implements FieldInterface
         $this->alias = $alias;
     }
 
-    public function hasArguments()
+    public function hasFields()
     {
-        return (bool)count($this->arguments);
+        return false;
     }
 
-    /**
-     * @return Argument[]
-     */
-    public function getArguments()
+    public function getFields()
     {
-        return $this->arguments;
+        return [];
     }
 
-    public function addArgument(Argument $argument)
-    {
-        $this->arguments[$argument->getName()] = $argument;
-    }
-
-    public function getKeyValueArguments()
-    {
-        if ($this->argumentsCache !== null) {
-            return $this->argumentsCache;
-        }
-
-        $this->argumentsCache = [];
-
-        foreach ($this->getArguments() as $argument) {
-            $this->argumentsCache[$argument->getName()] = $argument->getValue()->getValue();
-        }
-
-        return $this->argumentsCache;
-    }
 }

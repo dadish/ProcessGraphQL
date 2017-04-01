@@ -51,7 +51,8 @@ class ResolveValidator implements ResolveValidatorInterface
                 case TypeMap::KIND_INPUT_OBJECT:
                 case TypeMap::KIND_LIST:
                     if (!$argument->getType()->isValidValue($argumentType->parseValue($astArgument->getValue()))) {
-                        throw new ResolveException(sprintf('Not valid type for argument "%s" in query "%s"', $astArgument->getName(), $field->getName()), $astArgument->getLocation());
+                        $error = $argument->getType()->getLastError();
+                        throw new ResolveException($error ? $error : sprintf('Not valid type for argument "%s" in query "%s"', $astArgument->getName(), $field->getName()), $astArgument->getLocation());
                     }
 
                     break;
@@ -61,7 +62,7 @@ class ResolveValidator implements ResolveValidatorInterface
 
             }
 
-            if (array_key_exists($astArgument->getName(), $requiredArguments) || $argument->getConfig()->get('default') !== null) {
+            if (array_key_exists($astArgument->getName(), $requiredArguments) || $argument->getConfig()->get('defaultValue') !== null) {
                 unset($requiredArguments[$astArgument->getName()]);
             }
         }

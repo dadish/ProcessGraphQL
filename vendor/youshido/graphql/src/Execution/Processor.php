@@ -24,6 +24,7 @@ use Youshido\GraphQL\Parser\Ast\FragmentReference;
 use Youshido\GraphQL\Parser\Ast\Interfaces\FieldInterface as AstFieldInterface;
 use Youshido\GraphQL\Parser\Ast\Mutation as AstMutation;
 use Youshido\GraphQL\Parser\Ast\Query as AstQuery;
+use Youshido\GraphQL\Parser\Ast\Query;
 use Youshido\GraphQL\Parser\Ast\TypedFragmentReference;
 use Youshido\GraphQL\Parser\Parser;
 use Youshido\GraphQL\Schema\AbstractSchema;
@@ -92,47 +93,6 @@ class Processor
         }
 
         return $this;
-    }
-
-    public function getResponseData()
-    {
-        $result = [];
-
-        if (!empty($this->data)) {
-            $result['data'] = $this->data;
-        }
-
-        if ($this->executionContext->hasErrors()) {
-            $result['errors'] = $this->executionContext->getErrorsArray();
-        }
-
-        return $result;
-    }
-
-    /**
-     * You can access ExecutionContext to check errors and inject dependencies
-     *
-     * @return ExecutionContext
-     */
-    public function getExecutionContext()
-    {
-        return $this->executionContext;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxComplexity()
-    {
-        return $this->maxComplexity;
-    }
-
-    /**
-     * @param int $maxComplexity
-     */
-    public function setMaxComplexity($maxComplexity)
-    {
-        $this->maxComplexity = $maxComplexity;
     }
 
     protected function resolveQuery(AstQuery $query)
@@ -236,8 +196,10 @@ class Processor
                     foreach ($list as $item) {
                         $result[] = $this->prepareArgumentValue($item, $argumentType->getItemType()->getNullableType(), $request);
                     }
-                } else if ($argumentValue instanceof VariableReference) {
-                    return $this->getVariableReferenceArgumentValue($argumentValue, $argumentType, $request);
+                } else {
+                    if ($argumentValue instanceof VariableReference) {
+                        return $this->getVariableReferenceArgumentValue($argumentValue, $argumentType, $request);
+                    }
                 }
 
                 return $result;
@@ -248,8 +210,8 @@ class Processor
                 if ($argumentValue instanceof AstInputObject) {
                     foreach ($argumentType->getFields() as $field) {
                         /** @var $field Field */
-                        if ($field->getConfig()->has('default')) {
-                            $result[$field->getName()] = $field->getType()->getNullableType()->parseInputValue($field->getConfig()->get('default'));
+                        if ($field->getConfig()->has('defaultValue')) {
+                            $result[$field->getName()] = $field->getType()->getNullableType()->parseInputValue($field->getConfig()->get('defaultValue'));
                         }
                     }
                     foreach ($argumentValue->getValue() as $key => $item) {
@@ -259,8 +221,14 @@ class Processor
                             $result[$key] = $item;
                         }
                     }
-                } else if ($argumentValue instanceof VariableReference) {
-                    return $this->getVariableReferenceArgumentValue($argumentValue, $argumentType, $request);
+                } else {
+                    if ($argumentValue instanceof VariableReference) {
+                        return $this->getVariableReferenceArgumentValue($argumentValue, $argumentType, $request);
+                    } else {
+                        if (is_array($argumentValue)) {
+                            return $argumentValue;
+                        }
+                    }
                 }
 
                 return $result;
@@ -270,10 +238,12 @@ class Processor
                 /** @var $argumentValue AstLiteral|VariableReference */
                 if ($argumentValue instanceof VariableReference) {
                     return $this->getVariableReferenceArgumentValue($argumentValue, $argumentType, $request);
-                } else if ($argumentValue instanceof AstLiteral) {
-                    return $argumentValue->getValue();
                 } else {
-                    return $argumentValue;
+                    if ($argumentValue instanceof AstLiteral) {
+                        return $argumentValue->getValue();
+                    } else {
+                        return $argumentValue;
+                    }
                 }
         }
 
@@ -299,7 +269,7 @@ class Processor
 
         $requestValue = $request->getVariable($variable->getName());
         if ((null === $requestValue && $variable->isNullable()) && !$request->hasVariable($variable->getName())) {
-            throw  new ResolveException(sprintf('Variable "%s" does not exist in request', $variable->getName()), $variable->getLocation());
+            throw new ResolveException(sprintf('Variable "%s" does not exist in request', $variable->getName()), $variable->getLocation());
         }
 
         return $requestValue;
@@ -327,9 +297,15 @@ class Processor
         }
     }
 
+    /**
+     * @param FieldInterface     $field
+     * @param AbstractObjectType $type
+     * @param AstFieldInterface  $ast
+     * @param                    $resolvedValue
+     * @return array
+     */
     private function collectResult(FieldInterface $field, AbstractObjectType $type, $ast, $resolvedValue)
     {
-        /** @var AstQuery $ast */
         $result = [];
 
         foreach ($ast->getFields() as $astField) {
@@ -419,6 +395,7 @@ class Processor
         $fakeField = new Field([
             'name' => $field->getName(),
             'type' => $itemType,
+            'args' => $field->getArguments(),
         ]);
 
         $result = [];
@@ -469,12 +446,16 @@ class Processor
 
         $this->resolveValidator->assertValidResolvedValueForField($field, $resolvedValue);
 
+        if (null === $resolvedValue) {
+            return null;
+        }
+
         /** @var AbstractUnionType $type */
         $type         = $field->getType()->getNullableType();
         $resolvedType = $type->resolveType($resolvedValue);
 
         if (!$resolvedType) {
-            throw new ResolveException('Resoling function must return type');
+            throw new ResolveException('Resolving function must return type');
         }
 
         if ($type instanceof AbstractInterfaceType) {
@@ -486,6 +467,7 @@ class Processor
         $fakeField = new Field([
             'name' => $field->getName(),
             'type' => $resolvedType,
+            'args' => $field->getArguments(),
         ]);
 
         return $this->resolveObject($fakeField, $ast, $resolvedValue, true);
@@ -521,7 +503,7 @@ class Processor
 
         foreach ($field->getArguments() as $argument) {
             /** @var $argument InputField */
-            if ($argument->getConfig()->has('default')) {
+            if ($argument->getConfig()->has('defaultValue')) {
                 $defaults[$argument->getName()] = $argument->getConfig()->getDefaultValue();
             }
         }
@@ -548,6 +530,48 @@ class Processor
     protected function createResolveInfo(FieldInterface $field, array $astFields)
     {
         return new ResolveInfo($field, $astFields, $this->executionContext);
+    }
+
+
+    /**
+     * You can access ExecutionContext to check errors and inject dependencies
+     *
+     * @return ExecutionContext
+     */
+    public function getExecutionContext()
+    {
+        return $this->executionContext;
+    }
+
+    public function getResponseData()
+    {
+        $result = [];
+
+        if (!empty($this->data)) {
+            $result['data'] = $this->data;
+        }
+
+        if ($this->executionContext->hasErrors()) {
+            $result['errors'] = $this->executionContext->getErrorsArray();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxComplexity()
+    {
+        return $this->maxComplexity;
+    }
+
+    /**
+     * @param int $maxComplexity
+     */
+    public function setMaxComplexity($maxComplexity)
+    {
+        $this->maxComplexity = $maxComplexity;
     }
 
 }
