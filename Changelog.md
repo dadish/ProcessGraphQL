@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.15.1
+- Fix FieldtypeCheckbox bug.
+
 ### 0.15.0
 - Fix the FieldtypeDatetime bug.
 - Upgrade the youshido/graphql dependency. 
