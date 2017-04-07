@@ -41,9 +41,14 @@ class TemplatedPageArrayField extends AbstractField {
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
+    if (isset($args[TemplatedSelectorType::ARGUMENT_NAME])) {
+      $selector = $args[TemplatedSelectorType::ARGUMENT_NAME];
+    } else {
+      $selector = $this->defaultSelector;
+    }
     Utils::moduleConfig()->currentTemplateContext = $this->template;
     $pages = \Processwire\wire('pages');
-    return $pages->find($args[TemplatedSelectorType::ARGUMENT_NAME]);
+    return $pages->find($selector);
   }
 
 }

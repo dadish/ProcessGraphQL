@@ -9,19 +9,25 @@ use ProcessWire\GraphQL\Type\Scalar\TemplatedSelectorType;
 
 trait OptionalTemplatedSelectorTrait {
 
+  protected $defaultSelector;
+
   public function build(FieldConfig $config)
   {
-    $defaultValue = new TemplatedSelectorType($this->template);
+    $defaultSelector = new TemplatedSelectorType($this->template);
+    $this->defaultSelector = $defaultSelector->serialize("");
     $config->addArgument(new InputField([
       'name' => TemplatedSelectorType::ARGUMENT_NAME,
       'type' => new TemplatedSelectorType($this->template),
-      'default' => $defaultValue->serialize(""),
     ]));
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $selector = $args[TemplatedSelectorType::ARGUMENT_NAME];
+    if (isset($args[TemplatedSelectorType::ARGUMENT_NAME])) {
+      $selector = $args[TemplatedSelectorType::ARGUMENT_NAME];
+    } else {
+      $selector = $this->defaultSelector;
+    }
     $fieldName = $this->getName();
     $result = $value->$fieldName($selector);
     if ($result instanceof NullPage) return null;
