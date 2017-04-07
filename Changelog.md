@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.15.2
+- Fix the default value bug.
+
 ### 0.15.1
 - Fix FieldtypeCheckbox bug.
 
