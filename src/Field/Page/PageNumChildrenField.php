@@ -36,13 +36,15 @@ class PageNumChildrenField extends AbstractField {
     $config->addArgument(new InputField([
       'name' => self::firstArgumentName,
       'type' => new BooleanType(),
-      'default' => false,
     ]));
   }
 
   public function resolve($value, array $args, ResolveInfo $info)
   {
-    $visible = $args[self::firstArgumentName];
+    $visible = false;
+    if (isset($args[self::firstArgumentName])) {
+      $visible = $args[self::firstArgumentName];
+    }
     if ($visible) return $value->numChildren($visible);
     return $value->numChildren;
   }
