@@ -26,6 +26,7 @@ class Schema extends AbstractSchema {
      */
     $query = $config->getQuery();
 
+
     // $pages API
     if ($moduleConfig->pagesQuery) {
       $query->addField(new PagesField());
@@ -60,6 +61,9 @@ class Schema extends AbstractSchema {
       $query->addField(new LanguageField());
     }
 
+    // let the user modify the query operation
+    Utils::module()->getQuery($query);
+
     /**
      * Mutation
      */
@@ -74,6 +78,9 @@ class Schema extends AbstractSchema {
     foreach ($moduleConfig->legalEditTemplates as $template) {
       $mutation->addField(new UpdateTemplatedPage($template));
     }
+
+    // let the user modify the mutation operation
+    Utils::module()->getMutation($mutation);
 
   }
 

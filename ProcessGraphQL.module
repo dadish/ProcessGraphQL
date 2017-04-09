@@ -151,6 +151,34 @@ class ProcessGraphQL extends Process implements Module {
 		return json_encode($response);
 	}
 
+  /**
+   * The hook for modifying the GraphQL query operation by the user.
+   * The query operation could be modified with addField/addFields methods.
+   * See the documentation of the library used by this module to learn more
+   * @see  The GraphQL lib https://github.com/Youshido/GraphQL
+   * @param  $query        The $query object that will be modified.
+   * @return               The $query object to modify. Do not replace the returned value,
+   *                       but modify it with addField/addFields methods
+   */
+  public function ___getQuery($query)
+  {
+    return $query;
+  }
+
+  /**
+   * The hook for modifying the GraphQL mutation operation by the user.
+   * The mutation operation could be modified with addField/addFields methods.
+   * See the documentation of the library used by this module to learn more
+   * @see  The GraphQL lib https://github.com/Youshido/GraphQL
+   * @param  *             $mutation The $mutation object that will be modified.
+   * @return *             The $mutation object to modify. The same thing as the
+   *                       $query argument.
+   */
+  public function ___getMutation($mutation)
+  {
+    return $mutation;
+  }
+
 	/**
 	 * Install the module page under setup
 	 */
