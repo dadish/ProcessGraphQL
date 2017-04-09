@@ -114,6 +114,7 @@ you can also configure field Access rules in template context. That means you ca
 viewable in _skyscraper_ template and closed in others.
 
 ## API
+### GraphQL endpoint
 If you wish to expose your GraphQL api, you can do so by calling a single method on
 ProcessGraphQL module in your template file. Here is what it might look like
 ```php
@@ -124,6 +125,7 @@ ProcessGraphQL module in your template file. Here is what it might look like
 echo $modules->get('ProcessGraphQL')->executeGraphQL();
 ```
 
+### GraphiQL endpoint
 You can also expose the GraphiQL from within your template. Here is how you can do that.
 ```php
 <?php
@@ -153,6 +155,34 @@ echo $ProcessGraphQL->executeGraphiQL();
 ```
 > Make sure the url is exactly where your GraphQL api is. E.g. it ends with slash.
 > See [here](https://github.com/dadish/ProcessGraphQL/issues/1) why it is important.
+
+### Modifying Query and Mutation
+There could be cases when you want to include some custom fields into your GraphQL query and mutation operation. There are two ProcessWire hooks that allows you to do that.
+#### getQuery() hook
+You can hook into `getQuery` method of the `ProcessGraphQL` class to add some custom fields into your GraphQL query operation. Here how it could look like in your `graphql.php` template file.
+```php
+<?php namespace ProcessWire;
+
+use Youshido\GraphQL\Type\Scalar\StringType;
+
+$processGraphQL = $modules->get('ProcessGraphQL');
+
+wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
+    $query = $event->return;
+    $query->addField('hello', [
+        'type' => new StringType(),
+        'resolve' => function () {
+            return 'world!';
+        }
+    ]);
+});
+
+echo $processGraphQL->executeGraphQL();
+```
+The above code will add a `hello` field into your GraphQL api that reponds with the strin `world`. You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql] to learn more about how you can modify your GraphQL api.
+
+#### getMutation() hook
+You can also hook into `getMutation` method of `ProcessGraphQL` class to add custom fields into your GraphQL mutation operation. It works exactly like the `getQuery` hook method.
 
 ## Features
 ### GraphQL Operations
@@ -204,3 +234,4 @@ All the core ProcessWire fields will eventually be supported.
 [img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Filtering.gif
 [img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Fieldtypes.gif
 [img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Documentation.gif
+[youshido-graphql]: https://github.com/Youshido/GraphQL
