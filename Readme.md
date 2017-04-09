@@ -179,7 +179,7 @@ wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
 
 echo $processGraphQL->executeGraphQL();
 ```
-The above code will add a `hello` field into your GraphQL api that reponds with the strin `world`. You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql] to learn more about how you can modify your GraphQL api.
+The above code will add a `hello` field into your GraphQL api that reponds with the string `world`. You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql] to learn more about how you can modify your GraphQL api.
 
 #### getMutation() hook
 You can also hook into `getMutation` method of `ProcessGraphQL` class to add custom fields into your GraphQL mutation operation. It works exactly like the `getQuery` hook method.
