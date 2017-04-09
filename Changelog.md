@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.16.0
+- Add support for getQuery & getMutation hooks.
+
 ### 0.15.3
 - Fix numChildren field.
 
