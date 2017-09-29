@@ -45,6 +45,7 @@ class PageInterfaceType extends AbstractInterfaceType {
       'createdUser' => 'PageCreatedUserField',
       'find' => 'PageFindField',
       'httpUrl' => 'PageHttpUrlField',
+      'template' => 'PageTemplateField',
       'id' => 'PageIdField',
       'modified' => 'PageModifiedField',
       'modifiedUser' => 'PageModifiedUserField',

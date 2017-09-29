@@ -51,6 +51,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'id',
         'name',
         'httpUrl',
+        'template',
         ],
 
       /**
