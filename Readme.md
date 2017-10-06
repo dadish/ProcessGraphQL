@@ -1,7 +1,7 @@
 ProcessGraphQL
 ==============
 
-GraphQL for ProcessWire.
+[GraphQL][graphql] for [ProcessWire][pw].
 
 ## Table of Contents
 1. [About](#about-processgraphql)
@@ -14,7 +14,7 @@ GraphQL for ProcessWire.
 
 ## About ProcessGraphQL
 ProcessGraphQL is a module for [ProcessWire][pw]. The module seamlessly integrates to your ProcessWire
-web app and allows you to serve the GraphQL api of your existing content. You don't need to apply
+web app and allows you to serve the [GraphQL][graphql] api of your existing content. You don't need to apply
 changes to your content or it's structure. Just choose what you want to serve via GraphQL and your
 API is ready.
 
