@@ -1,22 +1,23 @@
 {
-    "name": "dadish/ProcessGraphql",
-    "type": "processwire-plugin",
-    "license": "MIT",
-    "description": "GraphQL for ProcessWire",
-    "authors": [
-        {
-            "name": "Nurguly Ashyrov",
-            "email": "nurguly.ashyrov@gmail.com"
-        }
-    ],
-    "require": {
-        "youshido/graphql": "v1.4.2.20"
-    },
-    "require-dev": {
-    },
-    "autoload": {
-        "psr-4": {
-            "ProcessWire\\GraphQL\\": "src/"
-        }
+  "name": "dadish/ProcessGraphql",
+  "type": "processwire-plugin",
+  "license": "MIT",
+  "description": "GraphQL for ProcessWire",
+  "authors": [
+    {
+      "name": "Nurguly Ashyrov",
+      "email": "nurguly.ashyrov@gmail.com"
     }
+  ],
+  "require": {
+    "youshido/graphql": "v1.4.2.20"
+  },
+  "require-dev": {
+    "processwire/processwire": "3.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "ProcessWire\\GraphQL\\": "src/"
+    }
+  }
 }

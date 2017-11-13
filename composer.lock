@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9584c2edb48588ea6202c0e75ce432f8",
+    "content-hash": "f4a9c344e89389a2f78084cd32818002",
     "packages": [
         {
             "name": "youshido/graphql",
@@ -50,7 +50,54 @@
             "time": "2017-03-01T22:01:30+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "processwire/processwire",
+            "version": "3.0.62",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/processwire/processwire.git",
+                "reference": "57b297fd1d828961b20ef29782012f75957d6886"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/57b297fd1d828961b20ef29782012f75957d6886",
+                "reference": "57b297fd1d828961b20ef29782012f75957d6886",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "wire/core/ProcessWire.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Cramer",
+                    "email": "ryan@processwire.com",
+                    "homepage": "https://processwire.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ProcessWire CMS/CMF",
+            "homepage": "https://processwire.com",
+            "keywords": [
+                "Content management system",
+                "cmf",
+                "cms",
+                "processwire"
+            ],
+            "time": "2017-05-05T17:43:17+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],

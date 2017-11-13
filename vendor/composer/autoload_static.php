@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9715c44fac5b978ca4d7973ec000fb91
 {
+    public static $files = array (
+        '4ba1167ff053aab3afcc2d28993cfca7' => __DIR__ . '/..' . '/processwire/processwire/wire/core/ProcessWire.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'Y' => 
         array (
