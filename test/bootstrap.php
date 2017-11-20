@@ -51,3 +51,6 @@ if ($modules->isInstalled('ProcessGraphQL')) {
     echo "Could not install ProcessGraphQL\n\n";
   }
 }
+
+// include helper traits
+require_once $baseDir . "/test/Traits/TestHelperTrait.php";
