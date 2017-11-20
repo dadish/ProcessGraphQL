@@ -131,10 +131,10 @@ class ProcessGraphQL extends Process implements Module {
 
 	/**
 	 * Retrieves the GraphQL request. Either from php://input or from $_POST.
-	 * @return array An array with two properties inside. `query` which is a
+	 * @return array An array with two properties inside. `payload` which is a
 	 * GraphQL payload, that includes all operations, including query, mutation...
 	 * And `variables` which is a variables object.
-	 * NOTE: Both `query` and `variables` are raw strings, that are ready to be consumed
+	 * NOTE: Both `payload` and `variables` are raw strings, that are ready to be consumed
 	 * by `executeGraphQL` method
 	 */
 	public function getRequest()
@@ -145,10 +145,13 @@ class ProcessGraphQL extends Process implements Module {
 		} else {
 				$requestData = $_POST;
 		}
-		$query   = isset($requestData['query']) ? $requestData['query'] : null;
+		$payload = isset($requestData['query']) ? $requestData['query'] : null;
+		if (is_null($payload)) {
+			$payload = isset($requestData['payload']) ? $requestData['payload'] : null;
+		}
 		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
 		return [
-			'query' => $query,
+			'payload' => $payload,
 			'variables' => $variables
 		];
 	}
@@ -157,13 +160,16 @@ class ProcessGraphQL extends Process implements Module {
    * Executes GraphQL api.
    * @return string GraphQL api JSON response.
    */
-	public function executeGraphQL()
+	public function executeGraphQL($payload, $variables)
 	{
+		if (!$payload) {
+			$request = $this->getRequest();
+			$payload = $request['payload'];
+			$variables = $request['variables'];
+		}
+
 		// instantiating Processor and setting the schema
 		$processor = new Processor(new Schema());
-		$request = $this->getRequest();
-		$query = $request['query'];
-		$variables = $request['variables'];
 		$response = $processor->processPayload($payload, $variables)->getResponseData();
 		header('Content-Type: application/json');
 		return json_encode($response);
