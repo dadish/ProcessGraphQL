@@ -121,7 +121,7 @@ $config->dbPass = 'pwql_password';
  * Database host
  * 
  */
-$config->dbHost = 'pwql_db';
+$config->dbHost = 'localhost';
 
 /**
  * Database port
