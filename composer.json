@@ -13,7 +13,8 @@
     "youshido/graphql": "v1.4.2.20"
   },
   "require-dev": {
-    "processwire/processwire": "3.0.*"
+    "processwire/processwire": "3.0.*",
+    "phpunit/phpunit": "6.4.*"
   },
   "autoload": {
     "psr-4": {
