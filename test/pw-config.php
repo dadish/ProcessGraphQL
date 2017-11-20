@@ -106,6 +106,12 @@ $config->dbPath = '';
 $config->dbLowercaseTables = true;
 
 /**
+ * Database name
+ * 
+ */
+$config->dbName = 'pwql_db';
+
+/**
  * Database username
  * 
  */
