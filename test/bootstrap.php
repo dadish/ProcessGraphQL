@@ -25,6 +25,5 @@ $pdo = new \PDO($dsn, $config->dbUser, $config->dbPass);
 $pdo->exec($sql);
 echo "Database setup finished\n\n";
 
-$wire = new ProcessWire($config);
-
-// echo \json_encode($config);
+// fire up ProcessWire!
+new ProcessWire($config);
