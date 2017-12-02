@@ -160,7 +160,7 @@ class ProcessGraphQL extends Process implements Module {
    * Executes GraphQL api.
    * @return string GraphQL api JSON response.
    */
-	public function executeGraphQL($payload, $variables)
+	public function executeGraphQL($payload = null, $variables = null)
 	{
 		if (!$payload) {
 			$request = $this->getRequest();
@@ -171,7 +171,6 @@ class ProcessGraphQL extends Process implements Module {
 		// instantiating Processor and setting the schema
 		$processor = new Processor(new Schema());
 		$response = $processor->processPayload($payload, $variables)->getResponseData();
-		header('Content-Type: application/json');
 		return json_encode($response);
 	}
 
