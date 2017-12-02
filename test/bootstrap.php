@@ -37,20 +37,5 @@ if (!file_exists($moduleDir)) {
   \symlink($baseDir, $moduleDir);
 }
 
-// install ProcessGraphQL module
-$modules = \ProcessWire\wire('modules');
-if ($modules->isInstalled('ProcessGraphQL')) {
-  echo "ProcessGraphQL is already installed!\n\n";
-} else {
-  echo "Installing ProcessGraphQL...\n";
-  $modules->refresh();
-  $module = $modules->install('ProcessGraphQL');
-  if ($module && $module->className() === 'ProcessGraphQL') {
-    echo "ProcessGraphQL installed!\n\n";
-  } else {
-    echo "Could not install ProcessGraphQL\n\n";
-  }
-}
-
 // include helper traits
 require_once $baseDir . "/test/Traits/TestHelperTrait.php";
