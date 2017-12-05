@@ -212,3 +212,12 @@ $config->dbStripMB4 = false;
  * 
  */
 $config->allowExceptions = false;
+
+/**
+ * An array of users we use for testing
+ *
+ * @var  array
+ */
+$config->testUsers = [
+	'admin' => 'skyscrapers-admin',
+];

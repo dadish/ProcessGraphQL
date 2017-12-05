@@ -168,6 +168,8 @@ class ProcessGraphQL extends Process implements Module {
 			$variables = $request['variables'];
 		}
 
+		print_r($payload);
+
 		// instantiating Processor and setting the schema
 		$processor = new Processor(new Schema());
 		$response = $processor->processPayload($payload, $variables)->getResponseData();
