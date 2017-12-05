@@ -4,9 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/favicon.ico">
-    
     <?php foreach($config->styles as $file) echo "\n\t<link type='text/css' href='$file' rel='stylesheet' />"; ?>
-    <?php foreach($config->scripts as $file) echo "\n\t<script type='text/javascript' src='$file'></script>"; ?>
     <title>GraphiQL</title>
     <style>
       body {
@@ -16,9 +14,6 @@
         overflow: hidden;
       }
     </style>
-    <script>
-      var config = <?= json_encode($config->js()) ?>;
-    </script>
   </head>
   <body>
     <style>
@@ -27,5 +22,9 @@
       }
     </style>
     <div id="graphiql">Loading...</div>
+    <script>
+      var config = <?= json_encode($config->js()) ?>;
+    </script>
+    <?php foreach($config->scripts as $file) echo "\n\t<script type='text/javascript' src='$file'></script>"; ?>
   </body>
 </html>
