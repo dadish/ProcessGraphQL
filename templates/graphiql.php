@@ -1,5 +1,5 @@
 <?php namespace ProcessWire;
 
 $ProcessGraphQL = $modules->get('ProcessGraphQL');
-$ProcessGraphQL->GraphQLServerUrl = $config->urls->root . '/graphql/';
+$ProcessGraphQL->GraphQLServerUrl = '/graphql/';
 echo $ProcessGraphQL->executeGraphiQL();
