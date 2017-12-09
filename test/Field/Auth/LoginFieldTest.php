@@ -1,6 +1,6 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Fields;
+namespace ProcessWire\GraphQL\Test\Fields\Auth;
 
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\GraphQL\Utils;
