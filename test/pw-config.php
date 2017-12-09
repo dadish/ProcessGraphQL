@@ -106,34 +106,14 @@ $config->dbPath = '';
 $config->dbLowercaseTables = true;
 
 /**
- * Database name
- * 
- */
-$config->dbName = 'pwql_db';
-
-/**
- * Database username
- * 
- */
-$config->dbUser = 'pwql_user';
-
-/**
- * Database password
- * 
- */
-$config->dbPass = 'pwql_password';
-
-/**
- * Database host
+ * Installer: Database Configuration
  * 
  */
 $config->dbHost = 'localhost';
-
-/**
- * Database port
- * 
- */
-$config->dbPort = 3306;
+$config->dbName = 'skyscrapers_dev';
+$config->dbUser = 'skyscrapers_dev';
+$config->dbPass = 'kwJM2HVk9L8b41Hv';
+$config->dbPort = '3306';
 
 /**
  * Database init command (PDO::MYSQL_ATTR_INIT_COMMAND)
@@ -219,7 +199,7 @@ $config->allowExceptions = true;
  * Must be retained if you migrate your site from one server to another
  * 
  */
-$config->userAuthSalt = '15957e0c3632f1125b0fa2bd6c677d41';
+$config->userAuthSalt = 'f4e0b5d144f474df44d7a4a0334921bf';
 
 /**
  * An array of users we use for testing
