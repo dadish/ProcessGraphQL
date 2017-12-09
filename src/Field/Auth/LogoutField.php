@@ -30,14 +30,14 @@ class LogoutField extends AbstractField {
   public function resolve($value, array $args, ResolveInfo $info)
   {
     $session = \ProcessWire\wire('session');
-    $session = $session->logout();
     $response = new WireData();
-    if ($session instanceof Session) {
+    try {
+      $session = $session->logout();
       $response->statusCode = 200;
       $response->message = 'Successful logout!';
-    } else {
+    } catch (Exception $error) {
       $response->statusCode = 500;
-      $response->message = 'Could not logout.';
+      $response->message = 'Could not logout: ' . $error->getMessage();
     }
     return $response;
   }

@@ -19,4 +19,11 @@ abstract class GraphqlTestCase extends TestCase {
     Utils::module()->setArray(self::$defaultConfig);
   }
 
+  public function execute($payload = null, $variables = null)
+  {
+  	$response = Utils::module()->executeGraphQL($payload, $variables);
+  	$respObj = json_decode($response);
+  	return $respObj;
+  }
+
 }
