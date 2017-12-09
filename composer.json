@@ -18,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "ProcessWire\\GraphQL\\": "src/"
+      "ProcessWire\\GraphQL\\": "src/",
+      "ProcessWire\\GraphQL\\Test\\": "test/"
     }
   }
 }
