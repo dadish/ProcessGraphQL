@@ -1,36 +1,35 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace ProcessWire\GraphQL\Test\Fields;
 
-class AuthTest extends TestCase {
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Utils;
 
-  use TestHelperTrait;
+/**
+ * @backupGlobals disabled
+ */
+class AuthTest extends GraphQLTestCase {
 
-  public function testLogin()
+  public function testAdminLoginViaPwApi()
   {
-    // first make sure the user is guest user
-    $user = $this->wire('user');
-    $this->assertEquals('guest', $user->name);
-    $this->assertTrue($user->isGuest());
+    Utils::session()->login('admin', 'skyscrapers-admin');
+    $user = Utils::user();
+    $this->assertEquals('admin', $user->name, 'Unable to login via $session->login()');
+    Utils::session()->logout();
+  }
 
-    // the admin credentials
-    $name = 'admin';
-    $pass = $this->wire('config')->testUsers['admin'];
-
-    // now login via graphql
-    $loginRequest ="{
-      login(name: \"$name\", pass: \"$pass\") {
-        statusCode,
+  public function testAdminLoginViaGraphQL()
+  {
+    $query = '{
+      login(name:"admin", pass:"skyscrapers-admin") {
+        statusCode
         message
       }
-    }";
-    $response = $this->module()->executeGraphQL($loginRequest);
+    }';
+    $response = Utils::module()->executeGraphQL($query);
     $respObj = json_decode($response);
-    print_r($respObj);
-
-    $user = $this->wire('user');
-    $this->assertEquals('admin', $user->name);
-    $this->assertTrue($user->isSuperuser());
+    $this->assertEquals(200, $respObj->data->login->statusCode, 'Unable to login via GraphQL');
+    Utils::session()->logout();
   }
 
 }

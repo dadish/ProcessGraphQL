@@ -1,5 +1,8 @@
 <?php namespace ProcessWire\GraphQL;
 
+// start the PHP session
+ob_start();
+
 // paths
 $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
@@ -9,8 +12,20 @@ $moduleDir = $siteDir . "/modules/ProcessGraphQL";
 // load dependencies
 require_once $baseDir . "/vendor/autoload.php";
 
+// remove install.php otherwise PW will think the site needs to be installed
+$installFile = $pwDir . "/install.php";
+if (file_exists($installFile)) {
+	unlink($installFile);
+}
+
 // overwrite site-default's config.php with our own custom one
 copy(__DIR__ . "/pw-config.php", $siteDir . "/config.php");
+
+// create necessary asset dirs
+$sessionsDir = $siteDir . "/assets/sessions";
+if (!file_exists($sessionsDir)) {
+	mkdir($sessionsDir);
+}
 
 use ProcessWire\ProcessWire;
 
@@ -36,6 +51,3 @@ new ProcessWire($config);
 if (!file_exists($moduleDir)) {
   \symlink($baseDir, $moduleDir);
 }
-
-// include helper traits
-require_once $baseDir . "/test/Traits/TestHelperTrait.php";

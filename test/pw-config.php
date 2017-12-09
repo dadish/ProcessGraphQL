@@ -203,15 +203,23 @@ $config->dbStripMB4 = false;
 
 /**
  * Allow Exceptions to propagate?
- * 
+ *
  * When true, ProcessWire will not capture Exceptions and will instead let them fall
  * through in their original state. Use only if you are running ProcessWire with your
  * own Exception handler. Most installations should leave this at false.
- * 
+ *
  * @var bool
+ *
+ */
+$config->allowExceptions = true;
+
+/**
+ * Installer: User Authentication Salt
+ *
+ * Must be retained if you migrate your site from one server to another
  * 
  */
-$config->allowExceptions = false;
+$config->userAuthSalt = '15957e0c3632f1125b0fa2bd6c677d41';
 
 /**
  * An array of users we use for testing
