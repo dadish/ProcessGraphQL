@@ -10,7 +10,7 @@ use ProcessWire\GraphQL\Utils;
  */
 class AuthTest extends GraphQLTestCase {
 
-  public function testAdminLoginViaPwApi()
+  public function testLoginCredentials()
   {
     Utils::session()->login('admin', 'skyscrapers-admin');
     $user = Utils::user();
@@ -18,17 +18,35 @@ class AuthTest extends GraphQLTestCase {
     Utils::session()->logout();
   }
 
-  public function testAdminLoginViaGraphQL()
+  public function testLoginSuccess()
   {
-    $query = '{
-      login(name:"admin", pass:"skyscrapers-admin") {
+    $config = Utils::config();
+    $pass = $config->testUsers['admin'];
+    $query = "{
+      login(name:\"admin\", pass:\"$pass\") {
         statusCode
         message
       }
-    }';
+    }";
     $response = Utils::module()->executeGraphQL($query);
     $respObj = json_decode($response);
     $this->assertEquals(200, $respObj->data->login->statusCode, 'Unable to login via GraphQL');
+    Utils::session()->logout();
+  }
+
+  public function testLoginFailure()
+  {
+    $config = Utils::config();
+    $pass = 'some-random-stuff';
+    $query = "{
+      login(name:\"admin\", pass:\"$pass\") {
+        statusCode
+        message
+      }
+    }";
+    $response = Utils::module()->executeGraphQL($query);
+    $respObj = json_decode($response);
+    $this->assertEquals(401, $respObj->data->login->statusCode, 'Unable to login via GraphQL');
     Utils::session()->logout();
   }
 
