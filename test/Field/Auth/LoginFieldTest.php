@@ -8,7 +8,7 @@ use ProcessWire\GraphQL\Utils;
 /**
  * @backupGlobals disabled
  */
-class AuthTest extends GraphQLTestCase {
+class LoginFieldTest extends GraphQLTestCase {
 
   public function tearDown()
   {
@@ -49,33 +49,6 @@ class AuthTest extends GraphQLTestCase {
     }";
     $res = $this->execute($query);
     $this->assertEquals(401, $res->data->login->statusCode, 'Unable to login via GraphQL');
-  }
-
-  public function testLogout()
-  {
-    $config = Utils::config();
-    Utils::session()->login('admin', $config->testUsers['admin']);
-    $user = Utils::user();
-    $this->assertTrue($user->isSuperuser());
-
-    $query = '{
-      logout {
-        statusCode
-      }
-    }';
-    $res = $this->execute($query);
-    $this->assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
-  }
-
-  public function testLogoutFailure()
-  {
-    $query = '{
-      logout {
-        statusCode
-      }
-    }';
-    $res = $this->execute($query);
-    $this->assertObjectHasAttribute('errors', $res, 'Unable to logout via GraphQL');
   }
 
 }
