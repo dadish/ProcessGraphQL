@@ -8,6 +8,8 @@ use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
 
 class FieldtypeDatetime extends AbstractFieldtype {
 
+  public static $format = 'Y-m-d H:i:s';
+
   public function getDefaultType()
   {
     return new DatetimeType();
@@ -18,7 +20,7 @@ class FieldtypeDatetime extends AbstractFieldtype {
     $fieldName = $this->field->name;
     $result = $value->$fieldName;
     if (!$result) return null;
-    return date('Y-m-d H:i:s', $result);
+    return date(self::$format, $result);
   }
 
 }
