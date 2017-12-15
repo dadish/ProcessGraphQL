@@ -28,16 +28,17 @@ class FieldtypeFileTest extends GraphQLTestCase {
   		architect (s: \"id=$architect->id\") {
   			list {
   				resume {
-  					list {
-  						url
-  					}
+  					url
   				}
   			}
   		}
   	}";
   	$res = $this->execute($query);
-  	print_r($res);
-  	// $this->assertEquals($architect->email, $res->data->architect->list[0]->email, 'Retrieves email value.');
+  	$this->assertEquals(
+  		$architect->resume->first()->url,
+  		$res->data->architect->list[0]->resume[0]->url,
+  		'Retrieves files value.'
+  	);
   }
 
 }
