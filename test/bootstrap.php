@@ -8,6 +8,8 @@ $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
 $siteDir = realpath($pwDir . "/site-default/");
 $moduleDir = $siteDir . "/modules/ProcessGraphQL";
+$testFilesDir = $baseDir . "/test/files";
+$siteFilesDir = $siteDir . "/assets/files";
 
 // load dependencies
 require_once $baseDir . "/vendor/autoload.php";
@@ -27,6 +29,18 @@ if (!file_exists($sessionsDir)) {
 	mkdir($sessionsDir);
 }
 
+// symlink our module inside the site's modules
+// directory, so we can install it as a module to
+// our processwire instance
+if (!file_exists($moduleDir)) {
+  \symlink($baseDir, $moduleDir);
+}
+
+// symlink skyscrapers pages files to site's asset files
+if (!file_exists($siteFilesDir)) {
+	\symlink($testFilesDir, $siteFilesDir);
+}
+
 use ProcessWire\ProcessWire;
 
 $config = ProcessWire::buildConfig($pwDir, null, [
@@ -43,11 +57,3 @@ echo "Database setup finished.\n\n";
 
 // Fire up ProcessWire!!!
 new ProcessWire($config);
-
-
-// symlink our module inside the site's modules
-// directory, so we can install it as a module to
-// our processwire instance
-if (!file_exists($moduleDir)) {
-  \symlink($baseDir, $moduleDir);
-}
