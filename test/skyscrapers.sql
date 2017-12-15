@@ -457,6 +457,38 @@ INSERT INTO `field_process` VALUES (6,17),(3,12),(8,12),(9,14),(10,7),(11,47),(1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `field_resume`
+--
+
+DROP TABLE IF EXISTS `field_resume`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `field_resume` (
+  `pages_id` int(10) unsigned NOT NULL,
+  `data` varchar(250) NOT NULL,
+  `sort` int(10) unsigned NOT NULL,
+  `description` text NOT NULL,
+  `modified` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`pages_id`,`sort`),
+  KEY `data` (`data`),
+  KEY `modified` (`modified`),
+  KEY `created` (`created`),
+  FULLTEXT KEY `description` (`description`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `field_resume`
+--
+
+LOCK TABLES `field_resume` WRITE;
+/*!40000 ALTER TABLE `field_resume` DISABLE KEYS */;
+INSERT INTO `field_resume` VALUES (4237,'resume.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4465,'resume-1.pdf',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4842,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4573,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4202,'resume.pdf',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(5318,'cv.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4646,'resume.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(5346,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4409,'resume.pdf',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(5230,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4788,'cv.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(5135,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4894,'cv.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4304,'resume.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4185,'performance.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4389,'resume.pdf',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4332,'resume.pdf',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(5548,'performance-1.xlsx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4477,'resume.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26'),(4838,'resume.docx',0,'','2017-12-15 06:39:26','2017-12-15 06:39:26');
+/*!40000 ALTER TABLE `field_resume` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `field_roles`
 --
 
@@ -871,4 +903,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-11 19:24:27
+-- Dump completed on 2017-12-15 13:24:49
