@@ -3,9 +3,16 @@
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeEmailTest extends GraphQLTestCase {
+
+  const TEMPLATE_NAME = 'architect';
+  const FIELD_NAME = 'email';
+  const FIELD_TYPE = 'FieldtypeEmail';
+
+  use FieldtypeTestTrait;
 	
   public static function setUpBeforeClass()
   {

@@ -3,23 +3,16 @@
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeFileTest extends GraphQLTestCase {
-	
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-    Utils::module()->legalTemplates = ['architect'];
-    Utils::module()->legalFields = ['resume'];
-    Utils::session()->login('admin', Utils::config()->testUsers['admin']);
-  }
 
-  public static function tearDownAfterClass()
-  {
-    parent::tearDownAfterClass();
-    Utils::session()->logout();
-  }
+  const TEMPLATE_NAME = 'architect';
+  const FIELD_NAME = 'resume';
+  const FIELD_TYPE = 'FieldtypeFile';
+
+  use FieldtypeTestTrait;
 
   public function testValue()
   {

@@ -3,24 +3,17 @@
 namespace ProcessWire\GraphQL\Test\Field\Page;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeDatetime;
 
 class FieldtypeDatetimeTest extends GraphQLTestCase {
 
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-    Utils::module()->legalTemplates = ['architect'];
-    Utils::module()->legalFields = ['born'];
-    Utils::session()->login('admin', Utils::config()->testUsers['admin']);
-  }
+  const TEMPLATE_NAME = 'architect';
+  const FIELD_NAME = 'born';
+  const FIELD_TYPE = 'FieldtypeDatetime';
 
-  public static function tearDownAfterClass()
-  {
-    parent::tearDownAfterClass();
-    Utils::session()->logout();
-  }
+  use FieldtypeTestTrait;
 
   public function testValue()
   {

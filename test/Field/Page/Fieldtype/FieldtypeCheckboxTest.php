@@ -3,23 +3,16 @@
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeCheckboxTest extends GraphQLTestCase {
 
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-    Utils::module()->legalTemplates = ['skyscraper'];
-    Utils::module()->legalFields = ['featured'];
-    Utils::session()->login('admin', Utils::config()->testUsers['admin']);
-  }
+  const TEMPLATE_NAME = 'skyscraper';
+  const FIELD_NAME = 'featured';
+  const FIELD_TYPE = 'FieldtypeCheckbox';
 
-  public static function tearDownAfterClass()
-  {
-    parent::tearDownAfterClass();
-    Utils::session()->logout();
-  }
+  use FieldtypeTestTrait;
 
   public function testTruthyValue()
   {
