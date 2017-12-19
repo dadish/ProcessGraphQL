@@ -2,9 +2,10 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page;
 
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
+use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
 use \ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeDatetime;
 
 class FieldtypeDatetimeTest extends GraphQLTestCase {
@@ -14,6 +15,7 @@ class FieldtypeDatetimeTest extends GraphQLTestCase {
   const FIELD_TYPE = 'FieldtypeDatetime';
 
   use FieldtypeTestTrait;
+  use FieldAccessTrait;
 
   public function testValue()
   {

@@ -1,11 +1,10 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits;
 
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Utils;
 
-trait FieldtypeTestTrait {
+trait FieldAccessTrait {
 
   public static function setUpBeforeClass()
   {
@@ -19,12 +18,6 @@ trait FieldtypeTestTrait {
   {
     parent::tearDownAfterClass();
     Utils::session()->logout();
-  }
-
-  public function testType()
-  {
-    $field = Utils::fields()->get("name=" . self::FIELD_NAME);
-    $this->assertEquals(self::FIELD_TYPE, $field->type->className(), 'Tests correct fieldtype.');
   }
 
 }

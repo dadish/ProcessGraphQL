@@ -2,9 +2,10 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
-use ProcessWire\GraphQL\Utils;
-use ProcessWire\GraphQL\Test\GraphQLTestCase;
-use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeTestTrait;
+use \ProcessWire\GraphQL\Utils;
+use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
 
 class FieldtypeImageDimensionsTest extends GraphQLTestCase {
 
@@ -12,7 +13,8 @@ class FieldtypeImageDimensionsTest extends GraphQLTestCase {
 	const FIELD_NAME = 'images';
 	const FIELD_TYPE = 'FieldtypeImage';
 
-	use FieldtypeTestTrait;
+  use FieldtypeTestTrait;
+  use FieldAccessTrait;
 
 	public function testDimensions()
 	{
