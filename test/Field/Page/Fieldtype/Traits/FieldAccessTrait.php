@@ -16,8 +16,8 @@ trait FieldAccessTrait {
 
   public static function tearDownAfterClass()
   {
-    parent::tearDownAfterClass();
     Utils::session()->logout();
+    parent::tearDownAfterClass();
   }
 
 }
