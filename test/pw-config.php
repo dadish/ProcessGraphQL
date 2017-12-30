@@ -208,4 +208,5 @@ $config->userAuthSalt = 'f4e0b5d144f474df44d7a4a0334921bf';
  */
 $config->testUsers = [
 	'admin' => 'skyscrapers-admin',
+	'editor' => 'skyscrapers-editor-123',
 ];
