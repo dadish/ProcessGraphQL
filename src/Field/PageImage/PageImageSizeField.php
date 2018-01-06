@@ -57,7 +57,7 @@ class PageImageSizeField extends AbstractField{
     $variations = $value->getVariations();
     foreach ($variations as $variation) {
       if ($width && $variation->width !== $width) continue;
-      if ($height && $variations->height !== $height) continue;
+      if ($height && $variation->height !== $height) continue;
       return $variation;
     }
     return new EmptyPageImage();
