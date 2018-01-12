@@ -9,21 +9,19 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
-use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 
 class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
 
   const TEMPLATE_NAME = 'skyscraper';
   const FIELD_NAME = 'images';
-  const FIELD_TYPE = 'FieldtypeImage';
 
   // page that is used for this test case solely
   const PAGE_ID = 4182;
 
-  use FieldtypeTestTrait;
-
-  protected function setUp()
+  public static function setUpBeforeClass()
   {
+    parent::setUpBeforeClass();
+
     // enable test fields
     $module = Utils::module();
     $module->legalTemplates = [self::TEMPLATE_NAME];
@@ -35,9 +33,10 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
     Utils::session()->login('admin', Utils::config()->testUsers['admin']);
   }
 
-  protected function tearDown()
+  public static function tearDownAfterClass()
   {
     Utils::session()->logout();
+    parent::tearDownAfterClass();
   }
 
   public function testThumbCreate()
@@ -85,12 +84,15 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
 
     // the created thumb's filename
     $filename = realpath($GLOBALS['pwDir'] . $actualThumb->url);
+
+    // make sure it created the thumbnail
+    $this->assertTrue(file_exists($filename), 'Admin creates the thumbnail.');
+    $this->assertTrue(is_file($filename), 'Created thumbnail is a file.');
     
     // expected thumb
     $expectedThumb = $image->size($thumbWidth, $thumbHeight);
 
     // make sure it created the correct thumbnail
-    $this->assertTrue(file_exists($filename), 'Admin creates the thumbnail.');
     $this->assertEquals($expectedThumb->url, $actualThumb->url, 'Correct url for created thumbnail.');
     $this->assertEquals($expectedThumb->width, $actualThumb->width, 'Correct width for created thumbnail.');
     $this->assertEquals($expectedThumb->height, $actualThumb->height, 'Correct height for created thumbnail.');
