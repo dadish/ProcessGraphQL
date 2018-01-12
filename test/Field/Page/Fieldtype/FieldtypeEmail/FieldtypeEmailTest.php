@@ -15,20 +15,6 @@ class FieldtypeEmailTest extends GraphQLTestCase {
 
   use FieldtypeTestTrait;
   use FieldAccessTrait;
-	
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-    Utils::module()->legalTemplates = ['architect'];
-    Utils::module()->legalFields = ['email'];
-    Utils::session()->login('admin', Utils::config()->testUsers['admin']);
-  }
-
-  public static function tearDownAfterClass()
-  {
-    parent::tearDownAfterClass();
-    Utils::session()->logout();
-  }
 
   public function testValue()
   {
