@@ -8,7 +8,7 @@ $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
 $siteDir = realpath($pwDir . "/site-default/");
 $moduleDir = $siteDir . "/modules/ProcessGraphQL";
-$testFilesDir = $baseDir . "/test/files";
+$testFilesDir = realpath($baseDir . "/test/files");
 $siteFilesDir = $siteDir . "/assets/files";
 
 // load dependencies
@@ -34,6 +34,14 @@ if (!file_exists($sessionsDir)) {
 // our processwire instance
 if (!file_exists($moduleDir)) {
   \symlink($baseDir, $moduleDir);
+}
+
+// symlink FieldtypeMapMarker inside the site's module
+// directory, so we can test FieldtypeMapMarker field.
+$mapMarkerDir = $baseDir . "/vendor/ryancramerdesign/FieldtypeMapMarker";
+$mapMarkerDestDir = $siteDir . "/modules/FieldtypeMapMarker";
+if (!file_exists($mapMarkerDestDir)) {
+	\symlink($mapMarkerDir, $mapMarkerDestDir);
 }
 
 // symlink skyscrapers pages files to site's asset files
