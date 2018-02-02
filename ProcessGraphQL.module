@@ -213,8 +213,9 @@ class ProcessGraphQL extends Process implements Module {
 		$page->name = self::pageName;
 
 		// set parent to the home->admin->setup
-		$page->parent = $this->pages->get($this->config->adminRootPageID)->child('name=setup');
-		$page->process = $this;
+		$parent = $this->pages->get($this->config->adminRootPageID)->child("name=setup, include=all");
+		$page->parent = $parent;
+		$page->process = $this->className;
 
 		// set the page title as module title
 		$info = self::getModuleInfo();
@@ -223,6 +224,7 @@ class ProcessGraphQL extends Process implements Module {
 		// save the page and tell the user about it
 		$page->save();
 		$this->message("Created page at: {$page->path}");
+
 	}
 
   /**
