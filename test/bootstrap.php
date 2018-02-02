@@ -64,4 +64,6 @@ $pdo->exec($sql);
 echo "Database setup finished.\n\n";
 
 // Fire up ProcessWire!!!
-new ProcessWire($config);
+$wire = new ProcessWire($config);
+$module = $wire->fuel('modules')->get('ProcessGraphQL');
+$module->install();
