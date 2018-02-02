@@ -18,7 +18,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
   public function testGetGraphQLServerUrl()
   {
     $module = Utils::module();
-    $default = '/processwire/graphql/';
+    $default = '/processwire/setup/graphql/';
     $this->assertEquals($default, $module->getGraphQLServerUrl());
 
     $custom = '/custom/graphql/server/path/';
