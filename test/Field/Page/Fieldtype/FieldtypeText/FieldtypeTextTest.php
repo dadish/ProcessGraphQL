@@ -7,27 +7,27 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
 
-class FieldtypePageSelectorTest extends GraphQLTestCase {
+class FieldtypeTextTest extends GraphQLTestCase {
 
-  const TEMPLATE_NAME = 'home';
-  const FIELD_NAME = 'selected';
-  const FIELD_TYPE = 'FieldtypeSelector';
+  const TEMPLATE_NAME = 'skyscraper';
+  const FIELD_NAME = 'freebase_guid';
+  const FIELD_TYPE = 'FieldtypeText';
 
   use FieldtypeTestTrait;
   use FieldAccessTrait;
 	
   public function testValue()
   {
-  	$home = Utils::pages()->get("template=home");
+  	$skyscraper = Utils::pages()->get("template=skyscraper, freebase_guid!=''");
   	$query = "{
-  		home (s: \"id=$home->id\") {
+  		skyscraper (s: \"id=$skyscraper->id\") {
   			list {
-  				selected
+  				freebase_guid
   			}
   		}
   	}";
   	$res = $this->execute($query);
-  	$this->assertEquals($home->selected, $res->data->home->list[0]->selected, 'Retrieves selector value.');
+  	$this->assertEquals($skyscraper->freebase_guid, $res->data->skyscraper->list[0]->freebase_guid, 'Retrieves freebase_guid value.');
   }
 
 }
