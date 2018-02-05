@@ -9,17 +9,19 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeMapMarkerTest extends GraphQLTestCase {
 
-  const TEMPLATE_NAME = 'skyscraper';
+  const accessRules = [
+    'legalTemplates' => ['skyscraper'],
+    'legalFields' => ['map'],
+  ];
   const FIELD_NAME = 'map';
   const FIELD_TYPE = 'FieldtypeMapMarker';
 
-  use FieldAccessTrait;
-  // use FieldtypeTestTrait;
+  use AccessTrait;
 
   public function testValue()
   {

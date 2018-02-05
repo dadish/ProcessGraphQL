@@ -4,17 +4,20 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphqlTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeIntegerTest extends GraphqlTestCase {  
 
-  const TEMPLATE_NAME = 'skyscraper';
+  const accessRules = [
+    'legalTemplates' => ['skyscraper'],
+    'legalFields' => ['floors'],
+  ];
   const FIELD_NAME = 'floors';
   const FIELD_TYPE = 'FieldtypeInteger';
 
   use FieldtypeTestTrait;
-  use FieldAccessTrait;
+  use AccessTrait;
 
   public function testValue()
   {

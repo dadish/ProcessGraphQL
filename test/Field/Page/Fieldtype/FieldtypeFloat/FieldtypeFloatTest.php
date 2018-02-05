@@ -4,17 +4,20 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphqlTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldAccessTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeFloatTest extends GraphqlTestCase {  
 
-  const TEMPLATE_NAME = 'skyscraper';
+  const accessRules = [
+    'legalTemplates' => ['skyscraper'],
+    'legalFields' => ['height'],
+  ];
   const FIELD_NAME = 'height';
   const FIELD_TYPE = 'FieldtypeFloat';
 
   use FieldtypeTestTrait;
-  use FieldAccessTrait;
+  use AccessTrait;
 
   public function testValue()
   {
