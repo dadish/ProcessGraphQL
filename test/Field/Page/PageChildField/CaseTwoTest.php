@@ -10,14 +10,16 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\PageFieldAccessTrait;
+use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
 class PageChildFieldCaseTwoTest extends GraphQLTestCase {
 
-  const TEMPLATE_NAME = ['city'];
-  const PAGE_FIELD_NAME = 'child';
+  const accessRules = [
+    'legalTemplates' => ['city'],
+    'legalPageFields' => ['child'],
+  ];
 
-  use PageFieldAccessTrait;
+  use AccessTrait;
 	
   public function testValue()
   {
