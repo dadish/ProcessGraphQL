@@ -11,7 +11,7 @@ use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class PageCreatedUserFieldTest extends GraphQLTestCase {
+class PageCreatedUserFieldCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['skyscraper', 'user'],

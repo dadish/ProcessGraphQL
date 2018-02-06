@@ -12,7 +12,9 @@ abstract class AbstractPageField extends AbstractField {
   {
     $fieldName = $this->getName();
     $result = $value->$fieldName;
-    if ($result instanceof NullPage) return null;
+    if ($result instanceof NullPage) {
+      return null;
+    }
     return $result;
   }
 
