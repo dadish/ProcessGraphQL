@@ -4,6 +4,7 @@ namespace ProcessWire\GraphQL\Field\Page;
 
 use ProcessWire\GraphQL\Field\Page\AbstractPageField;
 use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
+use ProcessWire\GraphQL\Field\Traits\PageResolverTrait;
 
 class PageNextField extends AbstractPageField {
 
@@ -21,5 +22,7 @@ class PageNextField extends AbstractPageField {
   {
     return "This page's next sibling page, or null if it is the last sibling.";
   }
+
+  use PageResolverTrait;
 
 }
