@@ -4,8 +4,8 @@ namespace ProcessWire\GraphQL\Field\Page;
 
 use Youshido\GraphQL\Type\NonNullType;
 use ProcessWire\GraphQL\Type\Object\UserType;
-use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Field\Page\AbstractPageField;
+use ProcessWire\GraphQL\Field\Traits\UserResolverTrait;
 
 class PageModifiedUserField extends AbstractPageField {
 
@@ -24,4 +24,5 @@ class PageModifiedUserField extends AbstractPageField {
     return 'The user that last modified this page.';
   }
 
+  use UserResolverTrait;
 }
