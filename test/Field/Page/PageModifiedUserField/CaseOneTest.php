@@ -28,7 +28,6 @@ class PageModifiedUserFieldCaseOneTest extends GraphQLTestCase {
   			list {
   				modifiedUser {
             name
-            email
           }
   			}
   		}
