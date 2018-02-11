@@ -1,7 +1,7 @@
 <?php
 
 /**
- * `parent` field selector respects access rules.
+ * `parents` field selector respects access rules.
  */
 
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
@@ -10,11 +10,11 @@ use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class PageParentFieldCaseFourTest extends GraphQLTestCase {
+class PageParentsFieldCaseFourTest extends GraphQLTestCase {
 
   const accessRules = [
-    'legalTemplates' => ['skyscraper'],
-    'legalPageFields' => ['parent', 'name'],
+    'legalTemplates' => ['skyscraper', 'city'],
+    'legalPageFields' => ['parents', 'name'],
   ];
 
   use AccessTrait;
@@ -25,14 +25,16 @@ class PageParentFieldCaseFourTest extends GraphQLTestCase {
     $query = "{
       skyscraper (s: \"id=$skyscraper->id\") {
         list {
-          parent (s: \"template=cities\") {
-            name
+          parents (s: \"template=cities\") {
+            list {
+              name
+            }
           }
         }
       }
     }";
     $res = $this->execute($query);
-    $this->assertTrue(is_null($res->data->skyscraper->list[0]->parent), 'parent returns null if no access.');
+    $this->assertEquals(0, count($res->data->skyscraper->list[0]->parents->list), 'parents returns empty list if no access.');
   }
 
 }
