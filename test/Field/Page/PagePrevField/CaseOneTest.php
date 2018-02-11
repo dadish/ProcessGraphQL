@@ -22,7 +22,7 @@ class PagePrevFieldCaseOneTest extends GraphQLTestCase {
   
   public function testValue()
   {
-    $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
+    $skyscraper = Utils::pages()->get("template=skyscraper, start=3");
     $query = "{
       skyscraper (s: \"id=$skyscraper->id\") {
         list {

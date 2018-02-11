@@ -5,7 +5,9 @@ namespace ProcessWire\GraphQL\Type\InterfaceType;
 use Youshido\GraphQL\Type\InterfaceType\AbstractInterfaceType;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\Field;
+use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageType;
+use ProcessWire\GraphQL\Type\Object\NullPageType;
 
 class PageInterfaceType extends AbstractInterfaceType {
 
@@ -33,6 +35,9 @@ class PageInterfaceType extends AbstractInterfaceType {
 
   public function resolveType($page)
   {
+    if (!$page || $page instanceof NullPage) {
+      return new NullPageType();
+    }
     return new TemplatedPageType($page->template);
   }
 

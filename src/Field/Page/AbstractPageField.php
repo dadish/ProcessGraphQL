@@ -11,11 +11,7 @@ abstract class AbstractPageField extends AbstractField {
   public function resolve($value, array $args, ResolveInfo $info)
   {
     $fieldName = $this->getName();
-    $result = $value->$fieldName;
-    if ($result instanceof NullPage) {
-      return null;
-    }
-    return $result;
+    return $value->$fieldName;
   }
 
 }

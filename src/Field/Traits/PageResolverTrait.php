@@ -6,7 +6,6 @@ use Youshido\GraphQL\Execution\ResolveInfo;
 use Youshido\GraphQL\Type\NonNullType;
 use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Utils;
-use ProcessWire\WireData;
 use ProcessWire\Page;
 
 trait PageResolverTrait {
@@ -16,9 +15,7 @@ trait PageResolverTrait {
     $value = null;
     $type = $this->getType();
     if ($type instanceof NonNullType) {      
-      $value = new WireData();
-      $value->name = '';
-      $value->id = '';
+      return new NullPage();
     }
     return $value;
   }
