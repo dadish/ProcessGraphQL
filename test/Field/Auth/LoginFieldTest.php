@@ -5,9 +5,6 @@ namespace ProcessWire\GraphQL\Test\Fields\Auth;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\GraphQL\Utils;
 
-/**
- * @backupGlobals disabled
- */
 class LoginFieldTest extends GraphQLTestCase {
 
   public function tearDown()
