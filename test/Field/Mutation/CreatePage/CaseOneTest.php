@@ -10,6 +10,7 @@ namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
+use \ProcessWire\NullPage;
 
 class CreatePageCaseOneTest extends GraphQLTestCase {
 
@@ -22,7 +23,6 @@ class CreatePageCaseOneTest extends GraphQLTestCase {
 	
   public function testValue()
   {
-  	$skyscraper = Utils::pages()->get("template=skyscraper");
   	$query = 'mutation createPage ($page: SkyscraperCreateInputType!) {
   		createSkyscraper (page: $page) {
   			name
@@ -32,12 +32,15 @@ class CreatePageCaseOneTest extends GraphQLTestCase {
   	$variables = [
   		"page" => [
   			"parent" => "4121",
-				"name" => "new-building-sky",
+				"name" => "not-created-building-sky",
 				"title" => "New Building Sky"
   		]
   	];
   	$res = $this->execute($query, json_encode($variables));
-  	$this->assertEquals(1, count($res->errors), 'createSkyscraper is not available if required `title` field is not legal.');
+    $newBuildingSky = Utils::pages()->get("name=not-created-building-sky");
+    $this->assertEquals(1, count($res->errors), 'createSkyscraper is not available if required `title` field is not legal.');
+    $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createSkyscraper does not create a page.');
+
   }
 
 }

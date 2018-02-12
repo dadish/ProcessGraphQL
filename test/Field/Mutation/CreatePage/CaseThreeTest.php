@@ -22,7 +22,6 @@ class CreatePageCaseThreeTest extends GraphQLTestCase {
 	
   public function testValue()
   {
-  	$skyscraper = Utils::pages()->get("template=skyscraper");
   	$query = 'mutation createPage ($page: SkyscraperCreateInputType!) {
   		skyscraper: createSkyscraper (page: $page) {
   			name
@@ -32,12 +31,14 @@ class CreatePageCaseThreeTest extends GraphQLTestCase {
   	$variables = [
   		"page" => [
   			"parent" => "4121",
-				"name" => "new-building-sky",
+				"name" => "created-building-sky",
 				"title" => "New Building Sky"
   		]
   	];
   	$res = $this->execute($query, json_encode($variables));
-  	$this->assertEquals($variables['page']['name'], $res->data->skyscraper->name, 'createSkyscraper creates skyscraper page if everything is ok.');
+    $newBuildingSky = Utils::pages()->get("name=created-building-sky");
+    $this->assertEquals($variables['page']['name'], $res->data->skyscraper->name, 'createSkyscraper returns correct values in response.');
+  	$this->assertEquals($newBuildingSky->id, $res->data->skyscraper->id, 'createSkyscraper creates skyscraper page if everything is ok.');
   }
 
 }
