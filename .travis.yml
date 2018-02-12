@@ -1,3 +1,4 @@
 language: php
 before_script:
   - phpenv config-rm xdebug.ini
+script: composer exec -v "phpunit --bootstrap test/bootstrap.php test"
