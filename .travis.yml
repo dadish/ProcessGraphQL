@@ -1,9 +1,24 @@
 language: php
+
 php:
   - '7.1'
+
+services:
+  - mysql
+
 before_install:
+  # disable xdebug, because it affects performance
   - phpenv config-rm xdebug.ini
+
+  # create our test database
+  - mysql -e "CREATE DATABASE IF NOT EXISTS skyscrapers_dev;"
+  - mysql -e "CREATE USER 'skyscrapers_dev'@'localhost' IDENTIFIED BY 'kwJM2HVk9L8b41Hv';"
+  - mysql -e "GRANT ALL ON skyscrapers_dev.* to 'skyscrapers_dev'@'localhost';"
+  - mysql -e "FLUSH PRIVILEGES;"
+
+
 install:
   - composer install
+
 script:
   - composer exec -v "phpunit --bootstrap test/bootstrap.php test"
