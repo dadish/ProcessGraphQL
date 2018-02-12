@@ -1,4 +1,9 @@
 language: php
-before_script:
+php:
+  - '7.1'
+before_install:
   - phpenv config-rm xdebug.ini
-script: composer exec -v "phpunit --bootstrap test/bootstrap.php test"
+install:
+  - composer install
+script:
+  - composer exec -v "phpunit --bootstrap test/bootstrap.php test"
