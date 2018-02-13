@@ -129,3 +129,13 @@ if (masterCheckout.code === 0) {
 // 	console.log(releaseBranchDelete.stderr || releaseBranchDelete.stdout)
 // 	shell.exit(1)
 // }
+
+// install vendor deps back
+const vendorInstallAll = shell.exec('composer install', silent)
+if (vendorInstallAll.code === 0) {
+	shell.echo('Installed vendor deps back.')
+} else {
+	shell.echo('Warning: Could not install vendor deps back. Try "composer install" to fix it.')
+	console.log(vendorInstallAll.stderrr)
+	shell.exit(1)
+}
