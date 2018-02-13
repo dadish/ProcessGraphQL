@@ -169,3 +169,26 @@ if (vendorInstallAll.code === 0) {
 	console.log(vendorInstallAll.stderrr)
 	shell.exit(1)
 }
+
+// increment version in package.json file
+// for master branch, since changes in release
+// branch do not affect master branch, the package
+// version in package.json file in master branch is old
+const incementPackageVersion = shell.exec(`npm version ${releaseLevel} --no-git-tag-version`)
+if (incementPackageVersion.code === 0) {
+	shell.echo(`Incremented package version on master branch`)
+} else {
+	shell.echo(`Error: Could not increment package version on ${MASTER_BRANCH_NAME} branch.`)
+	console.log(incementPackageVersion.stderr)
+	shell.exit(1)
+}
+
+// commit package version change on master branch
+const packageVersionCommit = shell.exec('git commit --all -m "Update package version."')
+if (packageVersionCommit.code === 0) {
+	shell.echo(`Committed package version update on ${MASTER_BRANCH_NAME} branch.`)
+} else {
+	shell.echo(`Error: Could not commit package version update on ${MASTER_BRANCH_NAME} branch.`)
+	console.log(packageVersionCommit.stderr)
+	shell.exit(1)
+}
