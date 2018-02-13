@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release-patch": "npm version patch && bin-release"
+    "release-patch": "bin-release"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/dadish/ProcessGraphQL/issues"
   },
-  "homepage": "https://github.com/dadish/ProcessGraphQL#readme"
+  "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
+  "devDependencies": {
+    "shelljs": "^0.8.1"
+  }
 }
