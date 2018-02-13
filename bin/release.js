@@ -52,6 +52,13 @@ const removeDirs = shell.rm('-rf', [
 	'ScreenCast.md',
 	'Todo.md',
 	'.gitignore',
+
+	// remove extraneous
+	'GraphiQL/src',
+	'GraphiQL/.gitignore',
+	'GraphiQL/package.json',
+	'GraphiQL/README.md',
+	'GraphiQL/yarn.lock',
 ], silent)
 if (removeDirs.code === 0) {
 	shell.echo('Removed extraneous files.')
