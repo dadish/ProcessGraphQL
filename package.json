@@ -1,0 +1,30 @@
+{
+  "name": "processgraphql",
+  "version": "0.16.1",
+  "description": "GraphQL for ProcessWire",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "bin": {
+    "cli-test": "bin/test.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release-patch": "npm version patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dadish/ProcessGraphQL.git"
+  },
+  "keywords": [
+    "GraphQL",
+    "ProcessWire"
+  ],
+  "author": "Nurguly Ashyrov <nurguly.ashyorov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dadish/ProcessGraphQL/issues"
+  },
+  "homepage": "https://github.com/dadish/ProcessGraphQL#readme"
+}
