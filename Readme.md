@@ -1,7 +1,7 @@
 ProcessGraphQL
 ==============
 
-![Travis-CI Status][travis-ci-badge]
+[![Travis-CI Status][travis-ci-badge]][travis-ci]
 
 [GraphQL][graphql] for [ProcessWire][pw].
 
@@ -238,3 +238,4 @@ All the core ProcessWire fields will eventually be supported.
 [img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Documentation.gif
 [youshido-graphql]: https://github.com/Youshido/GraphQL
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
+[travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
