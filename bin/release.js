@@ -3,7 +3,7 @@ const shell = require('shelljs')
 
 const silent = { silent: true }
 const RELEASE_BRANCH_NAME = 'release'
-const MASTER_BRANCH_NAME = 'ci'
+const MASTER_BRANCH_NAME = 'master'
 
 const RELEASE_MAJOR = 'major'
 const RELEASE_MINOR = 'minor'
