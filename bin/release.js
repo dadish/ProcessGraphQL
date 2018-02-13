@@ -174,7 +174,7 @@ if (vendorInstallAll.code === 0) {
 // for master branch, since changes in release
 // branch do not affect master branch, the package
 // version in package.json file in master branch is old
-const incementPackageVersion = shell.exec(`npm version ${releaseLevel} --no-git-tag-version`)
+const incementPackageVersion = shell.exec(`npm version ${releaseLevel} --no-git-tag-version`, silent)
 if (incementPackageVersion.code === 0) {
 	shell.echo(`Incremented package version on master branch`)
 } else {
@@ -184,7 +184,7 @@ if (incementPackageVersion.code === 0) {
 }
 
 // commit package version change on master branch
-const packageVersionCommit = shell.exec('git commit --all -m "Update package version."')
+const packageVersionCommit = shell.exec('git commit --all -m "Update package version."', silent)
 if (packageVersionCommit.code === 0) {
 	shell.echo(`Committed package version update on ${MASTER_BRANCH_NAME} branch.`)
 } else {
