@@ -49,7 +49,6 @@ const removeDirs = shell.rm('-rf', [
 	'Changelog.md',
 	'composer.lock',
 	'package-lock.json',
-	'package.json',
 	'ScreenCast.md',
 	'Todo.md',
 	'.gitignore',
