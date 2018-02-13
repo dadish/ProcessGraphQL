@@ -184,7 +184,7 @@ if (incementPackageVersion.code === 0) {
 }
 
 // commit package version change on master branch
-const packageVersionCommit = shell.exec('git commit --all -m "Update package version."', silent)
+const packageVersionCommit = shell.exec(`git commit --all -m "${incementPackageVersion}"`, silent)
 if (packageVersionCommit.code === 0) {
 	shell.echo(`Committed package version update on ${MASTER_BRANCH_NAME} branch.`)
 } else {
