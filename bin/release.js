@@ -19,8 +19,6 @@ if (
 	shell.exit(1)
 }
 
-return
-
 // create the release branch
 const releaseBranchCreate = shell.exec(`git branch ${RELEASE_BRANCH_NAME}`, silent)
 if (releaseBranchCreate.code === 0) {
