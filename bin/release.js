@@ -2,25 +2,41 @@
 const shell = require('shelljs')
 
 const silent = { silent: true }
-const releaseBranchName = 'release'
-const masterBranchName = 'ci'
+const RELEASE_BRANCH_NAME = 'release'
+const MASTER_BRANCH_NAME = 'ci'
+
+const RELEASE_MAJOR = 'major'
+const RELEASE_MINOR = 'minor'
+const RELEASE_PATCH = 'patch'
+
+const releaseLevel = process.argv[2]
+if (
+	releaseLevel !== RELEASE_MAJOR &&
+	releaseLevel !== RELEASE_MINOR &&
+	releaseLevel !== RELEASE_PATCH
+) {
+	shell.echo(`Error: The provided release level is incorrect: ${releaseLevel}. Allowed: ${RELEASE_MAJOR}, ${RELEASE_MINOR}, ${RELEASE_PATCH}`)
+	shell.exit(1)
+}
+
+return
 
 // create the release branch
-const releaseBranchCreate = shell.exec(`git branch ${releaseBranchName}`, silent)
+const releaseBranchCreate = shell.exec(`git branch ${RELEASE_BRANCH_NAME}`, silent)
 if (releaseBranchCreate.code === 0) {
-	shell.echo(`Created ${releaseBranchName} branch`)
+	shell.echo(`Created ${RELEASE_BRANCH_NAME} branch`)
 } else {
-	shell.echo(`Error: Could not create ${releaseBranchName} branch.`)
+	shell.echo(`Error: Could not create ${RELEASE_BRANCH_NAME} branch.`)
 	console.log(releaseBranchCreate.stderr || releaseBranchCreate.stdout)
 	shell.exit(1)
 }
 
 // checkout the release branch
-const releaseBranchCheckout = shell.exec(`git checkout ${releaseBranchName}`, silent)
+const releaseBranchCheckout = shell.exec(`git checkout ${RELEASE_BRANCH_NAME}`, silent)
 if (releaseBranchCheckout.code === 0) {
-	shell.echo(`Checked out the ${releaseBranchName} branch.`)
+	shell.echo(`Checked out the ${RELEASE_BRANCH_NAME} branch.`)
 } else {
-	shell.echo(`Error: Could not checkout the ${releaseBranchName} branch.`)
+	shell.echo(`Error: Could not checkout the ${RELEASE_BRANCH_NAME} branch.`)
 	console.log(releaseBranchCheckout.stderr || releaseBranchCheckout.stdout)
 	shell.exit(1)
 }
@@ -110,25 +126,35 @@ if (commitChanges.code === 0) {
 	shell.exit(1)
 }
 
-// checkout the master branch
-const masterCheckout = shell.exec(`git checkout ${masterBranchName}`, silent)
-if (masterCheckout.code === 0) {
-	shell.echo(`Checked out the ${masterBranchName} branch`)
+// tag the release
+const releaseTagging = shell.exec(`npm version ${releaseLevel}`)
+if (releaseTagging.code === 0) {
+	shell.echo('Tag the release.')
 } else {
-	shell.echo(`Error: Could not checkout the ${masterBranchName} branch.`)
+	shell.echo('Error: Could not tag the release.')
+	console.log(releaseTagging.stderr)
+	shell.exit(1)
+}
+
+// checkout the master branch
+const masterCheckout = shell.exec(`git checkout ${MASTER_BRANCH_NAME}`, silent)
+if (masterCheckout.code === 0) {
+	shell.echo(`Checked out the ${MASTER_BRANCH_NAME} branch`)
+} else {
+	shell.echo(`Error: Could not checkout the ${MASTER_BRANCH_NAME} branch.`)
 	console.log(masterCheckout.stderr || masterCheckout.stdout)
 	shell.exit(1)
 }
 
 // delete the release branch
-// const releaseBranchDelete = shell.exec(`git branch -D ${releaseBranchName}`, silent)
-// if (releaseBranchDelete.code === 0) {
-// 	shell.echo(`Deleted ${releaseBranchName} branch.`)
-// } else {
-// 	shell.echo(`Error: Could not delete ${releaseBranchName} branch.`)
-// 	console.log(releaseBranchDelete.stderr || releaseBranchDelete.stdout)
-// 	shell.exit(1)
-// }
+const releaseBranchDelete = shell.exec(`git branch -D ${RELEASE_BRANCH_NAME}`, silent)
+if (releaseBranchDelete.code === 0) {
+	shell.echo(`Deleted ${RELEASE_BRANCH_NAME} branch.`)
+} else {
+	shell.echo(`Error: Could not delete ${RELEASE_BRANCH_NAME} branch.`)
+	console.log(releaseBranchDelete.stderr || releaseBranchDelete.stdout)
+	shell.exit(1)
+}
 
 // install vendor deps back
 const vendorInstallAll = shell.exec('composer install', silent)

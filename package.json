@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release-patch": "bin-release"
+    "release-patch": "bin-release patch",
+    "release-minor": "bin-release minor",
+    "release-major": "bin-release major"
   },
   "repository": {
     "type": "git",
