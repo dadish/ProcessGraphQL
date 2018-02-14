@@ -2,6 +2,7 @@ language: php
 
 php:
   - '7.1'
+  - '5.5'
 
 services:
   - mysql
