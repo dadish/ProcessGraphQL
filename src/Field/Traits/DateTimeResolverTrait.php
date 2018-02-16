@@ -30,7 +30,11 @@ trait DatetimeResolverTrait {
       if (Utils::fields()->get($fieldName) instanceof FieldtypeDatetime) {
         $rawValue = $value->getUnformatted($fieldName);
       }
-      return date($format, $rawValue);
+      if ($rawValue) {
+        return date($format, $rawValue);
+      } else {
+        return "";
+      }
     }
     
     return $value->$fieldName;
