@@ -22,3 +22,7 @@ install:
 
 script:
   - composer exec -v "phpunit --bootstrap test/bootstrap.php test"
+
+branches:
+  only:
+    - master
