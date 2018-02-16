@@ -28,7 +28,8 @@ trait DatetimeResolverTrait {
     if (isset($args['format'])) {
       $format = $args['format'];
       $rawValue = $value->$fieldName;
-      if (Utils::fields()->get($fieldName) instanceof FieldtypeDatetime) {
+      $field = Utils::fields()->get($fieldName);
+      if ($field && $field->type instanceof FieldtypeDatetime) {
         $rawValue = $value->getUnformatted($fieldName);
       }
       if ($rawValue) {
