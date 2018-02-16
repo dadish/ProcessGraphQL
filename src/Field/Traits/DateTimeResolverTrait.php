@@ -17,6 +17,7 @@ trait DatetimeResolverTrait {
     $config->addArgument(new InputField([
       'name' => 'format',
       'type' => new StringType(),
+      'description' => 'PHP date formatting string. Refer to https://devdocs.io/php/function.date',
     ]));
   }
 
