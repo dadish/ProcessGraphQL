@@ -67,3 +67,7 @@ echo "Database setup finished.\n\n";
 $wire = new ProcessWire($config);
 $module = $wire->fuel('modules')->get('ProcessGraphQL');
 $module->install();
+
+// set output formatting
+$pages = $wire->fuel('pages');
+$pages->setOutputFormatting(true);

@@ -2,13 +2,16 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page;
 
+/**
+ * It returns correct default output.
+ */
+
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
-use \ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeDatetime;
 
-class FieldtypeDatetimeTest extends GraphQLTestCase {
+class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['architect'],
@@ -22,6 +25,7 @@ class FieldtypeDatetimeTest extends GraphQLTestCase {
 
   public function testValue()
   {
+
     $architect = Utils::pages()->get("template=architect");
     $query = "{
       architect(s: \"id=$architect->id\") {
@@ -31,9 +35,8 @@ class FieldtypeDatetimeTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    $expected = date(FieldtypeDatetime::$format, $architect->born);
-    $actual = $res->data->architect->list[0]->born;
-    $this->assertEquals($expected, $actual, 'Retrieves datetime value.');
+
+    $this->assertEquals($architect->born, $res->data->architect->list[0]->born, 'Retrieves datetime value.');
   }
 
 }

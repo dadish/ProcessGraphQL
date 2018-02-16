@@ -2,25 +2,17 @@
 
 namespace ProcessWire\GraphQL\Field\Page\Fieldtype;
 
-use Youshido\GraphQL\Type\Scalar\DateTimeType;
-use Youshido\GraphQL\Execution\ResolveInfo;
+use Youshido\GraphQL\Type\Scalar\StringType;
 use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
+use ProcessWire\GraphQL\Field\Traits\DatetimeResolverTrait;
 
 class FieldtypeDatetime extends AbstractFieldtype {
 
-  public static $format = 'Y-m-d H:i:s';
-
   public function getDefaultType()
   {
-    return new DatetimeType();
+    return new StringType();
   }
 
-  public function resolve($value, array $args, ResolveInfo $info)
-  {
-    $fieldName = $this->field->name;
-    $result = $value->$fieldName;
-    if (!$result) return null;
-    return date(self::$format, $result);
-  }
+  use DatetimeResolverTrait;
 
 }

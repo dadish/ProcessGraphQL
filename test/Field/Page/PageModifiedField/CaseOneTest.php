@@ -2,15 +2,19 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
+/**
+ * Returns the correct default value.
+ */
+
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class PageCreatedFieldTest extends GraphQLTestCase {
+class PageModifiedFieldCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['skyscraper'],
-    'legalPageFields' => ['created'],
+    'legalPageFields' => ['modified'],
   ];
 
   use AccessTrait;
@@ -21,12 +25,16 @@ class PageCreatedFieldTest extends GraphQLTestCase {
   	$query = "{
   		skyscraper (s: \"id=$skyscraper->id\") {
   			list {
-  				created
+  				modified
   			}
   		}
   	}";
   	$res = $this->execute($query);
-  	$this->assertEquals($skyscraper->created, $res->data->skyscraper->list[0]->created, 'Retrieves `created` field of the page.');
+  	$this->assertEquals(
+      $skyscraper->modified,
+      $res->data->skyscraper->list[0]->modified,
+      'Retrieves correct default value of `modified` field of the page.'
+    );
   }
 
 }

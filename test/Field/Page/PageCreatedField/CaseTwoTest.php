@@ -2,15 +2,19 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
+/**
+ * Returns correctly formatted value.
+ */
+
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class PageModifiedFieldTest extends GraphQLTestCase {
+class PageCreatedFieldCaseTwoTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['skyscraper'],
-    'legalPageFields' => ['modified'],
+    'legalPageFields' => ['created'],
   ];
 
   use AccessTrait;
@@ -18,15 +22,20 @@ class PageModifiedFieldTest extends GraphQLTestCase {
   public function testValue()
   {
   	$skyscraper = Utils::pages()->get("template=skyscraper");
+    $format = 'j F Y H/i/s';
   	$query = "{
   		skyscraper (s: \"id=$skyscraper->id\") {
   			list {
-  				modified
+  				created (format: \"$format\")
   			}
   		}
   	}";
   	$res = $this->execute($query);
-  	$this->assertEquals($skyscraper->modified, $res->data->skyscraper->list[0]->modified, 'Retrieves `modified` field of the page.');
+  	$this->assertEquals(
+      date($format, $skyscraper->created),
+      $res->data->skyscraper->list[0]->created,
+      'Retrieves correctly formatted `created` value.'
+    );
   }
 
 }
