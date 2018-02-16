@@ -11,9 +11,9 @@ before_install:
   - phpenv config-rm xdebug.ini
 
   # create our test database
-  - mysql -e "CREATE DATABASE IF NOT EXISTS skyscrapers_dev;"
-  - mysql -e "CREATE USER 'skyscrapers_dev'@'localhost' IDENTIFIED BY 'kwJM2HVk9L8b41Hv';"
-  - mysql -e "GRANT ALL ON skyscrapers_dev.* to 'skyscrapers_dev'@'localhost';"
+  - mysql -e "CREATE DATABASE IF NOT EXISTS processgraphql;"
+  - mysql -e "CREATE USER 'processgraphql'@'localhost' IDENTIFIED BY 'processgraphql';"
+  - mysql -e "GRANT ALL ON processgraphql.* to 'processgraphql'@'localhost';"
   - mysql -e "FLUSH PRIVILEGES;"
 
 

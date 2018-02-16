@@ -110,9 +110,9 @@ $config->dbLowercaseTables = true;
  * 
  */
 $config->dbHost = 'localhost';
-$config->dbName = 'skyscrapers_dev';
-$config->dbUser = 'skyscrapers_dev';
-$config->dbPass = 'kwJM2HVk9L8b41Hv';
+$config->dbName = 'processgraphql';
+$config->dbUser = 'processgraphql';
+$config->dbPass = 'processgraphql';
 $config->dbPort = '3306';
 
 /**
