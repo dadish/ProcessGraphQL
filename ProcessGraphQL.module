@@ -78,7 +78,10 @@ class ProcessGraphQL extends Process implements Module {
    */
   public function ___execute()
   {
-    if ($this->config->ajax) return $this->executeGraphQL();
+    if ($this->config->ajax) {
+    	$this->pages->setOutputFormatting(true);
+    	return $this->executeGraphQL();
+    }
 		return $this->executeGraphiQLPartial();
   }
 
