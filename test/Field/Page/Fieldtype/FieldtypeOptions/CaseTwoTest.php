@@ -9,7 +9,7 @@ use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
 
   const accessRules = [
-    'legalTemplates' => ['list-all'],
+    'legalTemplates' => ['city'],
     'legalFields' => ['options_single'],
   ];
 
@@ -17,9 +17,9 @@ class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
   
   public function testValue()
   {
-    $list_all = Utils::pages()->get("template=list-all");
+    $city = Utils::pages()->get("template=city, options_single.count>0");
     $query = "{
-      list_all () {
+      city (s: \"id=$city->id\") {
         list {
           options_single {
             title
@@ -30,9 +30,9 @@ class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    $this->assertEquals($list_all->options_single->title, $res->data->list_all->list[0]->options_single->title, 'Retrieves correct option title.');
-    $this->assertEquals($list_all->options_single->value, $res->data->list_all->list[0]->options_single->value, 'Retrieves correct option value.');
-    $this->assertEquals($list_all->options_single->id, $res->data->list_all->list[0]->options_single->id, 'Retrieves correct option id.');
+    $this->assertEquals($city->options_single->title, $res->data->city->list[0]->options_single->title, 'Retrieves correct option title.');
+    $this->assertEquals($city->options_single->value, $res->data->city->list[0]->options_single->value, 'Retrieves correct option value.');
+    $this->assertEquals($city->options_single->id, $res->data->city->list[0]->options_single->id, 'Retrieves correct option id.');
   }
 
 }
