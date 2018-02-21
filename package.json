@@ -10,10 +10,11 @@
     "bin-release": "bin/release.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
     "release-patch": "bin-release patch",
     "release-minor": "bin-release minor",
-    "release-major": "bin-release major"
+    "release-major": "bin-release major",
+    "postinstall": "composer install"
   },
   "repository": {
     "type": "git",
