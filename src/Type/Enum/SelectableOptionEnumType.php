@@ -18,8 +18,8 @@ class SelectableOptionEnumType extends AbstractEnumType {
 		$options = [];
 		foreach ($this->field->type->getOptions($this->field) as $option) {
 			$options[] = [
-				'value' => $option->id,
-				'name' => $option->value | $option->title,
+				'value' => $option->value,
+				'name' => $option->title,
 			];
 		}
 		return $options;

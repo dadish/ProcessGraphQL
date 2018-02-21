@@ -52,7 +52,7 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
     $this->assertTrue(!$newCity instanceof NullPage, 'New Page is created.');
     $this->assertEquals($name, $newCity->name, 'New Page has correct name.');
     $this->assertEquals($title, $newCity->title, 'New Page has correct title.');
-    $this->assertEquals($option, $newCity->options_single->value, 'New Page has correct option value.');
+    $this->assertEquals($option, $newCity->options_single->title, 'New Page has correct option title.');
   }
 
 }
