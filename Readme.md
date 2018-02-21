@@ -36,10 +36,9 @@ See more [demo here](https://github.com/dadish/ProcessGraphQL/blob/master/Screen
 
 ## Installation
 To install the module, go to __Modules -> Install -> Add New__. Scroll down to get to the section
-__Add Module from URL__. Paste the below URL into the __Module ZIP file URL__ field and press __Download__.
-```
-https://github.com/dadish/ProcessGraphQL/archive/master.zip
-```
+__Add Module from URL__. Paste the URL of the [latest release][latest-release] into the __Module ZIP file
+URL__ field and press __Download__.
+
 ProcessWire will download this module and place it at `/site/modules/` directory for you. After you
 did that, you should see __GraphQL__ module among others. Go ahead and press __Install__ button next
 to it.
@@ -239,3 +238,4 @@ All the core ProcessWire fields will eventually be supported.
 [youshido-graphql]: https://github.com/Youshido/GraphQL
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
+[latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
