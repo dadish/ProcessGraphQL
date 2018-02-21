@@ -1,6 +1,17 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.19.0
+- Add support for `FieldtypeOptions`.
+
+### 0.18.5
+- Fix `DatetimeResolverTrait`
+
+### 0.18.3
+- Adds support for format argument for FieldtypeDatetime Including built-in
+fields created & modified. Now you can pass [PHP date](https://secure.php.net/manual/en/function.date.php) formattting string and
+get dates exactly how you want.
+
 ### 0.17.0
 This release introduces lots of changes to repository structure and development
 process.
