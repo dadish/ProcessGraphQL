@@ -14,6 +14,7 @@
     "release-patch": "bin-release patch",
     "release-minor": "bin-release minor",
     "release-major": "bin-release major",
+    "release-test": "bin-release test",
     "postinstall": "composer install"
   },
   "repository": {

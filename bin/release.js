@@ -8,14 +8,16 @@ const MASTER_BRANCH_NAME = 'master'
 const RELEASE_MAJOR = 'major'
 const RELEASE_MINOR = 'minor'
 const RELEASE_PATCH = 'patch'
+const RELEASE_TEST = 'test'
 
 const releaseLevel = process.argv[2]
 if (
 	releaseLevel !== RELEASE_MAJOR &&
 	releaseLevel !== RELEASE_MINOR &&
-	releaseLevel !== RELEASE_PATCH
+	releaseLevel !== RELEASE_PATCH &&
+	releaseLevel !== RELEASE_TEST
 ) {
-	shell.echo(`Error: The provided release level is incorrect: ${releaseLevel}. Allowed: ${RELEASE_MAJOR}, ${RELEASE_MINOR}, ${RELEASE_PATCH}`)
+	shell.echo(`Error: The provided release level is incorrect: ${releaseLevel}. Allowed: ${RELEASE_MAJOR}, ${RELEASE_MINOR}, ${RELEASE_PATCH}, ${RELEASE_TEST}`)
 	shell.exit(1)
 }
 
@@ -130,15 +132,28 @@ if (commitChanges.code === 0) {
 	shell.exit(1)
 }
 
-// tag the release
-const releaseTagging = shell.exec(`npm version ${releaseLevel}`)
-if (releaseTagging.code === 0) {
-	shell.echo('Tag the release.')
+if (releaseLevel === RELEASE_TEST) {
+	// snapshot the release in "test" branch
+	const releaseSnapshotting = shell.exec(`git branch ${RELEASE_TEST}`)
+	if (releaseSnapshotting.code === 0) {
+		shell.echo('Snapshot the release.')
+	} else {
+		shell.echo('Error: Could not snapshot the release.')
+		console.log(releaseSnapshotting.stderr)
+		shell.exit(1)
+	}
 } else {
-	shell.echo('Error: Could not tag the release.')
-	console.log(releaseTagging.stderr)
-	shell.exit(1)
+	// tag the release
+	const releaseTagging = shell.exec(`npm version ${releaseLevel}`)
+	if (releaseTagging.code === 0) {
+		shell.echo('Tag the release.')
+	} else {
+		shell.echo('Error: Could not tag the release.')
+		console.log(releaseTagging.stderr)
+		shell.exit(1)
+	}
 }
+
 
 // checkout the master branch
 const masterCheckout = shell.exec(`git checkout ${MASTER_BRANCH_NAME}`, silent)
@@ -168,6 +183,11 @@ if (vendorInstallAll.code === 0) {
 	shell.echo('Warning: Could not install vendor deps back. Try "composer install" to fix it.')
 	console.log(vendorInstallAll.stderrr)
 	shell.exit(1)
+}
+
+// if it was a test release then do nothing on master branch
+if (releaseLevel === RELEASE_TEST) {
+	return
 }
 
 // increment version in package.json file
