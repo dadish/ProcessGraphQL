@@ -14,7 +14,7 @@
   },
   "require-dev": {
     "processwire/processwire": "3.0.*",
-    "phpunit/phpunit": "6.4.*",
+    "phpunit/phpunit": "7.0.*",
     "ryancramerdesign/FieldtypeMapMarker": "1.0.0"
   },
   "repositories": [
