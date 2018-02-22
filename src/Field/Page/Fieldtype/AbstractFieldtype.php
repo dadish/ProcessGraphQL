@@ -6,6 +6,7 @@ use Youshido\GraphQL\Field\AbstractField;
 use Youshido\GraphQL\Type\NonNullType;
 use Youshido\GraphQL\Execution\ResolveInfo;
 use ProcessWire\Field;
+use ProcessWire\Page;
 
 abstract class AbstractFieldtype extends AbstractField {
 
@@ -46,6 +47,12 @@ abstract class AbstractFieldtype extends AbstractField {
   {
     $fieldName = $this->field->name;
     return $value->$fieldName;
+  }
+
+  public function setValue(Page $page, $value)
+  {
+    $fieldName = $this->field->name;
+    $page->$fieldName = $value;
   }
 
 }

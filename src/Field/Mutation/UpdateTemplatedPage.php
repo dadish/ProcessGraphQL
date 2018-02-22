@@ -126,28 +126,14 @@ class UpdateTemplatedPage extends AbstractField {
       $field = $fields->get($fieldName);
       
       // ignore if field cannot be found
-      if (!$field instanceof Field) continue;
-      
-      switch ($field->type->className()) {
-        case 'FieldtypeMapMarker':
-          $p->$fieldName->lat = $value['lat'];
-          $p->$fieldName->lng = $value['lng'];
-          $p->$fieldName->address = $value['address'];
-          $p->$fieldName->zoom = $value['zoom'];
-          break;
-        
-        case 'FieldtypePage':
-          $p->$fieldName = implode('|', $value);
-          break;
-
-        case 'FieldtypeDatetime':
-          $p->$fieldName = $value->format('Y-m-d H:i:s');
-          break;
-
-        default:
-          $p->$fieldName = $value;
-          break;
+      if (!$field instanceof Field) {
+        continue;
       }
+
+      $className = $field->type->className();
+      $Class = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $className;
+      $f = new $Class($field);
+      $f->setValue($p, $value);
     }
 
     // save the page to db

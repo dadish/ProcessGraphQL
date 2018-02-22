@@ -11,6 +11,7 @@ use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Type\Object\TemplatedPageArrayType;
 use ProcessWire\GraphQL\Field\Page\Fieldtype\AbstractFieldtype;
 use ProcessWire\GraphQL\Type\Scalar\SelectorType;
+use ProcessWire\Page;
 
 class FieldtypePage extends AbstractFieldtype {
 
@@ -38,6 +39,12 @@ class FieldtypePage extends AbstractFieldtype {
     $field = \ProcessWire\wire('fields')->get($fieldName);
     $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
     return $value->$fieldName->find($defaultSelector->serialize(""));
+  }
+
+  public function setValue(Page $page, $value)
+  {
+    $fieldName = $this->field->name;
+    $page->$fieldName = implode('|', $value);
   }
 
 }
