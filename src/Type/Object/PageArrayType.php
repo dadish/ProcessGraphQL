@@ -5,8 +5,9 @@ namespace ProcessWire\GraphQL\Type\Object;
 use Youshido\GraphQL\Type\Object\AbstractObjectType;
 use ProcessWire\GraphQL\Type\Object\WireArrayType;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayListField;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayFirstField;
+use ProcessWire\GraphQL\Field\PageArray\PageArrayLastField;
 use ProcessWire\GraphQL\Field\PageArray\PageArrayFindField;
-use ProcessWire\GraphQL\Field\PageArray\PageArrayCountField;
 use ProcessWire\GraphQL\Type\InterfaceType\PaginatedArrayInterfaceType;
 
 class PageArrayType extends AbstractObjectType {
@@ -26,6 +27,8 @@ class PageArrayType extends AbstractObjectType {
     $config->applyInterface(new PaginatedArrayInterfaceType());
     $config->addField(new PageArrayListField());
     $config->addField(new PageArrayFindField());
+    $config->addField(new PageArrayFirstField());
+    $config->addField(new PageArrayLastField());
   }
 
   public function getInterfaces()

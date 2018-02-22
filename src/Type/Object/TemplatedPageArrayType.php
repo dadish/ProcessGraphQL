@@ -6,6 +6,8 @@ use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Object\PageArrayType;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayFindField;
 use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayListField;
+use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayFirstField;
+use ProcessWire\GraphQL\Field\TemplatedPageArray\TemplatedPageArrayLastField;
 
 class TemplatedPageArrayType extends PageArrayType {
 
@@ -39,6 +41,8 @@ class TemplatedPageArrayType extends PageArrayType {
     parent::build($config);
     $config->addField(new TemplatedPageArrayFindField($this->template));
     $config->addField(new TemplatedPageArrayListField($this->template));
+    $config->addField(new TemplatedPageArrayFirstField($this->template));
+    $config->addField(new TemplatedPageArrayLastField($this->template));
   }
 
 }
