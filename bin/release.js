@@ -144,7 +144,7 @@ if (releaseLevel === RELEASE_TEST) {
 	}
 } else {
 	// tag the release
-	const releaseTagging = shell.exec(`npm version ${releaseLevel}`)
+	const releaseTagging = shell.exec(`npm version ${releaseLevel} -m "%s \n[skip ci]"`)
 	if (releaseTagging.code === 0) {
 		shell.echo('Tag the release.')
 	} else {
