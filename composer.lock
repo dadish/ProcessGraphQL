@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "41c46d3676332fffd695f279562d3696",
+    "content-hash": "268ca1f861f0606823bcc8361ff96a5f",
     "packages": [
         {
             "name": "youshido/graphql",
@@ -51,6 +51,17 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "dadish/FieldtypeMapMarkerGraphQL",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/dadish/FieldtypeMapMarkerGraphQL/archive/master.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
         {
             "name": "doctrine/instantiator",
             "version": "1.1.0",
