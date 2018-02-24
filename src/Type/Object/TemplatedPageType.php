@@ -47,6 +47,14 @@ class TemplatedPageType extends AbstractObjectType {
       // skip if the field type is not supported
       $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
       if (!class_exists($className)) continue;
+
+      // // if field is supported by third party then add it
+      // $thirdPartyClassName = "\\ProcessWire\\" . $field->type->className() . "GraphQL";
+      // if (class_exists($thirdPartyClassName)) {
+      //   $config->addField(new FieldtypeThirdParty($thirdPartyClassName, $field));
+      //   continue;
+      // }
+
       $config->addField(new $className($field));
     }
   }
