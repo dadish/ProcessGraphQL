@@ -41,7 +41,7 @@ class MapMarkerType extends AbstractObjectType {
 			'type' => new StringType(),
 			'description' => 'The address of the MapMarker.',
 			'resolve' => function ($value) {
-				return (string) $value->adress;
+				return (string) $value->address;
 			}
 		]);
 
