@@ -25,7 +25,7 @@ class FieldtypeMapMarkerTest extends GraphQLTestCase {
 
   public function testValue()
   {
-    $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
+    $skyscraper = Utils::pages()->get("template=skyscraper, map.address!=''");
     $query = "{
       skyscraper (s: \"id=$skyscraper->id\") {
         list {
