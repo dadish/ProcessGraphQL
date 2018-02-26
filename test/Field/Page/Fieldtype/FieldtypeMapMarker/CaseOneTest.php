@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Can't make this one work. Don't know why.
+ * Retreives correct values.
  * 
  */
 
@@ -12,14 +12,12 @@ use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
-class FieldtypeMapMarkerTest extends GraphQLTestCase {
+class FieldtypeMapMarkerCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['map'],
   ];
-  const FIELD_NAME = 'map';
-  const FIELD_TYPE = 'FieldtypeMapMarker';
 
   use AccessTrait;
 
