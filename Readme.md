@@ -120,17 +120,32 @@ If you wish to expose your GraphQL api, you can do so by calling a single method
 ProcessGraphQL module in your template file. Here is what it might look like
 ```php
 <?php
-
 // /site/templates/graphql.php
 
 echo $modules->get('ProcessGraphQL')->executeGraphQL();
+```
+This will automatically capture the GraphQL request from your client and respond to it.
+If you need some manual control on this, `executeGraphQL` accepts `$query` & `$variables`
+arguments and it will respond to them instead of trying to guess query from the client.
+This allows you to modify the request from the client before passing it to ProcessGraphQL..
+Here how it might look like.
+```php
+<?php
+// /site/templates/graphql.php
+
+$query = $input->post->query;
+$variables = $input->post->variables;
+...
+// modify your $query and $variables here...
+...
+$result = $modules->get('ProcessGraphQL')->executeGraphQL($query, $variables);
+echo $result;
 ```
 
 ### GraphiQL endpoint
 You can also expose the GraphiQL from within your template. Here is how you can do that.
 ```php
 <?php
-
 // /site/templates/graphiql.php
 
 echo $modules->get('ProcessGraphQL')->executeGraphiQL();
@@ -216,7 +231,7 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeTextarea
 - FieldtypeTextareaLanguage
 - FieldtypeURL
-- FieldtypeMapMarker
+- FieldtypeMapMarker (via [FieldtypeMapMarkerGraphQL][map-marker-graphql])
 
 All the core ProcessWire fields will eventually be supported.
 
@@ -239,3 +254,4 @@ All the core ProcessWire fields will eventually be supported.
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
+[map-marker-graphql]: https://github.com/dadish/FieldtypeMapMarkerGraphQL
