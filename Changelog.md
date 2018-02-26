@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.21.0
+- Add support for third-party Fieldtypes.
+
 ### 0.20.0
 - Add support for `first` & `last` fields for PageArray types.
 
