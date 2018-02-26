@@ -17,12 +17,12 @@ class FieldtypeThirdParty extends AbstractFieldtype {
 
 	public function getDefaultType()
 	{
-		return $this->thirdPartyClass::getType();
+		return $this->thirdPartyClass::getType($this->field);
 	}
 
 	public function getInputfieldType($type = null)
 	{
-		return $this->thirdPartyClass::getInputType();
+		return $this->thirdPartyClass::getInputType($this->field);
 	}
 
 	public function setValue(Page $page, $value)
