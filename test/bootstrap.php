@@ -44,6 +44,14 @@ if (!file_exists($mapMarkerDestDir)) {
 	\symlink($mapMarkerDir, $mapMarkerDestDir);
 }
 
+// symlink FieldtypeMapMarkerGraphQL inside the site's module
+// directory, so we can test FieldtypeMapMarker field.
+$mapMarkerGraphQLDir = $baseDir . "/vendor/dadish/FieldtypeMapMarkerGraphQL";
+$mapMarkerGraphQLDestDir = $siteDir . "/modules/FieldtypeMapMarkerGraphQL";
+if (!file_exists($mapMarkerGraphQLDestDir)) {
+	\symlink($mapMarkerGraphQLDir, $mapMarkerGraphQLDestDir);
+}
+
 // symlink skyscrapers pages files to site's asset files
 if (!file_exists($siteFilesDir)) {
 	\symlink($testFilesDir, $siteFilesDir);
@@ -65,7 +73,10 @@ echo "Database setup finished.\n\n";
 
 // Fire up ProcessWire!!!
 $wire = new ProcessWire($config);
-$module = $wire->fuel('modules')->get('ProcessGraphQL');
+$modules = $wire->fuel('modules');
+$modules->refresh();
+
+$module = $modules->get('ProcessGraphQL');
 $module->install();
 
 // set output formatting
