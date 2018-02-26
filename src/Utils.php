@@ -12,6 +12,7 @@ use ProcessWire\Languages;
 use ProcessWire\Field;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Config;
+use ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeThirdParty;
 
 class Utils {
 
@@ -224,5 +225,27 @@ class Utils {
     } else {
       return false;
     }
+  }
+
+  /**
+   * Matches a ProcessWire Fieldtype to corresponding GraphQL Field
+   * @param Field $field A Processwire field.
+   * @return mixed|null Returns a GraphQL compatible field or null if match is not found.
+   */
+  public static function pwFieldToGraphQlField(Field $field)
+  {
+    // use local field if available
+    $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
+    if (class_exists($className)) {
+      return new $className($field);
+    }
+
+    // use third party field if available
+    $thirdPartyClassName = "\\ProcessWire\\" . $field->type->className() . "GraphQL";
+    if (class_exists($thirdPartyClassName)) {
+      return new FieldtypeThirdParty($thirdPartyClassName, $field);
+    }
+
+    return null;
   }
 }

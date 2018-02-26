@@ -64,18 +64,17 @@ class CreateInputType extends AbstractInputObjectType {
 
       // get the field's GraphQL input class
       $className = $field->type->className();
-      if (in_array($className, $unsupportedFieldtypes)) continue;
-      $Class = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $className;
+      if (in_array($className, $unsupportedFieldtypes)) {
+        continue;
+      }
 
-      // if we do not have a GraphQL class for a field
-      // it means we do not support it.
-      if (!class_exists($Class)) continue;
-
-      $f = new $Class($field);
-      $config->addField($f->getName(), [
-        'type' => $f->getInputfieldType(),
-        'description' => $f->getDescription(),
-      ]);
+      $f = Utils::pwFieldToGraphQlField($field);
+      if (!is_null($f)) {
+        $config->addField($f->getName(), [
+          'type' => $f->getInputfieldType(),
+          'description' => $f->getDescription(),
+        ]);
+      }
     }
   }
 

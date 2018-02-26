@@ -7,30 +7,27 @@ use ProcessWire\Page;
 
 class FieldtypeThirdParty extends AbstractFieldtype {
 
-	public function __construct($class, $field)
-	{
-		$this->class = $class;
-		parent::__construct($field);
-	}
+	protected $thirdPartyClass;
 
-	public function getName()
+	public function __construct($thirdPartyClass, $field)
 	{
-		return $this->class::getName();
+		$this->thirdPartyClass = $thirdPartyClass;
+		parent::__construct($field);
 	}
 
 	public function getDefaultType()
 	{
-		$this->class::getType();
+		return $this->thirdPartyClass::getType();
 	}
 
 	public function getInputfieldType($type = null)
 	{
-		return $this->class::getInputType();
+		return $this->thirdPartyClass::getInputType();
 	}
 
 	public function setValue(Page $page, $value)
 	{
-		return $this->class::setValue($page, $this->field, $value);
+		return $this->thirdPartyClass::setValue($page, $this->field, $value);
 	}
 
 }

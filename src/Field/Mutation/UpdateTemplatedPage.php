@@ -130,10 +130,11 @@ class UpdateTemplatedPage extends AbstractField {
         continue;
       }
 
-      $className = $field->type->className();
-      $Class = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $className;
-      $f = new $Class($field);
-      $f->setValue($p, $value);
+      // set value of a field
+      $f = Utils::pwFieldToGraphQlField($field);
+      if (!is_null($f)) {
+        $f->setValue($p, $value);
+      }
     }
 
     // save the page to db

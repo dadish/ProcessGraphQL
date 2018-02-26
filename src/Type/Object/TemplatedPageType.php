@@ -7,6 +7,7 @@ use ProcessWire\Template;
 use ProcessWire\Field;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
+use ProcessWire\GraphQL\Field\Page\Fieldtype\FieldtypeThirdParty;
 
 class TemplatedPageType extends AbstractObjectType {
 
@@ -41,21 +42,19 @@ class TemplatedPageType extends AbstractObjectType {
     $config->applyInterface(new PageInterfaceType());
     foreach ($this->template->fields as $field) {
       // skip illigal fields
-      if (!$legalFields->has($field)) continue;
+      if (!$legalFields->has($field)) {
+        continue;
+      }
+
       // check if user has permission to view this field
-      if (!Utils::hasFieldPermission('view', $field, $this->template)) continue;
-      // skip if the field type is not supported
-      $className = "\\ProcessWire\\GraphQL\\Field\\Page\\Fieldtype\\" . $field->type->className();
-      if (!class_exists($className)) continue;
+      if (!Utils::hasFieldPermission('view', $field, $this->template)) {
+        continue;
+      }
 
-      // // if field is supported by third party then add it
-      // $thirdPartyClassName = "\\ProcessWire\\" . $field->type->className() . "GraphQL";
-      // if (class_exists($thirdPartyClassName)) {
-      //   $config->addField(new FieldtypeThirdParty($thirdPartyClassName, $field));
-      //   continue;
-      // }
-
-      $config->addField(new $className($field));
+      $f = Utils::pwFieldToGraphQlField($field);
+      if (!is_null($f)) {
+        $config->addField($f);
+      }
     }
   }
 
