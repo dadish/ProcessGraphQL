@@ -13,6 +13,7 @@ ProcessGraphQL
 5. [Access Control](#access-control)
 6. [API](#api)
 7. [Features](#features)
+8. [Development](https://github.com/dadish/ProcessGraphQL/wiki/Development)
 
 ## About ProcessGraphQL
 ProcessGraphQL is a module for [ProcessWire][pw]. The module seamlessly integrates to your ProcessWire
@@ -116,19 +117,18 @@ viewable in _skyscraper_ template and closed in others.
 
 ## API
 ### GraphQL endpoint
-If you wish to expose your GraphQL api, you can do so by calling a single method on
-ProcessGraphQL module in your template file. Here is what it might look like
+If you wish to expose your GraphQL api, you can do so by calling a single method on ProcessGraphQL module
+in your template file. Here is what it might look like
 ```php
 <?php
 // /site/templates/graphql.php
 
 echo $modules->get('ProcessGraphQL')->executeGraphQL();
 ```
-This will automatically capture the GraphQL request from your client and respond to it.
-If you need some manual control on this, `executeGraphQL` accepts `$query` & `$variables`
-arguments and it will respond to them instead of trying to guess query from the client.
-This allows you to modify the request from the client before passing it to ProcessGraphQL..
-Here how it might look like.
+This will automatically capture the GraphQL request from your client and respond to it. If you need
+some manual control on this, `executeGraphQL` accepts `$query` & `$variables` arguments and it will
+respond to them instead of trying to guess query from the client. This allows you to modify the
+request from the client before passing it to ProcessGraphQL. Here how it might look like.
 ```php
 <?php
 // /site/templates/graphql.php
@@ -150,16 +150,14 @@ You can also expose the GraphiQL from within your template. Here is how you can 
 
 echo $modules->get('ProcessGraphQL')->executeGraphiQL();
 ```
-> Please note that GraphiQL is a full web page. Meaning it includes `<header>`,
-> `<title>` and so on. Depending on your site configuration you might want to
-> disable `$config->prependTemplateFile` and/or `$config->appendTemplateFile`
-> for the template that exposes GraphiQL.
+> Please note that GraphiQL is a full web page. Meaning it includes `<header>`, `<title>` and so on.
+> Depending on your site configuration you might want to disable `$config->prependTemplateFile`
+> and/or `$config->appendTemplateFile` for the template that exposes GraphiQL.
 
-By default the GraphiQL is pointed to your admin GraphQL server, which is
-`/processwire/setup/graphql/`. You might want to change that because ProcessWire
-will not allow guest users to access that url. You can point GraphiQL to whatever adress
-you want by a property `GraphQLServerUrl`. ProcessGraphQL will respect that property
-when exposing GraphiQL. Here is how you might do this in your template file.
+By default the GraphiQL is pointed to your admin GraphQL server, which is `/processwire/setup/graphql/`.
+You might want to change that because ProcessWire will not allow guest users to access that url.
+You can point GraphiQL to whatever adress you want by a property `GraphQLServerUrl`. ProcessGraphQL
+will respect that property when exposing GraphiQL. Here is how you might do this in your template file.
 ```php
 <?php
 
@@ -173,9 +171,11 @@ echo $ProcessGraphQL->executeGraphiQL();
 > See [here](https://github.com/dadish/ProcessGraphQL/issues/1) why it is important.
 
 ### Modifying Query and Mutation
-There could be cases when you want to include some custom fields into your GraphQL query and mutation operation. There are two ProcessWire hooks that allows you to do that.
+There could be cases when you want to include some custom fields into your GraphQL query and mutation
+operation. There are two ProcessWire hooks that allows you to do that.
 #### getQuery() hook
-You can hook into `getQuery` method of the `ProcessGraphQL` class to add some custom fields into your GraphQL query operation. Here how it could look like in your `graphql.php` template file.
+You can hook into `getQuery` method of the `ProcessGraphQL` class to add some custom fields into your
+GraphQL query operation. Here how it could look like in your `graphql.php` template file.
 ```php
 <?php namespace ProcessWire;
 
@@ -195,10 +195,14 @@ wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
 
 echo $processGraphQL->executeGraphQL();
 ```
-The above code will add a `hello` field into your GraphQL api that reponds with the string `world`. You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql] to learn more about how you can modify your GraphQL api.
+The above code will add a `hello` field into your GraphQL api that reponds with the string `world`.
+You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the
+library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql]
+to learn more about how you can modify your GraphQL api.
 
 #### getMutation() hook
-You can also hook into `getMutation` method of `ProcessGraphQL` class to add custom fields into your GraphQL mutation operation. It works exactly like the `getQuery` hook method.
+You can also hook into `getMutation` method of `ProcessGraphQL` class to add custom fields into your
+GraphQL mutation operation. It works exactly like the `getQuery` hook method.
 
 ## Features
 ### GraphQL Operations
@@ -222,6 +226,7 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeFloat
 - FieldtypeImage
 - FieldtypeInteger
+- FieldtypeOptions
 - FieldtypePage
 - FieldtypePageTitle
 - FieldtypePageTitleLanguage
@@ -233,7 +238,36 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeURL
 - FieldtypeMapMarker (via [FieldtypeMapMarkerGraphQL][map-marker-graphql])
 
-All the core ProcessWire fields will eventually be supported.
+### Third-party Fieldtypes Support
+You can add support for any third-party fieldtype by creating a module for it. The example module
+that you can refer to is [FieldtypeMapMarkerGraphQL][map-marker-graphql] that adds support for FieldtypeMapMarker
+fieldtype. Below are the basic requirements that this kind of modules should fulfill.
+
+#### Naming of the Module
+- Name your module exactly as the Fieldtype module you are adding support for with `GraphQL` suffix.
+So for example `FieldtypeMapMarkerGraphQL` adds support for `FieldtypeMapMarker`.
+
+#### Required methods
+There are three required methods.
+
+##### public static function getType(Field $field)
+The value type that the fieldtype returns. Could be string, number, boolean or an abject with bunch
+of subfields.
+
+##### public static function getInputType(Field $field)
+The value type that the fieldtype accepts. Could be different value type than it returns. For
+instance FieldtypePage returns a Page object with lots of subfields, but can accept a simple
+integer (id of the page) as a value.
+
+##### public static function setValue(Page $page, Field $field, $value)
+Given the `$page`, `$field` and a `$value`, the method sets the value to the page's given field.
+
+> Note: The GraphQL api is built upon [Youshido/GraphQL][youshido-graphql] library. So the methods above should
+> be built using that library. Please see [FieldtypeMapMarkerGraphQL][map-marker-graphql] module for reference.
+
+When your module is ready, just install it and it should be automatically used by ProcessGraphQL and
+your fieldtype should be available via your GraphQL api.
+
 
 ## License
 [MIT](https://github.com/dadish/ProcessGraphQL/blob/master/LICENSE)
@@ -255,3 +289,4 @@ All the core ProcessWire fields will eventually be supported.
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
 [map-marker-graphql]: https://github.com/dadish/FieldtypeMapMarkerGraphQL
+[youshido-graphql]: https://github.com/youshido/graphql
