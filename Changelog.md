@@ -1,7 +1,7 @@
 ProcessGraphQL Changelog
 ========================
 
-### 0.21.0
+### 0.22.0
 - Add support for third-party Fieldtypes.
 
 ### 0.20.0
