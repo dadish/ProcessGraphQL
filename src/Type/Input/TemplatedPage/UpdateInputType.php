@@ -30,7 +30,7 @@ class UpdateInputType extends AbstractInputObjectType {
 
   public function getName()
   {
-    return ucfirst(self::normalizeName($this->template->name)) . 'UpdateInputType';
+    return ucfirst(self::normalizeName($this->template->name)) . 'UpdateInput';
   }
 
   public function getDescription()

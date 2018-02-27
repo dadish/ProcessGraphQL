@@ -24,7 +24,7 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
   public function testValue()
   {
     $city = Utils::pages()->get("template=city");
-    $query = 'mutation createPage($page: SkyscraperCreateInputType!) {
+    $query = 'mutation createPage($page: SkyscraperCreateInput!) {
       skyscraper: createSkyscraper (page: $page) {
         name
         id

@@ -30,7 +30,7 @@ class CreateInputType extends AbstractInputObjectType {
 
   public function getName()
   {
-    return ucfirst(self::normalizeName($this->template->name)) . 'CreateInputType';
+    return ucfirst(self::normalizeName($this->template->name)) . 'CreateInput';
   }
 
   public function getDescription()

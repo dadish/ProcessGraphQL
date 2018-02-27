@@ -23,7 +23,7 @@ class UpdatePageCaseTwoTest extends GraphQLTestCase {
   public function testValue()
   {
   	$skyscraper = Utils::pages()->get("template=skyscraper");
-  	$query = 'mutation updatePage ($id: Int!, $page: SkyscraperUpdateInputType!) {
+  	$query = 'mutation updatePage ($id: Int!, $page: SkyscraperUpdateInput!) {
   		updateSkyscraper (id: $id, page: $page) {
   			title
   		}

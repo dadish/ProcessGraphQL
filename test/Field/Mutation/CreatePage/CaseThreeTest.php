@@ -22,7 +22,7 @@ class CreatePageCaseThreeTest extends GraphQLTestCase {
 	
   public function testValue()
   {
-  	$query = 'mutation createPage ($page: SkyscraperCreateInputType!) {
+  	$query = 'mutation createPage ($page: SkyscraperCreateInput!) {
   		skyscraper: createSkyscraper (page: $page) {
   			name
   			id

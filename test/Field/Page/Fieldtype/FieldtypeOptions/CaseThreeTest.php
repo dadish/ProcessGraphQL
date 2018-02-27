@@ -26,7 +26,7 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
     $name = "new-city";
     $title = "New City";
     $option = 'Mon';
-  	$query = 'mutation createPage ($page: CityCreateInputType!) {
+  	$query = 'mutation createPage ($page: CityCreateInput!) {
   		createCity (page: $page) {
   			name
   			id

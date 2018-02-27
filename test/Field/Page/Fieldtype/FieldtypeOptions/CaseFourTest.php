@@ -27,7 +27,7 @@ class FieldtypeOptionsCaseFourTest extends GraphQLTestCase {
     $title = "New Architect";
     $option = ['Mon', 'Thu', 'Sat'];
     $parent = "4111";
-  	$query = 'mutation createPage ($page: ArchitectCreateInputType!) {
+  	$query = 'mutation createPage ($page: ArchitectCreateInput!) {
   		createArchitect (page: $page) {
   			name
   			id
