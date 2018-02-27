@@ -26,7 +26,7 @@ class TemplatedPageType extends AbstractObjectType {
 
   public function getName()
   {
-    return ucfirst(self::normalizeName($this->template->name)) . 'PageType';
+    return ucfirst(self::normalizeName($this->template->name)) . 'Page';
   }
 
   public function getDescription()
