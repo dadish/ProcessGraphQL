@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "268ca1f861f0606823bcc8361ff96a5f",
+    "content-hash": "a94e2ccc73c1c727619b24bc60f2de1c",
     "packages": [
         {
             "name": "youshido/graphql",
@@ -52,11 +52,11 @@
     ],
     "packages-dev": [
         {
-            "name": "dadish/FieldtypeMapMarkerGraphQL",
+            "name": "dadish/GraphQLFieldtypeMapMarker",
             "version": "1.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/dadish/FieldtypeMapMarkerGraphQL/archive/master.zip",
+                "url": "https://github.com/dadish/GraphQLFieldtypeMapMarker/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -729,16 +729,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.0.1",
+            "version": "7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "316555dbd0ed4097bbdd17c65ab416bf27a472e9"
+                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/316555dbd0ed4097bbdd17c65ab416bf27a472e9",
-                "reference": "316555dbd0ed4097bbdd17c65ab416bf27a472e9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
+                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +805,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-02-13T06:08:08+00:00"
+            "time": "2018-02-26T07:03:12+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

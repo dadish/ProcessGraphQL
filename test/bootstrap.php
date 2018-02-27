@@ -44,10 +44,10 @@ if (!file_exists($mapMarkerDestDir)) {
 	\symlink($mapMarkerDir, $mapMarkerDestDir);
 }
 
-// symlink FieldtypeMapMarkerGraphQL inside the site's module
+// symlink GraphQLFieldtypeMapMarker inside the site's module
 // directory, so we can test FieldtypeMapMarker field.
-$mapMarkerGraphQLDir = $baseDir . "/vendor/dadish/FieldtypeMapMarkerGraphQL";
-$mapMarkerGraphQLDestDir = $siteDir . "/modules/FieldtypeMapMarkerGraphQL";
+$mapMarkerGraphQLDir = $baseDir . "/vendor/dadish/GraphQLFieldtypeMapMarker";
+$mapMarkerGraphQLDestDir = $siteDir . "/modules/GraphQLFieldtypeMapMarker";
 if (!file_exists($mapMarkerGraphQLDestDir)) {
 	\symlink($mapMarkerGraphQLDir, $mapMarkerGraphQLDestDir);
 }

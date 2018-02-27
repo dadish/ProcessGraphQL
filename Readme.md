@@ -236,16 +236,16 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeTextarea
 - FieldtypeTextareaLanguage
 - FieldtypeURL
-- FieldtypeMapMarker (via [FieldtypeMapMarkerGraphQL][map-marker-graphql])
+- FieldtypeMapMarker (via [GraphQLFieldtypeMapMarker][map-marker-graphql])
 
 ### Third-party Fieldtypes Support
 You can add support for any third-party fieldtype by creating a module for it. The example module
-that you can refer to is [FieldtypeMapMarkerGraphQL][map-marker-graphql] that adds support for FieldtypeMapMarker
+that you can refer to is [GraphQLFieldtypeMapMarker][map-marker-graphql] that adds support for FieldtypeMapMarker
 fieldtype. Below are the basic requirements that this kind of modules should fulfill.
 
 #### Naming of the Module
 - Name your module exactly as the Fieldtype module you are adding support for with `GraphQL` suffix.
-So for example `FieldtypeMapMarkerGraphQL` adds support for `FieldtypeMapMarker`.
+So for example `GraphQLFieldtypeMapMarker` adds support for `FieldtypeMapMarker`.
 
 #### Required methods
 There are three required methods.
@@ -263,7 +263,7 @@ integer (id of the page) as a value.
 Given the `$page`, `$field` and a `$value`, the method sets the value to the page's given field.
 
 > Note: The GraphQL api is built upon [Youshido/GraphQL][youshido-graphql] library. So the methods above should
-> be built using that library. Please see [FieldtypeMapMarkerGraphQL][map-marker-graphql] module for reference.
+> be built using that library. Please see [GraphQLFieldtypeMapMarker][map-marker-graphql] module for reference.
 
 When your module is ready, just install it and it should be automatically used by ProcessGraphQL and
 your fieldtype should be available via your GraphQL api.
@@ -288,5 +288,5 @@ your fieldtype should be available via your GraphQL api.
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
-[map-marker-graphql]: https://github.com/dadish/FieldtypeMapMarkerGraphQL
+[map-marker-graphql]: https://github.com/dadish/GraphQLFieldtypeMapMarker
 [youshido-graphql]: https://github.com/youshido/graphql
