@@ -244,7 +244,7 @@ that you can refer to is [GraphQLFieldtypeMapMarker][map-marker-graphql] that ad
 fieldtype. Below are the basic requirements that this kind of modules should fulfill.
 
 #### Naming of the Module
-- Name your module exactly as the Fieldtype module you are adding support for with `GraphQL` suffix.
+- Name your module exactly as the Fieldtype module you are adding support for with `GraphQL` prefix.
 So for example `GraphQLFieldtypeMapMarker` adds support for `FieldtypeMapMarker`.
 
 #### Required methods
