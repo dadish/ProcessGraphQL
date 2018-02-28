@@ -114,8 +114,8 @@ class ProcessGraphQL extends Process implements Module {
    */
 	public function setupGraphiQLAssets()
 	{
-		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.9636989d.js');
-		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.ac7684ef.css');
+		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.5581c0a6.js');
+		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.48946f6d.css');
 		$this->config->js($this->className, [
 			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
 		]);
