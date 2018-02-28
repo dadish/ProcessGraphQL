@@ -55,7 +55,7 @@ function updateURL() {
     return encodeURIComponent(key) + '=' +
       encodeURIComponent(parameters[key]);
   }).join('&');
-  history.replaceState(null, null, newSearch);
+  window.history.replaceState(null, null, newSearch);
 }
 // Defines a GraphQL fetcher using the fetch API. You're not required to
 // use fetch, and could instead implement graphQLFetcher however you like,
