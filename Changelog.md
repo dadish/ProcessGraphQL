@@ -1,6 +1,10 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.23.0
+- Simpler naming for GraphQL types.
+- Update GraphiQL js dependencies.
+
 ### 0.22.0
 - Add support for third-party Fieldtypes.
 
