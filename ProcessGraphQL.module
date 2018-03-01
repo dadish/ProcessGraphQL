@@ -13,16 +13,14 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '0.23.0',
+			'version' => '0.23.3',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
 			'autoload' => 'process=ProcessTemplate',
 			'icon' => 'object-group',
-      'requires' => array(
-         'PHP>=5.6.0',
-         'ProcessWire>=3.0.62'
-      	),
+      'requires' => array( "PHP>=5.6.0", "ProcessWire>=3.0.62", ""),
+      'installs' => array(""),
 			);
 	}
 
