@@ -1,4 +1,0 @@
-ProcessGraphiQL
-===============
-
-GraphiQL for ProcessWire.
