@@ -1,6 +1,9 @@
 ProcessGraphQL Changelog
 ========================
 
+### 0.23.3
+- Fix module installation via class name from pw modules directory.
+
 ### 0.23.0
 - Simpler naming for GraphQL types.
 - Update GraphiQL js dependencies.
