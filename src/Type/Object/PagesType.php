@@ -21,6 +21,7 @@ class PagesType extends PageArrayType {
 
   public function build($config)
   {
+    parent::build($config);
     $config->addField(new PagesCountField());
     $config->addField(new PagesFindField());
   }
