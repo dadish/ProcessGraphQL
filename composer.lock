@@ -729,16 +729,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.0.2",
+            "version": "7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9"
+                "reference": "536f4d853c12d8189963435088e8ff7c0daeab2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
-                "reference": "e2f8aa21bc54b6ba218bdd4f9e0dac1e9bc3b4e9",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/536f4d853c12d8189963435088e8ff7c0daeab2e",
+                "reference": "536f4d853c12d8189963435088e8ff7c0daeab2e",
                 "shasum": ""
             },
             "require": {
@@ -752,7 +752,7 @@
                 "phar-io/version": "^1.0",
                 "php": "^7.1",
                 "phpspec/prophecy": "^1.7",
-                "phpunit/php-code-coverage": "^6.0",
+                "phpunit/php-code-coverage": "^6.0.1",
                 "phpunit/php-file-iterator": "^1.4.3",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.0",
@@ -805,7 +805,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-02-26T07:03:12+00:00"
+            "time": "2018-03-26T07:36:48+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -865,16 +865,16 @@
         },
         {
             "name": "processwire/processwire",
-            "version": "3.0.62",
+            "version": "3.0.96",
             "source": {
                 "type": "git",
                 "url": "https://github.com/processwire/processwire.git",
-                "reference": "57b297fd1d828961b20ef29782012f75957d6886"
+                "reference": "941ef5cb672079c6b87eea666d50cac11dfc45ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/processwire/processwire/zipball/57b297fd1d828961b20ef29782012f75957d6886",
-                "reference": "57b297fd1d828961b20ef29782012f75957d6886",
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/941ef5cb672079c6b87eea666d50cac11dfc45ed",
+                "reference": "941ef5cb672079c6b87eea666d50cac11dfc45ed",
                 "shasum": ""
             },
             "require": {
@@ -907,7 +907,7 @@
                 "cms",
                 "processwire"
             ],
-            "time": "2017-05-05T17:43:17+00:00"
+            "time": "2018-03-16T14:44:38+00:00"
         },
         {
             "name": "ryancramerdesign/FieldtypeMapMarker",
