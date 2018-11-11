@@ -109,7 +109,7 @@ $config->dbLowercaseTables = true;
  * Installer: Database Configuration
  * 
  */
-$config->dbHost = 'localhost';
+$config->dbHost = '127.0.0.1';
 $config->dbName = 'processgraphql';
 $config->dbUser = 'processgraphql';
 $config->dbPass = 'processgraphql';
