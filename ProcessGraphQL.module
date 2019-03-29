@@ -1,6 +1,6 @@
 <?php namespace ProcessWire;
 
-use Youshido\GraphQL\Execution\Processor;
+use GraphQL\GraphQL;
 use ProcessWire\HookEvent;
 use ProcessWire\GraphQL\Schema;
 use Processwire\ProcessGraphQLConfig;
@@ -169,8 +169,9 @@ class ProcessGraphQL extends Process implements Module {
 		}
 
 		// instantiating Processor and setting the schema
-		$processor = new Processor(new Schema());
-		$response = $processor->processPayload($payload, $variables)->getResponseData();
+    $schema = Schema::create();
+    $result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
+		$response = $result->toArray();
 		return json_encode($response);
 	}
 
