@@ -5,7 +5,7 @@ use GraphQL\Type\Definition\Type;
 
 class UserType
 {
-  public static function create()
+  public static function type()
   {
     return new ObjectType([
       'name' => 'User',
