@@ -5,29 +5,19 @@ use GraphQL\Type\Definition\Type;
 use ProcessWire\Page as PWPage;
 use ProcessWire\GraphQL\Type\Resolver;
 
-class Page
+class PageType
 {
   public static function type()
   {
     $selfType = null;
     $selfType = new ObjectType([
-      'name' => self::getName(),
-      'description' => self::getDescription(),
+      'name' => 'Page',
+      'description' => 'ProcessWire Page.',
       'fields' => function () use (&$selfType) {
         return self::getBuiltInFields($selfType);
       },
     ]);
     return $selfType;
-  }
-
-  public static function getName()
-  {
-    return 'Page';
-  }
-
-  public static function getDescription()
-  {
-    return 'ProcessWire Page.';
   }
 
   public static function getBuiltInFields($selfType)
