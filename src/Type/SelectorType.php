@@ -1,36 +1,44 @@
 <?php namespace ProcessWire\GraphQL\Type;
 
 use GraphQL\Error\Error;
-use GraphQL\Type\Definition\ScalarType;
 use ProcessWire\Template;
 use ProcessWire\Selectors;
 use ProcessWire\Selector;
 use ProcessWire\SelectorEqual;
 use ProcessWire\GraphQL\Utils;
+use GraphQL\Type\Definition\CustomScalarType;
 
-class SelectorType extends ScalarType
+class SelectorType
 {
-  /**
-   * @var string
-   * Type name
-   */
-  public $name = 'Selector';
+  public static $name = 'Selector';
 
-  /**
-   * @var string
-   * Type decription
-   */
-  public $description = 'ProcessWire selector.';
+  public static $description = 'ProcessWire selector.';
 
-  /**
-   * Serializes an internal value to include in a response.
-   *
-   * @param string $value
-   * @return string
-   */
-  public function serialize($value)
+  private static $type;
+
+  private static $parsedValues = [];
+
+  public static function type()
   {
-    return (string) $value;
+    if (self::$type) {
+      return self::$type;
+    }
+
+    self::$type = new CustomScalarType([
+      'name' => self::$name,
+      'description' => self::$description,
+      'serialize' => function ($value) {
+        return (string) $value;
+      },
+      'parseValue' => function ($value) {
+        return self::parseValue($value);
+      },
+      'parseLiteral' => function ($valueNode) {
+        return self::parseValue($valueNode->value);
+      }
+    ]);
+
+    return self::$type;
   }
 
   /**
@@ -40,10 +48,17 @@ class SelectorType extends ScalarType
    * @return string
    * @throws Error
    */
-  public function parseValue($value)
+  private static function parseValue($value)
   {
+    // if we already parsed the given selector
+    // then return the cached result.
+    if (isset(self::$parsedValues[$value])) {
+      return self::$parsedValues[$value];
+    }
+
+
     if (!is_string($value)) {
-      throw new Error("$this->name should be a string.");
+      throw new Error(self::$name . " should be a string.");
     }
 
     $selectors = new Selectors($value);
@@ -91,23 +106,11 @@ class SelectorType extends ScalarType
     }
 
     // return selector as string
-    return (string) $selectors;
+    self::$parsedValues[$value] = (string) $selectors;
+    return self::$parsedValues[$value];
   }
 
-  /**
-   * Parses an externally provided literal value (hardcoded in GraphQL query) to use as an input.
-   *
-   * @param \GraphQL\Language\AST\Node $valueNode
-   * @param array|null $variables
-   * @return string
-   * @throws Error
-   */
-  public function parseLiteral($valueNode, array $variables = null)
-  {
-    return $this->parseValue($valueNode->value);
-  }
-
-  public static function findSelectorByField(Selectors $selectors, $target)
+  private static function findSelectorByField(Selectors $selectors, $target)
   {
     foreach ($selectors as $selector) {
       foreach ($selector->fields as $field) {
