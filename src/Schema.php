@@ -5,7 +5,7 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema as GraphQLSchema;
 
 use ProcessWire\GraphQL\Utils;
-use ProcessWire\GraphQL\Type\PageArray;
+use ProcessWire\GraphQL\Type\PageArrayType;
 
 class Schema extends GraphQLSchema
 {
@@ -25,7 +25,7 @@ class Schema extends GraphQLSchema
   {
     $moduleConfig = Utils::moduleConfig();
     $queryFields = [];
-    $queryFields[] = PageArray::asField();
+    $queryFields[] = PageArrayType::asField();
 
     $queryType = new ObjectType([
       'name' => 'Query',

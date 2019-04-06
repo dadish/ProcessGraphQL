@@ -2,10 +2,10 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\Page;
+use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\Pages as PWPages;
 
-class PageArray {
+class PageArrayType {
 	public static function type()
 	{
 		return new ObjectType([
@@ -13,10 +13,10 @@ class PageArray {
 			'description' => self::getDescription(),
 			'fields' => [
 				'list' => [
-					'type' => Type::listOf(Page::type()),
+					'type' => Type::listOf(PageType::type()),
 					'description' => 'List of PW Pages.',
 					'resolve' => function(PWPages $pages) {
-						return $pages->find('numChildren>10, limit=1, template=city');
+						return $pages->find('numChildren>10, limit=5, template=city');
 					},
 				],
 			],
