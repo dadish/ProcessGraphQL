@@ -7,17 +7,29 @@ use ProcessWire\GraphQL\Type\Resolver;
 
 class PageType
 {
+  public static $name = 'Page';
+
+  public static $description = 'ProcessWire Page.';
+
+  private static $type;
+
   public static function type()
   {
+    if (self::$type) {
+      return self::$type;
+    }
+
     $selfType = null;
     $selfType = new ObjectType([
-      'name' => 'Page',
-      'description' => 'ProcessWire Page.',
+      'name' => self::$name,
+      'description' => self::$description,
       'fields' => function () use (&$selfType) {
         return self::getBuiltInFields($selfType);
       },
     ]);
-    return $selfType;
+    
+    self::$type = $selfType;
+    return self::$type;
   }
 
   public static function getBuiltInFields($selfType)
