@@ -1,9 +1,9 @@
 <?php namespace ProcessWire;
 
-use ProcessWire\GraphQL\Type\InterfaceType\PageInterfaceType;
-use ProcessWire\GraphQL\Type\Object\PageFileType;
-use ProcessWire\GraphQL\Type\Object\PageImageType;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Type\PageType;
+use ProcessWire\GraphQL\Type\FileType;
+use ProcessWire\GraphQL\Type\ImageType;
 
 require_once $this->config->paths->site . 'modules/ProcessGraphQL/vendor/autoload.php';
 
@@ -262,8 +262,8 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Legal Page Fields';
     $f->description = 'Choose which built in `Page` fields you wish to be available via GraphQL api.';
     $f->notes = 'Be careful with fields like `parents` & `children` that will allow user to construct deeply nested queries that might be very expensive for your server to fulfill.';
-    foreach (PageInterfaceType::getPageFields() as $fieldName => $fieldClassName) {
-      $f->addOption($fieldName);
+    foreach (PageType::type()->getFields() as $field) {
+      $f->addOption($field->name);
     }
     $inputfields->add($f);
 
@@ -274,8 +274,8 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Legal PageFile Fields';
     $f->description = 'Choose which built in `PageFile` fields you wish to be available via GraphQL api.';
     $f->notes = 'These fields are also inherited by `PageImage`.';
-    foreach (PageFileType::getPageFileFields() as $fieldName => $fieldConfig) {
-      $f->addOption($fieldName);
+    foreach (FileType::type()->getFields() as $field) {
+      $f->addOption($field->name);
     }
     $inputfields->add($f);
 
@@ -285,8 +285,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->attr('name', 'legalPageImageFields');
     $f->label = 'Legal PageImage Fields';
     $f->description = 'Choose which built in `PageImage` fields you wish to be available via GraphQL api.';
-    foreach (PageImageType::getPageImageFields() as $fieldName => $fieldConfig) {
-      $f->addOption($fieldName);
+    foreach (ImageType::type()->getFields() as $field) {
+      if(in_array($field, FileType::type()->getFields())) {
+        continue;
+      }
+      $f->addOption($field->name);
     }
     $inputfields->add($f);
 
