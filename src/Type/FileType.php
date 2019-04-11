@@ -5,9 +5,9 @@ namespace ProcessWire\GraphQL\Type;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 
-class PageFileType {
+class FileType {
 
-  public static $name = 'PageFile';
+  public static $name = 'File';
 
   public static $description = 'ProcessWire PageFile.';
 
