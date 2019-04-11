@@ -171,7 +171,7 @@ class ProcessGraphQL extends Process implements Module {
 		// instantiating Processor and setting the schema
     $schema = Schema::create();
     $result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
-		$response = $result->toArray();
+		$response = $result->toArray(true);
 		return json_encode($response);
 	}
 
