@@ -48,7 +48,7 @@ class SelectorType
    * @return string
    * @throws Error
    */
-  private static function parseValue($value)
+  public static function parseValue(string $value)
   {
     // if we already parsed the given selector
     // then return the cached result.
@@ -110,7 +110,7 @@ class SelectorType
     return self::$parsedValues[$value];
   }
 
-  private static function findSelectorByField(Selectors $selectors, $target)
+  public static function findSelectorByField(Selectors $selectors, $target)
   {
     foreach ($selectors as $selector) {
       foreach ($selector->fields as $field) {
