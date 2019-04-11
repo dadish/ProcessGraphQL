@@ -1,8 +1,8 @@
 <?php namespace ProcessWire\GraphQL;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema as GraphQLSchema;
+use ProcessWire\Pages as PWPages;
 
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\PageArrayType;
@@ -13,7 +13,7 @@ class Schema extends GraphQLSchema
   {
     /**
      * Query
-     */ 
+     */
     $schema = new GraphQLSchema([
       'query' => self::buildQueryType(),
     ]);
@@ -25,7 +25,17 @@ class Schema extends GraphQLSchema
   {
     $moduleConfig = Utils::moduleConfig();
     $queryFields = [];
-    $queryFields[] = PageArrayType::asField();
+
+    foreach ($moduleConfig->legalViewTemplates as $template) {
+      $queryFields[] = [
+        'name' => $template->name,
+        'description' => PageArrayType::templatedTypeDescription($template),
+        'type' => PageArrayType::type($template),
+        'resolve' => function (PWPages $pages) {
+          return $pages;
+        }
+      ];
+    }
 
     $queryType = new ObjectType([
       'name' => 'Query',
