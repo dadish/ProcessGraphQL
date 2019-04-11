@@ -20,7 +20,7 @@ class PWTypes
   {
     if (self::$standardTypes === null) {
       self::$standardTypes = [
-        self::SELECTOR => new SelectorType(),
+        self::SELECTOR => SelectorType::type(),
         self::USER => UserType::type(),
       ];
     }
