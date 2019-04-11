@@ -2,46 +2,76 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use ProcessWire\Template as PWTemplate;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\Pages as PWPages;
+use ProcessWire\GraphQL\Type\SelectorType;
+use ProcessWire\GraphQL\ChromePhp;
 
 class PageArrayType {
-	public static function type()
+	public static $name = 'PageArray';
+
+	public static $description = 'ProcessWire PageArray.';
+
+	private static $types = [];
+
+	public static function type(PWTemplate $template = null)
 	{
-		return new ObjectType([
-			'name' => self::getName(),
-			'description' => self::getDescription(),
+		if ($template instanceof PWTemplate) {
+			return self::templatedType($template);
+		}
+
+		self::$types[self::$name] = new ObjectType([
+			'name' => self::$name,
+			'description' => self::$description,
 			'fields' => [
 				'list' => [
 					'type' => Type::listOf(PageType::type()),
 					'description' => 'List of PW Pages.',
-					'resolve' => function(PWPages $pages) {
-						return $pages->find('numChildren>10, limit=5, template=city');
+					'resolve' => function (PWPages $value) {
+						return $value->find(SelectorType::parseValue(''));
 					},
 				],
 			],
 		]);
+
+		return self::$types[self::$name];
 	}
 
-	public static function getName()
+	public static function templatedType(PWTemplate $template)
 	{
-		return 'PageArray';
+		if (isset(self::$types[$template->name])) {
+			return self::$types[$template->name];
+		}
+
+		self::$types[$template->name] = new ObjectType([
+			'name' => self::templatedTypeName($template),
+			'description' => self::templatedTypeDescription($template),
+			'fields' => [
+				'list' => [
+					'type' => Type::listOf(PageType::type()),
+					'description' => "List of " . self::templatedTypeName($template),
+					'resolve' => function (PWPageArray $value) use ($template) {
+						return $value->find(SelectorType::parseValue("template=$template"));
+					},
+				]
+			]
+		]);
+
+		return self::$types[$template->name];
 	}
 
-	public static function getDescription()
+	public static function templatedTypeName(PWTemplate $template)
 	{
-		return 'ProcessWire PageArray.';
+		return $template->name;
 	}
 
-	public static function asField()
+	public static function templatedTypeDescription(PWTemplate $template)
 	{
-		return [
-			'name' => 'pages',
-			'type' => self::type(),
-			'description' => 'ProcessWire Pages',
-			'resolve' => function (PWPages $pages) {
-				return $pages;
-			}
-		];
+		if ($template->description) {
+			return $template->description;
+		}
+
+		return "PageArray with the template $template->name.";
 	}
 }
