@@ -7,12 +7,13 @@ use ProcessWire\Page as PWPage;
 use ProcessWire\NullPage;
 use ProcessWire\WireData;
 use ProcessWire\FieldtypeDatetime;
+use ProcessWire\GraphQL\Type\Scalar\SelectorType;
 
 class Resolver
 {
   private static $emptyUser;
 
-  public static function resolveWithSelector(array $options)
+  public static function resolvePagefieldWithSelector(array $options)
   {
     return array_merge($options, [
       'args' => [
@@ -27,6 +28,24 @@ class Resolver
           return $page->$name($args['s']);
         }
         return $page->$name;
+      }
+    ]);
+  }
+
+  public static function resolvePageArray(array $options)
+  {
+    return array_merge($options, [
+      'args' => [
+        's' => [
+          'type' => PWTypes::selector(),
+          'description' => "ProcessWire selector."
+        ],
+      ],
+      'resolve' => function ($pages, array $args) use ($options) {
+        if (isset($args['s'])) {
+          return $pages->find($args['s']);
+        }
+        return $pages->find(SelectorType::parseValue(""));
       }
     ]);
   }

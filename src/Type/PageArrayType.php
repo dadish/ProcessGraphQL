@@ -4,7 +4,9 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Template as PWTemplate;
 use ProcessWire\GraphQL\Type\PageType;
+use ProcessWire\GraphQL\Type\TemplatedPageType;
 use ProcessWire\GraphQL\Type\SelectorType;
+use ProcessWire\GraphQL\Type\Resolver;
 
 class PageArrayType {
 	public static $name = 'PageArray';
@@ -47,7 +49,7 @@ class PageArrayType {
 			'description' => self::templatedTypeDescription($template),
 			'fields' => [
 				'list' => [
-					'type' => Type::listOf(PageType::type()),
+					'type' => Type::listOf(TemplatedPageType::type($template)),
 					'description' => "List of " . self::templatedTypeName($template),
 					'resolve' => function ($value) use ($template) {
 						return $value->find(SelectorType::parseValue("template=$template"));
@@ -71,5 +73,14 @@ class PageArrayType {
 		}
 
 		return "Pages with the template $template->name.";
+	}
+
+	public static function asField(PWTemplate $template)
+	{
+		return Resolver::resolvePageArray([
+			'name' => self::templatedTypeName($template),
+			'description' => self::templatedTypeDescription($template),
+			'type' => self::type($template),
+		]);
 	}
 }
