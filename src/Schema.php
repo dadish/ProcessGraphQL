@@ -27,14 +27,7 @@ class Schema extends GraphQLSchema
     $queryFields = [];
 
     foreach ($moduleConfig->legalViewTemplates as $template) {
-      $queryFields[] = [
-        'name' => $template->name,
-        'description' => PageArrayType::templatedTypeDescription($template),
-        'type' => PageArrayType::type($template),
-        'resolve' => function (PWPages $pages) {
-          return $pages;
-        }
-      ];
+      $queryFields[] = PageArrayType::asField($template);
     }
 
     $queryType = new ObjectType([

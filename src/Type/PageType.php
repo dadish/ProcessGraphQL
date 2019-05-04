@@ -2,7 +2,7 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\Page as PWPage;
+use ProcessWire\Page;
 use ProcessWire\GraphQL\Type\Resolver;
 
 class PageType
@@ -36,14 +36,14 @@ class PageType
   {
     return [
 
-      Resolver::resolveWithSelector([
+      Resolver::resolvePagefieldWithSelector([
         'name' => 'child',
         'type' => $selfType,
         'description' => "The first child of this page. If the `s`(selector) argument is provided then the 
                           first matching child (subpage) that matches the given selector. Returns a Page or null.",
       ]),
 
-      Resolver::resolveWithSelector([
+      Resolver::resolvePagefieldWithSelector([
         'name' => 'children',
         'type' => Type::listOf($selfType),
         'description' => "The number of children (subpages) this page has, optionally limiting to visible 
@@ -104,7 +104,7 @@ class PageType
             'type' => Type::boolean(),
           ],
         ],
-        'resolve' => function (PWPage $page, array $args) {
+        'resolve' => function (Page $page, array $args) {
           $visible = false;
           if (isset($args['visible'])) {
             $visible = $args['visible'];
@@ -116,7 +116,7 @@ class PageType
         },
       ],
 
-      Resolver::resolveWithSelector([
+      Resolver::resolvePagefieldWithSelector([
         'name' => 'parent',
         'type' => $selfType,
         'description' => 'The parent Page object, or the closest parent matching the given selector. Returns `null` if there is no parent or no match.'
@@ -128,7 +128,7 @@ class PageType
         'description' => 'The numbered ID of the parent page or 0 if none.',
       ],
 
-      Resolver::resolveWithSelector([
+      Resolver::resolvePagefieldWithSelector([
         'name' => 'parents',
         'type' => Type::listOf($selfType),
         'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector.",
