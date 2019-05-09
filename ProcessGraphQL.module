@@ -160,7 +160,7 @@ class ProcessGraphQL extends Process implements Module {
    * Executes GraphQL api.
    * @return string GraphQL api JSON response.
    */
-	public function executeGraphQL($payload = null, $variables = null)
+	public function ___executeGraphQL($payload = null, $variables = null)
 	{
 		if (!$payload) {
 			$request = $this->getRequest();
@@ -172,21 +172,21 @@ class ProcessGraphQL extends Process implements Module {
     $schema = Schema::create();
     $result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
 		$response = $result->toArray(true);
-		return json_encode($response);
+		return $response;
 	}
 
   /**
-   * The hook for modifying the GraphQL query operation by the user.
-   * The query operation could be modified with addField/addFields methods.
+   * The hook for modifying the GraphQL query operation fields by the user.
+   * The queryFields is an array of fields that will be set to Query operation.
+	 * Custom fields could be added bu just appending them into an array.
    * See the documentation of the library used by this module to learn more
-   * @see  The GraphQL lib https://github.com/Youshido/GraphQL
-   * @param  $query        The $query object that will be modified.
-   * @return               The $query object to modify. Do not replace the returned value,
-   *                       but modify it with addField/addFields methods
+   * @see  The GraphQL lib https://github.com/webonyx/graphql-php
+   * @param  $query        The $queryFields array.
+   * @return               The $queryFields array.
    */
-  public function ___getQuery($query)
+  public function ___getQueryFields($queryFields)
   {
-    return $query;
+    return $queryFields;
   }
 
   /**
