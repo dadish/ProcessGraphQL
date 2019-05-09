@@ -4,7 +4,6 @@ use GraphQL\Type\Definition\ObjectType;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\PageType;
-use ProcessWire\GraphQL\ChromePhp;
 
 class TemplatedPageType
 {
