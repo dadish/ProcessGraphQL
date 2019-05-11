@@ -24,7 +24,7 @@ class LogoutFieldTest extends GraphQLTestCase {
         statusCode
       }
     }';
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
   }
 
@@ -35,7 +35,7 @@ class LogoutFieldTest extends GraphQLTestCase {
         statusCode
       }
     }';
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertObjectHasAttribute('errors', $res, 'Unable to logout via GraphQL');
   }
 

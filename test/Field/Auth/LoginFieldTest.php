@@ -25,12 +25,12 @@ class LoginFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     $pass = $config->testUsers['admin'];
     $query = "{
-      login(name:\"admin\", pass:\"$pass\") {
+      login(username:\"admin\", password:\"$pass\") {
         statusCode
         message
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals(200, $res->data->login->statusCode, 'Unable to login via GraphQL');
   }
 
@@ -39,7 +39,7 @@ class LoginFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     $pass = 'some-random-stuff';
     $query = "{
-      login(name:\"admin\", pass:\"$pass\") {
+      login(username:\"admin\", password:\"$pass\") {
         statusCode
         message
       }

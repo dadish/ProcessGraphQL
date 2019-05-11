@@ -6,6 +6,8 @@ use GraphQL\Type\Schema as GraphQLSchema;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\UserType;
+use ProcessWire\GraphQL\Field\Auth\Login;
+use ProcessWire\GraphQL\Field\Auth\Logout;
 
 class Schema extends GraphQLSchema
 {
@@ -42,6 +44,15 @@ class Schema extends GraphQLSchema
           return \ProcessWire\wire('user');
         }
       ];
+    }
+
+    // Auth
+    if ($moduleConfig->authQuery) {
+      if (Utils::user()->isLoggedin()) {
+        $queryFields[] = Logout::field();
+      } else {
+        $queryFields[] = Login::field();
+      }
     }
 
     // let the user modify the query operation
