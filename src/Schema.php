@@ -15,13 +15,14 @@ class Schema extends GraphQLSchema
      * Query
      */
     $schema = new GraphQLSchema([
-      'query' => self::buildQueryType(),
+      'query' => self::buildQuery(),
+      'mutation' => self::builtMutation(),
     ]);
 
     return $schema;
   }
 
-  public static function buildQueryType()
+  public static function buildQuery()
   {
     $moduleConfig = Utils::moduleConfig();
     $queryFields = [];
@@ -44,13 +45,28 @@ class Schema extends GraphQLSchema
     }
 
     // let the user modify the query operation
-    Utils::module()->getQueryFields($queryFields);
+    $queryFields = Utils::module()->getQueryFields($queryFields);
 
-    $queryType = new ObjectType([
+    $query = new ObjectType([
       'name' => 'Query',
       'fields' => $queryFields,
     ]);
 
-    return $queryType;
+    return $query;
+  }
+
+  public static function builtMutation()
+  {
+    $mutationFields = [];
+
+    // let the user modify the query operation
+    $mutationFields = Utils::module()->getMutationFields($mutationFields);
+
+    $mutation = new ObjectType([
+      'name' => 'Mutation',
+      'fields' => $mutationFields,
+    ]);
+
+    return $mutation;
   }
 }

@@ -181,8 +181,8 @@ class ProcessGraphQL extends Process implements Module {
 	 * Custom fields could be added bu just appending them into an array.
    * See the documentation of the library used by this module to learn more
    * @see  The GraphQL lib https://github.com/webonyx/graphql-php
-   * @param  $query        The $queryFields array.
-   * @return               The $queryFields array.
+   * @param  $queryFields    
+   * @return $queryFields
    */
   public function ___getQueryFields($queryFields)
   {
@@ -190,17 +190,17 @@ class ProcessGraphQL extends Process implements Module {
   }
 
   /**
-   * The hook for modifying the GraphQL mutation operation by the user.
-   * The mutation operation could be modified with addField/addFields methods.
+   * The hook for modifying the GraphQL mutation operation fields by the user.
+   * The mutationFields is an array of fields that will be set to Mutation operation.
+	 * Custom fields could be added bu just appending them into an array.
    * See the documentation of the library used by this module to learn more
-   * @see  The GraphQL lib https://github.com/Youshido/GraphQL
-   * @param  *             $mutation The $mutation object that will be modified.
-   * @return *             The $mutation object to modify. The same thing as the
-   *                       $query argument.
+   * @see  The GraphQL lib https://github.com/webonyx/graphql-php
+   * @param $mutationFields
+   * @return $mutationFields
    */
-  public function ___getMutation($mutation)
+  public function ___getMutationFields($mutationFields)
   {
-    return $mutation;
+    return $mutationFields;
   }
 
 	/**
