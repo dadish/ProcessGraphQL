@@ -1,7 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Youshido\GraphQL\Type\Scalar\StringType;
+use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\GraphQL\Utils;
 
@@ -72,63 +71,54 @@ class ProcessGraphQLTest extends GraphQLTestCase {
   public function testExecuteGraphQL()
   {
     // should return GraphQL response with errors when no payload/query is provided
-    $response = Utils::module()->executeGraphQL();
-    $resObj = json_decode($response);
-    $this->assertEquals('Must provide an operation.', $resObj->errors[0]->message);
+    $res = Utils::module()->executeGraphQL();
+    $this->assertEquals('Syntax Error: Unexpected <EOF>', $res->errors[0]->message);
 
     // accepts GraphQL request via arguments
     $payload = '{ me { name } }';
-    $response = Utils::module()->executeGraphQL($payload);
-    $resObj = json_decode($response);
-    $this->assertEquals('guest', $resObj->data->me->name, 'Accepts request via arguments');
+    $res = Utils::module()->executeGraphQL($payload);
+    $this->assertEquals('guest', $res->data->me->name, 'Accepts request via arguments');
     
     // accepts GraphQL request via $_POST variable
     $_POST['payload'] = $payload;
-    $response = Utils::module()->executeGraphQL();
-    $resObj = json_decode($response);
-    $this->assertEquals('guest', $resObj->data->me->name, 'Accepts request via $_POST variable');
+    $res = Utils::module()->executeGraphQL();
+    $this->assertEquals('guest', $res->data->me->name, 'Accepts request via $_POST variable');
   }
   
-  public function testGetQueryHook()
+  public function testGetQueryFieldsHook()
   {
-    Utils::wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
-      $query = $event->return;
-      $query->addField('hello', [
-          'type' => new StringType(),
-          'resolve' => function () {
-              return 'world!';
-          }
-      ]);
+    Utils::wire()->addHookAfter('ProcessGraphQL::getQueryFields', function ($event) {
+      $fields = $event->return;
+      $fields[] = [
+        'name' => 'hello',
+        'type' => Type::string(),
+        'resolve' => function() {
+          return 'world!';
+        }
+      ];
+      $event->return = $fields;
     });
 
-    $response = Utils::module()->executeGraphQL('{ hello }');
-    $resObj = json_decode($response);
-    $this->assertEquals('world!', $resObj->data->hello);
+    $res = Utils::module()->executeGraphQL('{ hello }');
+    $this->assertEquals('world!', $res->data->hello);
   }
 
-  public function testGetMutationHook()
+  public function testGetMutationFieldsHook()
   {
     Utils::module()->legalEditTemplates = ['home'];
-    Utils::wire()->addHookAfter('ProcessGraphQL::getMutation', function ($event) {
-      $query = $event->return;
-      $query->addField('zombie', [
-          'type' => new StringType(),
-          'resolve' => function () {
-              return 'apocalypse';
-          }
-      ]);
+    Utils::wire()->addHookAfter('ProcessGraphQL::getMutationFields', function ($event) {
+      $fields = $event->return;
+      $fields[] = [
+        'name' => 'zombie',
+        'type' => Type::string(),
+        'resolve' => function () {
+          return 'apocalypse';
+        }
+      ];
+      $event->return = $fields;
     });
 
-    $response = Utils::module()->executeGraphQL('mutation { zombie }');
-    $resObj = json_decode($response);
-    $this->assertEquals('apocalypse', $resObj->data->zombie);
-  }
-  
-  public function testGetQueryGetMutationHooks()
-  {
-    $response = Utils::module()->executeGraphQL('query { hello } mutation { zombie }');
-    $resObj = json_decode($response);
-    $this->assertEquals('world!', $resObj->data->hello);
-    $this->assertEquals('apocalypse', $resObj->data->zombie);
+    $res = Utils::module()->executeGraphQL('mutation { zombie }');
+    $this->assertEquals('apocalypse', $res->data->zombie);
   }
 }
