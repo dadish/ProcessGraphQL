@@ -3,8 +3,7 @@
 namespace ProcessWire\GraphQL\Test\Field\Page;
 
 /**
- * It returns correct output when custom dateOutputFormat
- * is set.
+ * It accepts format argument and correctly preformats it for the output.
  */
 
 use \ProcessWire\GraphQL\Utils;
@@ -12,7 +11,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class FieldtypeDatetimeCaseTwoTest extends GraphQLTestCase {
+class FieldtypeDatetimeCaseThreeTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['architect'],
@@ -26,24 +25,21 @@ class FieldtypeDatetimeCaseTwoTest extends GraphQLTestCase {
 
   public function testValue()
   {
-    // set output format for born (Datetime) field
-    Utils::fields()->get('born')->dateOutputFormat = 'j F Y H:i:s';
 
     $architect = Utils::pages()->get("template=architect");
+    $format = 'j/F/Y H-i-s';
     $query = "{
       architect(s: \"id=$architect->id\") {
         list {
-          born
+          born (format: \"$format\")
         }
       }
     }";
-    $res = $this->execute($query);
-
-    $this->assertTrue($architect->outputFormatting(), 'Output formatting is on.');
+    $res = self::execute($query);
     $this->assertEquals(
-      $architect->born,
+      date($format, $architect->getUnformatted('born')),
       $res->data->architect->list[0]->born,
-      'Retrieves correctly formatted datetime value.'
+      'Formats datetime value correctly via format argument.'
     );
   }
 

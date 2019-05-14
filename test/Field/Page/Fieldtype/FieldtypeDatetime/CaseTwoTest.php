@@ -3,7 +3,8 @@
 namespace ProcessWire\GraphQL\Test\Field\Page;
 
 /**
- * It returns correct default output.
+ * It returns correct output when custom dateOutputFormat
+ * is set.
  */
 
 use \ProcessWire\GraphQL\Utils;
@@ -11,7 +12,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
-class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
+class FieldtypeDatetimeCaseTwoTest extends GraphQLTestCase {
 
   const accessRules = [
     'legalTemplates' => ['architect'],
@@ -25,6 +26,8 @@ class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
 
   public function testValue()
   {
+    // set output format for born (Datetime) field
+    Utils::fields()->get('born')->dateOutputFormat = 'j F Y H:i:s';
 
     $architect = Utils::pages()->get("template=architect");
     $query = "{
@@ -34,9 +37,14 @@ class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
 
-    $this->assertEquals($architect->born, $res->data->architect->list[0]->born, 'Retrieves datetime value.');
+    $this->assertTrue($architect->outputFormatting(), 'Output formatting is on.');
+    $this->assertEquals(
+      $architect->born,
+      $res->data->architect->list[0]->born,
+      'Retrieves correctly formatted datetime value.'
+    );
   }
 
 }
