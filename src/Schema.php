@@ -8,6 +8,7 @@ use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Field\Auth\Login;
 use ProcessWire\GraphQL\Field\Auth\Logout;
+use ProcessWire\GraphQL\Field\Debug\DbQuery;
 
 class Schema extends GraphQLSchema
 {
@@ -53,6 +54,11 @@ class Schema extends GraphQLSchema
       } else {
         $queryFields[] = Login::field();
       }
+    }
+
+    // Debugging
+    if (\ProcessWire\Wire('config')->debug) {
+      $queryFields[] = DbQuery::field();
     }
 
     // let the user modify the query operation

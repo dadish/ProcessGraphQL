@@ -25,7 +25,7 @@ class DbQueryCountFieldTest extends GraphQLTestCase {
   {
     Utils::config()->debug = false;
     $query = '{
-      dbQueryCount
+      dbQuery
     }';
     $res = $this->execute($query);
     $this->assertObjectHasAttribute('errors', $res, 'When debug turned off, `dbQueryCount` field must be unavailable.');
@@ -35,10 +35,10 @@ class DbQueryCountFieldTest extends GraphQLTestCase {
   {
     Utils::config()->debug = true;
     $query = '{
-      dbQueryCount
+      dbQuery
     }';
     $res = $this->execute($query);
-    $this->assertEquals(count(\ProcessWire\Database::getQueryLog()), $res->data->dbQueryCount, '`dbQueryCount` must return the number of db query logs');
+    $this->assertEquals(count(\ProcessWire\Database::getQueryLog()), count($res->data->dbQuery), '`dbQueryCount` must return the number of db query logs');
   }
 
 }
