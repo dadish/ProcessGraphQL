@@ -1,18 +1,16 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
 use GraphQL\Type\Definition\CustomScalarType;
+use ProcessWire\GraphQL\Type\Resolver;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\TypeCacheTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldCacheTrait;
 
 class Datetime
 { 
-  private static $type;
-
+  use TypeCacheTrait;
   public static function type()
   {
-    if (self::$type) {
-      return self::$type;
-    }
-
-    self::$type = new CustomScalarType([
+    $type = new CustomScalarType([
       'name' => 'Datetime',
       'description' => 'A date and optionally time',
       'serialize' => function ($value) {
@@ -25,7 +23,16 @@ class Datetime
         return (string) $valueNode->value;
       },
     ]);
+    return self::cacheType($type);
+  }
 
-    return self::$type;
+  use FieldCacheTrait;
+  public static function field($options)
+  {
+    $field = array_merge(
+      Resolver::resolveWithDateFormatter($options),
+      ['type' => self::type()]
+    );
+    return self::cacheField($options['name'], $field);
   }
 }

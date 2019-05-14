@@ -73,11 +73,10 @@ class TemplatedPageType
         $desc = "Field with the type of {$field->type}";
       }
 
-      $fields[] = [
+      $fields[] = $fieldClass::field([
         'name' => $field->name,
         'description' => $desc,
-        'type' => $fieldClass::type(),
-      ];
+      ]);
     }
 
     // add all the built in page fields
