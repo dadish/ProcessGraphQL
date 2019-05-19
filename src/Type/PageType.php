@@ -3,7 +3,9 @@
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Resolver;
+use ProcessWire\GraphQL\Utils;
 
 class PageType
 {
@@ -12,9 +14,12 @@ class PageType
   public static $description = 'ProcessWire Page.';
 
   private static $type;
-
-  public static function type()
+  public static function type(Template $template = null)
   {
+		if ($template instanceof Template) {
+			return self::templateType($template);
+		}
+
     if (self::$type) {
       return self::$type;
     }
@@ -158,5 +163,91 @@ class PageType
         'description' => "The page's URL path from the server's document root (may be the same as the `path`)",
       ],
     ];
+  }
+
+  private static $types = [];
+  public static function templateType(Template $template)
+  {
+		if (isset(self::$types[$template->name])) {
+			return self::$types[$template->name];
+		}
+
+    $selfType = null;
+    $selfType = new ObjectType([
+      'name' => self::getName($template),
+      'description' => self::getDescription($template),
+      'fields' => function () use (&$selfType, $template) {
+        return self::getFields($selfType, $template);
+      },
+    ]);
+
+    self::$types[$template->name] = $selfType;
+    return $selfType;
+  }
+
+  public static function getFields(&$selfType, Template $template)
+  {
+    $fields = [];
+
+    // add the template fields
+    $legalFields = Utils::moduleConfig()->legalFields;
+    foreach ($template->fields as $field) {
+      // skip illigal fields
+      if (!$legalFields->has($field)) {
+        continue;
+      }
+
+      // check if user has permission to view this field
+      if (!Utils::hasFieldPermission('view', $field, $template)) {
+        continue;
+      }
+
+      $fieldClass = Utils::pwFieldToGraphqlClass($field);
+      if (is_null($fieldClass)) {
+        continue;
+      }
+
+      // description
+      $desc = $field->description;
+      if (!$desc) {
+        $desc = "Field with the type of {$field->type}";
+      }
+
+      $fields[] = $fieldClass::field([
+        'name' => $field->name,
+        'description' => $desc,
+      ]);
+    }
+
+    // add all the built in page fields
+    foreach (self::type()->getFields() as $field) {
+      $fields[] = $field;
+    }
+
+    return $fields;
+  }
+
+  public Static function normalizeName($name)
+  {
+    return str_replace('-', '_', $name);
+  }
+
+  public static function getName(Template $template = null)
+  {
+    if ($template instanceof Template) {
+      return ucfirst(self::normalizeName($template->name)) . 'Page';
+    }
+
+    return self::$name;
+  }
+
+  public static function getDescription(Template $template = null)
+  {
+    if ($template instanceof Template) {
+      $desc = $template->description;
+      if ($desc) return $desc;
+      return "PageType with template `" . $template->name . "`.";
+    }
+    return self::$description;
   }
 }
