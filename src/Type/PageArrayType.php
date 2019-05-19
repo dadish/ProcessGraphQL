@@ -13,15 +13,18 @@ class PageArrayType {
 
 	public static $description = 'ProcessWire PageArray.';
 
-	private static $types = [];
-
+	private static $type;
 	public static function type(PWTemplate $template = null)
 	{
 		if ($template instanceof PWTemplate) {
 			return self::templatedType($template);
 		}
 
-		self::$types[self::$name] = new ObjectType([
+		if (self::$type) {
+			return self::$type;
+		}
+
+		self::$type = new ObjectType([
 			'name' => self::$name,
 			'description' => self::$description,
 			'fields' => [
@@ -35,9 +38,10 @@ class PageArrayType {
 			],
 		]);
 
-		return self::$types[self::$name];
+		return self::$type;
 	}
 
+	private static $types = [];
 	public static function templatedType(PWTemplate $template)
 	{
 		if (isset(self::$types[$template->name])) {
