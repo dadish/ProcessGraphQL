@@ -10,11 +10,7 @@ trait TypeCacheTrait
       return self::$type;
     }
 
-    if (is_callable($createType)) {
-      self::$type = $createType();
-    } else {
-      self::$type = $createType;
-    }
+    self::$type = $createType();
 
     return self::$type;
   }

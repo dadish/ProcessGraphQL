@@ -13,9 +13,10 @@ class File
   use FieldCacheTrait;
   public static function field($options)
   {
-    $field = array_merge($options, [
-      'type' => self::type(),
-    ]);
-    return self::cacheField($options['name'], $field);
+    return self::cacheField($options['name'], function () use ($options) {
+      return array_merge($options, [
+        'type' => self::type(),
+      ]);
+    });
   }
 }

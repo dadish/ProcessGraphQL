@@ -10,29 +10,31 @@ class Datetime
   use TypeCacheTrait;
   public static function type()
   {
-    $type = new CustomScalarType([
-      'name' => 'Datetime',
-      'description' => 'A date and optionally time',
-      'serialize' => function ($value) {
-        return (string) $value;
-      },
-      'parseValue' => function ($value) {
-        return (string) $value;
-      },
-      'parseLiteral' => function ($valueNode) {
-        return (string) $valueNode->value;
-      },
-    ]);
-    return self::cacheType($type);
+    return self::cacheType(function () {
+      return new CustomScalarType([
+        'name' => 'Datetime',
+        'description' => 'A date and optionally time',
+        'serialize' => function ($value) {
+          return (string) $value;
+        },
+        'parseValue' => function ($value) {
+          return (string) $value;
+        },
+        'parseLiteral' => function ($valueNode) {
+          return (string) $valueNode->value;
+        },
+      ]);
+    });
   }
 
   use FieldCacheTrait;
   public static function field($options)
   {
-    $field = array_merge(
-      Resolver::resolveWithDateFormatter($options),
-      ['type' => self::type()]
-    );
-    return self::cacheField($options['name'], $field);
+    return self::cacheField($options['name'], function () use ($options) {
+      return array_merge(
+        Resolver::resolveWithDateFormatter($options),
+        ['type' => self::type()]
+      );
+    });
   }
 }

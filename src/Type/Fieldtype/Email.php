@@ -9,28 +9,30 @@ class Email
   use TypeCacheTrait;
   public static function type()
   {
-    $type = new CustomScalarType([
-      'name' => 'Email',
-      'description' => 'E-Mail address in valid format',
-      'serialize' => function ($value) {
-        return (string) $value;
-      },
-      'parseValue' => function ($value) {
-        return (string) $value;
-      },
-      'parseLiteral' => function ($valueNode) {
-        return (string) $valueNode->value;
-      },
-    ]);
-    return self::cacheType($type);
+    return self::cacheType(function () {
+      return new CustomScalarType([
+        'name' => 'Email',
+        'description' => 'E-Mail address in valid format',
+        'serialize' => function ($value) {
+          return (string) $value;
+        },
+        'parseValue' => function ($value) {
+          return (string) $value;
+        },
+        'parseLiteral' => function ($valueNode) {
+          return (string) $valueNode->value;
+        },
+      ]);
+    });
   }
 
   use FieldCacheTrait;
   public static function field($options)
   {
-    $field = array_merge($options, [
-      'type' => self::type(),
-    ]);
-    return self::cacheField($options['name'], $field);
+    return self::cacheField($options['name'], function () use ($options) {
+      return array_merge($options, [
+        'type' => self::type(),
+      ]);
+    });
   }
 }

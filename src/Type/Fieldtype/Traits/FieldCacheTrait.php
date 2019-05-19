@@ -10,11 +10,7 @@ trait FieldCacheTrait
       return self::$field[$name];
     }
 
-    if (is_callable($createField)) {
-      self::$field[$name] = $createField();
-    } else {
-      self::$field[$name] = $createField;
-    }
+    self::$field[$name] = $createField();
 
     return self::$field[$name];
   }
