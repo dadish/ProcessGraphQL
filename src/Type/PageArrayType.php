@@ -6,24 +6,19 @@ use ProcessWire\Template as PWTemplate;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Type\SelectorType;
 use ProcessWire\GraphQL\Type\Resolver;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class PageArrayType {
+
+	use CacheTrait;
+
 	public static $name = 'PageArray';
 
 	public static $description = 'ProcessWire PageArray.';
 
-	private static $type;
-	public static function type(PWTemplate $template = null)
+	public static function buildType()
 	{
-		if ($template instanceof PWTemplate) {
-			return self::templateType($template);
-		}
-
-		if (self::$type) {
-			return self::$type;
-		}
-
-		self::$type = new ObjectType([
+		return new ObjectType([
 			'name' => self::$name,
 			'description' => self::$description,
 			'fields' => [
@@ -36,18 +31,11 @@ class PageArrayType {
 				],
 			],
 		]);
-
-		return self::$type;
 	}
 
-	private static $types = [];
-	public static function templateType(PWTemplate $template)
+	public static function buildTemplateType(PWTemplate $template)
 	{
-		if (isset(self::$types[$template->name])) {
-			return self::$types[$template->name];
-		}
-
-		self::$types[$template->name] = new ObjectType([
+		return new ObjectType([
 			'name' => self::templatedTypeName($template),
 			'description' => self::templatedTypeDescription($template),
 			'fields' => [
@@ -60,8 +48,6 @@ class PageArrayType {
 				]
 			]
 		]);
-
-		return self::$types[$template->name];
 	}
 
 	public static function templatedTypeName(PWTemplate $template)
