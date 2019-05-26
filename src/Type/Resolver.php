@@ -1,13 +1,12 @@
 <?php namespace ProcessWire\GraphQL\Type;
 
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\PWTypes;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\Page as PWPage;
 use ProcessWire\NullPage;
 use ProcessWire\WireData;
 use ProcessWire\FieldtypeDatetime;
-use ProcessWire\GraphQL\Type\Scalar\SelectorType;
+use ProcessWire\GraphQL\Type\SelectorType;
 
 class Resolver
 {
@@ -18,7 +17,7 @@ class Resolver
     return array_merge($options, [
       'args' => [
         's' => [
-          'type' => PWTypes::selector(),
+          'type' => SelectorType::type(),
           'description' => "ProcessWire selector."
         ],
       ],
@@ -37,7 +36,7 @@ class Resolver
     return array_merge($options, [
       'args' => [
         's' => [
-          'type' => PWTypes::selector(),
+          'type' => SelectorType::type(),
           'description' => "ProcessWire selector."
         ],
       ],

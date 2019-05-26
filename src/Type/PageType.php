@@ -6,6 +6,7 @@ use ProcessWire\Page;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Type\CacheTrait;
 
 class PageType
@@ -56,7 +57,7 @@ class PageType
 
       Resolver::resolveUser([
         'name' => 'createdUser',
-        'type' => PWTypes::user(),
+        'type' => UserType::type(),
         'description' => 'The user that created this page.',
       ]),
 
@@ -80,7 +81,7 @@ class PageType
 
       Resolver::resolveUser([
         'name' => 'modifiedUser',
-        'type' => PWTypes::user(),
+        'type' => UserType::type(),
         'description' => 'The user that last modified this page.',
       ]),
 
