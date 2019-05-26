@@ -6,24 +6,18 @@ use ProcessWire\Page;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class PageType
 {
+  use CacheTrait;
+
   public static $name = 'Page';
 
   public static $description = 'ProcessWire Page.';
 
-  private static $type;
-  public static function type(Template $template = null)
+  public static function buildType()
   {
-		if ($template instanceof Template) {
-			return self::templateType($template);
-		}
-
-    if (self::$type) {
-      return self::$type;
-    }
-
     $selfType = null;
     $selfType = new ObjectType([
       'name' => self::$name,
@@ -32,9 +26,7 @@ class PageType
         return self::getBuiltInFields($selfType);
       },
     ]);
-    
-    self::$type = $selfType;
-    return self::$type;
+    return $selfType;
   }
 
   public static function getBuiltInFields($selfType)
@@ -165,13 +157,8 @@ class PageType
     ];
   }
 
-  private static $types = [];
-  public static function templateType(Template $template)
+  public static function buildTemplateType(Template $template)
   {
-		if (isset(self::$types[$template->name])) {
-			return self::$types[$template->name];
-		}
-
     $selfType = null;
     $selfType = new ObjectType([
       'name' => self::getName($template),
@@ -181,7 +168,6 @@ class PageType
       },
     ]);
 
-    self::$types[$template->name] = $selfType;
     return $selfType;
   }
 

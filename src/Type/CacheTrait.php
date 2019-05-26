@@ -1,10 +1,16 @@
 <?php namespace ProcessWire\GraphQL\Type;
 
+use ProcessWire\Template;
+
 trait CacheTrait
 {
   private static $type;
-  public static function type()
+  public static function type($options = null)
   {
+    if ($options instanceof Template) {
+      return self::templateType($options);
+    }
+
     if (self::$type) {
       return self::$type;
     }
@@ -12,6 +18,17 @@ trait CacheTrait
     self::$type = self::buildType();
 
     return self::$type;
+  }
+
+  private static $types = [];
+  public static function templateType(Template $template)
+  {
+    if (isset(self::$types[$template->name])) {
+      return self::$types[$template->name];
+    }
+
+    self::$types[$template->name] = self::buildTemplateType($template);
+    return self::$types[$template->name];
   }
 
   private static $field = [];
