@@ -2,7 +2,7 @@
 
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Resolver;
-use ProcessWire\GraphQL\Type\Fieldtype\CacheTrait;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class Datetime
 { 

@@ -1,7 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
 use ProcessWire\GraphQL\Type\FileType;
-use ProcessWire\GraphQL\Type\Fieldtype\CacheTrait;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class File
 {
