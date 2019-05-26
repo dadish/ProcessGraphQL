@@ -16,7 +16,7 @@ class PageArrayType {
 	public static function type(PWTemplate $template = null)
 	{
 		if ($template instanceof PWTemplate) {
-			return self::templatedType($template);
+			return self::templateType($template);
 		}
 
 		if (self::$type) {
@@ -41,7 +41,7 @@ class PageArrayType {
 	}
 
 	private static $types = [];
-	public static function templatedType(PWTemplate $template)
+	public static function templateType(PWTemplate $template)
 	{
 		if (isset(self::$types[$template->name])) {
 			return self::$types[$template->name];
