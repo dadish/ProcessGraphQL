@@ -4,30 +4,25 @@ namespace ProcessWire\GraphQL\Type;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class FileType {
+
+  use CacheTrait;
 
   public static $name = 'File';
 
   public static $description = 'ProcessWire PageFile.';
 
-  private static $type;
-
-  public static function type()
+  public static function buildType()
   {
-    if (self::$type) {
-      return self::$type;
-    }
-
-    self::$type = new ObjectType([
+    return new ObjectType([
       'name' => self::$name,
       'description' => self::$description,
       'fields' => function () {
         return self::getFields();
       }
     ]);
-
-    return self::$type;
   }
 
   public static function getFields()

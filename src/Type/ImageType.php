@@ -6,21 +6,18 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\EmptyImage;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class ImageType {
+
+  use CacheTrait;
 
   public static $name = 'Image';
 
   public static $description = 'ProcessWire PageImage.';
 
-  private static $type;
-
-  public static function type()
+  public static function buildType()
   {
-    if (self::$type) {
-      return self::$type;
-    }
-
     $selfType = null;
     $selfType = new ObjectType([
       'name' => self::$name,
@@ -29,9 +26,7 @@ class ImageType {
         return self::getFields($selfType);
       }
     ]);
-
-    self::$type = $selfType;
-    return self::$type;
+    return $selfType;
   }
 
   public static function getFields($selfType)

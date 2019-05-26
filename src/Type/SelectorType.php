@@ -7,24 +7,21 @@ use ProcessWire\Selector;
 use ProcessWire\SelectorEqual;
 use ProcessWire\GraphQL\Utils;
 use GraphQL\Type\Definition\CustomScalarType;
+use ProcessWire\GraphQL\Type\CacheTrait;
 
 class SelectorType
 {
+  use CacheTrait;
+
   public static $name = 'Selector';
 
   public static $description = 'ProcessWire selector.';
 
-  private static $type;
-
   private static $parsedValues = [];
 
-  public static function type()
+  public static function buildType()
   {
-    if (self::$type) {
-      return self::$type;
-    }
-
-    self::$type = new CustomScalarType([
+    return new CustomScalarType([
       'name' => self::$name,
       'description' => self::$description,
       'serialize' => function ($value) {
@@ -37,8 +34,6 @@ class SelectorType
         return self::parseValue($valueNode->value);
       }
     ]);
-
-    return self::$type;
   }
 
   /**
