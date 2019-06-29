@@ -43,4 +43,14 @@ trait CacheTrait
 
     return self::$field[$name];
   }
+
+  public static function cacheType($key = 'default', $buildType)
+  {
+    if (isset(self::$types[$key])) {
+      return self::$types[$key];
+    }
+
+    self::$types[$key] = $buildType();
+    return self::$types[$key];
+  }
 }
