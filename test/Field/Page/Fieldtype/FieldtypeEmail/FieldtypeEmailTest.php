@@ -23,13 +23,13 @@ class FieldtypeEmailTest extends GraphQLTestCase {
   {
   	$architect = Utils::pages()->get("template=architect");
   	$query = "{
-  		architect (s: \"id=$architect->id\") {
-  			list {
-  				email
+      architect (s: \"id=$architect->id\") {
+        list {
+          email
   			}
   		}
-  	}";
-  	$res = $this->execute($query);
+    }";
+    $res = self::execute($query);
   	$this->assertEquals($architect->email, $res->data->architect->list[0]->email, 'Retrieves email value.');
   }
 
