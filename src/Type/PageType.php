@@ -17,22 +17,28 @@ class PageType
 
   public static $description = 'ProcessWire Page.';
 
-  public static function buildType()
+  public static function type($template = null)
   {
-    $selfType = null;
-    $selfType = new ObjectType([
-      'name' => self::$name,
-      'description' => self::$description,
-      'fields' => function () use (&$selfType) {
-        return self::getBuiltInFields($selfType);
-      },
-    ]);
-    return $selfType;
+    if ($template instanceof Template) {
+      return self::templateType($template);
+    }
+
+    return self::cache('default', function () {
+      $selfType = null;
+      $selfType = new ObjectType([
+        'name' => self::$name,
+        'description' => self::$description,
+        'fields' => function () use (&$selfType) {
+          return self::getBuiltInFields($selfType);
+        },
+      ]);
+      return $selfType;
+    });
   }
 
   public static function getBuiltInFields($selfType)
   {
-    return [
+    $builtInFields = [
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'child',
@@ -156,20 +162,26 @@ class PageType
         'description' => "The page's URL path from the server's document root (may be the same as the `path`)",
       ],
     ];
+
+    return array_filter($builtInFields, function ($field) {
+      return in_array($field['name'], Utils::moduleConfig()->legalPageFields);
+    });
   }
 
-  public static function buildTemplateType(Template $template)
+  public static function templateType(Template $template)
   {
-    $selfType = null;
-    $selfType = new ObjectType([
-      'name' => self::getName($template),
-      'description' => self::getDescription($template),
-      'fields' => function () use (&$selfType, $template) {
-        return self::getFields($selfType, $template);
-      },
-    ]);
-
-    return $selfType;
+    return self::cache(Utils::getTemplateCacheKey($template), function () use ($template) {
+      $selfType = null;
+      $selfType = new ObjectType([
+        'name' => self::getName($template),
+        'description' => self::getDescription($template),
+        'fields' => function () use (&$selfType, $template) {
+          return self::getFields($selfType, $template);
+        },
+      ]);
+  
+      return $selfType;
+    });
   }
 
   public static function getFields(&$selfType, Template $template)
@@ -180,7 +192,7 @@ class PageType
     $legalFields = Utils::moduleConfig()->legalFields;
     foreach ($template->fields as $field) {
       // skip illigal fields
-      if (!$legalFields->has($field)) {
+      if (!in_array($field->name, $legalFields)) {
         continue;
       }
 

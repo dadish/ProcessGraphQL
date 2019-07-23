@@ -19,21 +19,23 @@ class SelectorType
 
   private static $parsedValues = [];
 
-  public static function buildType()
+  public static function type()
   {
-    return new CustomScalarType([
-      'name' => self::$name,
-      'description' => self::$description,
-      'serialize' => function ($value) {
-        return (string) $value;
-      },
-      'parseValue' => function ($value) {
-        return self::parseValue($value);
-      },
-      'parseLiteral' => function ($valueNode) {
-        return self::parseValue($valueNode->value);
-      }
-    ]);
+    return self::cache('default', function () {
+      return new CustomScalarType([
+        'name' => self::$name,
+        'description' => self::$description,
+        'serialize' => function ($value) {
+          return (string) $value;
+        },
+        'parseValue' => function ($value) {
+          return self::parseValue($value);
+        },
+        'parseLiteral' => function ($valueNode) {
+          return self::parseValue($valueNode->value);
+        }
+      ]);
+    });
   }
 
   /**

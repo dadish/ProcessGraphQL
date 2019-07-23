@@ -11,10 +11,12 @@ class File
     return FileType::type();
   }
 
-  public static function buildField($options)
+  public static function field($options)
   {
-    return array_merge($options, [
-      'type' => self::type(),
-    ]);
+    return self::cache('field-' . $options['name'], function () use ($options) {
+      return array_merge($options, [
+        'type' => self::type(),
+      ]);
+    });
   }
 }

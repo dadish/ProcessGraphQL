@@ -12,25 +12,27 @@ class UserType
 
   public static $description = 'ProcessWire User.';
 
-  public static function buildType()
+  public static function type()
   {
-    return new ObjectType([
-      'name' => self::$name,
-      'description' => self::$description,
-      'fields' => [
-        'name' => [
-          'type' => Type::nonNull(Type::string()),
-          'description' => "The user's login name.",
-        ],
-        'email' => [
-          'type' => Type::nonNull(Type::string()),
-          'description' => "The user's email address.",
-        ],
-        'id' => [
-          'type' => Type::nonNull(Type::id()),
-          'description' => "The user's id.",
-        ],
-      ]
-    ]);
+    return self::cache('default', function () {
+      return new ObjectType([
+        'name' => self::$name,
+        'description' => self::$description,
+        'fields' => [
+          'name' => [
+            'type' => Type::nonNull(Type::string()),
+            'description' => "The user's login name.",
+          ],
+          'email' => [
+            'type' => Type::nonNull(Type::string()),
+            'description' => "The user's email address.",
+          ],
+          'id' => [
+            'type' => Type::nonNull(Type::id()),
+            'description' => "The user's id.",
+          ],
+        ]
+      ]);
+    });
   }
 }

@@ -248,4 +248,32 @@ class Utils {
 
     return null;
   }
+
+  public static function getTemplateCacheKey(Template $template)
+  {
+    $key = '';
+    $seperator = '-';
+
+    // user's roles
+    $key .= Utils::user()->roles->implode($seperator, 'name');
+    
+    // template name
+    $key .= "$seperator$seperator";
+    $key .= $template->name;
+    
+    // allowed fields
+    $key .= "$seperator$seperator";
+    $key .= implode($seperator, Utils::moduleConfig()->legalFields);
+    
+    $key .= "$seperator$seperator";
+    $key .= implode($seperator, Utils::moduleConfig()->legalPageFields);
+
+    $key .= "$seperator$seperator";
+    $key .= implode($seperator, Utils::moduleConfig()->legalPageFileFields);
+
+    $key .= "$seperator$seperator";
+    $key .= implode($seperator, Utils::moduleConfig()->legalPageImageFields);
+
+    return $key;
+  }
 }

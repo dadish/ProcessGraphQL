@@ -14,15 +14,17 @@ class FileType {
 
   public static $description = 'ProcessWire PageFile.';
 
-  public static function buildType()
+  public static function type()
   {
-    return new ObjectType([
-      'name' => self::$name,
-      'description' => self::$description,
-      'fields' => function () {
-        return self::getFields();
-      }
-    ]);
+    return self::cache('default', function () {
+      return new ObjectType([
+        'name' => self::$name,
+        'description' => self::$description,
+        'fields' => function () {
+          return self::getFields();
+        }
+      ]);
+    });
   }
 
   public static function getFields()

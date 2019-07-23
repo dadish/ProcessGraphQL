@@ -16,17 +16,19 @@ class ImageType {
 
   public static $description = 'ProcessWire PageImage.';
 
-  public static function buildType()
+  public static function type()
   {
-    $selfType = null;
-    $selfType = new ObjectType([
-      'name' => self::$name,
-      'description' => self::$description,
-      'fields' => function () use (&$selfType) {
-        return self::getFields($selfType);
-      }
-    ]);
-    return $selfType;
+    return self::cache('default', function () {
+      $selfType = null;
+      $selfType = new ObjectType([
+        'name' => self::$name,
+        'description' => self::$description,
+        'fields' => function () use (&$selfType) {
+          return self::getFields($selfType);
+        }
+      ]);
+      return $selfType;
+    });
   }
 
   public static function getFields($selfType)

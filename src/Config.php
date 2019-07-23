@@ -44,6 +44,7 @@ class Config extends WireData {
     switch ($key) {
       case 'maxLimit':
       case 'fullWidthGraphiQL':
+      case 'legalFields':
       case 'legalPageFields':
       case 'legalPageFileFields':
       case 'legalPageImageFields':
@@ -61,8 +62,6 @@ class Config extends WireData {
         return $this->getLegalTemplatesForPermission('page-edit');
       case 'legalAddTemplates':
         return $this->getLegalTemplatesForPermission('page-add');
-      case 'legalFields':
-        return $this->getLegalFields();
       default:
         return parent::get($key);
     }
@@ -159,17 +158,11 @@ class Config extends WireData {
     return $templates;
   }
 
-  protected function getLegalFields()
-  {
-    $legalFields = $this->module->legalFields;
-    return Utils::fields()->getAll()->find("name=" . implode('|', $legalFields));
-  }
-
   public static function allFieldsAreLegal(Fieldgroup $fields)
   {
     $legalFields = Utils::moduleConfig()->legalFields;
     foreach ($fields as $field) {
-      if (!$legalFields->has($field)) return false;
+      if (!in_array($field->name, $legalFields)) return false;
     }
     return true;
   }
