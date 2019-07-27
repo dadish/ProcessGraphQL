@@ -29,7 +29,7 @@ class FieldtypeIntegerTest extends GraphqlTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals($skyscraper->floors, $res->data->skyscraper->list[0]->floors, 'Retrieves field value.');
   }
 
