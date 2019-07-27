@@ -31,7 +31,10 @@ class FieldtypeFileTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+		$res = self::execute($query);
+		echo "\n=======================================\n";
+		echo json_encode($res, true);
+		echo "\n=======================================\n";
   	$this->assertEquals(
   		$architect->resume->first()->url,
   		$res->data->architect->list[0]->resume[0]->url,
