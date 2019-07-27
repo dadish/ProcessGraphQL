@@ -4,7 +4,7 @@ use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\CacheTrait;
 
-class Datetime
+class FieldtypeDatetime
 { 
   use CacheTrait;
   public static function type()

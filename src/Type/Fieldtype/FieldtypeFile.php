@@ -4,7 +4,7 @@ use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\CacheTrait;
 use GraphQL\Type\Definition\Type;
 
-class File
+class FieldtypeFile
 {
   use CacheTrait;
   public static function type()

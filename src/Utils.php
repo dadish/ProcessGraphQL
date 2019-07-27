@@ -235,7 +235,7 @@ class Utils {
   {
     ChromePhp::log();
     // use local field if available
-    $className = "\\ProcessWire\\GraphQL\\Type\\Fieldtype\\" . str_replace('Fieldtype', '', $field->type->className());
+    $className = "\\ProcessWire\\GraphQL\\Type\\Fieldtype\\" . $field->type->className();
     if (class_exists($className)) {
       return $className;
     }

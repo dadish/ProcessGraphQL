@@ -3,7 +3,7 @@
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\CacheTrait;
 
-class Email
+class FieldtypeEmail
 { 
   use CacheTrait;
   public static function type()
