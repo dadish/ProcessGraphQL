@@ -77,7 +77,7 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
     }";
 
     // execute graphql
-    $res = $this->execute($query);
+    $res = self::execute($query);
 
     // the thumb created by graphql
     $actualThumb = $res->data->skyscraper->list[0]->images[0]->size;

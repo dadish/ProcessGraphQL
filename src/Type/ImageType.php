@@ -7,6 +7,7 @@ use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\EmptyImage;
 use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Utils;
 
 class ImageType {
 
@@ -89,8 +90,14 @@ class ImageType {
           // might be asking for variation already created
           $variations = $value->getVariations();
           foreach ($variations as $variation) {
-            if ($width && $variation->width !== $width) continue;
-            if ($height && $variation->height !== $height) continue;
+            if ($width && $variation->width !== $width) {
+              continue;
+            }
+            
+            if ($height && $variation->height !== $height) {
+              continue;
+            }
+            
             return $variation;
           }
           return new EmptyImage();
