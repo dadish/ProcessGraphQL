@@ -170,6 +170,7 @@ class PageType
 
   public static function templateType(Template $template)
   {
+    Utils::moduleConfig()->currentTemplateContext = $template;
     return self::cache(Utils::getTemplateCacheKey($template), function () use ($template) {
       $selfType = null;
       $selfType = new ObjectType([
