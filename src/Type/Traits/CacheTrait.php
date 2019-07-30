@@ -1,6 +1,4 @@
-<?php namespace ProcessWire\GraphQL\Type;
-
-use ProcessWire\Template;
+<?php namespace ProcessWire\GraphQL\Type\Traits;
 
 trait CacheTrait
 {

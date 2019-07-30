@@ -2,7 +2,7 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class AuthResponseType
 {

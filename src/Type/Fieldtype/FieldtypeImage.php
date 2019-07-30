@@ -1,7 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
 use ProcessWire\GraphQL\Type\ImageType;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use GraphQL\Type\Definition\Type;
 
 class FieldtypeImage

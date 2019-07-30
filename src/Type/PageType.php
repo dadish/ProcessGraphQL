@@ -7,7 +7,7 @@ use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\UserType;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class PageType
 {

@@ -6,7 +6,7 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\EmptyImage;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Utils;
 
 class ImageType {

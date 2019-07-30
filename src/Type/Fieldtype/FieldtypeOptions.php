@@ -2,7 +2,7 @@
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\InputfieldSelectMultiple;
 
 class FieldtypeOptions

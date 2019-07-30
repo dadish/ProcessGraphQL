@@ -6,7 +6,7 @@ use ProcessWire\Template as PWTemplate;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Type\SelectorType;
 use ProcessWire\GraphQL\Type\Resolver;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Utils;
 
 class PageArrayType {

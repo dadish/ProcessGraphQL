@@ -7,7 +7,7 @@ use ProcessWire\Selector;
 use ProcessWire\SelectorEqual;
 use ProcessWire\GraphQL\Utils;
 use GraphQL\Type\Definition\CustomScalarType;
-use ProcessWire\GraphQL\Type\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class SelectorType
 {
