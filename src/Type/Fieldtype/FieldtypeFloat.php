@@ -2,21 +2,14 @@
 
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 
 class FieldtypeFloat
 { 
   use CacheTrait;
+  use FieldTrait;
   public static function type()
   {
     return Type::float();
-  }
-
-  public static function field($options)
-  {
-    return self::cache('field-' . $options['name'], function () use ($options) {
-      return array_merge($options, [
-        'type' => self::type(),
-      ]);
-    });
   }
 }

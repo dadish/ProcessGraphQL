@@ -2,10 +2,12 @@
 
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 
 class FieldtypeCheckbox
 { 
   use CacheTrait;
+  use FieldTrait;
   public static function type()
   {
     return self::cache('default', function () {
@@ -21,15 +23,6 @@ class FieldtypeCheckbox
         'parseLiteral' => function ($valueNode) {
           return (boolean) $valueNode->value;
         },
-      ]);
-    });
-  }
-
-  public static function field($options)
-  {
-    return self::cache('field-' . $options['name'], function () use ($options) {
-      return array_merge($options, [
-        'type' => self::type(),
       ]);
     });
   }

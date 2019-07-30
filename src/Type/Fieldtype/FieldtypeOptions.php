@@ -52,12 +52,20 @@ class FieldtypeOptions
     return $result;
   }
 
-  public static function field($options, $field)
+  public static function field($field)
   {
-    return self::cache('field-' . $options['name'], function () use ($options, $field) {
-      return array_merge($options, [
+    return self::cache("field-{$field->name}", function () use ($field) {
+      // description
+      $desc = $field->description;
+      if (!$desc) {
+        $desc = "Field with the type of {$field->type}";
+      }
+
+      return [
+        'name' => $field->name,
+        'description' => $desc,
         'type' => self::isMultiple($field) ? Type::listOf(self::type()) : self::type(),
-      ]);
+      ];
     });
   }
 }

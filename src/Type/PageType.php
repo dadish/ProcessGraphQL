@@ -207,16 +207,7 @@ class PageType
         continue;
       }
 
-      // description
-      $desc = $field->description;
-      if (!$desc) {
-        $desc = "Field with the type of {$field->type}";
-      }
-
-      $fields[] = $fieldClass::field([
-        'name' => $field->name,
-        'description' => $desc,
-      ], $field);
+      $fields[] = $fieldClass::field($field);
     }
 
     // add all the built in page fields

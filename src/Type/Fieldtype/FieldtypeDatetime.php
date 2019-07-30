@@ -12,7 +12,7 @@ class FieldtypeDatetime
     return self::cache('default', function () {
       return new CustomScalarType([
         'name' => 'Datetime',
-        'description' => 'A date and optionally time',
+        'description' => 'A string that represends a date and optionally time.',
         'serialize' => function ($value) {
           return (string) $value;
         },
@@ -26,13 +26,20 @@ class FieldtypeDatetime
     });
   }
 
-  public static function field($options)
+  public static function field($field)
   {
-    return self::cache('field-' . $options['name'], function () use ($options) {
-      return array_merge(
-        Resolver::resolveWithDateFormatter($options),
-        ['type' => self::type()]
-      );
+    return self::cache("field-{$field->name}", function () use ($field) {
+      // description
+      $desc = $field->description;
+      if (!$desc) {
+        $desc = "Field with the type of {$field->type}";
+      }
+
+      return Resolver::resolveWithDateFormatter([
+        'name' => $field->name,
+        'description' => $desc,
+        'type' => $field->required ? Type::nonNull(self::type()) : self::type(),
+      ]);
     });
   }
 }
