@@ -4,6 +4,7 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\InputfieldSelectMultiple;
+use GraphQL\Type\Definition\EnumType;
 
 class FieldtypeOptions
 { 
@@ -66,6 +67,31 @@ class FieldtypeOptions
         'description' => $desc,
         'type' => self::isMultiple($field) ? Type::listOf(self::type()) : self::type(),
       ];
+    });
+  }
+
+  public function inputType($field)
+  {
+    return self::cache("input-field-{$field->name}", function () use ($field) {
+      $options = [];
+      foreach ($field->type->getOptions($field) as $option) {
+        $options[] = [
+          'value' => $option->value ? $option->value : $option->title,
+          'name' => $option->title,
+        ];
+      }
+
+      $type = new EnumType([
+        'name' => $field->name,
+        'description' => "Possible values for the `{$field->name}`.",
+        'values' => $options,
+      ]);
+
+      if (self::isMultiple($field)) {
+        return Type::listOf($type);
+      }
+
+      return $type;
     });
   }
 }

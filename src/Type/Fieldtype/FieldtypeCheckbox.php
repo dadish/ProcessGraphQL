@@ -3,11 +3,13 @@
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\Traits\FieldTrait;
+use ProcessWire\GraphQL\Type\Traits\InputTypeTrait;
 
 class FieldtypeCheckbox
 { 
   use CacheTrait;
   use FieldTrait;
+  use InputTypeTrait;
   public static function type()
   {
     return self::cache('default', function () {

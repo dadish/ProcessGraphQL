@@ -3,10 +3,12 @@
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\InputTypeTrait;
 
 class FieldtypeDatetime
 { 
   use CacheTrait;
+  use InputTypeTrait;
   public static function type()
   {
     return self::cache('default', function () {
