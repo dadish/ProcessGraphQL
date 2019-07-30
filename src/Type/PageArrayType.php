@@ -2,7 +2,7 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\Template as PWTemplate;
+use ProcessWire\Template;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Type\SelectorType;
 use ProcessWire\GraphQL\Type\Resolver;
@@ -17,9 +17,9 @@ class PageArrayType {
 
 	public static $description = 'ProcessWire PageArray.';
 
-	public static function type(PWTemplate $template = null)
+	public static function type(Template $template = null)
 	{
-		if ($template instanceof PWTemplate) {
+		if ($template instanceof Template) {
 			return self::templateType($template);
 		}
 
@@ -40,7 +40,7 @@ class PageArrayType {
 		});
 	}
 
-	public static function templateType(PWTemplate $template)
+	public static function templateType(Template $template)
 	{
 		return self::cache(Utils::getTemplateCacheKey($template), function () use ($template) {
 			return new ObjectType([
@@ -59,12 +59,12 @@ class PageArrayType {
 		});
 	}
 
-	public static function templatedTypeName(PWTemplate $template)
+	public static function templatedTypeName(Template $template)
 	{
 		return $template->name;
 	}
 
-	public static function templatedTypeDescription(PWTemplate $template)
+	public static function templatedTypeDescription(Template $template)
 	{
 		if ($template->description) {
 			return $template->description;
@@ -73,7 +73,7 @@ class PageArrayType {
 		return "Pages with the template $template->name.";
 	}
 
-	public static function asField(PWTemplate $template)
+	public static function field(Template $template)
 	{
 		return Resolver::resolvePageArray([
 			'name' => self::templatedTypeName($template),

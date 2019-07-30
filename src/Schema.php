@@ -9,6 +9,7 @@ use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Field\Auth\Login;
 use ProcessWire\GraphQL\Field\Auth\Logout;
 use ProcessWire\GraphQL\Field\Debug\DbQuery;
+use ProcessWire\GraphQL\Field\Mutation\CreatePage;
 
 class Schema extends GraphQLSchema
 {
@@ -32,7 +33,7 @@ class Schema extends GraphQLSchema
 
     // add lagal templates
     foreach ($moduleConfig->legalViewTemplates as $template) {
-      $queryFields[] = PageArrayType::asField($template);
+      $queryFields[] = PageArrayType::field($template);
     }
 
     // User. The `me`
@@ -74,7 +75,13 @@ class Schema extends GraphQLSchema
 
   public static function builtMutation()
   {
+    $moduleConfig = Utils::moduleConfig();
     $mutationFields = [];
+
+    // CreatePage
+    foreach ($moduleConfig->legalCreateTemplates as $template) {
+      $mutationFields[] = CreatePage::field($template);
+    }
 
     // let the user modify the query operation
     $mutationFields = Utils::module()->getMutationFields($mutationFields);
