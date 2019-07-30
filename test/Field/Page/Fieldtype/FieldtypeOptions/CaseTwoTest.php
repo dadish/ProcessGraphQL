@@ -29,7 +29,7 @@ class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals($city->options_single->title, $res->data->city->list[0]->options_single->title, 'Retrieves correct option title.');
     $this->assertEquals($city->options_single->value, $res->data->city->list[0]->options_single->value, 'Retrieves correct option value.');
     $this->assertEquals($city->options_single->id, $res->data->city->list[0]->options_single->id, 'Retrieves correct option id.');

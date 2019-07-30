@@ -216,7 +216,7 @@ class PageType
       $fields[] = $fieldClass::field([
         'name' => $field->name,
         'description' => $desc,
-      ]);
+      ], $field);
     }
 
     // add all the built in page fields
