@@ -44,4 +44,10 @@ class FieldtypeDatetime
       ]);
     });
   }
+
+  public static function setValue(Page $page, $field, $value)
+  {
+  	$fieldName = $field->name;
+  	$page->$fieldName = $value->format('Y-m-d H:i:s');
+  }
 }

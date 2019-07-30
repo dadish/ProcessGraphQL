@@ -1,6 +1,5 @@
 <?php namespace ProcessWire\GraphQL\Type\Traits;
 
-use ProcessWire\Template;
 use GraphQL\Type\Definition\Type;
 
 trait InputTypeTrait

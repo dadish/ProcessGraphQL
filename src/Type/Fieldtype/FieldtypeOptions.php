@@ -1,14 +1,16 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
 use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\ObjectType;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
-use ProcessWire\InputfieldSelectMultiple;
 use GraphQL\Type\Definition\EnumType;
+use GraphQL\Type\Definition\ObjectType;
+use ProcessWire\InputfieldSelectMultiple;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
 
 class FieldtypeOptions
 { 
   use CacheTrait;
+  use SetValueTrait;
   public static function type()
   {
     return self::cache('default', function () {
