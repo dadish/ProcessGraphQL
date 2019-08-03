@@ -72,7 +72,7 @@ class FieldtypeOptions
     });
   }
 
-  public function inputType($field)
+  public static function inputType($field)
   {
     return self::cache("input-field-{$field->name}", function () use ($field) {
       $options = [];
