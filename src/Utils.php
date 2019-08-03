@@ -233,7 +233,8 @@ class Utils {
    */
   public static function pwFieldToGraphqlClass(Field $field)
   {
-    ChromePhp::log();
+
+    
     // use local field if available
     $className = "\\ProcessWire\\GraphQL\\Type\\Fieldtype\\" . $field->type->className();
     if (class_exists($className)) {
