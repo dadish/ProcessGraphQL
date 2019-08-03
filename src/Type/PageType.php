@@ -171,13 +171,13 @@ class PageType
   public static function templateType(Template $template)
   {
     Utils::moduleConfig()->currentTemplateContext = $template;
-    return self::cache(Utils::getTemplateCacheKey($template), function () use ($template) {
+    return self::cache('PageType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
       $selfType = null;
       $selfType = new ObjectType([
         'name' => self::getName($template),
         'description' => self::getDescription($template),
-        'fields' => function () use (&$selfType, $template) {
-          return self::getFields($selfType, $template);
+        'fields' => function () use ($template) {
+          return self::getFields($template);
         },
       ]);
   
@@ -185,7 +185,7 @@ class PageType
     });
   }
 
-  public static function getFields(&$selfType, Template $template)
+  public static function getFields(Template $template)
   {
     $fields = [];
 
