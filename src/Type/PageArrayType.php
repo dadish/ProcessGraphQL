@@ -42,7 +42,7 @@ class PageArrayType {
 
 	public static function templateType(Template $template)
 	{
-		return self::cache(Utils::getTemplateCacheKey($template), function () use ($template) {
+		return self::cache('PageArrayType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
 			return new ObjectType([
 				'name' => self::templatedTypeName($template),
 				'description' => self::templatedTypeDescription($template),
