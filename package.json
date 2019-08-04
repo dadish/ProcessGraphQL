@@ -10,12 +10,15 @@
     "bin-release": "bin/release.js"
   },
   "scripts": {
-    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
+    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Field/Page/Fieldtype/FieldtypeOptions/CaseThreeTest.php\"",
     "release-patch": "bin-release patch",
     "release-minor": "bin-release minor",
     "release-major": "bin-release major",
     "release-test": "bin-release test",
-    "postinstall": "composer install"
+    "postinstall": "composer install",
+    "start:client": "php -S localhost:8080 test/client.php",
+    "start:server": "php -S localhost:8081 test/server.php",
+    "start": "npm-run-all --parallel start:client start:server"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,8 @@
   },
   "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
   "devDependencies": {
+    "npm-run-all": "^4.1.5",
     "shelljs": "^0.8.1"
-  }
+  },
+  "dependencies": {}
 }
