@@ -46,7 +46,7 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
         "options_single" => $option,
   		]
   	];
-  	$res = $this->execute($query, json_encode($variables));
+    $res = self::execute($query, $variables);
 
     $newCity = Utils::pages()->get("template=city, name=$name");
     $this->assertTrue(!$newCity instanceof NullPage, 'New Page is created.');
