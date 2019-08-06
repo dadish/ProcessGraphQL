@@ -3,15 +3,15 @@
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
-use ProcessWire\GraphQL\Type\Traits\InputTypeTrait;
+use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 
 class FieldtypeDatetime
 { 
   use CacheTrait;
-  use InputTypeTrait;
-  public static function type()
+  use InputFieldTrait;
+  public static function type($field)
   {
-    return self::cache('default', function () {
+    return self::cache($field->name, function () {
       return new CustomScalarType([
         'name' => 'Datetime',
         'description' => 'A string that represends a date and optionally time.',
@@ -40,7 +40,7 @@ class FieldtypeDatetime
       return Resolver::resolveWithDateFormatter([
         'name' => $field->name,
         'description' => $desc,
-        'type' => $field->required ? Type::nonNull(self::type()) : self::type(),
+        'type' => $field->required ? Type::nonNull(self::type($field)) : self::type($field),
       ]);
     });
   }

@@ -5,19 +5,22 @@ use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\PageType;
 use GraphQL\Type\Definition\InputObjectType;
 use ProcessWire\GraphQL\Utils;
+use GraphQL\Type\Definition\Type;
+use ProcessWire\Page;
+use ProcessWire\Field;
 
 class CreatePage
 {
   use CacheTrait;
   public static function field(Template $template)
   {
-    return self::cache('default', function () use ($template) {
+    return self::cache('CreatePage--' . Utils::getTemplateCacheKey($template), function () use ($template) {
       return [
         'name' => self::name($template),
         'description' => self::description($template),
         'type' => PageType::type($template),
         'args' => [
-          'page' => self::inputType($template),
+          'page' => Type::nonNull(self::inputType($template)),
         ],
         'resolve' => function ($value, $args) use ($template) {
           return self::resolve($value, $args, $template);
@@ -28,18 +31,18 @@ class CreatePage
 
   public static function name($template)
   {
-    $typeName = PageType::normalizeName($template->name);
-    return "create_{$typeName}";
+    $typeName = ucfirst(PageType::normalizeName($template->name));
+    return "create{$typeName}";
   }
 
-  public function getDescription(Template $template)
+  public static function description(Template $template)
   {
     return "Allows you to create Pages with template `{$template->name}`.";
   }
 
   public static function inputType(Template $template)
   {
-    return self::cache('defaultInput', function () use ($template) {
+    return self::cache('CreateInputType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
       return new InputObjectType([
         'name' => ucfirst(PageType::normalizeName($template->name)) . 'CreateInput',
         'description' => "CreateInputType for pages with template {$template->name}.",
@@ -55,14 +58,14 @@ class CreatePage
     // parent
     $fields[] = [
       'name' => 'parent',
-      'type' => new NonNullType(new StringType()),
+      'type' => Type::nonNull(Type::string()),
       'description' => 'Id or the path of the parent page.',
     ];
 
     // name
     $fields[] = [
       'name' => 'name',
-      'type' => new NonNullType(new StringType()),
+      'type' => Type::nonNull(Type::string()),
       'description' => 'ProcessWire page name.',
     ];
 
@@ -73,7 +76,7 @@ class CreatePage
       'FieldtypeImage',
     ];
 
-    $legalFieldsName = Utils::moduleConfig()->legalFields->implode('|', 'name');
+    $legalFieldsName = implode('|', Utils::moduleConfig()->legalFields);
     foreach ($template->fields->find("name=$legalFieldsName") as $field) {
 
       // get the field's GraphQL input class
@@ -84,7 +87,7 @@ class CreatePage
 
       $f = Utils::pwFieldToGraphqlClass($field);
       if (!is_null($f)) {
-        $fields[] = $f::inputType($field);
+        $fields[] = $f::inputField($field);
       }
     }
 

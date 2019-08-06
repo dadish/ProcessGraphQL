@@ -6,7 +6,7 @@ use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
 
-class FieldtypeEmail
+class FieldtypePageTitle
 { 
   use CacheTrait;
   use FieldTrait;
@@ -16,8 +16,8 @@ class FieldtypeEmail
   {
     return self::cache($field->name, function () {
       return new CustomScalarType([
-        'name' => 'Email',
-        'description' => 'E-Mail address in valid format',
+        'name' => 'Page Title',
+        'description' => 'Field that stores a page title',
         'serialize' => function ($value) {
           return (string) $value;
         },

@@ -3,18 +3,18 @@
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\Traits\FieldTrait;
-use ProcessWire\GraphQL\Type\Traits\InputTypeTrait;
+use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
 
 class FieldtypeCheckbox
 { 
   use CacheTrait;
   use FieldTrait;
-  use InputTypeTrait;
+  use InputFieldTrait;
   use SetValueTrait;
-  public static function type()
+  public static function type($field)
   {
-    return self::cache('default', function () {
+    return self::cache($field->name, function () {
       return new CustomScalarType([
         'name' => 'Checkbox',
         'description' => 'An ON/OFF toggle via a single checkbox.',

@@ -6,15 +6,17 @@ use GraphQL\Type\Definition\ObjectType;
 use ProcessWire\InputfieldSelectMultiple;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
+use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 
 class FieldtypeOptions
 { 
   use CacheTrait;
+  use FieldTrait;
   use SetValueTrait;
-  public static function type()
+  public static function type($field)
   {
-    return self::cache('default', function () {
-      return new ObjectType([
+    return self::cache($field->name, function () use ($field) {
+      $type = new ObjectType([
         'name' => 'Options',
         'description' => 'Field that stores single and multi select options.',
         'fields' => [
@@ -44,42 +46,23 @@ class FieldtypeOptions
           ]
         ],
       ]);
-    });
-  }
 
-  public static function isMultiple($field)
-  {
-    $inputfieldClassName = 'ProcessWire\\' . $field->inputfieldClass;
-    $inputfieldClassInstance = new $inputfieldClassName();
-    $result = $inputfieldClassInstance instanceof InputfieldSelectMultiple;
-    return $result;
-  }
-
-  public static function field($field)
-  {
-    return self::cache("field-{$field->name}", function () use ($field) {
-      // description
-      $desc = $field->description;
-      if (!$desc) {
-        $desc = "Field with the type of {$field->type}";
+      if (self::isMultiple($field)) {
+        return Type::listOf($type);
       }
 
-      return [
-        'name' => $field->name,
-        'description' => $desc,
-        'type' => self::isMultiple($field) ? Type::listOf(self::type()) : self::type(),
-      ];
+      return $type;
     });
   }
 
   public static function inputType($field)
   {
-    return self::cache("input-field-{$field->name}", function () use ($field) {
+    return self::cache("input-type-{$field->name}", function () use ($field) {
       $options = [];
       foreach ($field->type->getOptions($field) as $option) {
-        $options[] = [
-          'value' => $option->value ? $option->value : $option->title,
-          'name' => $option->title,
+        $options[$option->title ? $option->title : $option->value] = [
+          'value' => $option->title ? $option->title : $option->value,
+          'description' => $option->value,
         ];
       }
 
@@ -94,6 +77,31 @@ class FieldtypeOptions
       }
 
       return $type;
+    });
+  }
+
+  public static function isMultiple($field)
+  {
+    $inputfieldClassName = 'ProcessWire\\' . $field->inputfieldClass;
+    $inputfieldClassInstance = new $inputfieldClassName();
+    $result = $inputfieldClassInstance instanceof InputfieldSelectMultiple;
+    return $result;
+  }
+
+  public static function inputField($field)
+  {
+    return self::cache("input-field-{$field->name}", function () use ($field) {
+      // description
+      $desc = $field->description;
+      if (!$desc) {
+        $desc = "Field with the type of {$field->type}";
+      }
+
+      return [
+        'name' => $field->name,
+        'description' => $desc,
+        'type' => $field->required ? Type::nonNull(self::inputType($field)) : self::inputType($field),
+      ];
     });
   }
 }
