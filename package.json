@@ -10,7 +10,7 @@
     "bin-release": "bin/release.js"
   },
   "scripts": {
-    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Field/Page/Fieldtype/FieldtypeOptions/CaseThreeTest.php\"",
+    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
     "release-patch": "bin-release patch",
     "release-minor": "bin-release minor",
     "release-major": "bin-release major",
