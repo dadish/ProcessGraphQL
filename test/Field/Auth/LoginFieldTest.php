@@ -25,7 +25,7 @@ class LoginFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     $pass = $config->testUsers['admin'];
     $query = "{
-      login(username:\"admin\", password:\"$pass\") {
+      login(name:\"admin\", pass:\"$pass\") {
         statusCode
         message
       }
@@ -39,7 +39,7 @@ class LoginFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     $pass = 'some-random-stuff';
     $query = "{
-      login(username:\"admin\", password:\"$pass\") {
+      login(name:\"admin\", pass:\"$pass\") {
         statusCode
         message
       }
