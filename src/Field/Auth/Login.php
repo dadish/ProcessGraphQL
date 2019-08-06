@@ -12,18 +12,18 @@ class Login
       'name' => 'login',
       'description' => 'Allows you to authenticate into the app.',
       'args' => [
-        'username' => Type::string(),
-        'password' => Type::string(),
+        'name' => Type::string(),
+        'pass' => Type::string(),
       ],
       'resolve' => function ($pages, $args) {
         $session = \ProcessWire\wire('session');
-        $username = $args['username'];
-        $password = $args['password'];
+        $username = $args['name'];
+        $password = $args['pass'];
         $user = $session->login($username, $password);
         $response = [];
         if (is_null($user)) {
           $response['statusCode'] = 401;
-          $response['message'] = 'Wrong username and/or password.';
+          $response['message'] = 'Wrong name and/or pass.';
         } else {
           $response['statusCode'] = 200;
           $response['message'] = 'Successful login!';
