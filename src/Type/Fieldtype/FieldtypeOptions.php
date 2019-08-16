@@ -17,7 +17,7 @@ class FieldtypeOptions
   {
     return self::cache($field->name, function () use ($field) {
       $type = new ObjectType([
-        'name' => 'Options',
+        'name' => $field->name,
         'description' => 'Field that stores single and multi select options.',
         'fields' => [
           [
@@ -67,7 +67,7 @@ class FieldtypeOptions
       }
 
       $type = new EnumType([
-        'name' => $field->name,
+        'name' => "{$field->name}_input",
         'description' => "Possible values for the `{$field->name}`.",
         'values' => $options,
       ]);
