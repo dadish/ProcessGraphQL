@@ -17,39 +17,41 @@ class PageType
 
   public static $description = 'ProcessWire Page.';
 
-  public static function type($template = null)
+  public static function &type($template = null)
   {
+    $type = null;
     if ($template instanceof Template) {
-      return self::templateType($template);
+      $type =& self::templateType($template);
+    } else {
+      $type =& self::cache('default', function () {
+        return new ObjectType([
+          'name' => self::$name,
+          'description' => self::$description,
+          'fields' => function () {
+            return self::getBuiltInFields();
+          },
+        ]);
+      });
     }
 
-    return self::cache('default', function () {
-      $selfType = null;
-      $selfType = new ObjectType([
-        'name' => self::$name,
-        'description' => self::$description,
-        'fields' => function () use (&$selfType) {
-          return self::getBuiltInFields($selfType);
-        },
-      ]);
-      return $selfType;
-    });
+    return $type;
   }
 
-  public static function getBuiltInFields($selfType)
+  public static function getBuiltInFields()
   {
+    $type =& self::type();
     $builtInFields = [
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'child',
-        'type' => $selfType,
+        'type' => $type,
         'description' => "The first child of this page. If the `s`(selector) argument is provided then the 
                           first matching child (subpage) that matches the given selector. Returns a Page or null.",
       ]),
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'children',
-        'type' => Type::listOf($selfType),
+        'type' => Type::listOf($type),
         'description' => "The number of children (subpages) this page has, optionally limiting to visible 
                           pages. When argument `visible` true, number includes only visible children 
                           (excludes unpublished, hidden, no-access, etc.)",
@@ -122,7 +124,7 @@ class PageType
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'parent',
-        'type' => $selfType,
+        'type' => $type,
         'description' => 'The parent Page object, or the closest parent matching the given selector. Returns `null` if there is no parent or no match.'
       ]),
 
@@ -134,7 +136,7 @@ class PageType
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'parents',
-        'type' => Type::listOf($selfType),
+        'type' => Type::listOf($type),
         'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector.",
       ]),
 
@@ -146,7 +148,7 @@ class PageType
 
       [
         'name' => 'rootParent',
-        'type' => Type::nonNull($selfType),
+        'type' => Type::nonNull($type),
         'description' => 'The parent page closest to the homepage (typically used for identifying a section)',
       ],
 
@@ -168,21 +170,19 @@ class PageType
     });
   }
 
-  public static function templateType(Template $template)
+  public static function &templateType(Template $template)
   {
     Utils::moduleConfig()->currentTemplateContext = $template;
-    return self::cache('PageType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
-      $selfType = null;
-      $selfType = new ObjectType([
+    $temlpateType =& self::cache('PageType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
+      return new ObjectType([
         'name' => self::getName($template),
         'description' => self::getDescription($template),
         'fields' => function () use ($template) {
           return self::getFields($template);
         },
       ]);
-  
-      return $selfType;
     });
+    return $temlpateType;
   }
 
   public static function getFields(Template $template)

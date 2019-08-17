@@ -277,4 +277,13 @@ class Utils {
 
     return $key;
   }
+
+  /**
+   * Used for circular dependant types. Until the type is built in full this
+   * placeholder is used. See CacheTrait for an example.
+   */
+  public static function placeholder()
+  {
+    return 'placeholder';
+  }
 }

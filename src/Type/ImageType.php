@@ -17,23 +17,23 @@ class ImageType {
 
   public static $description = 'ProcessWire PageImage.';
 
-  public static function type()
+  public static function &type()
   {
-    return self::cache('default', function () {
-      $selfType = null;
-      $selfType = new ObjectType([
+    $type =& self::cache('default', function () {
+      return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
-        'fields' => function () use (&$selfType) {
-          return self::getFields($selfType);
+        'fields' => function () {
+          return self::getFields();
         }
       ]);
-      return $selfType;
     });
+    return $type;
   }
 
-  public static function getFields($selfType)
+  public static function getFields()
   {
+    $type =& self::type();
     $fields = [
       [
         'name' => 'width',
@@ -53,7 +53,7 @@ class ImageType {
       ],
       [
         'name' => 'variations',
-        'type' => Type::listOf($selfType),
+        'type' => Type::listOf($type),
         'description' => 'Returns all size variations of the image.',
         'resolve' => function ($value) {
           return $value->getVariations();
@@ -61,7 +61,7 @@ class ImageType {
       ],
       [
         'name' => 'size',
-        'type' => $selfType,
+        'type' => $type,
         'description' => 'Create a thumbnail of the PageImage with the desired size.',
         'args' => [
           [
