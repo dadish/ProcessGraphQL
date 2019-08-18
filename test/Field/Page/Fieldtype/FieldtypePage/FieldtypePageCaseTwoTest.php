@@ -3,7 +3,7 @@
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 /**
- * When template skyscraper, architect and field architect is
+ * If template skyscraper, architect and field architect is legal then
  * the architect page field should return list of architect pages.
  */
 
