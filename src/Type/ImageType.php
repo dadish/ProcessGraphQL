@@ -76,12 +76,12 @@ class ImageType {
           ],
         ],
         'resolve' => function($value, array $args) {
-          $canCreate = Utils::hasFieldPermission('edit', $value->field, Utils::moduleConfig()->currentTemplateContext);
+          $canCreate = Utils::hasFieldPermission('edit', $value->field, $value->page->template);
           $width = isset($args['width']) ? $args['width'] : null;
           $height = isset($args['height']) ? $args['height'] : null;
       
           // if there neither width nor heigth is given then we return empty image
-          if (!$width && !$height) return new EmptyPageImage();
+          if (!$width && !$height) return new EmptyImage();
       
           // we create the image if user have rights for it
           if ($canCreate) return $value->size($width, $height);

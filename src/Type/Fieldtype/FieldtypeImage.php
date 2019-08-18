@@ -13,10 +13,8 @@ class FieldtypeImage
   use FieldTrait;
   use InputFieldTrait;
   use SetValueTrait;
-  public static function type($field)
+  public static function type()
   {
-    return self::cache($field->name, function () use ($field) {
-      return Type::listOf(ImageType::type($field));
-    });
+    return Type::listOf(ImageType::type());
   }
 }

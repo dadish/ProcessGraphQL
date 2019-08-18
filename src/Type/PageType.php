@@ -172,7 +172,6 @@ class PageType
 
   public static function &templateType(Template $template)
   {
-    Utils::moduleConfig()->currentTemplateContext = $template;
     $temlpateType =& self::cache('PageType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
       return new ObjectType([
         'name' => self::getName($template),
