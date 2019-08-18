@@ -17,32 +17,34 @@ class PageArrayType {
 
 	public static $description = 'ProcessWire PageArray.';
 
-	public static function type(Template $template = null)
+	public static function &type(Template $template = null)
 	{
+		$type = null;
 		if ($template instanceof Template) {
-			return self::templateType($template);
-		}
-
-		return self::cache('default', function () {
-			return new ObjectType([
-				'name' => self::$name,
-				'description' => self::$description,
-				'fields' => [
-					'list' => [
-						'type' => Type::listOf(PageType::type()),
-						'description' => 'List of PW Pages.',
-						'resolve' => function ($value) {
-							return $value->find(SelectorType::parseValue(''));
-						},
+			$type =& self::templateType($template);
+		} else {
+			$type =& self::cache('default', function () {
+				return new ObjectType([
+					'name' => self::$name,
+					'description' => self::$description,
+					'fields' => [
+						'list' => [
+							'type' => Type::listOf(PageType::type()),
+							'description' => 'List of PW Pages.',
+							'resolve' => function ($value) {
+								return $value->find(SelectorType::parseValue(''));
+							},
+						],
 					],
-				],
-			]);
-		});
+				]);
+			});
+		}
+		return $type;
 	}
 
-	public static function templateType(Template $template)
+	public static function &templateType(Template $template)
 	{
-		return self::cache('PageArrayType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
+		$type =& self::cache('PageArrayType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
 			return new ObjectType([
 				'name' => self::templatedTypeName($template),
 				'description' => self::templatedTypeDescription($template),
@@ -57,6 +59,7 @@ class PageArrayType {
 				]
 			]);
 		});
+		return $type;
 	}
 
 	public static function templatedTypeName(Template $template)
@@ -75,10 +78,11 @@ class PageArrayType {
 
 	public static function field(Template $template)
 	{
+		$type =& self::type($template);
 		return Resolver::resolvePageArray([
 			'name' => self::templatedTypeName($template),
 			'description' => self::templatedTypeDescription($template),
-			'type' => self::type($template),
+			'type' => $type,
 		]);
 	}
 }

@@ -49,8 +49,9 @@ class SelectorType
   {
     // if we already parsed the given selector
     // then return the cached result.
-    if (isset(self::$parsedValues[$value])) {
-      return self::$parsedValues[$value];
+    $key = self::getCacheKeyForSelector($value);
+    if (isset(self::$parsedValues[$key])) {
+      return self::$parsedValues[$key];
     }
 
 
@@ -103,8 +104,8 @@ class SelectorType
     }
 
     // return selector as string
-    self::$parsedValues[$value] = (string) $selectors;
-    return self::$parsedValues[$value];
+    self::$parsedValues[$key] = (string) $selectors;
+    return self::$parsedValues[$key];
   }
 
   public static function findSelectorByField(Selectors $selectors, $target)
@@ -115,5 +116,21 @@ class SelectorType
       }
     }
     return null;
+  }
+
+  public static function getCacheKeyForSelector(string $selector)
+  {
+    $key = $selector;
+    $seperator = '-';
+
+    // max limit
+    $key .= "$seperator$seperator";
+    $key .= Utils::moduleConfig()->maxLimit;
+
+    // legal templates
+    $key .= "$seperator$seperator";
+    $key .= Utils::moduleConfig()->legalViewTemplates->implode('-', 'name');
+
+    return $key;
   }
 }
