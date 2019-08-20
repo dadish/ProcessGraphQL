@@ -35,6 +35,20 @@ class PageArrayType {
 								return $value->find(SelectorType::parseValue(''));
 							},
 						],
+						'first' => [
+							'type' => PageType::type(),
+							'description' => 'Returns the first item in the WireArray.',
+							'resolve' => function ($value) {
+								return $value->find(SelectorType::parseValue(''))->first();
+							},
+						],
+						'last' => [
+							'type' => PageType::type(),
+							'description' => 'Returns the last item in the WireArray.',
+							'resolve' => function ($value) {
+								return $value->find(SelectorType::parseValue(''))->last();
+							},
+						]
 					],
 				]);
 			});
@@ -54,6 +68,20 @@ class PageArrayType {
 						'description' => "List of " . self::templatedTypeName($template),
 						'resolve' => function ($value) use ($template) {
 							return $value->find(SelectorType::parseValue("template=$template"));
+						},
+					],
+					'first' => [
+						'type' => PageType::type($template),
+						'description' => 'Returns the first item in the WireArray.',
+						'resolve' => function ($value) use ($template) {
+							return $value->find(SelectorType::parseValue("template=$template"))->first();
+						},
+					],
+					'last' => [
+						'type' => PageType::type($template),
+						'description' => 'Returns the last item in the WireArray.',
+						'resolve' => function ($value) use ($template) {
+							return $value->find(SelectorType::parseValue("template=$template"))->last();
 						},
 					]
 				]
