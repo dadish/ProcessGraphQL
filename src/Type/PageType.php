@@ -4,9 +4,10 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
 use ProcessWire\Template;
-use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\UserType;
+use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class PageType
@@ -51,7 +52,7 @@ class PageType
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'children',
-        'type' => Type::listOf($type),
+        'type' => PageArrayType::type(),
         'description' => "The number of children (subpages) this page has, optionally limiting to visible 
                           pages. When argument `visible` true, number includes only visible children 
                           (excludes unpublished, hidden, no-access, etc.)",
