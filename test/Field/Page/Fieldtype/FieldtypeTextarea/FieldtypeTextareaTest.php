@@ -29,7 +29,7 @@ class FieldtypeTextareaTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals($skyscraper->body, $res->data->skyscraper->list[0]->body, 'Retrieves body value.');
   }
 
