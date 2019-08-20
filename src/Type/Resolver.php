@@ -112,7 +112,7 @@ class Resolver
         if ($result instanceof NullPage) {
           return self::getEmptyUser();
         }
-        if ($result instanceof Page) {
+        if ($result instanceof PWPage) {
           $templateName = $result->template->name;
           if (Utils::moduleConfig()->legalViewTemplates->find("name=$templateName")->count()) {
             return $result;
