@@ -6,7 +6,7 @@ use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
 
-class FieldtypeTextarea
+class FieldtypeURL
 { 
   use CacheTrait;
   use FieldTrait;

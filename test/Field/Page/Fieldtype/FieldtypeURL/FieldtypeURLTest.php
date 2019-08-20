@@ -29,7 +29,7 @@ class FieldtypeURLTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals($home->sponsor, $res->data->home->list[0]->sponsor, 'Retrieves sponsor value.');
   }
 
