@@ -23,10 +23,15 @@ class Resolver
       ],
       'resolve' => function (PWPage $page, array $args) use ($options) {
         $name = $options['name'];
+        $selector = "";
         if (isset($args['s'])) {
-          return $page->$name($args['s']);
+          $selector = SelectorType::parseValue($args['s']);
+        } else {
+          $selector = SelectorType::parseValue("");
         }
-        return $page->$name;
+        $result = $page->$name($selector);
+        if ($result instanceof NullPage) return null;
+        return $result;
       }
     ]);
   }
@@ -41,10 +46,13 @@ class Resolver
         ],
       ],
       'resolve' => function ($pages, array $args) use ($options) {
+        $selector = "";
         if (isset($args['s'])) {
-          return $pages->find($args['s']);
+          $selector = SelectorType::parseValue($args['s']);
+        } else {
+          $selector = SelectorType::parseValue("");
         }
-        return $pages->find(SelectorType::parseValue(""));
+        return $pages->find($selector);
       }
     ]);
   }

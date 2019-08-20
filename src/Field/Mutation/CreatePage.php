@@ -14,7 +14,7 @@ class CreatePage
   use CacheTrait;
   public static function field(Template $template)
   {
-    return self::cache('CreatePage--' . Utils::getTemplateCacheKey($template), function () use ($template) {
+    return self::cache('CreatePage--' . PageType::getTemplateCacheKey($template), function () use ($template) {
       return [
         'name' => self::name($template),
         'description' => self::description($template),
@@ -42,7 +42,7 @@ class CreatePage
 
   public static function inputType(Template $template)
   {
-    return self::cache('CreateInputType--' . Utils::getTemplateCacheKey($template), function () use ($template) {
+    return self::cache('CreateInputType--' . PageType::getTemplateCacheKey($template), function () use ($template) {
       return new InputObjectType([
         'name' => ucfirst(PageType::normalizeName($template->name)) . 'CreateInput',
         'description' => "CreateInputType for pages with template {$template->name}.",
