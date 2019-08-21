@@ -36,7 +36,7 @@ class PageParentsFieldCaseOneTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals($skyscraper->parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
     $this->assertEquals($skyscraper->parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
     $this->assertEquals($skyscraper->parents[2]->name, $res->data->skyscraper->list[0]->parents->list[2]->name, 'Retrieves correct parent page at 2.');

@@ -33,7 +33,7 @@ class PageParentsFieldCaseThreeTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $parents = $skyscraper->parents("template=cities|home");
     $this->assertEquals($parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
     $this->assertEquals($parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
