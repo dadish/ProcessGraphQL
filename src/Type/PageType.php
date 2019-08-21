@@ -137,7 +137,7 @@ class PageType
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'parents',
-        'type' => Type::listOf($type),
+        'type' => PageArrayType::type(),
         'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector.",
       ]),
 
