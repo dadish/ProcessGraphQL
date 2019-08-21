@@ -25,7 +25,7 @@ class PageTemplateFieldTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals($skyscraper->template, $res->data->skyscraper->list[0]->template, 'Retrieves `template` field of the page.');
   }
 
