@@ -25,7 +25,7 @@ class PageNameFieldTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals($skyscraper->name, $res->data->skyscraper->list[0]->name, 'Retrieves `name` field of the page.');
   }
 
