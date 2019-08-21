@@ -31,7 +31,7 @@ class PageParentFieldCaseThreeTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals(
       $skyscraper->parent("template=cities")->name,
       $res->data->skyscraper->list[0]->parent->name,
