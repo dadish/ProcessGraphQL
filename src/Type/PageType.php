@@ -148,12 +148,6 @@ class PageType
       ],
 
       [
-        'name' => 'rootParent',
-        'type' => Type::nonNull($type),
-        'description' => 'The parent page closest to the homepage (typically used for identifying a section)',
-      ],
-
-      [
         'name' => 'template',
         'type' => Type::string(),
         'description' => 'Template name of the page.',
