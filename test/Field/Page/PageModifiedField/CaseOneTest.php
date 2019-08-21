@@ -29,7 +29,7 @@ class PageModifiedFieldCaseOneTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals(
       $skyscraper->modified,
       $res->data->skyscraper->list[0]->modified,

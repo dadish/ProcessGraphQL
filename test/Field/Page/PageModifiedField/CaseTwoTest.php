@@ -30,7 +30,7 @@ class PageModifiedFieldCaseTwoTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals(
       date($format, $skyscraper->modified),
       $res->data->skyscraper->list[0]->modified,
