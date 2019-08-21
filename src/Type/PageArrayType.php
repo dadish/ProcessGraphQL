@@ -27,29 +27,32 @@ class PageArrayType {
 				return new ObjectType([
 					'name' => self::$name,
 					'description' => self::$description,
-					'fields' => [
-						'list' => [
+					'fields' => array_merge(self::getPaginationFields(), [
+						[
+							'name' => 'list',
 							'type' => Type::listOf(PageType::type()),
 							'description' => 'List of PW Pages.',
 							'resolve' => function ($value) {
 								return $value->find(SelectorType::parseValue(''));
 							},
 						],
-						'first' => [
+						[
+							'name' => 'first',
 							'type' => PageType::type(),
 							'description' => 'Returns the first item in the WireArray.',
 							'resolve' => function ($value) {
 								return $value->find(SelectorType::parseValue(''))->first();
 							},
 						],
-						'last' => [
+						[
+							'name' => 'last',
 							'type' => PageType::type(),
 							'description' => 'Returns the last item in the WireArray.',
 							'resolve' => function ($value) {
 								return $value->find(SelectorType::parseValue(''))->last();
 							},
 						]
-					],
+					]),
 				]);
 			});
 		}
@@ -62,29 +65,32 @@ class PageArrayType {
 			return new ObjectType([
 				'name' => self::templatedTypeName($template),
 				'description' => self::templatedTypeDescription($template),
-				'fields' => [
-					'list' => [
+				'fields' => array_merge(self::getPaginationFields(), [
+					[
+						'name' => 'list',
 						'type' => Type::listOf(PageType::type($template)),
 						'description' => "List of " . self::templatedTypeName($template),
 						'resolve' => function ($value) use ($template) {
 							return $value->find(SelectorType::parseValue("template=$template"));
 						},
 					],
-					'first' => [
+					[
+						'name' => 'first',
 						'type' => PageType::type($template),
 						'description' => 'Returns the first item in the WireArray.',
 						'resolve' => function ($value) use ($template) {
 							return $value->find(SelectorType::parseValue("template=$template"))->first();
 						},
 					],
-					'last' => [
+					[
+						'name' => 'last',
 						'type' => PageType::type($template),
 						'description' => 'Returns the last item in the WireArray.',
 						'resolve' => function ($value) use ($template) {
 							return $value->find(SelectorType::parseValue("template=$template"))->last();
 						},
-					]
-				]
+					],
+				])
 			]);
 		});
 		return $type;
@@ -112,5 +118,42 @@ class PageArrayType {
 			'description' => self::templatedTypeDescription($template),
 			'type' => $type,
 		]);
+	}
+
+	public static function getPaginationFields()
+	{
+		$maxLimit = Utils::moduleConfig()->maxLimit;
+		return [
+			[
+				'name' => 'getTotal',
+				'type' => Type::int(),
+				'description' => 'Get the total number of pages that were found from a $pages->find("selectors, limit=n")
+													operation that led to this PageArray. The number returned may be greater than the number
+													of pages actually in PageArray, and is used for calculating pagination.
+													Whereas `count` will always return the number of pages actually in PageArray.',
+				'resolve' => function ($value) {
+					return (integer) $value->getTotal();
+				}
+			],
+			[
+				'name' => 'getLimit',
+				'type' => Type::int(),
+				'description' => "Get the number (n) from a 'limit=n' portion of a selector that resulted in the PageArray.
+													In pagination, this value represents the max items to display per page. The default limit
+													is set to $maxLimit.",
+				'resolve' => function ($value) {
+					return (integer) $value->getLimit();
+				}
+			],
+			[
+				'name' => 'getStart',
+				'type' => Type::int(),
+				'description' => "Get the number of the starting result that led to the PageArray in pagination.
+													Returns 0 if in the first page of results.",
+				'resolve' => function ($value) {
+					return (integer) $value->getStart();
+				}
+			]
+		];
 	}
 }
