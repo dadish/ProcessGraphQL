@@ -25,7 +25,7 @@ class PageNumChildrenFieldTest extends GraphQLTestCase {
   			}
   		}
   	}";
-  	$res = $this->execute($query);
+  	$res = self::execute($query);
   	$this->assertEquals($skyscraper->numChildren, $res->data->skyscraper->list[0]->numChildren, 'Retrieves `numChildren` field of the page.');
   }
 
