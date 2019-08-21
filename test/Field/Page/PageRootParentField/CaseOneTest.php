@@ -32,7 +32,7 @@ class PageRootParentFieldCaseOneTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $this->assertEquals($skyscraper->rootParent->name, $res->data->skyscraper->list[0]->rootParent->name, 'Retrieves `rootParent` field of the page.');
   }
 
