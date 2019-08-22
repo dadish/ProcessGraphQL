@@ -1,13 +1,14 @@
 <?php namespace ProcessWire\GraphQL\Field\Mutation;
 
-use ProcessWire\Template;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
-use ProcessWire\GraphQL\Type\PageType;
-use GraphQL\Type\Definition\InputObjectType;
-use ProcessWire\GraphQL\Utils;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\InputObjectType;
+use ProcessWire\Template;
 use ProcessWire\Page;
 use ProcessWire\Field;
+use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Error\ValidationError;
+use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Type\PageType;
 
 class CreatePage
 {
@@ -109,12 +110,12 @@ class CreatePage
     \*********************************************/
     // can new pages be created for this template?
     if ($template->noParents === 1) {
-      throw new ValidationException("No new pages can be created for the template `{$template->name}`.");
+      throw new ValidationError("No new pages can be created for the template `{$template->name}`.");
     }
 
     // if there could be only one page is there already a page with this template
     if ($template->noParents === -1 && !$pages->get("template={$template}") instanceof NullPage) {
-      throw new ValidationException("Only one page with template `{$template->name}` can be created.");
+      throw new ValidationError("Only one page with template `{$template->name}` can be created.");
     }
 
     // find the parent
@@ -123,41 +124,41 @@ class CreatePage
 
     // if no parent then no good. No child should born without a parent!
     if (!$parent || $parent instanceof NullPage) {
-      throw new ValidationException("Could not find the parent: '$parentSelector'.");
+      throw new ValidationError("Could not find the parent: '$parentSelector'.");
     }
 
     // make sure user is allowed to add children to this parent
     $legalAddTemplates = Utils::moduleConfig()->legalAddTemplates;
     if (!$legalAddTemplates->has($parent->template)) {
-      throw new ValidationException("You are not allowed to add children to the parent: '$parentSelector'.");
+      throw new ValidationError("You are not allowed to add children to the parent: '$parentSelector'.");
     }
 
     // make sure parent is allowed as a parent for this page
     $parentTemplates = $template->parentTemplates;
     if (count($parentTemplates) && !in_array($parent->template->id, $parentTemplates)) {
-      throw new ValidationException("`parent` is not allowed as a parent.");
+      throw new ValidationError("`parent` is not allowed as a parent.");
     }
 
     // make sure parent is allowed to have children
     if ($parent->template->noChildren === 1) {
-      throw new ValidationException("`parent` is not allowed to have children.");
+      throw new ValidationError("`parent` is not allowed to have children.");
     }
 
     // make sure the page is allowed as a child for parent
     $childTemplates = $parent->template->childTemplates;
     if (count($childTemplates) && !in_array($template->id, $childTemplates)) {
-      throw new ValidationException("not allowed to be a child for `parent`.");
+      throw new ValidationError("not allowed to be a child for `parent`.");
     }
 
     // check if the name is valid
     $name = $sanitizer->pageName($values['name']);
     if (!$name) {
-      throw new ValidationException('value for `name` field is invalid,');
+      throw new ValidationError('value for `name` field is invalid,');
     }
     // find out if the name is taken
     $taken = $pages->find("parent=$parent, name=$name")->count();
     if ($taken) {
-      throw new ValidationException('`name` is already taken.');
+      throw new ValidationError('`name` is already taken.');
     }
 
     // create the page
