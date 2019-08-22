@@ -1,8 +1,7 @@
 <?php
 
 /**
- * A page cannot be created if not all required
- * fields are legal
+ * A page cannot be created if parent page is not legal
  */
 
 namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
@@ -12,11 +11,11 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\NullPage;
 
-class CreatePageCaseOneTest extends GraphQLTestCase {
+class CreatePageCaseTwoTest extends GraphQLTestCase {
 
   const accessRules = [
-    'legalTemplates' => ['skyscraper', 'city'],
-    'legalFields' => ['featured', 'height', 'floors', 'body'],
+    'legalTemplates' => ['skyscraper'],
+    'legalFields' => ['title', 'height', 'floors', 'body'],
   ];
 
   use AccessTrait;
@@ -36,11 +35,11 @@ class CreatePageCaseOneTest extends GraphQLTestCase {
 				"title" => "New Building Sky"
   		]
   	];
-  	$res = $this->execute($query, json_encode($variables));
-    $newBuildingSky = Utils::pages()->get("name=not-created-building-sky");
-    $this->assertEquals(1, count($res->errors), 'createSkyscraper is not available if required `title` field is not legal.');
+  	$res = self::execute($query, $variables);
+		$newBuildingSky = Utils::pages()->get("name=not-created-building-sky");
+		$this->assertEquals(1, count($res->errors), 'createSkyscraper does not work if parent page is not legal.');
+		$this->assertStringContainsString('parent', $res->errors[0]->message);
     $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createSkyscraper does not create a page.');
-
   }
 
 }

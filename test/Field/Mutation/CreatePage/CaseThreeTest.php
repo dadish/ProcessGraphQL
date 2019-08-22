@@ -35,10 +35,9 @@ class CreatePageCaseThreeTest extends GraphQLTestCase {
 				"title" => "New Building Sky"
   		]
   	];
-  	$res = $this->execute($query, json_encode($variables));
+  	$res = self::execute($query, $variables);
     $newBuildingSky = Utils::pages()->get("name=created-building-sky");
     $this->assertEquals($variables['page']['name'], $res->data->skyscraper->name, 'createSkyscraper returns correct values in response.');
   	$this->assertEquals($newBuildingSky->id, $res->data->skyscraper->id, 'createSkyscraper creates skyscraper page if everything is ok.');
   }
-
 }
