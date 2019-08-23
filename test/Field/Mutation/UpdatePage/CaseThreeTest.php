@@ -23,7 +23,7 @@ class UpdatePageCaseThreeTest extends GraphQLTestCase {
   public function testValue()
   {
   	$skyscraper = Utils::pages()->get("template=skyscraper");
-  	$query = 'mutation updatePage ($id: Int!, $page: SkyscraperUpdateInput!) {
+  	$query = 'mutation updatePage ($id: String!, $page: SkyscraperUpdateInput!) {
   		skyscraper: updateSkyscraper (id: $id, page: $page) {
   			name
   			id
@@ -42,7 +42,7 @@ class UpdatePageCaseThreeTest extends GraphQLTestCase {
   		],
       "id" => $skyscraper->id
   	];
-  	$res = $this->execute($query, json_encode($variables));
+    $res = self::execute($query, $variables);
     $this->assertEquals($variables['page']['title'], $res->data->skyscraper->title, 'updateSkyscraper returns updated value of the `title`.');
   	$this->assertEquals($variables['page']['title'], $skyscraper->title, 'updateSkyscraper updates value of the `title`.');
   }

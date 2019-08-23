@@ -23,9 +23,9 @@ class UpdatePageCaseTwoTest extends GraphQLTestCase {
   public function testValue()
   {
   	$skyscraper = Utils::pages()->get("template=skyscraper");
-  	$query = 'mutation updatePage ($id: Int!, $page: SkyscraperUpdateInput!) {
+  	$query = 'mutation updatePage ($id: String!, $page: SkyscraperUpdateInput!) {
   		updateSkyscraper (id: $id, page: $page) {
-  			title
+  			name
   		}
   	}';
   	$variables = [
@@ -36,8 +36,9 @@ class UpdatePageCaseTwoTest extends GraphQLTestCase {
   		],
       "id" => $skyscraper->id
   	];
-  	$res = $this->execute($query, json_encode($variables));
-    $this->assertEquals(1, count($res->errors), '`title` field is invalid for SkyscraperUpdateInputType if `title` field is not legal.');
+		$res = self::execute($query, $variables);
+		$this->assertEquals(1, count($res->errors), '`title` field is invalid for SkyscraperUpdateInputType if `title` field is not legal.');
+		$this->assertStringContainsString('title', $res->errors[0]->message);		
   	$this->assertTrue($skyscraper->title !== $variables['page']['title'], 'updateSkyscraper does not update the `title`.');
   }
 
