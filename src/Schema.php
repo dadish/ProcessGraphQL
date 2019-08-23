@@ -10,6 +10,7 @@ use ProcessWire\GraphQL\Field\Auth\Login;
 use ProcessWire\GraphQL\Field\Auth\Logout;
 use ProcessWire\GraphQL\Field\Debug\DbQuery;
 use ProcessWire\GraphQL\Field\Mutation\CreatePage;
+use ProcessWire\GraphQL\Field\Mutation\UpdatePage;
 
 class Schema extends GraphQLSchema
 {
@@ -81,6 +82,11 @@ class Schema extends GraphQLSchema
     // CreatePage
     foreach ($moduleConfig->legalCreateTemplates as $template) {
       $mutationFields[] = CreatePage::field($template);
+    }
+
+    // UpdatePage
+    foreach ($moduleConfig->legalEditTemplates as $template) {
+      $mutationFields[] = UpdatePage::field($template);
     }
 
     // let the user modify the query operation
