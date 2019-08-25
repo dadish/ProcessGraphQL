@@ -11,10 +11,7 @@
   },
   "scripts": {
     "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
-    "release-patch": "bin-release patch",
-    "release-minor": "bin-release minor",
-    "release-major": "bin-release major",
-    "release-test": "bin-release test",
+    "release": "bin-release",
     "postinstall": "composer install",
     "start:client": "php -S localhost:8080 test/client.php",
     "start:server": "php -S localhost:8081 test/server.php",

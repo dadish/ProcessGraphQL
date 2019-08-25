@@ -5,19 +5,11 @@ const silent = { silent: true }
 const RELEASE_BRANCH_NAME = 'release'
 const MASTER_BRANCH_NAME = 'master'
 
-const RELEASE_MAJOR = 'major'
-const RELEASE_MINOR = 'minor'
-const RELEASE_PATCH = 'patch'
 const RELEASE_TEST = 'test'
 
 const releaseLevel = process.argv[2]
-if (
-	releaseLevel !== RELEASE_MAJOR &&
-	releaseLevel !== RELEASE_MINOR &&
-	releaseLevel !== RELEASE_PATCH &&
-	releaseLevel !== RELEASE_TEST
-) {
-	shell.echo(`Error: The provided release level is incorrect: ${releaseLevel}. Allowed: ${RELEASE_MAJOR}, ${RELEASE_MINOR}, ${RELEASE_PATCH}, ${RELEASE_TEST}`)
+if (!releaseLevel) {
+	shell.echo("Error: Should provide a version argument. See `npm help version`.")
 	shell.exit(1)
 }
 
@@ -66,8 +58,8 @@ if (removeDirs.code === 0) {
 	shell.echo('Removed extraneous files.')
 } else {
 	shell.echo('Error: Could not remove files.')
- shell.exit(1)
-	
+	shell.exit(1)
+
 }
 
 // add all changes to stage
