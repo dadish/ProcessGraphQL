@@ -56,7 +56,7 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
         ],
       ],
     ];
-    $res = $this->execute($query, json_encode($variables));
+    $res = self::execute($query, $variables);
     $skyscraper = Utils::pages()->get("template=skyscraper, name=$name");
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->map;

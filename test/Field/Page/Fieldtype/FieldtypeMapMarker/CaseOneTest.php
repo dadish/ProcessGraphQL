@@ -8,7 +8,6 @@
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
@@ -36,7 +35,7 @@ class FieldtypeMapMarkerCaseOneTest extends GraphQLTestCase {
         }
       }
     }";
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->list[0]->map;
     $this->assertEquals($expectedMap->lat, $actualMap->lat, 'Retreives correct lat.');
