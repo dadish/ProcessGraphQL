@@ -1,5 +1,5 @@
 {
-  "name": "dadish/ProcessGraphql",
+  "name": "dadish/processgraphql",
   "type": "processwire-plugin",
   "license": "MIT",
   "description": "GraphQL for ProcessWire",
@@ -35,7 +35,7 @@
       "type": "package",
       "package": {
         "name": "dadish/GraphQLFieldtypeMapMarker",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "dist": {
           "type": "zip",
           "url": "https://github.com/dadish/GraphQLFieldtypeMapMarker/archive/master.zip"
