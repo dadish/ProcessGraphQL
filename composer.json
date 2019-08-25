@@ -15,8 +15,8 @@
   },
   "require-dev": {
     "processwire/processwire": "3.0.*",
-    "ryancramerdesign/FieldtypeMapMarker": "1.0.0",
-    "dadish/GraphQLFieldtypeMapMarker": "1.0.0",
+    "ryancramerdesign/fieldtypemapmarker": "1.0.0",
+    "dadish/graphqlfieldtypemapmarker": "2.0.0",
     "phpunit/phpunit": "^7.5"
   },
   "repositories": [
@@ -27,7 +27,7 @@
         "version": "1.0.0",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/ryancramerdesign/FieldtypeMapMarker/archive/master.zip"
+          "url": "https://github.com/ryancramerdesign/fieldtypemapmarker/archive/master.zip"
         }
       }
     },
@@ -38,7 +38,7 @@
         "version": "2.0.0",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/dadish/GraphQLFieldtypeMapMarker/archive/master.zip"
+          "url": "https://github.com/dadish/graphqlfieldtypemapmarker/archive/master.zip"
         }
       }
     }

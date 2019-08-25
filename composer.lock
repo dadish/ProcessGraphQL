@@ -4,33 +4,34 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d9e700894fa55d21a87e7259741fdc4",
+    "content-hash": "ff2e17c896e14b9f8bf4ca93e25c3fdc",
     "packages": [
         {
             "name": "webonyx/graphql-php",
-            "version": "v0.13.0",
+            "version": "v0.13.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5"
+                "reference": "b7a03cd847ad930d884f354d4e4c7e538c289061"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/9bb8e7327748fdc828f801001161e6b586ca96e5",
-                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/b7a03cd847ad930d884f354d4e4c7e538c289061",
+                "reference": "b7a03cd847ad930d884f354d4e4c7e538c289061",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.1"
+                "php": "^7.1||^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^5.0",
+                "doctrine/coding-standard": "^6.0",
                 "phpbench/phpbench": "^0.14.0",
-                "phpstan/phpstan": "0.10.5",
-                "phpstan/phpstan-phpunit": "0.10.0",
-                "phpstan/phpstan-strict-rules": "0.10.1",
+                "phpstan/phpstan": "^0.11.4",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpcov": "^5.0",
                 "phpunit/phpunit": "^7.2",
                 "psr/http-message": "^1.0",
                 "react/promise": "2.*"
@@ -55,7 +56,7 @@
                 "api",
                 "graphql"
             ],
-            "time": "2018-11-27T10:23:58+00:00"
+            "time": "2019-08-23T08:13:00+00:00"
         },
         {
             "name": "youshido/graphql",
@@ -103,11 +104,11 @@
     ],
     "packages-dev": [
         {
-            "name": "dadish/GraphQLFieldtypeMapMarker",
-            "version": "1.0.0",
+            "name": "dadish/graphqlfieldtypemapmarker",
+            "version": "2.0.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/dadish/GraphQLFieldtypeMapMarker/archive/master.zip",
+                "url": "https://github.com/dadish/graphqlfieldtypemapmarker/archive/master.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -872,16 +873,16 @@
         },
         {
             "name": "processwire/processwire",
-            "version": "3.0.62",
+            "version": "3.0.123",
             "source": {
                 "type": "git",
                 "url": "https://github.com/processwire/processwire.git",
-                "reference": "57b297fd1d828961b20ef29782012f75957d6886"
+                "reference": "649d2569abc10bac43e98ca98db474dd3d6603ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/processwire/processwire/zipball/57b297fd1d828961b20ef29782012f75957d6886",
-                "reference": "57b297fd1d828961b20ef29782012f75957d6886",
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/649d2569abc10bac43e98ca98db474dd3d6603ca",
+                "reference": "649d2569abc10bac43e98ca98db474dd3d6603ca",
                 "shasum": ""
             },
             "require": {
@@ -901,9 +902,9 @@
             "authors": [
                 {
                     "name": "Ryan Cramer",
+                    "role": "Developer",
                     "email": "ryan@processwire.com",
-                    "homepage": "https://processwire.com",
-                    "role": "Developer"
+                    "homepage": "https://processwire.com"
                 }
             ],
             "description": "ProcessWire CMS/CMF",
@@ -914,7 +915,7 @@
                 "cms",
                 "processwire"
             ],
-            "time": "2017-05-05T17:43:17+00:00"
+            "time": "2018-12-21T19:30:49+00:00"
         },
         {
             "name": "ryancramerdesign/FieldtypeMapMarker",
@@ -1593,16 +1594,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9"
+                "reference": "88e6d84706d09a236046d686bbea96f07b3a34f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/83e253c8e0be5b0257b881e1827274667c5c17a9",
-                "reference": "83e253c8e0be5b0257b881e1827274667c5c17a9",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/88e6d84706d09a236046d686bbea96f07b3a34f4",
+                "reference": "88e6d84706d09a236046d686bbea96f07b3a34f4",
                 "shasum": ""
             },
             "require": {
@@ -1610,8 +1611,7 @@
                 "symfony/polyfill-ctype": "^1.8"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.6",
-                "sebastian/version": "^1.0.1"
+                "phpunit/phpunit": "^4.8.36 || ^7.5.13"
             },
             "type": "library",
             "extra": {
@@ -1640,7 +1640,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2018-12-25T11:19:39+00:00"
+            "time": "2019-08-24T08:43:50+00:00"
         }
     ],
     "aliases": [],
