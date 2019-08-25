@@ -12,14 +12,7 @@ response slow. We need to solve it.
 We need to make sure the user is able to request queries only for couple levels deep
 to prevent the CPU intensive requests.
 
-#### Add support for Image thumbs
-- Add `variations` field for image fields that lets you request the available image
-thumbnail variations.
-- Add `thumb` field for images fields that allows user to request the image thumbnail
-with particular height and/or width. If there isn't a thumbnail variation with such
-size, then create it.
-- Mind permissions for thumbnail creation.
-
-#### Make GraphQL processing a hookable method for extra user control
+#### Create a dedicated type for Page ids.
+Currently there is no special type for identifying a page id. We are just using a `String` type right now. But it would be better if we used some kind of `Id` type. So it is easier to change it's behavior accross codebase if we need.
 
 [n1-problem]: https://secure.phabricator.com/book/phabcontrib/article/n_plus_one/
