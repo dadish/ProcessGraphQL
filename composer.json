@@ -23,7 +23,7 @@
     {
       "type": "package",
       "package": {
-        "name": "ryancramerdesign/FieldtypeMapMarker",
+        "name": "ryancramerdesign/fieldtypemapmarker",
         "version": "1.0.0",
         "dist": {
           "type": "zip",
@@ -34,7 +34,7 @@
     {
       "type": "package",
       "package": {
-        "name": "dadish/GraphQLFieldtypeMapMarker",
+        "name": "dadish/graphqlfieldtypemapmarker",
         "version": "2.0.0",
         "dist": {
           "type": "zip",
