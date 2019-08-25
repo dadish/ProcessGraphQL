@@ -10,7 +10,6 @@
     }
   ],
   "require": {
-    "youshido/graphql": "v1.4.2.20",
     "webonyx/graphql-php": "^0.13.0"
   },
   "require-dev": {
