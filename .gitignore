@@ -1,2 +1,7 @@
 vendor
 node_modules
+
+*.old
+*.old/*
+*.new
+*.new/*
