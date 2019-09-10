@@ -36,8 +36,8 @@ if (releaseBranchCheckout.code === 0) {
 
 // extract graphiql library
 const extractGraphiQL = shell.cp(
-	path.resolve(`${__dirname}/../GraphiQL/node_modules/graphiql/graphiql.min.js`),
-	path.resolve(`${__dirname}/../GraphiQL/node_modules/graphiql/graphiql.css`),
+	path.resolve(`${__dirname}/../node_modules/graphiql/graphiql.min.js`),
+	path.resolve(`${__dirname}/../node_modules/graphiql/graphiql.css`),
 	path.resolve(`${__dirname}/../GraphiQL/`),
 );
 if (extractGraphiQL.code === 0) {
