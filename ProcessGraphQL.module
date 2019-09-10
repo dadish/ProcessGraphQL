@@ -111,8 +111,12 @@ class ProcessGraphQL extends Process implements Module {
    */
 	public function setupGraphiQLAssets()
 	{
-		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/js/main.5581c0a6.js');
-		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/build/static/css/main.48946f6d.css');
+		$this->config->scripts->add("https://cdn.jsdelivr.net/es6-promise/4.0.5/es6-promise.auto.min.js");
+		$this->config->scripts->add("https://cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js");
+		$this->config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react.min.js");
+		$this->config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react-dom.min.js");
+		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/node_modules/graphiql/graphiql.min.js');
+		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/node_modules/graphiql/graphiql.css');
 		$this->config->js($this->className, [
 			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
 		]);
