@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const path = require('path');
 const shell = require('shelljs')
 
 const silent = { silent: true }
@@ -33,6 +34,16 @@ if (releaseBranchCheckout.code === 0) {
 	shell.exit(1)
 }
 
+// extract graphiql library
+const extractGraphiQL = shell.mv(
+	path.resolve(`${__dirname}/GraphiQL/node_modules/graphiql/graphiql.min.js`),
+	path.resolve(`${__dirname}/GraphiQL/node_modules/graphiql/graphiql.css`),
+	path.resolve(`${__dirname}/GraphiQL/`),
+);
+if (extractGraphiQL.code === 0) {
+	shell.echo('Extracted graphiql library from node_modules')
+}
+
 // remove the unwanted files
 const removeDirs = shell.rm('-rf', [
 	'bin',
@@ -46,13 +57,8 @@ const removeDirs = shell.rm('-rf', [
 	'ScreenCast.md',
 	'Todo.md',
 	'.gitignore',
-
-	// remove extraneous
-	'GraphiQL/src',
-	'GraphiQL/.gitignore',
 	'GraphiQL/package.json',
-	'GraphiQL/README.md',
-	'GraphiQL/yarn.lock',
+	'GraphiQL/package-lock.json',
 ], silent)
 if (removeDirs.code === 0) {
 	shell.echo('Removed extraneous files.')
@@ -84,17 +90,16 @@ if (vendorInstall.code === 0) {
 
 // remove vendor extraneous files
 const vendorRemoveFiles = shell.rm('-rf', [
-	'vendor/youshido/graphql/examples',
-	'vendor/youshido/graphql/Tests',
-	'vendor/youshido/graphql/.gitignore',
-	'vendor/youshido/graphql/.scrutinizer.yml',
-	'vendor/youshido/graphql/.travis.yml',
-	'vendor/youshido/graphql/CHANGELOG-1.1.md',
-	'vendor/youshido/graphql/composer.json',
-	'vendor/youshido/graphql/LICENSE',
-	'vendor/youshido/graphql/phpunit.xml.dist',
-	'vendor/youshido/graphql/README.md',
-	'vendor/youshido/graphql/UPGRADE-1.1.md',
+	'vendor/webonyx/graphql-php/docs',
+	'vendor/webonyx/graphql-php/examples',
+	'vendor/webonyx/graphql-php/.scrutinizer.yml',
+	'vendor/webonyx/graphql-php/CHANGELOG.md',
+	'vendor/webonyx/graphql-php/composer.json',
+	'vendor/webonyx/graphql-php/LICENSE',
+	'vendor/webonyx/graphql-php/phpcs.xml.dist',
+	'vendor/webonyx/graphql-php/phpstan.neon.dist',
+	'vendor/webonyx/graphql-php/README.md',
+	'vendor/webonyx/graphql-php/UPGRADE.md',
 ])
 if (vendorRemoveFiles.code === 0) {
 	shell.echo('Removed extraneous vendor files.')
