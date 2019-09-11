@@ -1,12 +1,46 @@
+<?php if(!$fullGraphiQL): ?>
+<style>
+  .AdminThemeDefault #graphiql {
+    margin-top: 30px;
+  }
+  #graphiql {
+    height: 86vh;
+    border: 5px solid #efefef;
+  }
+  #graphiql * {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    line-height: 1rem;
+  }
+  #graphiql .doc-explorer-title{
+    overflow: hidden;
+  }
+  #graphiql .graphiql-container .doc-explorer-back{
+    line-height: 0.85rem;
+  }
+  #graphiql .doc-explorer-contents{
+    padding: 5px 20px 15px;
+  }
+  #graphiql .graphiql-container .search-box{
+    margin: 5px 0px 8px 0;
+  }
+  #graphiql .graphiql-container .search-box:before{
+    top: 5px;
+  }
+  #graphiql .graphiql-container .search-box input{
+    padding: 6px 0px 8px 24px;
+    width: 94%;
+    background: none;
+  }
+</style>
+<?php endif; ?>
 <div id="graphiql">Loading...</div>
 <script>
-  // set the processwire config variables
-  var config = <?= json_encode($config->js()) ?>;
-
   /**
    * The below code is a copy from
    * https://github.com/graphql/graphiql/blob/master/packages/graphiql-examples/cdn/index.html
-   * The only thing that's changed is the graphiql request url.
+   * The only thing that's changed is the graphiql request url and added an X-Requested-With header.
    */
   // Parse the search string to get url parameters.
   var search = window.location.search;
@@ -63,6 +97,7 @@
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
       },
       body: JSON.stringify(graphQLParams),
       credentials: 'include',
