@@ -73,19 +73,17 @@ if (removeDirs.code === 0) {
 }
 
 // install vendor dependencies
-spinner = ora("Installing php dependencies").start();
+spinner = ora("Installing php dependencies (--no-dev)").start();
 const vendorInstall = shell.exec("composer install --no-dev", silent);
 if (vendorInstall.code === 0) {
-  shell.echo("Installed vendor dependencies");
   spinner.succeed();
 } else {
-  shell.echo("Error: Could not install vendor dependencies.");
-  spinner.fail(vendorInstall.stderr);
+  spinner.fail(vendorInstall.stderr || vendorInstall.stdout);
   shell.exit(1);
 }
 
 // remove vendor extraneous files
-spinner = ora("Removinf extraneous files from vendor code").start();
+spinner = ora("Removing extraneous files from vendor code").start();
 const vendorRemoveFiles = shell.rm("-rf", [
   "vendor/webonyx/graphql-php/docs",
   "vendor/webonyx/graphql-php/examples",
@@ -131,7 +129,7 @@ if (stageChanges.code === 0) {
 }
 
 // commit all changes
-spinner = ora("Committing the changes").start();
+spinner = ora("Git committing the changes").start();
 const commitChanges = shell.exec(
   "git commit -m 'Remove extraneous files for release.'",
   silent
@@ -145,58 +143,56 @@ if (commitChanges.code === 0) {
 
 if (releaseLevel === RELEASE_TEST) {
   // snapshot the release in "test" branch
+  spinner = ora("Snapshotting the release").start();
   const releaseSnapshotting = shell.exec(`git branch ${RELEASE_TEST}`);
   if (releaseSnapshotting.code === 0) {
-    shell.echo("Snapshot the release.");
+    spinner.succeed();
   } else {
-    shell.echo("Error: Could not snapshot the release.");
-    console.log(releaseSnapshotting.stderr);
+    spiiner.fail(releaseSnapshotting.stderr || releaseSnapshotting.stdout);
     shell.exit(1);
   }
 } else {
   // tag the release
+  spinner = ora("Tagging the release").start();
   const releaseTagging = shell.exec(`npm version ${releaseLevel}`);
   if (releaseTagging.code === 0) {
-    shell.echo("Tag the release.");
+    spinner.succeed();
   } else {
-    shell.echo("Error: Could not tag the release.");
-    console.log(releaseTagging.stderr);
+    spinner.fail(releaseTagging.stderr || releaseTagging.stdout);
     shell.exit(1);
   }
 }
 
 // checkout the master branch
+spinner = ora(`Switching to the ${MASTER_BRANCH_NAME} branch`);
 const masterCheckout = shell.exec(`git checkout ${MASTER_BRANCH_NAME}`, silent);
 if (masterCheckout.code === 0) {
-  shell.echo(`Checked out the ${MASTER_BRANCH_NAME} branch`);
+  spinner.succeed();
 } else {
-  shell.echo(`Error: Could not checkout the ${MASTER_BRANCH_NAME} branch.`);
-  console.log(masterCheckout.stderr || masterCheckout.stdout);
+  spiiner.fail(masterCheckout.stderr || masterCheckout.stdout);
   shell.exit(1);
 }
 
 // delete the release branch
+spinner = ora(`Deleting the ${RELEASE_BRANCH_NAME} branch`).start();
 const releaseBranchDelete = shell.exec(
   `git branch -D ${RELEASE_BRANCH_NAME}`,
   silent
 );
 if (releaseBranchDelete.code === 0) {
-  shell.echo(`Deleted ${RELEASE_BRANCH_NAME} branch.`);
+  spinner.succeed();
 } else {
-  shell.echo(`Error: Could not delete ${RELEASE_BRANCH_NAME} branch.`);
-  console.log(releaseBranchDelete.stderr || releaseBranchDelete.stdout);
+  spinner.fail(releaseBranchDelete.stderr || releaseBranchDelete.stdout);
   shell.exit(1);
 }
 
 // install vendor deps back
+spinner = ora("Installing vendor deps back").start();
 const vendorInstallAll = shell.exec("composer install", silent);
 if (vendorInstallAll.code === 0) {
-  shell.echo("Installed vendor deps back.");
+  spinner.succeed();
 } else {
-  shell.echo(
-    'Warning: Could not install vendor deps back. Try "composer install" to fix it.'
-  );
-  console.log(vendorInstallAll.stderrr);
+  spinner.fail(vendorInstallAll.stderr || vendorInstallAll.stdout);
   shell.exit(1);
 }
 
@@ -209,33 +205,31 @@ if (releaseLevel === RELEASE_TEST) {
 // for master branch, since changes in release
 // branch do not affect master branch, the package
 // version in package.json file in master branch is old
+spinner = ora(
+  `Incrementing the package version on the ${MASTER_BRANCH_NAME} branch`
+).start();
 const incementPackageVersion = shell.exec(
   `npm version ${releaseLevel} --no-git-tag-version`,
   silent
 );
 if (incementPackageVersion.code === 0) {
-  shell.echo(`Incremented package version on master branch`);
+  spinner.succeed();
 } else {
-  shell.echo(
-    `Error: Could not increment package version on ${MASTER_BRANCH_NAME} branch.`
-  );
-  console.log(incementPackageVersion.stderr);
+  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
   shell.exit(1);
 }
 
 // commit package version change on master branch
+spinner = ora(
+  `Committing package version update on ${MASTER_BRANCH_NAME} branch`
+).start();
 const packageVersionCommit = shell.exec(
   `git commit --all -m "${incementPackageVersion}"`,
   silent
 );
 if (packageVersionCommit.code === 0) {
-  shell.echo(
-    `Committed package version update on ${MASTER_BRANCH_NAME} branch.`
-  );
+  spinner.succeed();
 } else {
-  shell.echo(
-    `Error: Could not commit package version update on ${MASTER_BRANCH_NAME} branch.`
-  );
-  console.log(packageVersionCommit.stderr);
+  spinner.fail(packageVersionCommit.stderr || packageVersionCommit.stdout);
   shell.exit(1);
 }
