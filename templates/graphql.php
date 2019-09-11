@@ -1,3 +1,3 @@
 <?php namespace ProcessWire;
 
-echo $modules->get('ProcessGraphQL')->executeGraphQL();
+echo json_encode($modules->get('ProcessGraphQL')->executeGraphQL(), true);
