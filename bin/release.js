@@ -154,7 +154,7 @@ if (releaseLevel === RELEASE_TEST) {
 } else {
   // tag the release
   spinner = ora("Tagging the release").start();
-  const releaseTagging = shell.exec(`npm version ${releaseLevel}`);
+  const releaseTagging = shell.exec(`npm version ${releaseLevel}`, silent);
   if (releaseTagging.code === 0) {
     spinner.succeed();
   } else {
