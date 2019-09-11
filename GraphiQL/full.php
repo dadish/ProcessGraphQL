@@ -19,7 +19,12 @@
 
   </head>
   <body>
+    <script>
+      // set the processwire config variables
+      var config = <?= json_encode($config->js()) ?>;
+    </script>
     <?php
+      $fullGraphiQL = true;
       require_once(realpath(__DIR__ . "/partial.php"));
     ?>
   </body>
