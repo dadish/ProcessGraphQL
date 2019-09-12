@@ -46,6 +46,29 @@ class FieldtypePageCaseOneTest extends GraphQLTestCase {
   		count($res->data->skyscraper->list[0]->architects->list),
   		'Returns empty list.'
   	);
+	}
+	
+  public function testAnotherValue()
+  {
+  	$skyscraper = Utils::pages()->get("template=skyscraper, architects.count>0");
+  	$query = "{
+  		skyscraper (s: \"id=$skyscraper->id\") {
+  			list {
+  				architects {
+  					first {
+  						id
+  						name
+  					}
+  				}
+  			}
+  		}
+  	}";
+		$res = self::execute($query);
+  	$this->assertEquals(
+  		null,
+  		count($res->data->skyscraper->list[0]->architects->first->id),
+  		'Returns empty first item.'
+  	);
   }
 
 }

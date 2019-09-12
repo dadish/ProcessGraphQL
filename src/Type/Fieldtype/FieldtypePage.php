@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\Type;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Type\PageArrayType;
+use ProcessWire\GraphQL\Type\SelectorType;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class FieldtypePage
@@ -37,7 +38,7 @@ class FieldtypePage
           $fieldName = $field->name;
           $field = \ProcessWire\wire('fields')->get($fieldName);
           $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
-          return $value->$fieldName;
+          return $value->$fieldName->find(SelectorType::parseValue(""));
         }
       ];
     });
