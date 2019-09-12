@@ -29,7 +29,7 @@ class PageType
           'name' => self::$name,
           'description' => self::$description,
           'fields' => function () {
-            return self::getBuiltInFields();
+            return self::getLegalBuiltInFields();
           },
         ]);
       });
@@ -41,8 +41,7 @@ class PageType
   public static function getBuiltInFields()
   {
     $type =& self::type();
-    $builtInFields = [
-
+    return [
       Resolver::resolvePagefieldWithSelector([
         'name' => 'child',
         'type' => $type,
@@ -159,7 +158,11 @@ class PageType
         'description' => "The page's URL path from the server's document root (may be the same as the `path`)",
       ],
     ];
+  }
 
+  public static function getLegalBuiltInFields()
+  {
+    $builtInFields = self::getBuiltInFields();
     return array_filter($builtInFields, function ($field) {
       return in_array($field['name'], Utils::moduleConfig()->legalPageFields);
     });
