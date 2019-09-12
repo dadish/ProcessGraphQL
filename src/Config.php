@@ -43,7 +43,6 @@ class Config extends WireData {
     $super = Utils::user()->isSuperuser();
     switch ($key) {
       case 'maxLimit':
-      case 'fullWidthGraphiQL':
       case 'legalFields':
       case 'legalPageFields':
       case 'legalPageFileFields':

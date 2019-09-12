@@ -21,13 +21,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
       'maxLimit' => 50,
 
       /**
-       * Wheather the GraphiQL GUI should be stretched to full width or centered
-       * like other parts of the ProcessWire's admin back-end.
-       * @var boolean
-       */
-      'fullWidthGraphiQL' => true,
-
-      /**
        * An array of template names that will be concidered for schema generation.
        * @var array
        */
@@ -205,15 +198,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Max Limit';
     $f->description = 'Set the maximum value for `limit` selector field.';
     $f->required = true;
-    $f->columnWidth = 50;
-    $inputfields->add($f);
-
-    // GraphiQL full width
-    $f = $this->modules->get('InputfieldCheckbox');
-    $f->attr('name', 'fullWidthGraphiQL');
-    $f->label = 'Full width GraphiQL';
-    $f->description = 'Check this if you want GraphiQL on the backend to stretch to full width.';
-    $f->columnWidth = 50;
     $inputfields->add($f);
 
     // legalTemplates
