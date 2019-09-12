@@ -192,14 +192,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
   {
     $inputfields = parent::getInputFields();
 
-    // maxLimit
-    $f = $this->modules->get('InputfieldInteger');
-    $f->attr('name', 'maxLimit');
-    $f->label = 'Max Limit';
-    $f->description = 'Set the maximum value for `limit` selector field.';
-    $f->required = true;
-    $inputfields->add($f);
-
     // legalTemplates
     $f = $this->modules->get('InputfieldCheckboxes');
     $f->optionColumns = 4;
@@ -294,6 +286,14 @@ class ProcessGraphQLConfig extends Moduleconfig {
       $inputfields->add($fSet);
     }
 
+    // maxLimit
+    $f = $this->modules->get('InputfieldInteger');
+    $f->attr('name', 'maxLimit');
+    $f->label = 'Max Limit';
+    $f->description = 'Set the maximum value for `limit` selector field.';
+    $f->required = true;
+    $inputfields->add($f);
+
     // ADVANCED
     $fSet = $this->modules->get('InputfieldFieldset');
     $fSet->label = 'Advanced';
@@ -337,17 +337,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $desc = "By default only `superuser` can access fields that does not have `Access` ";
     $desc .= "settings enabled. If you wish to grant access to fields without `Access` ";
     $desc .= "settings, check this field. (not recommended)";
-    $f->description = $desc;
-    $fSet->add($f);
-
-    // pagesQuery
-    $f = $this->modules->get('InputfieldCheckbox');
-    $f->attr('name', 'pagesQuery');
-    $f->label = 'pages Query';
-    $desc = "Experimental!" . PHP_EOL;
-    $desc .= " Adds '`pages`' query field. ";
-    $desc .= 'Allows you to fetch pages in ProcessWire\'s `$pages` style. ';
-    $desc .= 'Like `$pages->find(...)`.';
     $f->description = $desc;
     $fSet->add($f);
 
