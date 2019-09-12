@@ -29,10 +29,10 @@ class SelectorType
           return (string) $value;
         },
         'parseValue' => function ($value) {
-          return self::parseValue($value);
+          return (string) $value;
         },
         'parseLiteral' => function ($valueNode) {
-          return self::parseValue($valueNode->value);
+          return (string) $valueNode->value;
         }
       ]);
     });
