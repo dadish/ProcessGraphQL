@@ -113,11 +113,28 @@ class PageArrayType {
 	public static function field(Template $template)
 	{
 		$type =& self::type($template);
-		return Resolver::resolvePageArray([
+		return [
 			'name' => self::templatedTypeName($template),
 			'description' => self::templatedTypeDescription($template),
 			'type' => $type,
-		]);
+      'args' => [
+        's' => [
+          'type' => SelectorType::type(),
+          'description' => "ProcessWire selector."
+        ],
+      ],
+      'resolve' => function ($pages, array $args) use ($template) {
+				$selector = "";
+				if ($template) {
+					$selector .= "template=$template, ";
+				}
+        if (isset($args['s'])) {
+          $selector .= $args['s'] . ", ";
+				}
+				rtrim($selector, ", ");
+				return $pages->find(SelectorType::parseValue($selector));
+      }
+    ];
 	}
 
 	public static function getPaginationFields()

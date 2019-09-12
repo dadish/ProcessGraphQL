@@ -36,27 +36,6 @@ class Resolver
     ]);
   }
 
-  public static function resolvePageArray(array $options)
-  {
-    return array_merge($options, [
-      'args' => [
-        's' => [
-          'type' => SelectorType::type(),
-          'description' => "ProcessWire selector."
-        ],
-      ],
-      'resolve' => function ($pages, array $args) use ($options) {
-        $selector = "";
-        if (isset($args['s'])) {
-          $selector = SelectorType::parseValue($args['s']);
-        } else {
-          $selector = SelectorType::parseValue("");
-        }
-        return $pages->find($selector);
-      }
-    ]);
-  }
-
   public static function resolveWithDateFormatter(array $options)
   {
     return array_merge($options, [
