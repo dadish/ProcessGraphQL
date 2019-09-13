@@ -17,4 +17,9 @@ class FieldtypeImage
   {
     return Type::listOf(ImageType::type());
   }
+
+  public static function getFieldCacheKey()
+  {
+    return 'field--' . ImageType::getCacheKey();
+  }
 }

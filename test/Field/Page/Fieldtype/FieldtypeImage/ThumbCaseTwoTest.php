@@ -104,7 +104,7 @@ class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
       }
     }";
 
-    $res = $this->execute($query);
+    $res = self::execute($query);
     $expectedThumb = $res->data->skyscraper->list[0]->images[0]->size;
     
     // make sure it responded the correct thumbnail
