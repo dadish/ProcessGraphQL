@@ -238,8 +238,8 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Legal Page Fields';
     $f->description = 'Choose which built in `Page` fields you wish to be available via GraphQL api.';
     $f->notes = 'Be careful with fields like `parents` & `children` that will allow user to construct deeply nested queries that might be very expensive for your server to fulfill.';
-    foreach (PageType::type()->getFields() as $field) {
-      $f->addOption($field->name);
+    foreach (PageType::getBuiltInFields() as $field) {
+      $f->addOption($field['name']);
     }
     $inputfields->add($f);
 
@@ -250,8 +250,8 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'Legal PageFile Fields';
     $f->description = 'Choose which built in `PageFile` fields you wish to be available via GraphQL api.';
     $f->notes = 'These fields are also inherited by `PageImage`.';
-    foreach (FileType::type()->getFields() as $field) {
-      $f->addOption($field->name);
+    foreach (FileType::getBuiltInFields() as $field) {
+      $f->addOption($field['name']);
     }
     $inputfields->add($f);
 
@@ -261,11 +261,8 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->attr('name', 'legalPageImageFields');
     $f->label = 'Legal PageImage Fields';
     $f->description = 'Choose which built in `PageImage` fields you wish to be available via GraphQL api.';
-    foreach (ImageType::type()->getFields() as $field) {
-      if(in_array($field, FileType::type()->getFields())) {
-        continue;
-      }
-      $f->addOption($field->name);
+    foreach (ImageType::getBuiltInFields() as $field) {
+      $f->addOption($field['name']);
     }
     $inputfields->add($f);
 
