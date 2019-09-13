@@ -19,22 +19,22 @@ class ImageType {
 
   public static function &type()
   {
-    $type =& self::cache('default', function () {
+    $type =& self::cache(self::getCacheKey(), function () {
       return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
         'fields' => function () {
-          return self::getFields();
+          return array_merge(self::getLegalBuiltInFields(), FileType::getLegalBuiltInFields());
         }
       ]);
     });
     return $type;
   }
 
-  public static function getFields()
+  public static function getBuiltInFields()
   {
     $type =& self::type();
-    $fields = [
+    return [
       [
         'name' => 'width',
         'type' => Type::int(),
@@ -104,12 +104,17 @@ class ImageType {
         }
       ]
     ];
+  }
+  public static function getLegalBuiltInFields()
+  {
+    return array_filter(self::getBuiltInFields(), function ($field) {
+      return in_array($field['name'], Utils::moduleConfig()->legalPageImageFields);
+    });
+  }
 
-    // add fields from FileType
-    foreach (FileType::type()->getFields() as $field) {
-      $fields[] = $field;
-    }
- 
-    return $fields;
+  public static function getCacheKey()
+  {
+    $key = implode('-', Utils::moduleConfig()->legalPageImageFields);
+    return $key;
   }
 }
