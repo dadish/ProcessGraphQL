@@ -5,6 +5,7 @@ namespace ProcessWire\GraphQL\Type;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Utils;
 
 class FileType {
 
@@ -16,18 +17,18 @@ class FileType {
 
   public static function type()
   {
-    return self::cache('default', function () {
+    return self::cache(self::getCacheKey(), function () {
       return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
         'fields' => function () {
-          return self::getFields();
+          return self::getLegalBuiltInFields();
         }
       ]);
     });
   }
 
-  public static function getFields()
+  public static function getBuiltInFields()
   {
     return [
       [
@@ -130,5 +131,17 @@ class FileType {
         }
       ],
     ];
+  }
+
+  public static function getLegalBuiltInFields()
+  {
+    return array_filter(self::getBuiltInFields(), function ($field) {
+      return in_array($field['name'], Utils::moduleConfig()->legalPageFileFields);
+    });
+  }
+
+  public static function getCacheKey()
+  {
+    return implode('-', Utils::moduleConfig()->legalPageFileFields);
   }
 }
