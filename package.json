@@ -1,6 +1,6 @@
 {
   "name": "processgraphql",
-  "version": "1.0.0-rc10",
+  "version": "1.0.0-rc11",
   "description": "GraphQL for ProcessWire",
   "main": "index.js",
   "directories": {
