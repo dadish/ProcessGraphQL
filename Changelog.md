@@ -1,10 +1,21 @@
 ProcessGraphQL Changelog
 ========================
 
-### 1.0.0-rc.0
+### 1.0.0-rc10
 #### ⚠️ WARNING: Breaking Changes! ⚠️
-The ProcessGraphQl was rewritten to use [webonyx/graphql-php](https://github.com/webonyx/graphql-php) instead of [youshido/graphql](http://github.com/youshido/graphql). There are also several deprecations regarding the
+The ProcessGraphQl was rewritten to use [webonyx/graphql-php][webonyx/graphql-php] instead of [youshido/graphql](http://github.com/youshido/graphql). There are also several deprecations regarding the
 built in page fields.
+
+- The following fields no longer will be available for Page object types.
+	- `find`
+	- `next`
+	- `prev`
+	- `rootParent`
+	- `siblings`
+- Also an experimental `pages` field is no longer supported.
+- The lowest version of PHP is 7.1 is required.
+- If you had used a third-party module to support additional PW fields for GraphQL, then they are no longer going to work. You'll have to update them to use [webonyx/graphql-php][webonyx/graphql-php].
+- If you used `GraphqlFieldtypeMapMarker` module, you need to update it to the latest vesion available.
 
 ### 0.23.3
 - Fix module installation via class name from pw modules directory.
@@ -142,3 +153,4 @@ it to the module to meet your needs.
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
+[webonyx/graphql-php]: https://github.com/webonyx/graphql-php
