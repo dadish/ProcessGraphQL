@@ -152,6 +152,11 @@ class ProcessGraphQL extends Process implements Module {
 			$payload = isset($requestData['payload']) ? $requestData['payload'] : null;
 		}
 		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
+
+		// in case the post is a form data, parse the variables string.
+		if (is_string($variables)) {
+			$variables = json_decode($variables, true);
+		}
 		return [
 			'payload' => $payload,
 			'variables' => $variables
