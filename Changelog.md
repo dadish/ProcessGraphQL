@@ -1,7 +1,7 @@
 ProcessGraphQL Changelog
 ========================
 
-### 1.0.0-rc14
+### 1.0.0-rc15
 #### ⚠️ WARNING: Breaking Changes! ⚠️
 The ProcessGraphQl was rewritten to use [webonyx/graphql-php][webonyx/graphql-php] instead of [youshido/graphql](http://github.com/youshido/graphql). There are also several deprecations regarding the
 built in page fields.
