@@ -48,10 +48,10 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     $this->assertNull($request['variables']);
 
     // variables could be set via $_POST['variables']
-    $variables = 'variables in $_POST["variablses"]';
+    $variables = '{ one: 1, two: "two" }';
     $_POST['variables'] = $variables;
     $request = Utils::module()->getRequest();
-    $this->assertEquals($variables, $request['variables']);
+    $this->assertEquals(json_decode($variables), $request['variables'], 'variables in $_POST["variables"]');
   }
 
   public function testGetRequestForPhpInput()
