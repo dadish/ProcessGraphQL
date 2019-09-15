@@ -90,7 +90,9 @@ class ProcessGraphQL extends Process implements Module {
   {
 		$this->setupGraphiQLAssets();
     $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/full.php';
-		return wireRenderFile($fullFilename);
+		return wireRenderFile($fullFilename, [
+			'fullGraphiQL' => true,
+		]);
   }
 
   /**
@@ -101,7 +103,9 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		$this->setupGraphiQLAssets();
 		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/partial.php';
-		return wireRenderFile($partialFilename);
+		return wireRenderFile($partialFilename, [
+			'fullGraphiQL' => false,
+		]);
 	}
 
   /**
