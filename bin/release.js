@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const fs = require("fs");
 const path = require("path");
 const shell = require("shelljs");
 const ora = require("ora");
@@ -201,7 +202,7 @@ if (releaseLevel === RELEASE_TEST) {
   return;
 }
 
-// increment version in package.json file
+// update version in package.json file
 // for master branch, since changes in release
 // branch do not affect master branch, the package
 // version in package.json file in master branch is old
@@ -213,8 +214,21 @@ const incementPackageVersion = shell.exec(
   silent
 );
 if (incementPackageVersion.code === 0) {
-  spinner.succeed();
+  // silent
 } else {
+  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
+  shell.exit(1);
+}
+
+try {
+  // update version in ProcessGraphQL.module file.
+  const matcher = /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/;
+  const moduleFilename = path.resolve(__dirname + "/../ProcessGraphQL.module");
+  let content = fs.readFileSync(moduleFilename, "utf8");
+  content = content.replace(matcher, `'version' => '${releaseLevel}'`);
+  fs.writeFileSync(moduleFilename, content);
+  spinner.succeed();
+} catch (err) {
   spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
   shell.exit(1);
 }
