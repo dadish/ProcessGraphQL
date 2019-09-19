@@ -20,4 +20,9 @@ class Cache
     self::$store[$name] = $build();
     return self::$store[$name];
   }
+
+  public static function clear()
+  {
+    self::$store = [];
+  }
 }
