@@ -12,19 +12,25 @@ use ProcessWire\GraphQL\Field\Debug\DbQuery;
 use ProcessWire\GraphQL\Field\Mutation\CreatePage;
 use ProcessWire\GraphQL\Field\Mutation\UpdatePage;
 
-class Schema extends GraphQLSchema
+class Schema
 {
-  public static function create()
-  {
-    /**
-     * Query
-     */
-    $schema = new GraphQLSchema([
-      'query' => self::buildQuery(),
-      'mutation' => self::builtMutation(),
-    ]);
+  private static $schema = null;
 
-    return $schema;
+  public static function getSchema()
+  {
+    if (is_null(self::$schema)) {
+      self::build();
+    }
+
+    return self::$schema;
+  }
+
+  public static function build()
+  {
+    self::$schema = new GraphQLSchema([
+      'query' => self::buildQuery(),
+      'mutation' => self::buildMutation(),
+    ]);
   }
 
   public static function buildQuery()
@@ -74,7 +80,7 @@ class Schema extends GraphQLSchema
     return $query;
   }
 
-  public static function builtMutation()
+  public static function buildMutation()
   {
     $moduleConfig = Utils::moduleConfig();
     $mutationFields = [];

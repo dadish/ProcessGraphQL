@@ -99,7 +99,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
       $event->return = $fields;
     });
 
-    $res = Utils::module()->executeGraphQL('{ hello }');
+    $res = self::execute('{ hello }');
     $this->assertEquals('world!', $res->data->hello);
   }
 
@@ -118,7 +118,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
       $event->return = $fields;
     });
 
-    $res = Utils::module()->executeGraphQL('mutation { zombie }');
+    $res = self::execute('mutation { zombie }');
     $this->assertEquals('apocalypse', $res->data->zombie);
   }
 }
