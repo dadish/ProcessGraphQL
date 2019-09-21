@@ -6,28 +6,24 @@ use ProcessWire\Template;
 use ProcessWire\Field;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Error\ValidationError;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\PageType;
 
 class UpdatePage
 {
-  use CacheTrait;
   public static function field(Template $template)
   {
-    return self::cache('UpdatePage--' . PageType::getTemplateCacheKey($template), function () use ($template) {
-      return [
-        'name' => self::name($template),
-        'description' => self::description($template),
-        'type' => PageType::type($template),
-        'args' => [
-          'id' => Type::nonNull(Type::string()),
-          'page' => Type::nonNull(self::inputType($template)),
-        ],
-        'resolve' => function ($value, $args) use ($template) {
-          return self::resolve($value, $args, $template);
-        }
-      ];
-    });
+    return [
+      'name' => self::name($template),
+      'description' => self::description($template),
+      'type' => PageType::type($template),
+      'args' => [
+        'id' => Type::nonNull(Type::string()),
+        'page' => Type::nonNull(self::inputType($template)),
+      ],
+      'resolve' => function ($value, $args) use ($template) {
+        return self::resolve($value, $args, $template);
+      }
+    ];
   }
 
   public static function name($template)
@@ -43,13 +39,11 @@ class UpdatePage
 
   public static function inputType(Template $template)
   {
-    return self::cache('UpdateInputType--' . PageType::getTemplateCacheKey($template), function () use ($template) {
-      return new InputObjectType([
-        'name' => ucfirst(PageType::normalizeName($template->name)) . 'UpdateInput',
-        'description' => "UpdateInputType for pages with template {$template->name}.",
-        'fields' => self::getInputFields($template),
-      ]);
-    });
+    return new InputObjectType([
+      'name' => ucfirst(PageType::normalizeName($template->name)) . 'UpdateInput',
+      'description' => "UpdateInputType for pages with template {$template->name}.",
+      'fields' => self::getInputFields($template),
+    ]);
   }
 
   public static function getInputFields(Template $template)

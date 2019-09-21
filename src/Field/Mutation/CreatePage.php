@@ -7,27 +7,23 @@ use ProcessWire\Page;
 use ProcessWire\Field;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Error\ValidationError;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\PageType;
 
 class CreatePage
 {
-  use CacheTrait;
   public static function field(Template $template)
   {
-    return self::cache('CreatePage--' . PageType::getTemplateCacheKey($template), function () use ($template) {
-      return [
-        'name' => self::name($template),
-        'description' => self::description($template),
-        'type' => PageType::type($template),
-        'args' => [
-          'page' => Type::nonNull(self::inputType($template)),
-        ],
-        'resolve' => function ($value, $args) use ($template) {
-          return self::resolve($value, $args, $template);
-        }
-      ];
-    });
+    return [
+      'name' => self::name($template),
+      'description' => self::description($template),
+      'type' => PageType::type($template),
+      'args' => [
+        'page' => Type::nonNull(self::inputType($template)),
+      ],
+      'resolve' => function ($value, $args) use ($template) {
+        return self::resolve($value, $args, $template);
+      }
+    ];
   }
 
   public static function name($template)
@@ -43,13 +39,11 @@ class CreatePage
 
   public static function inputType(Template $template)
   {
-    return self::cache('CreateInputType--' . PageType::getTemplateCacheKey($template), function () use ($template) {
-      return new InputObjectType([
-        'name' => ucfirst(PageType::normalizeName($template->name)) . 'CreateInput',
-        'description' => "CreateInputType for pages with template {$template->name}.",
-        'fields' => self::getInputFields($template),
-      ]);
-    });
+    return new InputObjectType([
+      'name' => ucfirst(PageType::normalizeName($template->name)) . 'CreateInput',
+      'description' => "CreateInputType for pages with template {$template->name}.",
+      'fields' => self::getInputFields($template),
+    ]);
   }
 
   public static function getInputFields(Template $template)
