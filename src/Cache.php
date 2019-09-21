@@ -4,25 +4,58 @@ namespace ProcessWire\GraphQL;
 
 class Cache
 {
-  private static $store = [];
-
-  public static function &type(string $name, $build = null)
+  private static function &cache(string $methodName, $store, string $key, $build = null)
   {
-    if (isset(self::$store[$name])) {
-      return self::$store[$name];
+    if (isset($store[$key])) {
+      return $store[$key];
     }
 
     if (is_null($build) || !is_callable($build)) {
-      throw \Exception('The second argument for Cache::type() should be a callable.');
+      throw \Exception("The second argument for Cache::$methodName() should be a callable.");
     }
 
-    self::$store[$name] = Utils::placeholder();
-    self::$store[$name] = $build();
-    return self::$store[$name];
+    $store[$key] = Utils::placeholder();
+    $store[$key] = $build();
+    return $store[$key];
   }
+
+  /**
+   * Type caching
+   */
+  private static $typeStore = [];
+
+  public static function &type(string $name, $build = null)
+  {
+    $type =& self::cache('type', self::$typeStore, $name, $build);
+    return $type;
+  }
+
+  public static function clearType()
+  {
+    self::$typeStore = [];
+  }
+
+
+  /**
+   * Field caching
+   */
+  private static $fieldStore = [];
+
+  public static function &field(string $name, $build = null)
+  {
+    $field =& self::cache('field', self::$fieldStore, $name, $build);
+    return $field;
+  }
+
+  public static function clearField()
+  {
+    self::$fieldStore = [];
+  }
+
 
   public static function clear()
   {
-    self::$store = [];
+    self::$typeStore = [];
+    self::$fieldStore = [];
   }
 }
