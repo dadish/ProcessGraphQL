@@ -4,21 +4,6 @@ namespace ProcessWire\GraphQL;
 
 class Cache
 {
-  private static function &cache(string $methodName, $store, string $key, $build = null)
-  {
-    if (isset($store[$key])) {
-      return $store[$key];
-    }
-
-    if (is_null($build) || !is_callable($build)) {
-      throw \Exception("The second argument for Cache::$methodName() should be a callable.");
-    }
-
-    $store[$key] = Utils::placeholder();
-    $store[$key] = $build();
-    return $store[$key];
-  }
-
   /**
    * Type caching
    */
@@ -26,8 +11,17 @@ class Cache
 
   public static function &type(string $name, $build = null)
   {
-    $type =& self::cache('type', self::$typeStore, $name, $build);
-    return $type;
+    if (isset(self::$typeStore[$name])) {
+      return self::$typeStore[$name];
+    }
+
+    if (is_null($build) || !is_callable($build)) {
+      throw \Exception("The second argument for Cache::type() should be a callable.");
+    }
+
+    self::$typeStore[$name] = Utils::placeholder();
+    self::$typeStore[$name] = $build();
+    return self::$typeStore[$name];
   }
 
   public static function clearType()
@@ -43,8 +37,17 @@ class Cache
 
   public static function &field(string $name, $build = null)
   {
-    $field =& self::cache('field', self::$fieldStore, $name, $build);
-    return $field;
+    if (isset(self::$fieldStore[$name])) {
+      return self::$fieldStore[$name];
+    }
+
+    if (is_null($build) || !is_callable($build)) {
+      throw \Exception("The second argument for Cache::field() should be a callable.");
+    }
+
+    self::$fieldStore[$name] = Utils::placeholder();
+    self::$fieldStore[$name] = $build();
+    return self::$fieldStore[$name];
   }
 
   public static function clearField()
