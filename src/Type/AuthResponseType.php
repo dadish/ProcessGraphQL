@@ -2,16 +2,17 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Cache;
 
 class AuthResponseType
 {
-  use CacheTrait;
+  public static $name = 'AuthResponse';
+  
   public static function type()
   {
-    return self::cache('default', function () {
+    return Cache::type(self::$name, function () {
       return new ObjectType([
-        'name' => 'AuthResponse',
+        'name' => self::$name,
         'description' => 'Object type that represents the authentication response.',
         'fields' => [
           'statusCode' => [
