@@ -4,6 +4,7 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Schema as GraphQLSchema;
 
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Field\Auth\Login;
@@ -27,6 +28,7 @@ class Schema
 
   public static function build()
   {
+    Cache::clear();
     self::$schema = new GraphQLSchema([
       'query' => self::buildQuery(),
       'mutation' => self::buildMutation(),
