@@ -6,12 +6,10 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\EmptyImage;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Cache;
 
 class ImageType {
-
-  use CacheTrait;
 
   public static $name = 'Image';
 
@@ -19,7 +17,7 @@ class ImageType {
 
   public static function &type()
   {
-    $type =& self::cache(self::getCacheKey(), function () {
+    $type =& Cache::type(self::$name, function () {
       return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
@@ -110,11 +108,5 @@ class ImageType {
     return array_filter(self::getBuiltInFields(), function ($field) {
       return in_array($field['name'], Utils::moduleConfig()->legalPageImageFields);
     });
-  }
-
-  public static function getCacheKey()
-  {
-    $key = implode('-', Utils::moduleConfig()->legalPageImageFields);
-    return $key;
   }
 }

@@ -1,12 +1,13 @@
 <?php namespace ProcessWire\GraphQL\Type\Traits;
 
 use GraphQL\Type\Definition\Type;
+use ProcessWire\GraphQL\Cache;
 
 trait FieldTrait
 {
   public static function field($field)
   {
-    return self::cache(self::getFieldCacheKey($field), function () use ($field) {
+    return Cache::field($field->name, function () use ($field) {
       // description
       $desc = $field->description;
       if (!$desc) {
@@ -19,10 +20,5 @@ trait FieldTrait
         'type' => $field->required ? Type::nonNull(self::type($field)) : self::type($field),
       ];
     });
-  }
-
-  public static function getFieldCacheKey($field)
-  {
-    return "field-{$field->name}";
   }
 }
