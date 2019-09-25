@@ -58,7 +58,7 @@ class Cache
 
   public static function clear()
   {
-    self::$typeStore = [];
-    self::$fieldStore = [];
+    self::clearType();
+    self::clearField();
   }
 }
