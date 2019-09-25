@@ -3,22 +3,28 @@
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\ObjectType;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\InputfieldSelectMultiple;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
 use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 
 class FieldtypeOptions
 { 
-  use CacheTrait;
   use FieldTrait;
   use SetValueTrait;
+
+  public static $name = 'FieldtypeOptions';
+
+  public static $inputName = 'FieldtypeOptionsInput';
+
+  public static $description = 'Field that stores single and multi select options.';
+
   public static function type($field)
   {
-    return self::cache($field->name, function () use ($field) {
+    return Cache::type(self::$name, function () use ($field) {
       $type = new ObjectType([
-        'name' => $field->name,
-        'description' => 'Field that stores single and multi select options.',
+        'name' => self::$name,
+        'description' => self::$description,
         'fields' => [
           [
             'name' => 'title',
@@ -57,7 +63,7 @@ class FieldtypeOptions
 
   public static function inputType($field)
   {
-    return self::cache("input-type-{$field->name}", function () use ($field) {
+    return Cache::type(self::$inputName, function () use ($field) {
       $options = [];
       foreach ($field->type->getOptions($field) as $option) {
         $options[$option->title ? $option->title : $option->value] = [
@@ -67,8 +73,8 @@ class FieldtypeOptions
       }
 
       $type = new EnumType([
-        'name' => "{$field->name}_input",
-        'description' => "Possible values for the `{$field->name}`.",
+        'name' => self::$inputName,
+        'description' => "Possible values for the ". self::$name .".",
         'values' => $options,
       ]);
 
@@ -90,7 +96,7 @@ class FieldtypeOptions
 
   public static function inputField($field)
   {
-    return self::cache("input-field-{$field->name}", function () use ($field) {
+    return Cache::field("input--{$field->name}", function () use ($field) {
       // description
       $desc = $field->description;
       if (!$desc) {
