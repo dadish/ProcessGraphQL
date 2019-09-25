@@ -12,7 +12,7 @@ class FieldtypeSelector
   use FieldTrait;
   use InputFieldTrait;
   use SetValueTrait;
-  public static function type($field)
+  public static function type()
   {
     return Type::string();
   }
