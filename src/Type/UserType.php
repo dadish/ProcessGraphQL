@@ -2,19 +2,17 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Cache;
 
 class UserType
 {
-  use CacheTrait;
-
   public static $name = 'User';
 
   public static $description = 'ProcessWire User.';
 
   public static function type()
   {
-    return self::cache('default', function () {
+    return Cache::type(self::$name, function () {
       return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
