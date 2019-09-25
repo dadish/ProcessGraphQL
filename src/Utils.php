@@ -252,7 +252,7 @@ class Utils {
 
   /**
    * Used for circular dependant types. Until the type is built in full this
-   * placeholder is used. See CacheTrait for an example.
+   * placeholder is used. See Cache::type() for an example.
    */
   public static function placeholder()
   {
