@@ -232,37 +232,4 @@ class PageType
     }
     return 'ProcessWire Page.';
   }
-
-  public static function getCacheKey()
-  {
-    $key = '';
-    $seperator = '-';
-
-    // user's roles
-    $key .= Utils::user()->roles->implode($seperator, 'name');
-
-    // allowed fields
-    $key .= "$seperator$seperator";
-    $key .= implode($seperator, Utils::moduleConfig()->legalPageFields);
-
-    return $key;    
-  }
-
-  public static function getTemplateCacheKey(Template $template)
-  {
-    $key = self::getCacheKey();
-    $seperator = '-';
-
-    $key .= "$seperator$seperator";
-    $key .= implode($seperator, Utils::moduleConfig()->legalFields);
-
-    $key .= "$seperator$seperator";
-    $key .= implode($seperator, Utils::moduleConfig()->legalPageFileFields);
-
-    $key .= "$seperator$seperator";
-    $key .= implode($seperator, Utils::moduleConfig()->legalPageImageFields);
-
-    // prepend template name
-    return "{$template->name}--{$key}";
-  }
 }
