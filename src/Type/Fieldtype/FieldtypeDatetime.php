@@ -2,19 +2,23 @@
 
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Type\Resolver;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 
 class FieldtypeDatetime
 { 
-  use CacheTrait;
   use InputFieldTrait;
-  public static function type($field)
+
+  public static $name = 'DateTime';
+
+  public static $description = 'A string that represends a date and optionally time.';
+
+  public static function type()
   {
-    return self::cache($field->name, function () {
+    return Cache::type(self::$name, function () {
       return new CustomScalarType([
-        'name' => 'Datetime',
-        'description' => 'A string that represends a date and optionally time.',
+        'name' => self::$name,
+        'description' => self::$description,
         'serialize' => function ($value) {
           return (string) $value;
         },
@@ -30,7 +34,7 @@ class FieldtypeDatetime
 
   public static function field($field)
   {
-    return self::cache("field-{$field->name}", function () use ($field) {
+    return Cache::field($field->name, function () use ($field) {
       // description
       $desc = $field->description;
       if (!$desc) {
