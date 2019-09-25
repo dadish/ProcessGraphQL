@@ -119,6 +119,19 @@ if (extractGraphiQL.code === 0) {
   shell.exit(1);
 }
 
+try {
+  // update version in ProcessGraphQL.module file.
+  const matcher = /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/;
+  const moduleFilename = path.resolve(__dirname + "/../ProcessGraphQL.module");
+  let content = fs.readFileSync(moduleFilename, "utf8");
+  content = content.replace(matcher, `'version' => '${releaseLevel}'`);
+  fs.writeFileSync(moduleFilename, content);
+  spinner.succeed();
+} catch (err) {
+  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
+  shell.exit(1);
+}
+
 // add all changes to stage
 spinner = ora("Git adding the changes").start();
 const stageChanges = shell.exec("git add . && git reset node_modules", silent);
@@ -216,19 +229,6 @@ const incementPackageVersion = shell.exec(
 if (incementPackageVersion.code === 0) {
   // silent
 } else {
-  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
-  shell.exit(1);
-}
-
-try {
-  // update version in ProcessGraphQL.module file.
-  const matcher = /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/;
-  const moduleFilename = path.resolve(__dirname + "/../ProcessGraphQL.module");
-  let content = fs.readFileSync(moduleFilename, "utf8");
-  content = content.replace(matcher, `'version' => '${releaseLevel}'`);
-  fs.writeFileSync(moduleFilename, content);
-  spinner.succeed();
-} catch (err) {
   spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
   shell.exit(1);
 }
