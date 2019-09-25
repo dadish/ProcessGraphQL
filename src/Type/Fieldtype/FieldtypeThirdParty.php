@@ -1,17 +1,16 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\Traits\FieldTrait;
 
 class FieldtypeThirdParty
 {
-  use CacheTrait;
   use FieldTrait;
 
   public static function &type($field)
   {
-    $type =& self::cache($field->name, function () use ($field) {
-      $thirdPartyClassName = self::getThirdPartyClassName($field);
+    $thirdPartyClassName = self::getThirdPartyClassName($field);
+    $type =& Cache::type($thirdPartyClassName, function () use ($field, $thirdPartyClassName) {
       return $thirdPartyClassName::getType($field);
     });
     return $type;
@@ -19,7 +18,7 @@ class FieldtypeThirdParty
 
   public static function &inputField($field)
   {
-    $inputType =& self::cache("input-type-{$field->name}", function () use ($field) {
+    $inputType =& Cache::field("input--{$field->name}", function () use ($field) {
       $fieldSettings = self::field($field);
       $thirdPartyClassName = self::getThirdPartyClassName($field);
       if (method_exists($thirdPartyClassName, 'getInputType')) {
