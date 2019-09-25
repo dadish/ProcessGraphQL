@@ -2,13 +2,12 @@
 
 use GraphQL\Type\Definition\Type;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\SelectorType;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class FieldtypePage
 {
-  use CacheTrait;
   public static function type($field)
   {
     $template = null;
@@ -23,7 +22,7 @@ class FieldtypePage
 
   public static function field($field)
   {
-    return self::cache("field-{$field->name}", function () use ($field) {
+    return Cache::field($field->name, function () use ($field) {
       // description
       $desc = $field->description;
       if (!$desc) {

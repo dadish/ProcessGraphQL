@@ -4,30 +4,24 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
 use ProcessWire\Template;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Type\PageArrayType;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 
 class PageType
 {
-  use CacheTrait;
-
-  public static $name = 'Page';
-
-  public static $description = 'ProcessWire Page.';
-
   public static function &type($template = null)
   {
     $type = null;
     if ($template instanceof Template) {
       $type =& self::templateType($template);
     } else {
-      $type =& self::cache(self::getCacheKey(), function () {
+      $type =& Cache::type(self::getName(), function () {
         return new ObjectType([
-          'name' => self::$name,
-          'description' => self::$description,
+          'name' => self::getName(),
+          'description' => self::getDescription(),
           'fields' => function () {
             return self::getLegalBuiltInFields();
           },
@@ -170,7 +164,7 @@ class PageType
 
   public static function &templateType(Template $template)
   {
-    $temlpateType =& self::cache('PageType--' . self::getTemplateCacheKey($template), function () use ($template) {
+    $temlpateType =& Cache::type(self::getName($template), function () use ($template) {
       return new ObjectType([
         'name' => self::getName($template),
         'description' => self::getDescription($template),
@@ -226,7 +220,7 @@ class PageType
       return ucfirst(self::normalizeName($template->name)) . 'Page';
     }
 
-    return self::$name;
+    return 'Page';
   }
 
   public static function getDescription(Template $template = null)
@@ -236,7 +230,7 @@ class PageType
       if ($desc) return $desc;
       return "PageType with template `" . $template->name . "`.";
     }
-    return self::$description;
+    return 'ProcessWire Page.';
   }
 
   public static function getCacheKey()

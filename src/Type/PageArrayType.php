@@ -3,30 +3,22 @@
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Template;
+use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Type\SelectorType;
-use ProcessWire\GraphQL\Type\Resolver;
-use ProcessWire\GraphQL\Type\Traits\CacheTrait;
 use ProcessWire\GraphQL\Utils;
 
 class PageArrayType {
-
-	use CacheTrait;
-
-	public static $name = 'PageArray';
-
-	public static $description = 'ProcessWire PageArray.';
-
 	public static function &type(Template $template = null)
 	{
 		$type = null;
 		if ($template instanceof Template) {
 			$type =& self::templateType($template);
 		} else {
-			$type =& self::cache('default', function () {
+			$type =& Cache::type(self::getName(), function () {
 				return new ObjectType([
-					'name' => self::$name,
-					'description' => self::$description,
+					'name' => self::getName(),
+					'description' => self::getDescription(),
 					'fields' => array_merge(self::getPaginationFields(), [
 						[
 							'name' => 'list',
@@ -61,15 +53,15 @@ class PageArrayType {
 
 	public static function &templateType(Template $template)
 	{
-		$type =& self::cache('PageArrayType--' . PageType::getTemplateCacheKey($template), function () use ($template) {
+		$type =& Cache::type(self::getName($template), function () use ($template) {
 			return new ObjectType([
-				'name' => self::templatedTypeName($template),
-				'description' => self::templatedTypeDescription($template),
+				'name' => self::getName($template),
+				'description' => self::getDescription($template),
 				'fields' => array_merge(self::getPaginationFields(), [
 					[
 						'name' => 'list',
 						'type' => Type::listOf(PageType::type($template)),
-						'description' => "List of " . self::templatedTypeName($template),
+						'description' => "List of " . self::getName($template),
 						'resolve' => function ($value) {
 							return $value;
 						},
@@ -96,26 +88,31 @@ class PageArrayType {
 		return $type;
 	}
 
-	public static function templatedTypeName(Template $template)
-	{
-		return $template->name;
-	}
+  public static function getName(Template $template = null)
+  {
+    if ($template instanceof Template) {
+      return ucfirst(PageType::normalizeName($template->name)) . 'PageArray';
+    }
 
-	public static function templatedTypeDescription(Template $template)
-	{
-		if ($template->description) {
-			return $template->description;
-		}
+    return 'PageArray';
+  }
 
-		return "Pages with the template $template->name.";
-	}
+  public static function getDescription(Template $template = null)
+  {
+    if ($template instanceof Template) {
+      $desc = $template->description;
+      if ($desc) return $desc;
+      return "PageArray with template `" . $template->name . "`.";
+    }
+    return 'ProcessWire PageArray.';
+  }
 
 	public static function field(Template $template)
 	{
 		$type =& self::type($template);
 		return [
-			'name' => self::templatedTypeName($template),
-			'description' => self::templatedTypeDescription($template),
+			'name' => PageType::normalizeName($template),
+			'description' => self::getDescription($template),
 			'type' => $type,
       'args' => [
         's' => [
