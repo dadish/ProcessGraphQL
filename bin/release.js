@@ -128,7 +128,9 @@ try {
   fs.writeFileSync(moduleFilename, content);
   spinner.succeed();
 } catch (err) {
-  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
+  spinner.fail(
+    incrementPackageVersion.stderr || incrementPackageVersion.stdout
+  );
   shell.exit(1);
 }
 
@@ -222,14 +224,16 @@ if (releaseLevel === RELEASE_TEST) {
 spinner = ora(
   `Incrementing the package version on the ${MASTER_BRANCH_NAME} branch`
 ).start();
-const incementPackageVersion = shell.exec(
+const incrementPackageVersion = shell.exec(
   `npm version ${releaseLevel} --no-git-tag-version`,
   silent
 );
-if (incementPackageVersion.code === 0) {
-  // silent
+if (incrementPackageVersion.code === 0) {
+  spinner.succeed();
 } else {
-  spinner.fail(incementPackageVersion.stderr || incementPackageVersion.stdout);
+  spinner.fail(
+    incrementPackageVersion.stderr || incrementPackageVersion.stdout
+  );
   shell.exit(1);
 }
 
@@ -238,7 +242,7 @@ spinner = ora(
   `Committing package version update on ${MASTER_BRANCH_NAME} branch`
 ).start();
 const packageVersionCommit = shell.exec(
-  `git commit --all -m "${incementPackageVersion}"`,
+  `git commit --all -m "${releaseLevel}"`,
   silent
 );
 if (packageVersionCommit.code === 0) {
