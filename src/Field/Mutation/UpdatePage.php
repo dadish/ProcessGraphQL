@@ -28,8 +28,7 @@ class UpdatePage
 
   public static function name($template)
   {
-    $typeName = ucfirst(PageType::normalizeName($template->name));
-    return "update{$typeName}";
+    return Utils::normalizeFieldName("update_{$template->name}");
   }
 
   public static function description(Template $template)
@@ -40,7 +39,7 @@ class UpdatePage
   public static function inputType(Template $template)
   {
     return new InputObjectType([
-      'name' => ucfirst(PageType::normalizeName($template->name)) . 'UpdateInput',
+      'name' => Utils::normalizeTypeName("{$template->name}UpdateInput"),
       'description' => "UpdateInputType for pages with template {$template->name}.",
       'fields' => self::getInputFields($template),
     ]);

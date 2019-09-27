@@ -209,15 +209,10 @@ class PageType
     return $fields;
   }
 
-  public Static function normalizeName($name)
-  {
-    return str_replace('-', '_', $name);
-  }
-
   public static function getName(Template $template = null)
   {
     if ($template instanceof Template) {
-      return ucfirst(self::normalizeName($template->name)) . 'Page';
+      return Utils::normalizeTypeName("{$template->name}Page");
     }
 
     return 'Page';

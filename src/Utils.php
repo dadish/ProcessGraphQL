@@ -258,4 +258,14 @@ class Utils {
   {
     return 'placeholder';
   }
+
+  public static function normalizeFieldName($name)
+  {
+    return Utils::sanitizer()->camelCase($name);
+  }
+
+  public static function normalizeTypeName($name)
+  {
+    return ucfirst(Utils::normalizeFieldName($name));
+  }
 }

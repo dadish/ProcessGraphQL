@@ -91,7 +91,7 @@ class PageArrayType {
   public static function getName(Template $template = null)
   {
     if ($template instanceof Template) {
-      return ucfirst(PageType::normalizeName($template->name)) . 'PageArray';
+			return Utils::normalizeTypeName("{$template->name}PageArray");
     }
 
     return 'PageArray';
@@ -111,7 +111,7 @@ class PageArrayType {
 	{
 		$type =& self::type($template);
 		return [
-			'name' => PageType::normalizeName($template),
+			'name' => Utils::normalizeFieldName($template->name),
 			'description' => self::getDescription($template),
 			'type' => $type,
       'args' => [

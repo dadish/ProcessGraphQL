@@ -28,8 +28,7 @@ class CreatePage
 
   public static function name($template)
   {
-    $typeName = ucfirst(PageType::normalizeName($template->name));
-    return "create{$typeName}";
+    return Utils::normalizeFieldName("create_{$template->name}");
   }
 
   public static function description(Template $template)
@@ -40,7 +39,7 @@ class CreatePage
   public static function inputType(Template $template)
   {
     return new InputObjectType([
-      'name' => ucfirst(PageType::normalizeName($template->name)) . 'CreateInput',
+      'name' => Utils::normalizeTypeName("{$template->name}CreateInput"),
       'description' => "CreateInputType for pages with template {$template->name}.",
       'fields' => self::getInputFields($template),
     ]);
