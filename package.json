@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
-    "release": "node bin/release.js",
+    "release": "node scripts/release.js",
     "postinstall": "composer install",
     "start:client": "php -S localhost:8080 test/client.php",
     "start:server": "php -S localhost:8081 test/server.php",
