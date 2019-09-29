@@ -26,12 +26,13 @@ $config->scripts->add("https://cdn.jsdelivr.net/es6-promise/4.0.5/es6-promise.au
 $config->scripts->add("https://cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js");
 $config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react.min.js");
 $config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react-dom.min.js");
-$config->scripts->add('GraphiQL/node_modules/graphiql/graphiql.min.js');
-$config->styles->add('GraphiQL/node_modules/graphiql/graphiql.css');
+$config->scripts->add('node_modules/graphiql/graphiql.min.js');
+$config->styles->add('node_modules/graphiql/graphiql.css');
 
 $filename = realpath($baseDir . $_SERVER['SCRIPT_NAME']);
 if ($filename === $baseDir) {
   require_once(realpath("$baseDir/GraphiQL/full.php"));
+  return;
 }
 
 if (!file_exists($filename)) {
