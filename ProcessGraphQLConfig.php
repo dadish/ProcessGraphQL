@@ -114,7 +114,27 @@ class ProcessGraphQLConfig extends Moduleconfig {
     if (strpos($name, '--') === 0) return false; // as we change the `-` symbols to `_` for field names the `--` becomes `__` and it also reserved by GraphQL
 		if (in_array($name, Utils::getReservedWords())) return false; // some words that used now and might be for future
     return true;
-	}
+  }
+
+  /**
+   * Checks if the template is a repeater template
+   * @param Template $template
+   * @return boolean True if the template is repeater template, false otherwise.
+   */
+  public static function isRepeaterTemplate($template)
+  {
+    // if it's not prefixed with "repeater_" then it's not a repeater template
+    if (strpos($template->name, 'repeater_' !== 0)) {
+      return false;
+    }
+
+    // if it's not flagged as system then it's not repeater
+    if (!($template->flags & Template::flagSystem)) {
+      return false;
+    }
+
+    return true;
+  }
 
   public function generatePages()
   {
@@ -200,6 +220,10 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->description = 'Only the templates that are selected here and have Access Control enabled will be handled by this module.';
     $gotDisabledFields = false;
     foreach (\ProcessWire\wire('templates') as $template) {
+      // skip repeater templates
+      if (self::isRepeaterTemplate($template)) {
+        continue;
+      }
       $attributes = [];
       if (!self::isLegalTemplateName($template->name)) {
         $attributes['disabled'] = true;
