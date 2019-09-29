@@ -87,11 +87,6 @@ async function release(releaseLevel) {
   // install all deps back
   await execute("composer", ["install"], "Install all vendor deps back.");
 
-  // if it's a test release then don't change anything on master branch
-  if (releaseLevel === "test") {
-    return;
-  }
-
   // update package.json version
   await execute(
     "npm",
