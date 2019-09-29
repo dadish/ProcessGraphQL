@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Type\Fieldtype\FieldtypeEmail;
 
 class UserType
 {
@@ -22,7 +23,7 @@ class UserType
             'description' => "The user's login name.",
           ],
           'email' => [
-            'type' => Type::nonNull(Type::string()),
+            'type' => FieldtypeEmail::type(),
             'description' => "The user's email address.",
           ],
           'id' => [
