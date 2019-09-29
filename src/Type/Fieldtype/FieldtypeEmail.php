@@ -16,14 +16,17 @@ class FieldtypeEmail
 
   public static $description = 'E-Mail address in valid format';
 
-  public static function type($field)
+  public static function type()
   {
-    return Cache::type($field->name, function () {
+    return Cache::type(self::$name, function () {
       return new CustomScalarType([
         'name' => self::$name,
         'description' => self::$description,
         'serialize' => function ($value) {
-          return (string) $value;
+          if ($value) {
+            return (string) $value;
+          }
+          return "";
         },
         'parseValue' => function ($value) {
           return (string) $value;
