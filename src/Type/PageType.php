@@ -59,37 +59,37 @@ class PageType
 
       Resolver::resolveUser([
         'name' => 'createdUser',
-        'type' => UserType::type(),
+        'type' => Type::nonNull(UserType::type()),
         'description' => 'The user that created this page.',
       ]),
 
       [
         'name' => 'httpUrl',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::string()),
         'description' => 'Same as `url`, except includes protocol (http or https) and hostname.',
       ],
 
       [
         'name' => 'id',
-        'type' => Type::id(),
+        'type' => Type::nonNull(Type::id()),
         'description' => 'ProcessWire Page id.',
       ],
 
       Resolver::resolveWithDateFormatter([
         'name' => 'modified',
-        'type' => Type::nonNull(Type::string()),
+        'type' => Type::nonNull(Type::nonNull(Type::string())),
         'description' => 'Date of when the page was last modified.',
       ]),
 
       Resolver::resolveUser([
         'name' => 'modifiedUser',
-        'type' => UserType::type(),
+        'type' => Type::nonNull(UserType::type()),
         'description' => 'The user that last modified this page.',
       ]),
 
       [
         'name' => 'name',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::string()),
         'description' => 'ProcessWire Page name.',
       ],
 
@@ -136,19 +136,19 @@ class PageType
 
       [
         'name' => 'path',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::string()),
         'description' => "The page's URL path from the homepage (i.e. /about/staff/ryan/)",
       ],
 
       [
         'name' => 'template',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::string()),
         'description' => 'Template name of the page.',
       ],
 
       [
         'name' => 'url',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::string()),
         'description' => "The page's URL path from the server's document root (may be the same as the `path`)",
       ],
     ];
@@ -198,7 +198,11 @@ class PageType
         continue;
       }
 
-      $fields[] = $fieldClass::field($field);
+      $fieldSettings = $fieldClass::field($field);
+      if ($field->required) {
+        $fieldSettings['type'] = Type::nonNull($fieldSettings['type']);
+      }
+      $fields[] = $fieldSettings;
     }
 
     // add all the built in page fields
