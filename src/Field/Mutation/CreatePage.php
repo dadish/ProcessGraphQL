@@ -81,7 +81,11 @@ class CreatePage
 
       $f = Utils::pwFieldToGraphqlClass($field);
       if (!is_null($f)) {
-        $fields[] = $f::inputField($field);
+        $fieldSettings = $f::inputField($field);
+        if ($field->required) {
+          $fieldSettings['type'] = Type::nonNull($fieldSettings['type']);
+        }
+        $fields[] = $fieldSettings;
       }
     }
 

@@ -106,7 +106,7 @@ class FieldtypeOptions
       return [
         'name' => $field->name,
         'description' => $desc,
-        'type' => $field->required ? Type::nonNull(self::inputType($field)) : self::inputType($field),
+        'type' => self::inputType($field),
       ];
     });
   }

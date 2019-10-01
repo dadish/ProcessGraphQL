@@ -44,7 +44,7 @@ class FieldtypeDatetime
       return Resolver::resolveWithDateFormatter([
         'name' => $field->name,
         'description' => $desc,
-        'type' => $field->required ? Type::nonNull(self::type($field)) : self::type($field),
+        'type' => self::type($field),
       ]);
     });
   }
