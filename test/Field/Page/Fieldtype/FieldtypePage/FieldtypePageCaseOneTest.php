@@ -55,20 +55,23 @@ class FieldtypePageCaseOneTest extends GraphQLTestCase {
   		skyscraper (s: \"id=$skyscraper->id\") {
   			list {
   				architects {
+  					list {
+  						id
+  					}
   					first {
   						id
-  						name
+  					}
+  					last {
+  						id
   					}
   				}
   			}
   		}
   	}";
 		$res = self::execute($query);
-  	$this->assertEquals(
-  		null,
-  		count($res->data->skyscraper->list[0]->architects->first->id),
-  		'Returns empty first item.'
-  	);
+		$this->assertEquals(0, count($res->data->skyscraper->list[0]->architects->list), 'Returns empty list.');
+  	$this->assertNull($res->data->skyscraper->list[0]->architects->first, 'Returns empty first item.');
+  	$this->assertNull($res->data->skyscraper->list[0]->architects->last, 'Returns empty last item.');
   }
 
 }
