@@ -1,8 +1,9 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
-use GraphQL\Type\Definition\Type;
+use ProcessWire\Page;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Type\Inputfield\InputfieldPage;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\SelectorType;
 
@@ -43,14 +44,13 @@ class FieldtypePage
     });
   }
 
-  public static function inputField()
+  public static function inputField($field)
   {
-    return Type::listOf(Type::string());
+    return InputfieldPage::inputField($field);
   }
 
-  public function setValue(Page $page, $field, $value)
+  public static function setValue(Page $page, $field, $value)
   {
-    $fieldName = $field->name;
-    $page->$fieldName = implode('|', $value);
+    return InputfieldPage::setValue($page, $field, $value);
   }
 }
