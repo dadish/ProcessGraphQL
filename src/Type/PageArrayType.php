@@ -7,6 +7,7 @@ use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Type\SelectorType;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\NullPage;
 
 class PageArrayType {
 	public static function &type(Template $template = null)
@@ -33,7 +34,11 @@ class PageArrayType {
 							'type' => PageType::type(),
 							'description' => 'Returns the first item in the WireArray.',
 							'resolve' => function ($value) {
-								return $value->first();
+								$first = $value->first();
+								if ($first) {
+									return $first;
+								}
+								return null;
 							},
 						],
 						[
@@ -41,7 +46,11 @@ class PageArrayType {
 							'type' => PageType::type(),
 							'description' => 'Returns the last item in the WireArray.',
 							'resolve' => function ($value) {
-								return $value->last();
+								$last = $value->last();
+								if ($last) {
+									return $last;
+								}
+								return null;
 							},
 						]
 					]),
@@ -70,16 +79,24 @@ class PageArrayType {
 						'name' => 'first',
 						'type' => PageType::type($template),
 						'description' => 'Returns the first item in the WireArray.',
-						'resolve' => function ($value) use ($template) {
-							return $value->first();
+						'resolve' => function ($value) {
+							$first = $value->first();
+							if ($first) {
+								return $first;
+							}
+							return null;
 						},
 					],
 					[
 						'name' => 'last',
 						'type' => PageType::type($template),
 						'description' => 'Returns the last item in the WireArray.',
-						'resolve' => function ($value) use ($template) {
-							return $value->last();
+						'resolve' => function ($value) {
+							$last = $value->last();
+							if ($last) {
+								return $last;
+							}
+							return null;
 						},
 					],
 				])

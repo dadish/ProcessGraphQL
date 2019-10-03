@@ -17,7 +17,7 @@ class UpdatePage
       'description' => self::description($template),
       'type' => PageType::type($template),
       'args' => [
-        'id' => Type::nonNull(Type::string()),
+        'id' => Type::nonNull(Type::id()),
         'page' => Type::nonNull(self::inputType($template)),
       ],
       'resolve' => function ($value, $args) use ($template) {

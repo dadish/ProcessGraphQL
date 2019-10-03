@@ -77,7 +77,7 @@ class PageType
 
       Resolver::resolveWithDateFormatter([
         'name' => 'modified',
-        'type' => Type::nonNull(Type::nonNull(Type::string())),
+        'type' => Type::nonNull(Type::string()),
         'description' => 'Date of when the page was last modified.',
       ]),
 
@@ -95,7 +95,7 @@ class PageType
 
       [
         'name' => 'numChildren',
-        'type' => Type::int(),
+        'type' => Type::nonNull(Type::int()),
         'description' => "The number of children (subpages) this page has, optionally limiting to 
                           visible pages. When argument `visible` true, number includes only visible 
                           children (excludes unpublished, hidden, no-access, etc.)",
@@ -124,13 +124,13 @@ class PageType
 
       [
         'name' => 'parentID',
-        'type' => Type::string(),
+        'type' => Type::nonNull(Type::id()),
         'description' => 'The numbered ID of the parent page or 0 if none.',
       ],
 
       Resolver::resolvePagefieldWithSelector([
         'name' => 'parents',
-        'type' => PageArrayType::type(),
+        'type' => Type::nonNull(PageArrayType::type()),
         'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector.",
       ]),
 
