@@ -12,10 +12,4 @@ $config = ProcessWire::buildConfig($pwDir, null, [
   "siteDir" => "site-default"
 ]);
 
-// fill up database
-echo "Database setup started...\n";
-$dsn = "mysql:dbname=$config->dbName;host=$config->dbHost";
-$sql = \file_get_contents(__DIR__ . "/skyscrapers.sql");
-$pdo = new \PDO($dsn, $config->dbUser, $config->dbPass, []);
-$pdo->exec($sql);
-echo "Database setup finished.\n\n";
+require_once realpath(__DIR__ . "/databaseReset.php");
