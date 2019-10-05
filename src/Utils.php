@@ -268,4 +268,24 @@ class Utils {
   {
     return ucfirst(Utils::normalizeFieldName($name));
   }
+
+  /**
+   * Checks if the template is a repeater template
+   * @param Template $template
+   * @return boolean True if the template is repeater template, false otherwise.
+   */
+  public static function isRepeaterTemplate(Template $template)
+  {
+    // if it's not prefixed with "repeater_" then it's not a repeater template
+    if (strpos($template->name, 'repeater_' !== 0)) {
+      return false;
+    }
+
+    // if it's not flagged as system then it's not repeater
+    if (!($template->flags & Template::flagSystem)) {
+      return false;
+    }
+
+    return true;
+  }
 }
