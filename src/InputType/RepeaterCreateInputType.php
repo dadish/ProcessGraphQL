@@ -28,7 +28,7 @@ class RepeaterCreateInputType
     $fields = array_merge($fields, PageCreateInputType::getTemplateFields($template));
     
     // mark required fields as nonNull
-    PageCreateInputType::markRequiredTemplateFields($fields, $template);
+    $fields = PageCreateInputType::markRequiredTemplateFields($fields, $template);
 
     return $fields;
   }

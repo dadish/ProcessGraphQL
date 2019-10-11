@@ -39,7 +39,7 @@ class PageCreateInputType
     $fields = array_merge($fields, self::getTemplateFields($template));
     
     // mark required fields as nonNull
-    self::markRequiredTemplateFields($fields, $template);
+    $fields = self::markRequiredTemplateFields($fields, $template);
 
     return $fields;
   }
@@ -119,6 +119,8 @@ class PageCreateInputType
       }
       $fields[$field->name]['type'] = Type::nonNull($fields[$field->name]['type']);
     }
+
+    return $fields;
   }
 
   public static function setValues(Page $page, array $values)
