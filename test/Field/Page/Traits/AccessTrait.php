@@ -6,10 +6,8 @@ use \ProcessWire\GraphQL\Utils;
 
 trait AccessTrait {
 
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-    
+  public static function setUpAccess()
+  {    
     if (isset(self::accessRules['legalTemplates'])) {
       Utils::module()->legalTemplates = array_merge(Utils::module()->legalTemplates, self::accessRules['legalTemplates']);
     }
@@ -33,10 +31,9 @@ trait AccessTrait {
     Utils::session()->login('admin', Utils::config()->testUsers['admin']);
   }
 
-  public static function tearDownAfterClass()
+  public static function tearDownAccess()
   {
     Utils::session()->logout();
-    parent::tearDownAfterClass();
   }
 
 }

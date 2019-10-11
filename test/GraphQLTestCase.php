@@ -12,12 +12,20 @@ abstract class GraphqlTestCase extends TestCase {
 
   public static function setUpBeforeClass()
   {
+    $self = static::class;
+    if (method_exists($self, 'setupAccess')) {
+      $self::setupAccess();
+    }
     self::$defaultConfig = Utils::module()->data();
   }
 
   public static function tearDownAfterClass()
   {
     Utils::module()->setArray(self::$defaultConfig);
+    $self = static::class;
+    if (method_exists($self, 'teardownAccess')) {
+      $self::teardownAccess();
+    }
   }
 
   public static function execute($payload = null, $variables = null)
