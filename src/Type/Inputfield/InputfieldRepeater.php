@@ -63,24 +63,34 @@ class InputfieldRepeater
   public static function setValue(Page $page, $field, $value)
   {
     $fieldName = $field->name;
+
+    // create repeaters
     if (isset($value['add'])) {
       foreach ($value['add'] as $createValues) {
         $r = $page->$fieldName->getNew();
         PageCreateInputType::setValues($r, $createValues);
         $r->save();
-        $page->$fieldName->add($r);
       }
     }
+
+    // remove repeaters
     if (isset($value['remove'])) {
       foreach ($value['remove'] as $id) {
         $r = $page->$fieldName->get("id=$id");
+        // skip if the repeater item cannot be found
+        if ($r instanceof NullPage) {
+          continue;
+        }
         $page->$fieldName->remove($r);
       }
     }
+
+    // update repeaters
     if (isset($value['update'])) {
       foreach ($value['update'] as $updateValues) {
         $id = $updateValues['id'];
         $r = $page->$fieldName->get("id=$id");
+        $r->of(false);
 
         // skip if the repeater item cannot be found
         if ($r instanceof NullPage) {
