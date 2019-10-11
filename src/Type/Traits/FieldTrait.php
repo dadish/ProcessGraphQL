@@ -1,6 +1,5 @@
 <?php namespace ProcessWire\GraphQL\Type\Traits;
 
-use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Cache;
 
 trait FieldTrait
