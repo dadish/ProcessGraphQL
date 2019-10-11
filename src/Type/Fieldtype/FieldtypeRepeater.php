@@ -1,6 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
-use GraphQL\Type\Definition\Type;
+use ProcessWire\Page;
+use ProcessWire\GraphQL\Type\Inputfield\InputfieldRepeater;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\Traits\FieldTrait;
@@ -26,6 +27,11 @@ class FieldtypeRepeater
 
   public static function inputField($field)
   {
-    return Type::string();
+    return InputfieldRepeater::inputField($field);
+  }
+
+  public static function setValue(Page $page, $field, $value)
+  {
+    return InputfieldRepeater::setValue($page, $field, $value);
   }
 }
