@@ -13,3 +13,8 @@ $config = ProcessWire::buildConfig($pwDir, null, [
 ]);
 
 require_once realpath(__DIR__ . "/databaseReset.php");
+
+// reset the test/files directory
+$filesDirectory = realpath(__DIR__ . "/files/");
+exec("git checkout $filesDirectory");
+echo "Reset the 'test/files' directory.\n";
