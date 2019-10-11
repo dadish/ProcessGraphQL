@@ -29,10 +29,19 @@ class Schema
   public static function build()
   {
     Cache::clear();
-    self::$schema = new GraphQLSchema([
-      'query' => self::buildQuery(),
-      'mutation' => self::buildMutation(),
-    ]);
+    $schema = [];
+
+    $query = self::buildQuery();
+    if ($query) {
+      $schema['query'] = $query;
+    }
+
+    $mutation = self::buildMutation();
+    if ($mutation) {
+      $schema['mutation'] = $mutation;
+    }
+
+    self::$schema = new GraphQLSchema($schema);
   }
 
   public static function buildQuery()
@@ -74,12 +83,14 @@ class Schema
     // let the user modify the query operation
     $queryFields = Utils::module()->getQueryFields($queryFields);
 
-    $query = new ObjectType([
-      'name' => 'Query',
-      'fields' => $queryFields,
-    ]);
+    if (count($queryFields)) {
+      return new ObjectType([
+        'name' => 'Query',
+        'fields' => $queryFields,
+      ]);
+    }
 
-    return $query;
+    return null;
   }
 
   public static function buildMutation()
@@ -100,11 +111,13 @@ class Schema
     // let the user modify the query operation
     $mutationFields = Utils::module()->getMutationFields($mutationFields);
 
-    $mutation = new ObjectType([
-      'name' => 'Mutation',
-      'fields' => $mutationFields,
-    ]);
+    if (count($mutationFields)) {
+      return new ObjectType([
+        'name' => 'Mutation',
+        'fields' => $mutationFields,
+      ]);
+    }
 
-    return $mutation;
+    return null;
   }
 }
