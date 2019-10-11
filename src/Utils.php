@@ -63,7 +63,7 @@ class Utils {
 
  /**
   * Shortcut for wire('templates')
-  * @return \ProcessWire\Fields The ProcessWire $templates API variable.
+  * @return \ProcessWire\Templates The ProcessWire $templates API variable.
   */
   public static function templates()
   {
@@ -99,7 +99,7 @@ class Utils {
 
  /**
   * Shortcut for wire('session')
-  * @return \ProcessWire\session The ProcessWire $session variable.
+  * @return \ProcessWire\Session The ProcessWire $session variable.
   */
   public static function session()
   {
