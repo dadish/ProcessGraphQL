@@ -1,12 +1,13 @@
 <?php namespace ProcessWire\GraphQL\Field\Mutation;
 
 use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\InputObjectType;
 use ProcessWire\Template;
-use ProcessWire\Field;
+use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Error\ValidationError;
 use ProcessWire\GraphQL\Type\PageType;
+use ProcessWire\GraphQL\InputType\PageCreateInputType;
+use ProcessWire\GraphQL\InputType\PageUpdateInputType;
 
 class UpdatePage
 {
@@ -18,7 +19,7 @@ class UpdatePage
       'type' => PageType::type($template),
       'args' => [
         'id' => Type::nonNull(Type::id()),
-        'page' => Type::nonNull(self::inputType($template)),
+        'page' => Type::nonNull(PageUpdateInputType::type($template)),
       ],
       'resolve' => function ($value, $args) use ($template) {
         return self::resolve($value, $args, $template);
@@ -36,67 +37,19 @@ class UpdatePage
     return "Allows you to update Pages with template `{$template->name}`.";
   }
 
-  public static function inputType(Template $template)
-  {
-    return new InputObjectType([
-      'name' => Utils::normalizeTypeName("{$template->name}UpdateInput"),
-      'description' => "UpdateInputType for pages with template {$template->name}.",
-      'fields' => self::getInputFields($template),
-    ]);
-  }
-
-  public static function getInputFields(Template $template)
-  {
-    $fields = [];
-
-    // parent
-    $fields[] = [
-      'name' => 'parent',
-      'type' => Type::string(),
-      'description' => 'Id or the path of the parent page.',
-    ];
-
-    // name
-    $fields[] = [
-      'name' => 'name',
-      'type' => Type::string(),
-      'description' => 'ProcessWire page name.',
-    ];
-
-    // the list of input fields we do not 
-    // support for now
-    $unsupportedFieldtypes = [
-      'FieldtypeFile',
-      'FieldtypeImage',
-    ];
-
-    $legalFieldsName = implode('|', Utils::moduleConfig()->legalFields);
-    foreach ($template->fields->find("name=$legalFieldsName") as $field) {
-
-      // get the field's GraphQL input class
-      $className = $field->type->className();
-      if (in_array($className, $unsupportedFieldtypes)) {
-        continue;
-      }
-
-      $f = Utils::pwFieldToGraphqlClass($field);
-      if (!is_null($f)) {
-        $fields[] = $f::inputField($field);
-      }
-    }
-
-    return $fields;
-  }
-
-  public static function resolve($value, $args, $template)
+  public static function resolve($value, $args)
   {
     // prepare neccessary variables
     $pages = Utils::pages();
     $sanitizer = Utils::sanitizer();
-    $fields = Utils::fields();
     $values = (array) $args['page'];
     $id = (integer) $args['id'];
     $p = $pages->get($id);
+
+    if ($p instanceof NullPage) {
+      throw new ValidationError("Could not find the page `$p` to update.");
+    }
+
     $p->of(false);
 
     /*********************************************\
@@ -166,21 +119,7 @@ class UpdatePage
     unset($values['parent']);
     unset($values['name']);
 
-    // update the values from client
-    foreach ($values as $fieldName => $value) {
-      $field = $fields->get($fieldName);
-      
-      // ignore if field cannot be found
-      if (!$field instanceof Field) {
-        continue;
-      }
-
-      // set value of a field
-      $f = Utils::pwFieldToGraphqlClass($field);
-      if (!is_null($f)) {
-        $f::setValue($p, $field, $value);
-      }
-    }
+    PageCreateInputType::setValues($p, $values);
 
     // save the page to db
     if ($p->save()) {
