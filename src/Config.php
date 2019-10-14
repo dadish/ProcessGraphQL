@@ -47,8 +47,6 @@ class Config extends WireData {
       case 'legalPageFields':
       case 'legalPageFileFields':
       case 'legalPageImageFields':
-      case 'grantTemplatesAccess':
-      case 'grantFieldsAccess':
       case 'pagesQuery':
       case 'meQuery':
       case 'authQuery':
@@ -80,24 +78,10 @@ class Config extends WireData {
     // if superuser give access to everything
     if ($user->isSuperuser()) return $templates;
 
-    // if access is granted then templates are accessable by default
-    // but if a template has Access settings, user should have relevant
-    // permissions
-    if (Utils::moduleConfig()->grantTemplatesAccess) {
-      foreach ($templates as $template) {
-        if ($template->useRoles && !$this->hasTemplatePermission($permission, $user, $template)) {
-          $templates->remove($template);
-        }
-      }
-
-    // if access is not granted then user can see only those templates that
-    // she has explicit access to.
-    } else {
-      $templates->filter("useRoles=1");
-      foreach ($templates as $template) {
-        if (!$this->hasTemplatePermission($permission, $user, $template)) {
-          $templates->remove($template);
-        }
+    $templates->filter("useRoles=1");
+    foreach ($templates as $template) {
+      if (!$this->hasTemplatePermission($permission, $user, $template)) {
+        $templates->remove($template);
       }
     }
 

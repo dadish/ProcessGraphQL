@@ -219,8 +219,6 @@ class Utils {
         if (in_array($role->id, $field->$roles)) return true;
       }
       return false;
-    } else if (self::moduleConfig()->grantFieldsAccess) {
-      return true;
     } else {
       return false;
     }

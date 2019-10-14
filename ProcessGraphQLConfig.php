@@ -70,18 +70,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
       ],
 
       /**
-       * Grant access to everyone on a template level.
-       * @var boolean
-       */
-      'grantTemplatesAccess' => false,
-
-      /**
-       * Grant access to everyone on a field level.
-       * @var boolean
-       */
-      'grantFieldsAccess' => false,
-
-      /**
        * The `pages` query field. Allows to perform $pages->find queries.
        * @var boolean
        */
@@ -315,29 +303,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->label = 'login/logout Query';
     $f->columnWidth = 50;
     $desc = "Adds '`login`' & '`logout`' fields. Allows users to authenticate via GraphQL API.";
-    $f->description = $desc;
-    $fSet->add($f);
-
-    // grantTemplatesAccess
-    $f = $this->modules->get('InputfieldCheckbox');
-    $f->attr('name', 'grantTemplatesAccess');
-    $f->label = 'Grant Templates Access';
-    $f->columnWidth = 50;
-    $desc = "By default only `superuser` can access pages with template that ";
-    $desc .= "does not have `Access` settings enabled. If you wish to grant ";
-    $desc .= "access to pages without `Access` settings, check this field. ";
-    $desc .= "(not recommended)";
-    $f->description = $desc;
-    $fSet->add($f);
-
-    // grantFieldsAccess
-    $f = $this->modules->get('InputfieldCheckbox');
-    $f->attr('name', 'grantFieldsAccess');
-    $f->label = 'Grant Fields Access';
-    $f->columnWidth = 50;
-    $desc = "By default only `superuser` can access fields that does not have `Access` ";
-    $desc .= "settings enabled. If you wish to grant access to fields without `Access` ";
-    $desc .= "settings, check this field. (not recommended)";
     $f->description = $desc;
     $fSet->add($f);
 
