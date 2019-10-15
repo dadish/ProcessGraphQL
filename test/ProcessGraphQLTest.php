@@ -1,5 +1,7 @@
 <?php
 
+namespace ProcessWire\GraphQL\Test;
+
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\GraphQL\Utils;
