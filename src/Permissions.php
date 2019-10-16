@@ -1,6 +1,7 @@
 <?php namespace ProcessWire\GraphQL;
 
 use ProcessWire\Template;
+use ProcessWire\Templates;
 use ProcessWire\Field;
 use ProcessWire\GraphQL\Utils;
 
@@ -61,7 +62,7 @@ class Permissions
 
     // can't create if allowed parents are not legal
     if ($template->noParents == 0 && count($template->parentTemplates)) {
-      if (!count(array_intersect(self::getLegalTemplateIds(), $template->parentTemplates))) {
+      if (!count(array_intersect(self::getTemplateIds(), $template->parentTemplates))) {
         return false;
       }
     }
@@ -217,17 +218,83 @@ class Permissions
   }
 
   /**
+   * Returns legal templates. The ones user marked in the module settings.
+   *
+   * @return Templates
+   */
+  public static function getTemplates()
+  {
+    $templates = Utils::templates();
+    $legalTemplateNames = implode('|', Utils::module()->legalTemplates);
+    return $templates->find("name=$legalTemplateNames");
+  }
+
+  /**
    * Returns the ids of the legal templates.
    *
    * @return integer[]
    */
-  public static function getLegalTemplateIds()
+  public static function getTemplateIds()
   {
-    $templates = Utils::templates();
-    $legalTemplateNames = implode('|', Utils::module()->legalTemplates);
-    $legalTemplateIds = $templates->find("name=$legalTemplateNames")->explode('id');
+    return array_merge([], self::getTemplates()->explode('id'));
+  }
 
-    // reset indexes
-    return array_merge([], $legalTemplateIds);
+  public static function filterTemplatesByPermission($predicator)
+  {
+    $templates = self::getTemplates();
+    foreach ($templates as $template) {
+      if (!$predicator($template)) {
+        $templates->remote($template);
+      }
+    }
+    return $templates;
+  }
+
+  /**
+   * Returns the templates that can be viewed by the current user.
+   *
+   * @return Templates
+   */
+  public static function getViewTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canView($template);
+    });
+  }
+
+  /**
+   * Returns the templates that can be created by the current user.
+   *
+   * @return Templates
+   */
+  public static function getCreateTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canCreate($template);
+    });
+  }
+
+  /**
+   * Returns the templates that can be edited by the current user.
+   *
+   * @return Templates
+   */
+  public static function getEditTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canEdit($template);
+    });
+  }
+
+  /**
+   * Returns the templates that can be deleted by the current user.
+   *
+   * @return Templates
+   */
+  public static function getDeleteTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canDelete($template);
+    });
   }
 }
