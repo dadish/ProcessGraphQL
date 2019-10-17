@@ -9,6 +9,7 @@ use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 class FieldtypePageSelectorTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['home'],
     'legalFields' => ['selected'],
   ];

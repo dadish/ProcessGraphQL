@@ -9,6 +9,7 @@ use \ProcessWire\GraphQL\Utils;
 class FieldtypeIntegerTest extends GraphqlTestCase {  
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['floors'],
   ];

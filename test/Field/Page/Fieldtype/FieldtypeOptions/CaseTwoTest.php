@@ -8,6 +8,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['city'],
     'legalFields' => ['options_single'],
   ];

@@ -6,6 +6,7 @@ use ProcessWire\GraphQL\Utils;
 
 class SuperuserCanNotViewTest extends GraphqlTestCase {
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
   ];
 

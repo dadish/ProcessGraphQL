@@ -8,6 +8,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 class PageIdFieldTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalPageFields' => ['id'],
   ];

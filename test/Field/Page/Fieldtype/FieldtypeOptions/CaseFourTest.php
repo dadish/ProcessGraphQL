@@ -14,6 +14,7 @@ use ProcessWire\NullPage;
 class FieldtypeOptionsCaseFourTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['architects', 'architect'],
     'legalFields' => ['options', 'title'],
   ];

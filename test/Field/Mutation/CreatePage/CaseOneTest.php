@@ -14,6 +14,7 @@ use \ProcessWire\NullPage;
 class CreatePageCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper', 'city'],
     'legalFields' => ['featured', 'height', 'floors', 'body'],
   ];

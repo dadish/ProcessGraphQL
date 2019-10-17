@@ -9,6 +9,7 @@ use \ProcessWire\GraphQL\Utils;
 class FieldtypeFloatTest extends GraphqlTestCase {  
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['height'],
   ];

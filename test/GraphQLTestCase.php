@@ -37,8 +37,9 @@ abstract class GraphqlTestCase extends TestCase {
       Utils::module()->legalPageImageFields = array_merge(Utils::module()->legalPageImageFields, $accessRules['legalPageImageFields']);
     }
 
-    if (count($accessRules)) {
-      Utils::session()->login('admin', Utils::config()->testUsers['admin']);
+    if (isset($accessRules['login'])) {
+      $username = $accessRules['login'];
+      Utils::session()->login($username, Utils::config()->testUsers[$username]);
     }
   }
 

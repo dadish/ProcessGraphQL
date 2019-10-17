@@ -9,6 +9,7 @@ use \ProcessWire\GraphQL\Utils;
 class FieldtypeFileTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['architect'],
     'legalFields' => ['resume'],
   ];

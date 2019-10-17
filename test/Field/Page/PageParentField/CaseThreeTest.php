@@ -12,6 +12,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 class PageParentFieldCaseThreeTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['cities', 'skyscraper'],
     'legalPageFields' => ['parent', 'name'],
   ];

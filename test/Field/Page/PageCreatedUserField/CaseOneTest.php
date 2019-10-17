@@ -13,6 +13,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 class PageCreatedUserFieldCaseOneTest extends GraphQLTestCase {
 
   const accessRules = [
+    'login' => 'admin',
     'legalTemplates' => ['skyscraper', 'user'],
     'legalPageFields' => ['createdUser'],
   ];
