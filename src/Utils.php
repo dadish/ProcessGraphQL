@@ -8,10 +8,8 @@
 
 namespace ProcessWire\GraphQL;
 
-use ProcessWire\Languages;
 use ProcessWire\Field;
 use ProcessWire\Template;
-use ProcessWire\GraphQL\Config;
 
 class Utils {
 
@@ -140,48 +138,6 @@ class Utils {
   public static function languages()
   {
     return self::wire('languages');
-  }
-
- /**
-  * Creates and sets the Config property to ProcessGraphQL module instance.
-  *
-  * @return \ProcessWire\GraphQL\Config The ProcessGaphQL module runtime configuration
-  */
-  public static function setupModuleConfig()
-  {
-    $module = self::module();
-    $config = new Config($module);
-    self::setupModuleLanguageConfig($config);
-    return $module->Config;
-  }
-
-  /**
-   * Sets the `languageEnabled` property for Config
-   * @param  Config $config The ProcessGraphQL runtime configuration
-   * @return boolean        Returns true if LanguageSupport is enabled, false otherwise.
-   */
-  public static function setupModuleLanguageConfig(Config $config)
-  {
-    $languages = self::languages();
-    if (is_null($languages) || !$languages instanceof Languages) {
-      $config->languageEnabled = false;
-      return false;
-    }
-    $config->languageEnabled = true;
-    return true;
-  }
-
-  /**
-   * Returns ProcessGraphQL's runtime configuration
-   *
-   * @return \ProcessWire\GraphQL\Config
-   *
-   */
-  public static function moduleConfig()
-  {
-    $module = self::module();
-    if ($module->Config instanceof Config) return $module->Config;
-    return self::setupModuleConfig();
   }
 
  /**

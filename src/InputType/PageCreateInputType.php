@@ -55,7 +55,7 @@ class PageCreateInputType
       'FieldtypeImage',
     ];
 
-    $legalFieldsName = implode('|', Utils::moduleConfig()->legalFields);
+    $legalFieldsName = implode('|', Utils::module()->legalFields);
     foreach ($template->fields->find("name=$legalFieldsName") as $field) {
 
       // get the field's GraphQL input class

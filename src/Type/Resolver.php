@@ -2,6 +2,7 @@
 
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Permissions;
 use ProcessWire\Page as PWPage;
 use ProcessWire\NullPage;
 use ProcessWire\WireData;
@@ -93,7 +94,7 @@ class Resolver
         }
         if ($result instanceof PWPage) {
           $templateName = $result->template->name;
-          if (Utils::moduleConfig()->legalViewTemplates->find("name=$templateName")->count()) {
+          if (Permissions::getViewTemplates()->find("name=$templateName")->count()) {
             return $result;
           } else {
             return self::getEmptyUser();

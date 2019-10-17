@@ -3,7 +3,7 @@
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Template;
 use ProcessWire\Page;
-use ProcessWire\Field;
+use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Error\ValidationError;
 use ProcessWire\GraphQL\Type\PageType;
@@ -69,8 +69,8 @@ class CreatePage
     }
 
     // make sure user is allowed to add children to this parent
-    $legalAddTemplates = Utils::moduleConfig()->legalAddTemplates;
-    if (!$legalAddTemplates->has($parent->template)) {
+    $addTemplates = Permissions::getAddTemplates();
+    if (!$addTemplates->has($parent->template)) {
       throw new ValidationError("You are not allowed to add children to the parent: '$parentSelector'.");
     }
 

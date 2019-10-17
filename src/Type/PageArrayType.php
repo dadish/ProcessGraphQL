@@ -153,7 +153,7 @@ class PageArrayType {
 
 	public static function getPaginationFields()
 	{
-		$maxLimit = Utils::moduleConfig()->maxLimit;
+		$maxLimit = Utils::module()->maxLimit;
 		return [
 			[
 				'name' => 'getTotal',

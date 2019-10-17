@@ -158,7 +158,7 @@ class PageType
   {
     $builtInFields = self::getBuiltInFields();
     return array_filter($builtInFields, function ($field) {
-      return in_array($field['name'], Utils::moduleConfig()->legalPageFields);
+      return in_array($field['name'], Utils::module()->legalPageFields);
     });
   }
 
@@ -181,7 +181,7 @@ class PageType
     $fields = [];
 
     // add the template fields
-    $legalFields = Utils::moduleConfig()->legalFields;
+    $legalFields = Utils::module()->legalFields;
     foreach ($template->fields as $field) {
       // skip illigal fields
       if (!in_array($field->name, $legalFields)) {

@@ -135,7 +135,7 @@ class FileType {
   public static function getLegalBuiltInFields()
   {
     return array_filter(self::getBuiltInFields(), function ($field) {
-      return in_array($field['name'], Utils::moduleConfig()->legalPageFileFields);
+      return in_array($field['name'], Utils::module()->legalPageFileFields);
     });
   }
 }

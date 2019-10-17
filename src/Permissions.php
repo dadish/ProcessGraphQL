@@ -67,6 +67,13 @@ class Permissions
       }
     }
 
+    // can't create a page if one of the required fields is not legal
+    foreach ($template->fields->find("required=1") as $field) {
+      if (!in_array($field->name, Utils::module()->legalFields)) {
+        return false;
+      }
+    }
+
     // superuser can create all pages
     if ($user->isSuperuser()) {
       return true;
@@ -149,6 +156,46 @@ class Permissions
   }
 
   /**
+   * Tells if a page can be added to the given template.
+   *
+   * @param Template $template
+   * @return boolean
+   */
+  public static function canAdd(Template $template)
+  {
+    $user = Utils::user();
+
+    // can't add a page if no child is allowed
+    if ($template->noChildren == 1) {
+      return false;
+    }
+
+    // can't add a page if the allowed childTemplates are not legal
+    if ($template->noChildren == 0 && count($template->childTemplates)) {
+      if (!count(array_intersect(self::getTemplateIds(), $template->childTemplates))) {
+        return false;
+      }
+    }
+
+    // superuser can add without permissions
+    if ($user->isSuperuser()) {
+      return true;
+    }
+
+    // can't add if access rules are not defined
+    if (!self::definesAccess($template)) {
+      return false;
+    }
+
+    // can't add a page if user does not have add permission on the given template
+    if (!$user->hasPermission(self::pageAddPermission, $template)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
    * Tells if the field can be edited by the user within the context of the given template.
    *
    * @param Field $field
@@ -180,7 +227,7 @@ class Permissions
    * @param  Template $template   The context of the field.
    * @return boolean              Returns true if user has rights and false otherwise
    */
-  public static function hasFieldPermission($permission = 'view', Field $field, Template $template)
+  public static function hasFieldPermission(string $permission, Field $field, Template $template)
   {
     $user = Utils::user();
 
@@ -244,7 +291,7 @@ class Permissions
     $templates = self::getTemplates();
     foreach ($templates as $template) {
       if (!$predicator($template)) {
-        $templates->remote($template);
+        $templates->remove($template);
       }
     }
     return $templates;
@@ -295,6 +342,18 @@ class Permissions
   {
     return self::filterTemplatesByPermission(function (Template $template) {
       return self::canDelete($template);
+    });
+  }
+
+  /**
+   * Returns the templates that user can add pages to.
+   *
+   * @return Templates
+   */
+  public static function getAddTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canAdd($template);
     });
   }
 }

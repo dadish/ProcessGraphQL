@@ -8,6 +8,7 @@ use ProcessWire\SelectorEqual;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Cache;
 use GraphQL\Type\Definition\CustomScalarType;
+use ProcessWire\GraphQL\Permissions;
 
 class SelectorType
 {
@@ -60,7 +61,7 @@ class SelectorType
     $selectors = new Selectors($value);
 
     // make sure the limit field is not greater than max allowed
-    $maxLimit = Utils::moduleConfig()->maxLimit;
+    $maxLimit = Utils::module()->maxLimit;
     $limitSelector = self::findSelectorByField($selectors, 'limit');
     if ($limitSelector instanceof Selector) {
       if ($maxLimit < $limitSelector->value) $limitSelector->set('value', $maxLimit);
@@ -71,7 +72,7 @@ class SelectorType
 
     // make sure to limit the search to legal templates only
     $templateSelector = self::findSelectorByField($selectors, 'template');
-    $legalTemplates = Utils::moduleConfig()->legalViewTemplates;
+    $legalTemplates = Permissions::getViewTemplates();
     $names = [];
     
     if ($templateSelector instanceof Selector) {
@@ -123,11 +124,11 @@ class SelectorType
 
     // max limit
     $key .= "$seperator$seperator";
-    $key .= Utils::moduleConfig()->maxLimit;
+    $key .= Utils::module()->maxLimit;
 
     // legal templates
     $key .= "$seperator$seperator";
-    $key .= Utils::moduleConfig()->legalViewTemplates->implode('-', 'name');
+    $key .= Permissions::getViewTemplates()->implode('-', 'name');
 
     return $key;
   }

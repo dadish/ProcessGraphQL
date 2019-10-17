@@ -106,7 +106,7 @@ class ImageType {
   public static function getLegalBuiltInFields()
   {
     return array_filter(self::getBuiltInFields(), function ($field) {
-      return in_array($field['name'], Utils::moduleConfig()->legalPageImageFields);
+      return in_array($field['name'], Utils::module()->legalPageImageFields);
     });
   }
 }

@@ -5,6 +5,7 @@ use GraphQL\Type\Schema as GraphQLSchema;
 
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Field\Auth\Login;
@@ -46,16 +47,15 @@ class Schema
 
   public static function buildQuery()
   {
-    $moduleConfig = Utils::moduleConfig();
     $queryFields = [];
 
     // add lagal templates
-    foreach ($moduleConfig->legalViewTemplates as $template) {
+    foreach (Permissions::getViewTemplates() as $template) {
       $queryFields[] = PageArrayType::field($template);
     }
 
     // User. The `me`
-    if ($moduleConfig->meQuery) {
+    if (Utils::module()->meQuery) {
       $queryFields[] = [
         'name' => 'me',
         'description' => 'The current user of the app.',
@@ -67,7 +67,7 @@ class Schema
     }
 
     // Auth
-    if ($moduleConfig->authQuery) {
+    if (Utils::module()->authQuery) {
       if (Utils::user()->isLoggedin()) {
         $queryFields[] = Logout::field();
       } else {
@@ -95,16 +95,15 @@ class Schema
 
   public static function buildMutation()
   {
-    $moduleConfig = Utils::moduleConfig();
     $mutationFields = [];
 
     // CreatePage
-    foreach ($moduleConfig->legalCreateTemplates as $template) {
+    foreach (Permissions::getCreateTemplates() as $template) {
       $mutationFields[] = CreatePage::field($template);
     }
 
     // UpdatePage
-    foreach ($moduleConfig->legalEditTemplates as $template) {
+    foreach (Permissions::getEditTemplates() as $template) {
       $mutationFields[] = UpdatePage::field($template);
     }
 
