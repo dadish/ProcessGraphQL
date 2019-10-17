@@ -30,11 +30,11 @@ class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
     // login as an editor
     Utils::session()->login('editor', Utils::config()->testUsers['editor']);
 
-    // grant view access to skyscraper template for skyscraper-editor role
-    $editorRole = Utils::roles()->get('skyscraper-editor');
+    // grant view access to skyscraper template for editor role
+    $editorRole = Utils::roles()->get('editor');
     Utils::templates()->get('skyscraper')->setRoles([$editorRole->id], 'view');
 
-    // grant view access to images field for skyscraper-editor
+    // grant view access to images field for editor
     $field = Utils::fields()->get('images');
     $field->flags = $field->flags | Field::flagAccess;
     $field->setRoles('view', [$editorRole->id]);
@@ -60,20 +60,20 @@ class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
   {
     // make sure user is logged in as an editor
     $this->assertEquals(Utils::user()->name, 'editor', 'Logged in as an editor.');
-    $this->assertTrue(Utils::user()->hasRole('skyscraper-editor'), 'Editor has skyscraper-editor role.');
+    $this->assertTrue(Utils::user()->hasRole('editor'), 'Editor has editor role.');
 
     // make sure editor has explicit rights to view the skyscraper pages
     $this->assertTrue(
-      Utils::templates()->get('skyscraper')->hasRole('skyscraper-editor', 'view'),
-      'skyscraper template has view access for skyscraper-editor role.'
+      Utils::templates()->get('skyscraper')->hasRole('editor', 'view'),
+      'skyscraper template has view access for editor role.'
     );
 
     // make sure editor has explicit right to view images field
-    $editorRole = Utils::roles()->get('skyscraper-editor');
+    $editorRole = Utils::roles()->get('editor');
     $imagesField = Utils::fields()->get('images');
     $this->assertTrue(
       in_array($editorRole->id, $imagesField->viewRoles),
-      'images field has view access for skyscraper-editor role.'
+      'images field has view access for editor role.'
     );
     
     // get the test page

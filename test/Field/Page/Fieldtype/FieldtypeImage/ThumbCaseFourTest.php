@@ -31,7 +31,7 @@ class FieldtypeImageThumbCaseFourTest extends GraphQLTestCase {
     Utils::session()->login('editor', Utils::config()->testUsers['editor']);
 
     // grant view access on skyscraper template to skyscrapers-editor role
-    $editorRole = Utils::roles()->get('skyscraper-editor');
+    $editorRole = Utils::roles()->get('editor');
     Utils::templates()->get('skyscraper')->setRoles([$editorRole->id], 'view');
 
     // grant view and edit access on images field to skyscrrapers-editor role
@@ -62,24 +62,24 @@ class FieldtypeImageThumbCaseFourTest extends GraphQLTestCase {
   {
     // make sure user is logged in as an editor
     $this->assertEquals(Utils::user()->name, 'editor', 'Logged in as an editor.');
-    $this->assertTrue(Utils::user()->hasRole('skyscraper-editor'), 'Editor has skyscraper-editor role.');
+    $this->assertTrue(Utils::user()->hasRole('editor'), 'Editor has editor role.');
 
     // make sure editor has explicit rights to view the skyscraper pages
     $this->assertTrue(
-      Utils::templates()->get('skyscraper')->hasRole('skyscraper-editor', 'view'),
-      'skyscraper template has view access for skyscraper-editor role.'
+      Utils::templates()->get('skyscraper')->hasRole('editor', 'view'),
+      'skyscraper template has view access for editor role.'
     );
 
     // make sure editor has explicit right to view and edit images field
-    $editorRole = Utils::roles()->get('skyscraper-editor');
+    $editorRole = Utils::roles()->get('editor');
     $imagesField = Utils::fields()->get('images');
     $this->assertTrue(
       in_array($editorRole->id, $imagesField->viewRoles),
-      'images field has view access for skyscraper-editor role.'
+      'images field has view access for editor role.'
     );
     // $this->assertTrue(
     //   in_array($editorRole->id, $imagesField->editRoles),
-    //   'images field has edit access for skyscraper-editor role.'
+    //   'images field has edit access for editor role.'
     // );
     
     // get the test page
