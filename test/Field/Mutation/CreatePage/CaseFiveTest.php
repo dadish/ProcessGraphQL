@@ -8,7 +8,6 @@ namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\NullPage;
 
 class CreatePageCaseFiveTest extends GraphQLTestCase {
@@ -18,7 +17,6 @@ class CreatePageCaseFiveTest extends GraphQLTestCase {
     'legalFields' => ['title'],
   ];
 
-  use AccessTrait;
 	
   public function testValue()
   {

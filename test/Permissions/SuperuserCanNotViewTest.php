@@ -9,7 +9,6 @@ class SuperuserCanNotViewTest extends GraphqlTestCase {
     'legalTemplates' => ['skyscraper'],
   ];
 
-  use AccessTrait;
 
   public function testSuperuserCanNotView() {
     $target = Utils::pages()->get('template=architect, sort=random');

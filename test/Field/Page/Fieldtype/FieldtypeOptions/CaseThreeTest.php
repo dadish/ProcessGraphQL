@@ -9,7 +9,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeOptions;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use ProcessWire\NullPage;
 
 class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
@@ -19,7 +18,6 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
     'legalFields' => ['options_single', 'title'],
   ];
 
-  use AccessTrait;
 	
   public function testValue()
   {

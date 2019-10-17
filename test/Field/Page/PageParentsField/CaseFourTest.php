@@ -8,7 +8,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
 class PageParentsFieldCaseFourTest extends GraphQLTestCase {
 
@@ -17,7 +16,6 @@ class PageParentsFieldCaseFourTest extends GraphQLTestCase {
     'legalPageFields' => ['parents', 'name'],
   ];
 
-  use AccessTrait;
   
   public function testValue()
   {

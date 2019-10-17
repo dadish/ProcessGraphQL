@@ -9,7 +9,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeMapMarkerCaseThreeTest extends GraphQLTestCase {
@@ -19,7 +18,6 @@ class FieldtypeMapMarkerCaseThreeTest extends GraphQLTestCase {
     'legalFields' => ['map'],
   ];
 
-  use AccessTrait;
 
   public function testValue()
   {

@@ -4,7 +4,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
 class PageArrayLastFieldTest extends GraphQLTestCase {
 
@@ -13,7 +12,6 @@ class PageArrayLastFieldTest extends GraphQLTestCase {
     'legalFields' => ['title'],
   ];
 
-  use AccessTrait;
 	
   public function testValue()
   {

@@ -9,7 +9,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
 
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use \ProcessWire\GraphQL\Utils;
 
 class FieldtypePageCaseTwoTest extends GraphQLTestCase {
@@ -22,7 +21,6 @@ class FieldtypePageCaseTwoTest extends GraphQLTestCase {
   const FIELD_TYPE = 'FieldtypePage';
 
   use FieldtypeTestTrait;
-  use AccessTrait;
 
   public function testValue()
   {

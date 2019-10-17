@@ -9,7 +9,6 @@ namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 
 class UpdatePageCaseThreeTest extends GraphQLTestCase {
 
@@ -18,7 +17,6 @@ class UpdatePageCaseThreeTest extends GraphQLTestCase {
     'legalFields' => ['title', 'height', 'floors', 'body'],
   ];
 
-  use AccessTrait;
 	
   public function testValue()
   {
