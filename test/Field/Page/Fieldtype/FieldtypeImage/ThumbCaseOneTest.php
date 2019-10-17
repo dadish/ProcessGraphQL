@@ -12,38 +12,19 @@ use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
 
-  const TEMPLATE_NAME = 'skyscraper';
-  const FIELD_NAME = 'images';
+  const accessRules = [
+    'login' => 'admin',
+    'legalTemplates' => ['skyscraper'],
+    'legalFields' => ['images'],
+    'legalPageImageFields' => ['size'],
+    'legalPageFileFields' => ['url'],
+  ];
 
   // page that is used for this test case solely
   const PAGE_ID = 4182;
 
-  public static function setUpBeforeClass()
-  {
-    parent::setUpBeforeClass();
-
-    // enable test fields
-    $module = Utils::module();
-    $module->legalTemplates = [self::TEMPLATE_NAME];
-    $module->legalFields = [self::FIELD_NAME];
-    $module->legalPageImageFields = array_merge($module->legalPageImageFields, ['size']);
-    $module->legalPageFileFields = array_merge($module->legalPageFileFields, ['url']);
-
-    // login as an admin
-    Utils::session()->login('admin', Utils::config()->testUsers['admin']);
-  }
-
-  public static function tearDownAfterClass()
-  {
-    Utils::session()->logout();
-    parent::tearDownAfterClass();
-  }
-
   public function testThumbCreate()
   {
-    // make sure we are logged in as an admin
-    $this->assertTrue(Utils::user()->isSuperuser(), 'Logged in as an admin.');
-
     // get the test page
     $skyscraper = Utils::pages()->get("id=" . self::PAGE_ID);
     

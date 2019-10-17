@@ -13,51 +13,31 @@ use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class FieldtypeImageThumbCaseFourTest extends GraphQLTestCase {
 
-  const TEMPLATE_NAME = 'skyscraper';
-  const FIELD_NAME = 'images';
   const PAGE_ID = 4189;
 
-  public static function setUpBeforeClass()
+  public static function getAccessRules()
   {
-    parent::setUpBeforeClass();
-
-    $module = Utils::module();
-    $module->legalTemplates = [self::TEMPLATE_NAME];
-    $module->legalFields = [self::FIELD_NAME];
-    $module->legalPageImageFields = array_merge($module->legalPageImageFields, ['size']);
-    $module->legalPageFileFields = array_merge($module->legalPageFileFields, ['url']);
-
-    // login as an editor
-    Utils::session()->login('editor', Utils::config()->testUsers['editor']);
-
-    // grant view access on skyscraper template to skyscrapers-editor role
     $editorRole = Utils::roles()->get('editor');
-    Utils::templates()->get('skyscraper')->useRoles = 1;
-    Utils::templates()->get('skyscraper')->setRoles([$editorRole->id], 'view');
-
-    // grant view and edit access on images field to skyscrrapers-editor role
-    $field = Utils::fields()->get('images');
-    $field->flags = $field->flags | Field::flagAccess;
-    $field->setRoles('view', [$editorRole->id]);
-    $field->setRoles('edit', [$editorRole->id]);
-  }
-
-  public static function tearDownAfterClass()
-  {
-    // remove explicit view and edit access on images field for skyscrapers-editor role
-    $field = Utils::fields()->get('images');
-    $field->setRoles('view', []);
-    $field->setRoles('edit', []);
-
-    // remove explicit view access on skyscraper template for skyscrapers-editor role
-    $template = Utils::templates()->get('skyscraper');
-    $template->setRoles([], 'view');
-    Utils::templates()->get('skyscraper')->useRoles = 0;
-    
-    // logout the editor user
-    Utils::session()->logout();
-
-    parent::tearDownAfterClass();
+    return [
+      'login' => 'editor',
+      'legalTemplates' => ['skyscraper'],
+      'legalFields' => ['images'],
+      'legalPageImageFields' => ['size'],
+      'legalPageFileFields' => ['url'],
+      'access' => [
+        'templates' => [
+          'skyscraper' => [
+            'view' => [$editorRole->id],
+          ],
+        ],
+        'fields' => [
+          'images' => [
+            'view' => [$editorRole->id],
+            'edit' => [$editorRole->id],
+          ],
+        ],
+      ],
+    ];
   }
 
   public function testThumbCreate()
