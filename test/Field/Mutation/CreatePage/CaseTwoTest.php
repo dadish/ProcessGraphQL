@@ -1,7 +1,7 @@
 <?php
 
 /**
- * A page cannot be created if parent page is not legal
+ * A page cannot be created if allowed parent page is not legal
  */
 
 namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
@@ -35,10 +35,11 @@ class CreatePageCaseTwoTest extends GraphQLTestCase {
 				"title" => "New Building Sky"
   		]
   	];
-  	$res = self::execute($query, $variables);
+		$res = self::execute($query, $variables);
 		$newBuildingSky = Utils::pages()->get("name=not-created-building-sky");
-		$this->assertEquals(1, count($res->errors), 'createSkyscraper does not work if parent page is not legal.');
-		$this->assertStringContainsString('parent', $res->errors[0]->message);
+		$this->assertEquals(2, count($res->errors), 'createSkyscraper does not exist if allowed parent page is not legal.');
+		$this->assertStringContainsString('SkyscraperCreateInput', $res->errors[0]->message);
+		$this->assertStringContainsString('createSkyscraper', $res->errors[1]->message);
     $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createSkyscraper does not create a page.');
   }
 

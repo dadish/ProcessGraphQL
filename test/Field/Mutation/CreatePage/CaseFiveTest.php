@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * A page cannot be created if parent page is not legal
+ */
+
+namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
+
+use \ProcessWire\GraphQL\Utils;
+use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use \ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
+use \ProcessWire\NullPage;
+
+class CreatePageCaseFiveTest extends GraphQLTestCase {
+
+  const accessRules = [
+    'legalTemplates' => ['basic-page'],
+    'legalFields' => ['title'],
+  ];
+
+  use AccessTrait;
+	
+  public function testValue()
+  {
+  	$query = 'mutation createPage ($page: BasicPageCreateInput!) {
+  		createBasicPage (page: $page) {
+  			name
+				id
+				title
+  		}
+  	}';
+  	$variables = [
+  		"page" => [
+  			"parent" => "4121", // city page
+				"name" => "not-created-basic-page",
+				"title" => "New Basic Page"
+  		]
+  	];
+		$res = self::execute($query, $variables);
+		$newBuildingSky = Utils::pages()->get("name=not-created-basic-page");
+		$this->assertEquals(1, count($res->errors), 'createBasicPage does not resolve if parent page template is not legal.');
+    $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createBasicPage does not create a page.');
+  }
+
+}
