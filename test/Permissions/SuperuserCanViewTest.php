@@ -1,7 +1,6 @@
 <?php namespace ProcessWire\GraphQL\Test\Permissions;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
-use ProcessWire\GraphQL\Test\Field\Page\Traits\AccessTrait;
 use ProcessWire\GraphQL\Utils;
 
 class SuperuserCanViewTest extends GraphqlTestCase {
