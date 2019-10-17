@@ -32,6 +32,7 @@ class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
 
     // grant view access to skyscraper template for editor role
     $editorRole = Utils::roles()->get('editor');
+    Utils::templates()->get('skyscraper')->useRoles = 1;
     Utils::templates()->get('skyscraper')->setRoles([$editorRole->id], 'view');
 
     // grant view access to images field for editor
@@ -49,6 +50,7 @@ class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
     // remove explicit view access on skyscraper template for skyscrapers-editor role
     $template = Utils::templates()->get('skyscraper');
     $template->setRoles([], 'view');
+    Utils::templates()->get('skyscraper')->useRoles = 0;
     
     // logout the editor user
     Utils::session()->logout();
