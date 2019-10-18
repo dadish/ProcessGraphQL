@@ -243,3 +243,14 @@ class Utils {
     return true;
   }
 }
+
+
+function log($data, $label = '')
+{
+  echo "\n======================================\n";
+  if ($label) {
+    echo "$label\n";
+  }
+  echo json_encode($data, true);
+  echo "\n======================================\n";
+}
