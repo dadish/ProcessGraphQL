@@ -26,12 +26,14 @@ class FieldtypeImageThumbCaseFourTest extends GraphQLTestCase {
       'legalPageFileFields' => ['url'],
       'access' => [
         'templates' => [
-          'skyscraper' => [
+          [
+            'name' => 'skyscraper',
             'view' => [$editorRole->id],
           ],
         ],
         'fields' => [
-          'images' => [
+          [
+            'name' => 'images',
             'view' => [$editorRole->id],
             'edit' => [$editorRole->id],
           ],
