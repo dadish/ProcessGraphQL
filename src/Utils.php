@@ -157,30 +157,6 @@ class Utils {
   }
 
   /**
-   * Determines whether the current user has given permission on $field within
-   * $template's context.
-   * @param  string   $permission The permission type. Either 'view' or 'edit'
-   * @param  Field    $field      The field against the check is performed
-   * @param  Template $template   The context of the field.
-   * @return boolean              Returns true if user has rights and false otherwise
-   */
-  public static function hasFieldPermission($permission = 'view', Field $field, Template $template)
-  {
-    $user = self::user();
-    if ($user->isSuperuser()) return true;
-    $field = $template->fields->getFieldContext($field);
-    if ($field->useRoles) {
-      $roles = $permission . 'Roles';
-      foreach ($user->roles as $role) {
-        if (in_array($role->id, $field->$roles)) return true;
-      }
-      return false;
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * Matches a ProcessWire Fieldtype to corresponding GraphQL Field
    * @param Field $field A Processwire field.
    * @return mixed|null Returns a GraphQL compatible field or null if match is not found.

@@ -5,6 +5,7 @@ use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\UserType;
@@ -189,7 +190,7 @@ class PageType
       }
 
       // check if user has permission to view this field
-      if (!Utils::hasFieldPermission('view', $field, $template)) {
+      if (!Permissions::canViewField($field, $template)) {
         continue;
       }
 

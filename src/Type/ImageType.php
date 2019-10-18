@@ -8,6 +8,7 @@ use ProcessWire\GraphQL\Type\FileType;
 use ProcessWire\GraphQL\Type\EmptyImage;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Permissions;
 
 class ImageType {
 
@@ -74,7 +75,7 @@ class ImageType {
           ],
         ],
         'resolve' => function($value, array $args) {
-          $canCreate = Utils::hasFieldPermission('edit', $value->field, $value->page->template);
+          $canCreate = Permissions::canEditField($value->field, $value->page->template);
           $width = isset($args['width']) ? $args['width'] : null;
           $height = isset($args['height']) ? $args['height'] : null;
       
