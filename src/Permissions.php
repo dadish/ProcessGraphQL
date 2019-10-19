@@ -237,12 +237,13 @@ class Permissions
     }
 
     // cannot view/edit if access rules are not defined
+    $field = $template->fields->getFieldContext($field);
     if (!self::definesAccess($field)) {
       return false;
     }
-    
+
     $roles = $permission . 'Roles';
-    $field = $template->fields->getFieldContext($field);
+
     foreach ($user->roles as $role) {
       if (in_array($role->id, $field->$roles)) {
         return true;
