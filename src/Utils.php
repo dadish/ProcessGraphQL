@@ -220,7 +220,6 @@ class Utils {
   }
 }
 
-
 function log($data, $label = '')
 {
   echo "\n======================================\n";
@@ -228,5 +227,10 @@ function log($data, $label = '')
     echo "$label\n";
   }
   echo json_encode($data, true);
-  echo "\n======================================\n";
+  echo "\n======================================\n";  
+}
+
+function logArr($data, $label = '')
+{
+  log(json_encode($data, true), $label);
 }
