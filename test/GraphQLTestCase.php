@@ -5,6 +5,8 @@ namespace ProcessWire\GraphQL\Test;
 use PHPUnit\Framework\TestCase;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Schema;
+use ProcessWire\Template;
+use ProcessWire\Field;
 
 abstract class GraphqlTestCase extends TestCase {
 
@@ -54,21 +56,48 @@ abstract class GraphqlTestCase extends TestCase {
 
     if (isset($accessRules['access'])) {
       if (isset($accessRules['access']['templates'])) {
-        foreach ($accessRules['access']['templates'] as $templateName => $rules) {
+        foreach ($accessRules['access']['templates'] as $rules) {
+          if (!isset($rules['name'])) {
+            throw new \Error("template rule should have a name. E.g. 'name' => 'templateName'.");
+          }
+          $templateName = $rules['name'];
           $template = Utils::templates()->get("name=$templateName");
+          if (!$template instanceof Template) {
+            throw new \Error("'$templateName' is not a valid template.");
+          }
           $template->useRoles = 1;
           foreach ($rules as $type => $roles) {
+            if ($type === 'name') {
+              continue;
+            }
             $template->setRoles($roles, $type);
           }
         }
       }
 
       if (isset($accessRules['access']['fields'])) {
-        foreach ($accessRules['access']['fields'] as $fieldName => $rules) {
+        foreach ($accessRules['access']['fields'] as $rules) {
+          if (!isset($rules['name'])) {
+            throw new \Error("field rule should have a name. E.g. 'name' => 'fieldName'.");
+          }
+          $fieldName = $rules['name'];
           $field = Utils::fields()->get("name=$fieldName");
+          if (isset($rules['context'])) {
+            $template = Utils::templates()->get($rules['context']);
+            $field = $template->fieldgroup->getFieldContext($field);
+          }
+          if (!$field instanceof Field) {
+            throw new \Error("'$fieldName' is not a valid field.");
+          }
           $field->useRoles = 1;
           foreach ($rules as $type => $roles) {
+            if (in_array($type, ['name', 'context'])) {
+              continue;
+            }
             $field->setRoles($type, $roles);
+          }
+          if (isset($rules['context']) && $template instanceof Template) {
+            Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
           }
         }
       }
@@ -92,9 +121,13 @@ abstract class GraphqlTestCase extends TestCase {
 
     if (isset($accessRules['access'])) {
       if (isset($accessRules['access']['templates'])) {
-        foreach ($accessRules['access']['templates'] as $templateName => $rules) {
+        foreach ($accessRules['access']['templates'] as $rules) {
+          $templateName = $rules['name'];
           $template = Utils::templates()->get("name=$templateName");
           foreach ($rules as $type => $roles) {
+            if ($type === 'name') {
+              continue;
+            }
             $template->setRoles([], $type);
           }
           $template->useRoles = 0;
@@ -102,12 +135,23 @@ abstract class GraphqlTestCase extends TestCase {
       }
 
       if (isset($accessRules['access']['fields'])) {
-        foreach ($accessRules['access']['fields'] as $fieldName => $rules) {
+        foreach ($accessRules['access']['fields'] as $rules) {
+          $fieldName = $rules['name'];
           $field = Utils::fields()->get("name=$fieldName");
+          if (isset($rules['context'])) {
+            $template = Utils::templates()->get($rules['context']);
+            $field = $template->fieldgroup->getFieldContext($field);
+          }
           foreach ($rules as $type => $roles) {
+            if (in_array($type, ['name', 'context'])) {
+              continue;
+            }
             $field->setRoles($type, []);
           }
           $field->useRoles = 0;
+          if (isset($rules['context']) && $template instanceof Template) {
+            Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
+          }
         }
       }
     }
