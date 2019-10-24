@@ -73,17 +73,17 @@ class ProcessGraphQLTest extends GraphQLTestCase {
   public function testExecuteGraphQL()
   {
     // should return GraphQL response with errors when no payload/query is provided
-    $res = Utils::module()->executeGraphQL();
+    $res = self::execute();
     $this->assertEquals('Syntax Error: Unexpected <EOF>', $res->errors[0]->message);
 
     // accepts GraphQL request via arguments
     $payload = '{ me { name } }';
-    $res = Utils::module()->executeGraphQL($payload);
+    $res = self::execute($payload);
     $this->assertEquals('guest', $res->data->me->name, 'Accepts request via arguments');
     
     // accepts GraphQL request via $_POST variable
     $_POST['payload'] = $payload;
-    $res = Utils::module()->executeGraphQL();
+    $res = self::execute();
     $this->assertEquals('guest', $res->data->me->name, 'Accepts request via $_POST variable');
   }
   

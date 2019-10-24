@@ -76,8 +76,3 @@ $module->install();
 // set output formatting
 $pages = $wire->fuel('pages');
 $pages->setOutputFormatting(true);
-
-$wire->addHookAfter('ProcessGraphQL::executeGraphQL', function($event) {
-	$arr = $event->return;
-	$event->return = json_decode(json_encode($arr), false);
-});

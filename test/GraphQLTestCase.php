@@ -12,6 +12,20 @@ abstract class GraphqlTestCase extends TestCase {
 
   const accessRules = [];
 
+  const introspectionQuery = "{
+    __schema {
+      types {
+        ... on __Type {
+          kind
+          name
+          fields {
+            name
+          }
+        }
+      }
+    }
+  }";
+
   public static $defaultConfig;
 
   public static function setUpBeforeClass()
@@ -160,7 +174,8 @@ abstract class GraphqlTestCase extends TestCase {
   public static function execute($payload = null, $variables = null)
   {
     Schema::build();
-  	return Utils::module()->executeGraphQL($payload, $variables);
+    $res = Utils::module()->executeGraphQL($payload, $variables);
+    return json_decode(json_encode($res), false);
   }
 
 }
