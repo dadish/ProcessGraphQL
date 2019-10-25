@@ -8,7 +8,7 @@ class EditorCanViewContextFieldTest extends GraphqlTestCase {
   public static function getSettings()
   {
     $editorRole = Utils::roles()->get('editor');
-    $adminRole = Utils::roles()->get('admin');
+    $superuserRole = Utils::roles()->get('superuser');
     return [
       'login' => 'editor',
       'legalTemplates' => ['skyscraper'],
@@ -17,18 +17,18 @@ class EditorCanViewContextFieldTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'view' => [$editorRole->id],
+            'roles' => [$editorRole->id],
           ]
         ],
         'fields' => [
           [
             'name' => 'height',
-            'view' => [$adminRole->id],
+            'viewRoles' => [$superuserRole->id],
           ],
           [
             'name' => 'height',
             'context' => 'skyscraper',
-            'view' => [$editorRole->id],
+            'viewRoles' => [$editorRole->id],
           ]
         ]
       ]

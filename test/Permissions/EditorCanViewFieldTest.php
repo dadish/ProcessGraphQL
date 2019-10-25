@@ -16,13 +16,13 @@ class EditorCanViewFieldTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'view' => [$editorRole->id],
+            'roles' => [$editorRole->id],
           ]
         ],
         'fields' => [
           [
             'name' => 'height',
-            'view' => [$editorRole->id],
+            'viewRoles' => [$editorRole->id],
           ]
         ]
       ]

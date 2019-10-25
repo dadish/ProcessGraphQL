@@ -26,7 +26,67 @@ abstract class GraphqlTestCase extends TestCase {
     }
   }";
 
-  public static $defaultConfig;
+  private static $defaultConfig;
+  private static $originalAccessRules = [];
+
+  public static function rememberOriginalAccessRules($accessRules)
+  {
+    $originals = [];
+    if (isset($accessRules['templates'])) {
+      $originals['templates'] = [];
+      foreach ($accessRules['templates'] as $rules) {
+        if (!isset($rules['name'])) {
+          throw new \Error("template rule should have a name. E.g. 'name' => 'templateName'.");
+        }
+        $templateName = $rules['name'];
+        $template = Utils::templates()->get("name=$templateName");
+        if (!$template instanceof Template) {
+          throw new \Error("'$templateName' is not a valid template.");
+        }
+        $originalRules = [];
+        $originalRules['useRoles'] = $template->useRoles;
+        foreach ($rules as $property => $value) {
+          if ($property === 'name') {
+            $originalRules['name'] = $value;
+          } else {
+            $originalRules[$property] = $template->$property;
+          }
+        }
+        $originals['templates'][] = $originalRules;
+      }
+    }
+
+    if (isset($accessRules['fields'])) {
+      $originals['fields'] = [];
+      foreach ($accessRules['fields'] as $rules) {
+        if (!isset($rules['name'])) {
+          throw new \Error("field rule should have a name. E.g. 'name' => 'fieldName'.");
+        }
+        $fieldName = $rules['name'];
+        $field = Utils::fields()->get("name=$fieldName");
+        if (isset($rules['context'])) {
+          $template = Utils::templates()->get($rules['context']);
+          $field = $template->fieldgroup->getFieldContext($field);
+        }
+        if (!$field instanceof Field) {
+          throw new \Error("'$fieldName' is not a valid field.");
+        }
+        $originalRules = [];
+        $originalRules['useRoles'] = $field->useRoles;
+        foreach ($rules as $property => $value) {
+          if (in_array($property, ['name', 'context'])) {
+            $originalRules[$property] = $value;
+          } else {
+            $originalRules[$property] = $field->$property;
+          }
+        }
+        $originals['fields'][] = $originalRules;
+      }
+    }
+
+    self::$originalAccessRules = $originals;
+    return $originals;
+  }
 
   public static function setUpBeforeClass()
   {
@@ -35,7 +95,7 @@ abstract class GraphqlTestCase extends TestCase {
     $settings = $self::settings;
 
     // if settings are empty then try to populate
-    // them via getSettings methof
+    // them via getSettings method
     if (!count($settings) && method_exists($self, 'getSettings')) {
       $settings = $self::getSettings();
     }
@@ -69,46 +129,44 @@ abstract class GraphqlTestCase extends TestCase {
     }
 
     if (isset($settings['access'])) {
+      self::rememberOriginalAccessRules($settings['access']);
       if (isset($settings['access']['templates'])) {
         foreach ($settings['access']['templates'] as $rules) {
-          if (!isset($rules['name'])) {
-            throw new \Error("template rule should have a name. E.g. 'name' => 'templateName'.");
-          }
           $templateName = $rules['name'];
           $template = Utils::templates()->get("name=$templateName");
-          if (!$template instanceof Template) {
-            throw new \Error("'$templateName' is not a valid template.");
+          if (
+            isset($rules['roles']) ||
+            isset($rules['editRoles']) ||
+            isset($rules['addRoles']) ||
+            isset($rules['createRoles'])
+          ) {
+            $template->useRoles = 1;
           }
-          $template->useRoles = 1;
-          foreach ($rules as $type => $roles) {
-            if ($type === 'name') {
+          foreach ($rules as $property => $value) {
+            if ($property === 'name') {
               continue;
             }
-            $template->setRoles($roles, $type);
+            $template->$property = $value;
           }
         }
       }
 
       if (isset($settings['access']['fields'])) {
         foreach ($settings['access']['fields'] as $rules) {
-          if (!isset($rules['name'])) {
-            throw new \Error("field rule should have a name. E.g. 'name' => 'fieldName'.");
-          }
           $fieldName = $rules['name'];
           $field = Utils::fields()->get("name=$fieldName");
           if (isset($rules['context'])) {
             $template = Utils::templates()->get($rules['context']);
             $field = $template->fieldgroup->getFieldContext($field);
           }
-          if (!$field instanceof Field) {
-            throw new \Error("'$fieldName' is not a valid field.");
+          if (isset($rules['editRoles']) || isset($rules['viewRoles'])) {
+            $field->useRoles = true;
           }
-          $field->useRoles = 1;
-          foreach ($rules as $type => $roles) {
-            if (in_array($type, ['name', 'context'])) {
+          foreach ($rules as $property => $value) {
+            if (in_array($property, ['name', 'context'])) {
               continue;
             }
-            $field->setRoles($type, $roles);
+            $field->$property = $value;
           }
           if (isset($rules['context']) && $template instanceof Template) {
             Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
@@ -128,44 +186,45 @@ abstract class GraphqlTestCase extends TestCase {
     $settings = $self::settings;
 
     // if settings are empty then try to populate
-    // them via getSettings methof
+    // them via getSettings method
     if (!count($settings) && method_exists($self, 'getSettings')) {
       $settings = $self::getSettings();
     }
-
-    if (isset($settings['access'])) {
-      if (isset($settings['access']['templates'])) {
-        foreach ($settings['access']['templates'] as $rules) {
-          $templateName = $rules['name'];
-          $template = Utils::templates()->get("name=$templateName");
-          foreach ($rules as $type => $roles) {
-            if ($type === 'name') {
-              continue;
-            }
-            $template->setRoles([], $type);
+    if (!isset($settings['access'])) {
+      return;
+    }
+    $accessRules = self::$originalAccessRules;
+    if (isset($accessRules['templates'])) {
+      foreach ($accessRules['templates'] as $rules) {
+        $templateName = $rules['name'];
+        $template = Utils::templates()->get("name=$templateName");
+        foreach ($rules as $property => $value) {
+          if (in_array($property, ['name', 'useRoles'])) {
+            continue;
           }
-          $template->useRoles = 0;
+          $template->$property = $value;
         }
+        $template->useRoles = $rules['useRoles'];
       }
+    }
 
-      if (isset($settings['access']['fields'])) {
-        foreach ($settings['access']['fields'] as $rules) {
-          $fieldName = $rules['name'];
-          $field = Utils::fields()->get("name=$fieldName");
-          if (isset($rules['context'])) {
-            $template = Utils::templates()->get($rules['context']);
-            $field = $template->fieldgroup->getFieldContext($field);
+    if (isset($accessRules['fields'])) {
+      foreach ($accessRules['fields'] as $rules) {
+        $fieldName = $rules['name'];
+        $field = Utils::fields()->get("name=$fieldName");
+        if (isset($rules['context'])) {
+          $template = Utils::templates()->get($rules['context']);
+          $field = $template->fieldgroup->getFieldContext($field);
+        }
+        foreach ($rules as $property => $value) {
+          if (in_array($property, ['name', 'context', 'useRoles'])) {
+            continue;
           }
-          foreach ($rules as $type => $roles) {
-            if (in_array($type, ['name', 'context'])) {
-              continue;
-            }
-            $field->setRoles($type, []);
-          }
-          $field->useRoles = 0;
-          if (isset($rules['context']) && $template instanceof Template) {
-            Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
-          }
+          $field->$property = $value;
+        }
+        $field->useRoles = $rules['useRoles'];
+        if (isset($rules['context']) && $template instanceof Template) {
+          Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
         }
       }
     }
@@ -187,5 +246,4 @@ abstract class GraphqlTestCase extends TestCase {
     }
     return null;
   }
-
 }

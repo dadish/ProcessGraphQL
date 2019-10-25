@@ -27,13 +27,13 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'view' => [$editorRole->id],
+            'roles' => [$editorRole->id],
           ],
         ],
         'fields' => [
           [
             'name' => 'images',
-            'view' => [$editorRole->id],
+            'viewRoles' => [$editorRole->id],
           ],
         ],
       ],

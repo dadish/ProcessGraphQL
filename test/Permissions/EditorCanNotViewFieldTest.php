@@ -16,7 +16,7 @@ class EditorCanNotViewFieldTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'view' => [$editorRole->id],
+            'roles' => [$editorRole->id],
           ]
         ]
       ]
