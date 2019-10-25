@@ -13,7 +13,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class PageChildFieldCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['city', 'skyscraper'],
     'legalPageFields' => ['child'],

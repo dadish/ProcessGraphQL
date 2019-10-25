@@ -12,7 +12,7 @@ use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['images'],

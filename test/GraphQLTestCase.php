@@ -10,7 +10,7 @@ use ProcessWire\Field;
 
 abstract class GraphqlTestCase extends TestCase {
 
-  const accessRules = [];
+  const settings = [];
 
   const introspectionQuery = "{
     __schema {
@@ -30,47 +30,47 @@ abstract class GraphqlTestCase extends TestCase {
 
   public static function setUpBeforeClass()
   {
-    // get accessRules
+    // get settings
     $self = static::class;
-    $accessRules = $self::accessRules;
+    $settings = $self::settings;
 
-    // if accessRules are empty then try to populate
-    // them via getAccessRules methof
-    if (!count($accessRules) && method_exists($self, 'getAccessRules')) {
-      $accessRules = $self::getAccessRules();
+    // if settings are empty then try to populate
+    // them via getSettings methof
+    if (!count($settings) && method_exists($self, 'getSettings')) {
+      $settings = $self::getSettings();
     }
 
     // cache the original rules
     self::$defaultConfig = Utils::module()->data();
 
-    if (isset($accessRules['legalTemplates'])) {
-      Utils::module()->legalTemplates = array_merge(Utils::module()->legalTemplates, $accessRules['legalTemplates']);
+    if (isset($settings['legalTemplates'])) {
+      Utils::module()->legalTemplates = array_merge(Utils::module()->legalTemplates, $settings['legalTemplates']);
     }
     
-    if (isset($accessRules['legalFields'])) {
-      Utils::module()->legalFields = array_merge(Utils::module()->legalFields, $accessRules['legalFields']);
+    if (isset($settings['legalFields'])) {
+      Utils::module()->legalFields = array_merge(Utils::module()->legalFields, $settings['legalFields']);
     }
     
-    if (isset($accessRules['legalPageFields'])) {
-      Utils::module()->legalPageFields = array_merge(Utils::module()->legalPageFields, $accessRules['legalPageFields']);
+    if (isset($settings['legalPageFields'])) {
+      Utils::module()->legalPageFields = array_merge(Utils::module()->legalPageFields, $settings['legalPageFields']);
     }
     
-    if (isset($accessRules['legalPageFileFields'])) {
-      Utils::module()->legalPageFileFields = array_merge(Utils::module()->legalPageFileFields, $accessRules['legalPageFileFields']);
+    if (isset($settings['legalPageFileFields'])) {
+      Utils::module()->legalPageFileFields = array_merge(Utils::module()->legalPageFileFields, $settings['legalPageFileFields']);
     }
     
-    if (isset($accessRules['legalPageImageFields'])) {
-      Utils::module()->legalPageImageFields = array_merge(Utils::module()->legalPageImageFields, $accessRules['legalPageImageFields']);
+    if (isset($settings['legalPageImageFields'])) {
+      Utils::module()->legalPageImageFields = array_merge(Utils::module()->legalPageImageFields, $settings['legalPageImageFields']);
     }
 
-    if (isset($accessRules['login'])) {
-      $username = $accessRules['login'];
+    if (isset($settings['login'])) {
+      $username = $settings['login'];
       Utils::session()->login($username, Utils::config()->testUsers[$username]);
     }
 
-    if (isset($accessRules['access'])) {
-      if (isset($accessRules['access']['templates'])) {
-        foreach ($accessRules['access']['templates'] as $rules) {
+    if (isset($settings['access'])) {
+      if (isset($settings['access']['templates'])) {
+        foreach ($settings['access']['templates'] as $rules) {
           if (!isset($rules['name'])) {
             throw new \Error("template rule should have a name. E.g. 'name' => 'templateName'.");
           }
@@ -89,8 +89,8 @@ abstract class GraphqlTestCase extends TestCase {
         }
       }
 
-      if (isset($accessRules['access']['fields'])) {
-        foreach ($accessRules['access']['fields'] as $rules) {
+      if (isset($settings['access']['fields'])) {
+        foreach ($settings['access']['fields'] as $rules) {
           if (!isset($rules['name'])) {
             throw new \Error("field rule should have a name. E.g. 'name' => 'fieldName'.");
           }
@@ -123,19 +123,19 @@ abstract class GraphqlTestCase extends TestCase {
     Utils::session()->logout();
     Utils::module()->setArray(self::$defaultConfig);
 
-    // get accessRules
+    // get settings
     $self = static::class;
-    $accessRules = $self::accessRules;
+    $settings = $self::settings;
 
-    // if accessRules are empty then try to populate
-    // them via getAccessRules methof
-    if (!count($accessRules) && method_exists($self, 'getAccessRules')) {
-      $accessRules = $self::getAccessRules();
+    // if settings are empty then try to populate
+    // them via getSettings methof
+    if (!count($settings) && method_exists($self, 'getSettings')) {
+      $settings = $self::getSettings();
     }
 
-    if (isset($accessRules['access'])) {
-      if (isset($accessRules['access']['templates'])) {
-        foreach ($accessRules['access']['templates'] as $rules) {
+    if (isset($settings['access'])) {
+      if (isset($settings['access']['templates'])) {
+        foreach ($settings['access']['templates'] as $rules) {
           $templateName = $rules['name'];
           $template = Utils::templates()->get("name=$templateName");
           foreach ($rules as $type => $roles) {
@@ -148,8 +148,8 @@ abstract class GraphqlTestCase extends TestCase {
         }
       }
 
-      if (isset($accessRules['access']['fields'])) {
-        foreach ($accessRules['access']['fields'] as $rules) {
+      if (isset($settings['access']['fields'])) {
+        foreach ($settings['access']['fields'] as $rules) {
           $fieldName = $rules['name'];
           $field = Utils::fields()->get("name=$fieldName");
           if (isset($rules['context'])) {

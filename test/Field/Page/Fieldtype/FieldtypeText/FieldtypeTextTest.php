@@ -8,7 +8,7 @@ use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 
 class FieldtypeTextTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['freebase_guid'],

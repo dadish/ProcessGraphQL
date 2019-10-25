@@ -5,7 +5,7 @@ use ProcessWire\GraphQL\Utils;
 
 class EditorCanViewFieldTest extends GraphqlTestCase {
 
-  public static function getAccessRules()
+  public static function getSettings()
   {
     $editorRole = Utils::roles()->get('editor');
     return [

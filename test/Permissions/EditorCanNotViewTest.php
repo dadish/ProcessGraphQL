@@ -5,7 +5,7 @@ use ProcessWire\GraphQL\Utils;
 
 class EditorCanNotViewTest extends GraphqlTestCase {
 
-  public static function getAccessRules()
+  public static function getSettings()
   {
     return [
       'login' => 'editor',

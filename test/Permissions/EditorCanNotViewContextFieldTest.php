@@ -5,7 +5,7 @@ use ProcessWire\GraphQL\Utils;
 
 class EditorCanNotViewContextFieldTest extends GraphqlTestCase {
 
-  public static function getAccessRules()
+  public static function getSettings()
   {
     $editorRole = Utils::roles()->get('editor');
     return [

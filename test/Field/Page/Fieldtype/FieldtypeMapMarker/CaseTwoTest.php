@@ -13,7 +13,7 @@ use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper', 'city'],
     'legalFields' => ['map', 'title'],

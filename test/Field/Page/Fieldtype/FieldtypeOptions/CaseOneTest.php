@@ -7,7 +7,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class FieldtypeOptionsCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['architect'],
     'legalFields' => ['options'],

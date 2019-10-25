@@ -7,7 +7,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class PageParentIDFieldTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalPageFields' => ['parentID'],

@@ -14,7 +14,7 @@ use \ProcessWire\GraphQL\Utils;
 
 class FieldtypePageCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['architects'],

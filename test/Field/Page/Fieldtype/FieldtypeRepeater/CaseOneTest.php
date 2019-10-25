@@ -8,7 +8,7 @@ use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeRepeaterCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['list-all'],
     'legalFields' => ['slides', 'title'],

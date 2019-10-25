@@ -7,7 +7,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class PageArrayFirstFieldTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['city'],
     'legalFields' => ['title'],

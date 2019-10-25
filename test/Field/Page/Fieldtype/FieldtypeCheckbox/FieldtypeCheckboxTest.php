@@ -8,7 +8,7 @@ use \ProcessWire\GraphQL\Utils;
 
 class FieldtypeCheckboxTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalFields' => ['featured'],

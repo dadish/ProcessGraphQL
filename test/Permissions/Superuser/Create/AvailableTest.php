@@ -10,7 +10,7 @@ class SuperuserCreateAvailableTest extends GraphqlTestCase {
    * + The configured parent template should be legal.
    * + All the required fields should be legal.
    */
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper', 'city'],
     'legalFields' => ['title'],

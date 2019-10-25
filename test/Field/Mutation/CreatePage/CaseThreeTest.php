@@ -12,7 +12,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class CreatePageCaseThreeTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper', 'city'],
     'legalFields' => ['title', 'featured', 'height', 'floors', 'body'],

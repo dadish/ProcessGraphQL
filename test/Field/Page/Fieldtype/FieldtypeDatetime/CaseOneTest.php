@@ -12,7 +12,7 @@ use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 
 class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['architect'],
     'legalFields' => ['born'],

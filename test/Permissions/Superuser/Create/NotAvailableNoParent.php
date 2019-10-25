@@ -11,7 +11,7 @@ class SuperuserCreateNnotAvailableNoParentTest extends GraphqlTestCase {
    * + All the required fields are legal.
    * - But template has noParents checked.
    */
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['city', 'skyscraper'],
   ];

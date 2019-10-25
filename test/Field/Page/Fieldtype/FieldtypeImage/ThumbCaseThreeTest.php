@@ -14,7 +14,7 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
 
   const PAGE_ID = 4184;
 
-  public static function getAccessRules()
+  public static function getSettings()
   {
     $editorRole = Utils::roles()->get('editor');
     return [

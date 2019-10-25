@@ -13,7 +13,7 @@ use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class FieldtypeImageThumbCaseTwoTest extends GraphQLTestCase {
 
-  public static function getAccessRules()
+  public static function getSettings()
   {
     $editorRole = Utils::roles()->get('editor');
     return [

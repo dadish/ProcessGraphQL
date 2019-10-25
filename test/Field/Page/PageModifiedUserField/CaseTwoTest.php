@@ -12,7 +12,7 @@ use \ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class PageModifiedUserFieldCaseTwoTest extends GraphQLTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
     'legalPageFields' => ['modifiedUser'],

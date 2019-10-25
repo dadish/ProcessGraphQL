@@ -5,7 +5,7 @@ use ProcessWire\GraphQL\Utils;
 
 class SuperuserCanViewTest extends GraphqlTestCase {
 
-  const accessRules = [
+  const settings = [
     'login' => 'admin',
     'legalTemplates' => ['skyscraper'],
   ];
