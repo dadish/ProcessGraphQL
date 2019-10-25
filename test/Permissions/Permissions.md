@@ -1,0 +1,53 @@
+- Create
+  - Available
+    - Template legal
+    - Template Create Permission
+    - Required Fields legal
+    - Required Fields Context Edit Permission
+    - Template NoParent Off
+    - Template ParentTemplates
+      - Parent Template legal
+      - Parent Template Add Permission
+      - Parent Template NoChild Off
+      - Parent Template ChildTemplates Match
+  - Allowed
+    - Template OnlyOne Off (if already exists)
+    - Parent Template legal
+    - Parent Template Add Permission
+    - Parent Template NoChild Off
+    - Parent Template ChildTemplates Match
+
+- View
+  - Available/Allowed
+    - Template legal
+    - Template View Permission
+  - Field
+    - Allowed
+      - Field Context View Permission
+
+- Update
+  - Available
+    - Template legal
+    - Template Edit Permission
+    - Fields Context Edit Permission
+  - Allowed
+    - Template page-edit-created Permission
+    - Template page-rename Permission
+    - Parent change
+      - Template page-move Permission
+      - Parent Template legal
+      - Parent Template Add Permission
+      - Parent Template NoChild Off
+      - Parent Template ChildTemplates Match
+
+- Trash
+  - Available
+  - Allowed
+    - Template legal
+    - Template Delete Permission | Template page-edit-trash-created Permission
+
+- Delete
+  - Available
+  - Allowed
+    - Template legal
+    - Template Delete Permission

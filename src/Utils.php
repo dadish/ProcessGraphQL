@@ -226,11 +226,11 @@ function log($data, $label = '')
   if ($label) {
     echo "$label\n";
   }
-  echo json_encode($data, true);
+  echo $data;
   echo "\n======================================\n";  
 }
 
 function logArr($data, $label = '')
 {
-  log(json_encode($data, true), $label);
+  log(json_encode($data, JSON_PRETTY_PRINT), $label);
 }

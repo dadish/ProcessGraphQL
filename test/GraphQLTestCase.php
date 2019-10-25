@@ -178,4 +178,14 @@ abstract class GraphqlTestCase extends TestCase {
     return json_decode(json_encode($res), false);
   }
 
+  public static function selectByProperty($arr, $property, $value)
+  {
+    foreach ($arr as $item) {
+      if ($item->$property === $value) {
+        return $item;
+      }
+    }
+    return null;
+  }
+
 }
