@@ -2,25 +2,25 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-class SuperuserCreateAvailableTest extends GraphqlTestCase {
+class SuperuserCreateNotAvailableTemplateTest extends GraphqlTestCase {
 
   /**
    * + For superuser.
-   * + The template should be legal.
-   * + The configured parent template should be legal.
-   * + All the required fields should be legal.
+   * + The configured parent template is legal.
+   * + All the required fields are legal.
+   * - But the template is not legal
    */
   const settings = [
     'login' => 'admin',
-    'legalTemplates' => ['skyscraper', 'city'],
+    'legalTemplates' => ['city'],
     'legalFields' => ['title'],
   ];
 
-  public function testSuperuserCanView() {
+  public function testPermission() {
     $res = self::execute(GraphqlTestCase::introspectionQuery);
     $mutation = self::selectByProperty($res->data->__schema->types, 'name', 'Mutation');
     $this->assertNotNull($mutation, 'Mutation is available.');
     $createSkyscraper = self::selectByProperty($mutation->fields, 'name', 'createSkyscraper');
-    $this->assertNotNull($createSkyscraper, 'Create field is available.');
+    $this->assertNull($createSkyscraper, 'Create field is available.');
   }
 }

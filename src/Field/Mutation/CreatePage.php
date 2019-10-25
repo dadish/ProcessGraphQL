@@ -55,7 +55,7 @@ class CreatePage
     }
 
     // if there could be only one page is there already a page with this template
-    if ($template->noParents === -1 && !$pages->get("template={$template}") instanceof NullPage) {
+    if ($template->noParents === -1 && $pages->count("template={$template}")) {
       throw new ValidationError("Only one page with template `{$template->name}` can be created.");
     }
 

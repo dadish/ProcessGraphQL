@@ -21,9 +21,8 @@
   - Available/Allowed
     - Template legal
     - Template View Permission
-  - Field
-    - Allowed
-      - Field Context View Permission
+    - Field legal
+        - Field Context View Permission
 
 - Update
   - Available

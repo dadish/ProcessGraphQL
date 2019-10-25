@@ -62,7 +62,21 @@ class Permissions
 
     // can't create if allowed parents are not legal
     if ($template->noParents == 0 && count($template->parentTemplates)) {
-      if (!count(array_intersect(self::getTemplateIds(), $template->parentTemplates))) {
+      
+      // filter out the parents that has noChildren checked or
+      // has configured childTemplates without the target template
+      $parentTemplates = array_filter($template->parentTemplates, function ($templateId) use ($template) {
+        $parentTemplate = Utils::templates()->get($templateId);
+        if ($parentTemplate->noChildren) {
+          return false;
+        }
+        if (count($parentTemplate->childTemplates) && !in_array($template->id, $parentTemplate->childTemplates)) {
+          return false;
+        }
+        return true;
+      });
+
+      if (!count(array_intersect(self::getTemplateIds(), $parentTemplates))) {
         return false;
       }
     }
