@@ -2,29 +2,23 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
+use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+
 class SuperuserViewNotAvailableTemplateTest extends GraphqlTestCase {
 
   /**
-   * + The template is legal.
+   * - The target template is not legal.
    */
   public static function getSettings()
   {
     return [
-      'login' => 'admin'
+      'login' => 'admin',
+      'legalTemplates' => ['architect', 'city'],
+      'legalFields' => ['images']
     ];
   }
 
   public function testPermission() {
-    $query = '{
-      skyscraper{
-        list{
-          id
-        }
-      }
-    }';
-
-    $res = self::execute($query);
-    $this->assertEquals(1, count($res->errors), '"skyscraper" field should not be available if it is not legal.');
-    $this->assertStringContainsString('skyscraper', $res->errors[0]->message);
+    assertSchemaFieldNotExists(['query', 'skyscraper']);
   }
 }

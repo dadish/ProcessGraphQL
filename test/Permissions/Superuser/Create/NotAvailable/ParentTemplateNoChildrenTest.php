@@ -2,6 +2,8 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
+use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+
 class SuperuserCreateNotAvailableParentTemplateNoChildrenTest extends GraphqlTestCase {
 
   /**
@@ -26,12 +28,8 @@ class SuperuserCreateNotAvailableParentTemplateNoChildrenTest extends GraphqlTes
   ];
 
   public function testPermission() {
-    $res = self::execute(GraphqlTestCase::introspectionQuery);
-    $mutation = self::selectByProperty($res->data->__schema->types, 'name', 'Mutation');
-    $this->assertNotNull($mutation, 'Mutation is available.');
-    $createSkyscraper = self::selectByProperty($mutation->fields, 'name', 'createSkyscraper');
-    $this->assertNull(
-      $createSkyscraper,
+    assertSchemaFieldNotExists(
+      ['mutation', 'createSkyscraper'],
       'Create field should not be available if configured parent template has noChildren checked.'
     );
   }

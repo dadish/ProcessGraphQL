@@ -2,6 +2,8 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
+use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldExists;
+
 class SuperuserCreateAvailableTemplateTest extends GraphqlTestCase {
 
   /**
@@ -17,10 +19,9 @@ class SuperuserCreateAvailableTemplateTest extends GraphqlTestCase {
   ];
 
   public function testPermission() {
-    $res = self::execute(GraphqlTestCase::introspectionQuery);
-    $mutation = self::selectByProperty($res->data->__schema->types, 'name', 'Mutation');
-    $this->assertNotNull($mutation, 'Mutation is available.');
-    $createSkyscraper = self::selectByProperty($mutation->fields, 'name', 'createSkyscraper');
-    $this->assertNotNull($createSkyscraper, 'Create field is available.');
+    assertSchemaFieldExists(
+      ['mutation', 'createSkyscraper'],
+      'createSKyscrpaer mutation field should be available.'
+    );
   }
 }

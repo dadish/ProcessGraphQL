@@ -76,3 +76,9 @@ $module->install();
 // set output formatting
 $pages = $wire->fuel('pages');
 $pages->setOutputFormatting(true);
+
+// include phpunit assertion functions
+require_once realpath("$baseDir/vendor/phpunit/phpunit/src/Framework/Assert/Functions.php");
+
+// include custom assertion functions
+require_once realpath("$baseDir/test/Assert/Functions.php");
