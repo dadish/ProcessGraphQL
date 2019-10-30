@@ -38,7 +38,7 @@ class UpdatePage
     return "Allows you to update Pages with template `{$template->name}`.";
   }
 
-  public static function resolve($value, $args)
+  public static function resolve($value, $args, $template)
   {
     // prepare neccessary variables
     $pages = Utils::pages();
@@ -77,7 +77,7 @@ class UpdatePage
       }
 
       // make sure parent is allowed as a parent for this page
-      $parentTemplates = $this->template->parentTemplates;
+      $parentTemplates = $template->parentTemplates;
       if (count($parentTemplates) && !in_array($parent->template->id, $parentTemplates)) {
         throw new ValidationError("`parent` is not allowed as a parent.");
       }
@@ -89,7 +89,7 @@ class UpdatePage
 
       // make sure the page is allowed as a child for parent
       $childTemplates = $parent->template->childTemplates;
-      if (count($childTemplates) && !in_array($this->template->id, $childTemplates)) {
+      if (count($childTemplates) && !in_array($template->id, $childTemplates)) {
         throw new ValidationError("not allowed to be a child for `parent`.");
       }
 
@@ -128,7 +128,7 @@ class UpdatePage
     }
 
     // If we did not return till now then no good!
-    throw new ResolveError("Could not update page `$name` with template `{$this->template->name}`");
+    throw new ResolveError("Could not update page `$name` with template `{$template->name}`");
   }
 }
 
