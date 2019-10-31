@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-class SuperuserCreateNotAllowedOnlyOneTest extends GraphqlTestCase {
+class SuperuserCreateNotAllowedTemplateOnlyOneTest extends GraphqlTestCase {
 
   /**
    * + The template can have only one Page.

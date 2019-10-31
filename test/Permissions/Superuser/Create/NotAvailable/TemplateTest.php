@@ -10,7 +10,7 @@ class SuperuserCreateNotAvailableTemplateTest extends GraphqlTestCase {
    * + For superuser.
    * + The configured parent template is legal.
    * + All the required fields are legal.
-   * - But the template is not legal
+   * - But the target template is not legal
    */
   const settings = [
     'login' => 'admin',
@@ -21,7 +21,7 @@ class SuperuserCreateNotAvailableTemplateTest extends GraphqlTestCase {
   public function testPermission() {
     assertSchemaFieldNotExists(
       ['mutation', 'createSkyscraper'],
-      'Create field should not be available if target templateg is not legal.'
+      'Create field should not be available if target template is not legal.'
     );
   }
 }

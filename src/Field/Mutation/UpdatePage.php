@@ -110,7 +110,7 @@ class UpdatePage
       }
       $taken = $pages->find("parent=$parent, name=$name")->count();
       if ($taken) {
-        throw new ValidationError('`name` is already taken.');
+        throw new ValidationError("name '$name' is already taken.");
       }
 
       $p->name = $name;

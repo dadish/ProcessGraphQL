@@ -4,7 +4,7 @@ use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
 use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
 
-class SuperuserCreateNotAvailableFieldTest extends GraphqlTestCase {
+class SuperuserCreateNotAvailableFieldsTest extends GraphqlTestCase {
 
   /**
    * + For superuser.
