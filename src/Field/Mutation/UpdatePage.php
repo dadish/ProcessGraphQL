@@ -6,9 +6,11 @@ use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Type\PageType;
+use ProcessWire\GraphQL\Error\ExecutionError;
 use ProcessWire\GraphQL\Error\ValidationError;
 use ProcessWire\GraphQL\InputType\PageCreateInputType;
 use ProcessWire\GraphQL\InputType\PageUpdateInputType;
+use ProcessWire\WireException;
 
 class UpdatePage
 {
@@ -123,12 +125,15 @@ class UpdatePage
     PageCreateInputType::setValues($p, $values);
 
     // save the page to db
-    if ($p->save()) {
-      return $pages->get("$p");
+    try {
+      $p->save();
+    } catch (WireException $err) {
+      throw new ExecutionError($err->getMessage());
     }
+    return $pages->get("$p");
 
     // If we did not return till now then no good!
-    throw new ResolveError("Could not update page `$name` with template `{$template->name}`");
+    throw new ExecutionError("Could not update page `$name` with template `{$template->name}`");
   }
 }
 

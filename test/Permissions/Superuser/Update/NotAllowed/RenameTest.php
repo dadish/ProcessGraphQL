@@ -5,12 +5,12 @@ use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
-class SuperuserRenameNameConflictTest extends GraphqlTestCase {
+class SuperuserRenameNotAllowedTest extends GraphqlTestCase {
 
   /**
    * + For superuser.
    * + The target template is legal.
-   * + The new name does not conflict.
+   * - The new name is already taken.
    */
   public static function getSettings()
   {

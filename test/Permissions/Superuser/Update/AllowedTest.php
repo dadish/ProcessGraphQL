@@ -3,28 +3,29 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserMoveTest extends GraphqlTestCase {
+class SuperuserUpdateAllowedTest extends GraphqlTestCase {
 
   /**
    * + For superuser.
    * + The target template is legal.
-   * + The new name does not conflict.
+   * + Field is legal.
    */
   public static function getSettings()
   {
     return [
       'login' => 'admin',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'legalPageFields' => ['parentID']
+      'legalTemplates' => ['skyscraper'],
+      'legalFields' => ['title']
     ];
   }
 
   public function testPermission() {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
-    $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
+    $newTitle = 'New Title for Skyscraper';
     $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
       updateSkyscraper(id: $id, page: $page) {
-        parentID
+        id
+        title
       }
     }';
 
@@ -32,13 +33,13 @@ class SuperuserMoveTest extends GraphqlTestCase {
     $variables = [
       'id' => $skyscraper->id,
       'page' => [
-        'parent' => $newParent->id,
+        'title' => $newTitle,
       ]
     ];
 
-    assertNotEquals($newParent->id, $skyscraper->parentID);
+    assertNotEquals($newTitle, $skyscraper->title);
     $res = self::execute($query, $variables); 
-    assertEquals($res->data->updateSkyscraper->parentID, $newParent->id, 'Allows to move the page if both target and parent templates are legal.');
-    assertEquals($newParent->id, $skyscraper->parentID, 'Updates the parent of the target.');
+    assertEquals($res->data->updateSkyscraper->title, $newTitle, 'Allows to update the page title if both template and field are legal.');
+    assertEquals($newTitle, $skyscraper->title, 'Updates the title of the target.');
   }
 }
