@@ -1,4 +1,4 @@
-<?php namespace ProcessWire\GraphQL;
+<?php namespace ProcessWire\GraphQL\Test;
 
 // start the PHP session
 ob_start();
@@ -76,6 +76,16 @@ $module->install();
 // set output formatting
 $pages = $wire->fuel('pages');
 $pages->setOutputFormatting(true);
+
+// disable cache for $pages->get() & $pages->find() if they have random sorting
+$pages->addHookBefore('find', function ($event) {
+	$selector = $event->arguments('selector');
+	if (strpos($selector, 'sort=random')) {
+		$hash = uniqid();
+		$selector .= ", id!=$hash";
+		$event->arguments('selector', $selector);
+	}
+});
 
 // include phpunit assertion functions
 require_once realpath("$baseDir/vendor/phpunit/phpunit/src/Framework/Assert/Functions.php");

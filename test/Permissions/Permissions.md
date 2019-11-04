@@ -19,21 +19,26 @@ Superuser
 
 - View
   - Available
+    ✅ Template legal
+    ✅ Field legal
   - NotAvailable
-    - Template legal
+    ✅ Template legal
+    ✅ Field legal
 
 - Update
-  - Available
+  ✅ Available
   - NotAvailable
-    - Template legal
-  - Allowed
+    ✅ Template legal
+  ✅ Allowed
   - NotAllowed
-    - Rename
-      - Name conflict
+    ✅ Rename
+    - Move + Rename
     - Move
-      - Parent Template legal
-      - Parent Template NoChild Off
-      - Parent Template ChildTemplates Match
+      ✅ Name conflict
+      ✅ ParentTemplates Match
+      ✅ Parent Template legal
+      ✅ Parent Template NoChild Off
+      ✅ Parent Template ChildTemplates Match
 
 - Trash
   - Available
@@ -73,6 +78,8 @@ Editor
 
 - View
   - Available
+    - Template legal
+    - Field legal
   - NotAvailable
     - Template legal
     - Template View Permission
@@ -93,7 +100,10 @@ Editor
     - Rename
       - Name conflict
       - Template page-rename Permission
+    - Move + Rename
     - Move
+      - NoParents off
+      - ParentTemplates Match
       - Template page-move Permission
       - Parent Template legal
       - Parent Template Add Permission
