@@ -76,7 +76,9 @@ class Permissions
         return true;
       });
 
-      if (!count(array_intersect(self::getTemplateIds(), $parentTemplates))) {
+      // get templates that user can add pages to
+      $addTemplates = self::getAddTemplates()->explode('id');
+      if (!count(array_intersect($addTemplates, $parentTemplates))) {
         return false;
       }
     }
