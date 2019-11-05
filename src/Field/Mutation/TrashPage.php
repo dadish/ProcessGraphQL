@@ -42,22 +42,28 @@ class TrashPage
     $id = Utils::sanitizer()->int($args['id']);
     $page = Utils::pages()->get("id=$id");
     $user = Utils::user();
+    $notAllowedMsg = "You ar not allowed to move page `$id` to trash.";
 
     // check if we got a page
     if ($page instanceof NullPage) {
       throw new ValidationError("Could not find a page `$id`.");
     }
 
-    // check if user can delete the template
-    if (!Permissions::canDelete($page->template)) {
+    // make sure the template is legal and trashable by the user
+    if (!Permissions::getTrashTemplates()->has($page->template)) {
+      throw new ValidationError($notAllowedMsg);
+    }
 
-      // check if the user has edit-trash-created permission
-      // and has indeed created this page.
-      $hasTrashCreatedPermission = $user->hasPermission(Permissions::pageEditTrashCreatedPermission, $page->template);
-      $createdThisPage = $page->createdUser->id === $user->id;
-      if (!($hasTrashCreatedPermission && $createdThisPage)) {
-        throw new ValidationError("You ar not allowed to move page `$page` to trash.");
-      }
+    // if user has no delete permission then check if user
+    // has trashCreated permission and has created this page
+    $hasDeletePermission = $user->hasPermission(Permissions::pageDeletePermission, $page->template);
+    $hasTrashCreatedPermission = $user->hasPermission(Permissions::pageEditTrashCreatedPermission, $page->template);
+    $createdThisPage = $page->createdUser->id === $user->id;
+    if (
+      !$hasDeletePermission &&
+      !($hasTrashCreatedPermission && $createdThisPage)
+    ) {
+        throw new ValidationError($notAllowedMsg);
     }
 
     // trash the page

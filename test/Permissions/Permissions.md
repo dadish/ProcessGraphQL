@@ -41,16 +41,11 @@ Superuser
       ✅ Parent Template ChildTemplates Match
 
 - Trash
-  - Available
-  - Allowed
+  ✅ Available
+  ✅ Not Available
+  ✅ Allowed
   - NotAllowed
-    - Template legal
-
-- Delete
-  - Available
-  - Allowed
-  - NotAllowed
-    - Template legal
+    ✅ Template legal
 
 Editor
 ======
@@ -112,6 +107,11 @@ Editor
 
 - Trash
   - Available
+    - Template Delete Permission
+    - Template page-edit-trash-created Permission
+  - Not Available
+    - Template legal
+    - Template Delete Permission | Template page-edit-trash-created Permission
   - Allowed
   - NotAllowed
     - Template legal
