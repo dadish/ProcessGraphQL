@@ -156,13 +156,45 @@ class Permissions
       return true;
     }
 
-    // can't delete a page if access rules are note defined
+    // can't delete a page if access rules are not defined
     if (!self::definesAccess($template)) {
       return false;
     }
 
     // can't delete if user does not have a delete permission on the given template
     if (!$user->hasPermission(self::pageDeletePermission, $template)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Tells if the user can trash a page with the given template.
+   *
+   * @param Template $template
+   * @return boolean
+   */
+  public static function canTrash(Template $template)
+  {
+    $user = Utils::user();
+
+    // superuser can trash
+    if ($user->isSuperuser()) {
+      return true;
+    }
+
+    // can't trash a page if access rules are not defined
+    if (!self::definesAccess($template)) {
+      return false;
+    }
+
+    // can't trash if user does not have a delete or edit-trash-created
+    // permission on the given template
+    if (
+      !$user->hasPermission(self::pageDeletePermission, $template) &&
+      !$user->hasPermission(self::pageEditTrashCreatedPermission, $template)
+    ) {
       return false;
     }
 
@@ -357,6 +389,18 @@ class Permissions
   {
     return self::filterTemplatesByPermission(function (Template $template) {
       return self::canDelete($template);
+    });
+  }
+
+  /**
+   * Returns the templates that can be moved to trash by the current user.
+   *
+   * @return Templates
+   */
+  public static function getTrashTemplates()
+  {
+    return self::filterTemplatesByPermission(function (Template $template) {
+      return self::canTrash($template);
     });
   }
 

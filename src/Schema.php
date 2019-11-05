@@ -12,6 +12,7 @@ use ProcessWire\GraphQL\Field\Auth\Login;
 use ProcessWire\GraphQL\Field\Auth\Logout;
 use ProcessWire\GraphQL\Field\Debug\DbQuery;
 use ProcessWire\GraphQL\Field\Mutation\CreatePage;
+use ProcessWire\GraphQL\Field\Mutation\TrashPage;
 use ProcessWire\GraphQL\Field\Mutation\UpdatePage;
 
 class Schema
@@ -105,6 +106,11 @@ class Schema
     // UpdatePage
     foreach (Permissions::getEditTemplates() as $template) {
       $mutationFields[] = UpdatePage::field($template);
+    }
+
+    // trash page
+    if (count(Permissions::getTrashTemplates())) {
+      $mutationFields[] = TrashPage::field();
     }
 
     // let the user modify the query operation
