@@ -146,8 +146,8 @@ class SchemaFieldExists extends Constraint {
     // select the type
     $type = self::selectByProperty($types, 'name', $typeName);
 
-    // if there is no path then user wants to select root operation
-    if (!count($path)) {
+    // if there is no path or no type then we're done traversing
+    if (!count($path) || !$type) {
       return $type;
     }
 
