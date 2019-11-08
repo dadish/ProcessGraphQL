@@ -5,17 +5,18 @@ Superuser
   - NotAvailable
     ✅ Template legal
     ✅ Required Fields legal
-    ✅ Template NoParent Off
+    ✅ Template NoParent On
     - Template ParentTemplates
       ✅ Parent Template legal
-      ✅ Parent Template NoChildren Off
+      ✅ Parent Template NoChildren On
       ✅ Parent Template ChildTemplates Match
   ✅ Allowed
   - NotAllowed
-    ✅ Template OnlyOne Off (if already exists)
+    ✅ Template OnlyOne On (if already exists)
     ✅ Parent Template legal
-    ✅ Parent Template NoChild Off
+    ✅ Parent Template NoChildren On
     ✅ Parent Template ChildTemplates Match
+    ✅ Template parentTemplates Match
 
 - View
   - Available
@@ -37,7 +38,7 @@ Superuser
       ✅ Name conflict
       ✅ ParentTemplates Match
       ✅ Parent Template legal
-      ✅ Parent Template NoChild Off
+      ✅ Parent Template NoChildren On
       ✅ Parent Template ChildTemplates Match
 
 - Trash
@@ -50,37 +51,38 @@ Superuser
 Editor
 ======
 - Create
-  - Available
+  ✅ Available
   - NotAvailable
-    - Template legal
-    - Template Create Permission
-    - Required Fields legal
-    - Required Fields Edit Permission
-    - Required Fields Context Edit Permission
-    - Template NoParent Off
+    ✅ Template legal
+    ✅ Template Create Permission
+    ✅ Required Fields legal
+    ✅ Required Fields Edit Permission
+    ✅ Required Fields Context Edit Permission
+    ✅ Template NoParent On
     - Template ParentTemplates
-      - Parent Template legal
-      - Parent Template Add Permission
-      - Parent Template NoChild Off
-      - Parent Template ChildTemplates Match
-  - Allowed
+      ✅ Parent Template legal
+      ✅ Parent Template Add Permission
+      ✅ Parent Template NoChildren On
+      ✅ Parent Template ChildTemplates Match
+  ✅ Allowed
   - NotAllowed
-    - Template OnlyOne Off (if already exists)
-    - Parent Template legal
-    - Parent Template Add Permission
-    - Parent Template NoChild Off
-    - Parent Template ChildTemplates Match
+    ✅ Template OnlyOne On (if already exists)
+    ✅ Parent Template legal
+    ✅ Parent Template Add Permission
+    ✅ Parent Template NoChildren On
+    ✅ Parent Template childTemplates Match
+    ✅ Template parentTemplates Match
 
 - View
   - Available
-    - Template legal
-    - Field legal
+    ✅ Template legal
+    ✅ Field legal
   - NotAvailable
-    - Template legal
-    - Template View Permission
-    - Field legal
-    - Field View Permission
-    - Field Context View Permission
+    ✅ Template legal
+    ✅ Template View Permission
+    ✅ Field legal
+    ✅ Field View Permission
+    ✅ Field Context View Permission
 
 - Update
   - Available
@@ -102,7 +104,7 @@ Editor
       - Template page-move Permission
       - Parent Template legal
       - Parent Template Add Permission
-      - Parent Template NoChild Off
+      - Parent Template NoChildren On
       - Parent Template ChildTemplates Match
 
 - Trash
