@@ -1,7 +1,6 @@
 <?php namespace ProcessWire\GraphQL\Test\Permissions;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
-use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
@@ -17,8 +16,6 @@ class EditorCreateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
    */
   public static function getSettings()
   {
-    $editorRole = Utils::roles()->get("editor");
-
     return [
       'login' => 'editor',
       'legalTemplates' => ['skyscraper', 'city'], 
@@ -27,21 +24,25 @@ class EditorCreateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
-            'createRoles' => [$editorRole->id],
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'createRoles' => ['editor'],
           ],
           [
             'name' => 'city',
-            'roles' => [$editorRole->id],
-            'addRoles' => [$editorRole->id],
+            'roles' => ['editor'],
+            'addRoles' => ['editor'],
           ]
         ],
         'fields' => [
           [
             'name' => 'images',
-            'editRoles' => [$editorRole->id],
-          ]
+            'editRoles' => ['editor'],
+          ],
+          [
+            'name' => 'title',
+            // 'editRoles' => ['editor'], // <-- has no edit permission to the required "title" field.
+          ],
         ]
       ]
     ];
@@ -50,7 +51,7 @@ class EditorCreateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
   public function testPermission() {
     assertTypePathNotExists(
       ['Mutation', 'createSkyscraper'],
-      'createSkyscraper mutation field should not be available if one of the required fields is not legal.'
+      'createSkyscraper mutation field should not be available if user has no edit permission on the required field.'
     );
   }
 }
