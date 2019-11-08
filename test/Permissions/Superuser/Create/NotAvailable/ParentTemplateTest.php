@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class SuperuserCreateNotAvailableParentTemplateTest extends GraphqlTestCase {
 
@@ -19,8 +19,8 @@ class SuperuserCreateNotAvailableParentTemplateTest extends GraphqlTestCase {
   ];
 
   public function testPermission() {
-    assertSchemaFieldNotExists(
-      ['mutation', 'createSkyscraper'],
+    assertTypePathNotExists(
+      ['Mutation', 'createSkyscraper'],
       'Create field should not be available if configured parent template is not legal.'
     );
   }

@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathExists;
 
 class SuperuserCreateAvailableTest extends GraphqlTestCase {
 
@@ -19,8 +19,8 @@ class SuperuserCreateAvailableTest extends GraphqlTestCase {
   ];
 
   public function testPermission() {
-    assertSchemaFieldExists(
-      ['mutation', 'createSkyscraper'],
+    assertTypePathExists(
+      ['Mutation', 'createSkyscraper'],
       'createSKyscrpaer mutation field should be available.'
     );
   }

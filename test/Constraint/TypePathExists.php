@@ -3,11 +3,10 @@
 namespace ProcessWire\GraphQL\Test\Constraint;
 
 use PHPUnit\Framework\Constraint\Constraint;
-use PHPUnit\Framework\ExpectationFailedException;
 use ProcessWire\GraphQL\Schema;
 use ProcessWire\GraphQL\Utils;
 
-class SchemaFieldExists extends Constraint {
+class TypePathExists extends Constraint {
 
   const introspectionQuery = "query IntrospectionQuery {
     __schema {
@@ -112,8 +111,7 @@ class SchemaFieldExists extends Constraint {
 
   public function matches($other): bool
   {
-    self::ensureProperArgument($other);
-    $field = self::selectSchemaField($other);
+    $field = self::selectTypePath($other);
     return !is_null($field);
   }
 
@@ -134,14 +132,14 @@ class SchemaFieldExists extends Constraint {
     return json_decode(json_encode($res), false);
   }
 
-  public static function selectSchemaField(array $path)
+  public static function selectTypePath(array $path)
   {
     $introspection = self::getIntrospection();
     $types = $introspection->data->__schema->types;
-    return self::traverseSchemaField($types, ucfirst($path[0]), array_slice($path, 1));
+    return self::traverseTypePath($types, $path[0], array_slice($path, 1));
   }
 
-  private static function traverseSchemaField($types, $typeName, $path)
+  private static function traverseTypePath($types, $typeName, $path)
   {
     // select the type
     $type = self::selectByProperty($types, 'name', $typeName);
@@ -177,30 +175,13 @@ class SchemaFieldExists extends Constraint {
       return null;
     }
 
-    return self::traverseSchemaField($types, $type->name, array_slice($path, 1));
+    return self::traverseTypePath($types, $type->name, array_slice($path, 1));
   }
 
   
   public function toString(): string
   {
     return 'field path exists';
-  }
-
-  /**
-   * Return additional failure description where needed
-   *
-   * The function can be overridden to provide additional failure
-   * information like a diff
-   *
-   * @param mixed $other evaluated value or object
-   */
-  protected function additionalFailureDescription($other): string
-  {
-    $rootOperations = ['query', 'mutation'];
-    if (!in_array($other[0], $rootOperations)) {
-      return 'Please make sure your path starts with one of the root operations: ' . implode(', ', $rootOperations);
-    }
-    return '';
   }
 
   /**
@@ -224,16 +205,5 @@ class SchemaFieldExists extends Constraint {
       $desc = "\"$desc\"";
     }
     return $desc . ' ' . $this->toString();
-  }
-
-  protected static function ensureProperArgument($other)
-  {
-    $rootOperations = ['query', 'mutation'];
-    if (!in_array($other[0], $rootOperations)) {
-      $msg = 'Please make sure your path starts with one of the root operations: "' . implode('", "', $rootOperations) . '".';
-      $msg .= "\n";
-      $msg .= 'Your path is: ' . json_encode($other);
-      throw new ExpectationFailedException($msg);
-    }
   }
 }

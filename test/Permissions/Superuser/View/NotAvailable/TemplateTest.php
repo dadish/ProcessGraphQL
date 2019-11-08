@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class SuperuserViewNotAvailableTemplateTest extends GraphqlTestCase {
 
@@ -19,6 +19,6 @@ class SuperuserViewNotAvailableTemplateTest extends GraphqlTestCase {
   }
 
   public function testPermission() {
-    assertSchemaFieldNotExists(['query', 'skyscraper']);
+    assertTypePathNotExists(['Query', 'skyscraper']);
   }
 }

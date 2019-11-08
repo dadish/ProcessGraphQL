@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class EditorViewNotAvailableTemplateTest extends GraphqlTestCase {
 
@@ -27,8 +27,8 @@ class EditorViewNotAvailableTemplateTest extends GraphqlTestCase {
   }
 
   public function testPermission() {
-    assertSchemaFieldNotExists(
-      ['query', 'skyscraper'],
+    assertTypePathNotExists(
+      ['Query', 'skyscraper'],
       'skyscraper field should not be available if skyscraper template is not legal.'
     );
   }

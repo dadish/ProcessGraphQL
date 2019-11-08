@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class SuperuserViewNotAvailableTemplateViewPermissionTest extends GraphqlTestCase {
 
@@ -28,8 +28,8 @@ class SuperuserViewNotAvailableTemplateViewPermissionTest extends GraphqlTestCas
   }
 
   public function testPermission() {
-    assertSchemaFieldNotExists(
-      ['query', 'skyscraper'],
+    assertTypePathNotExists(
+      ['Query', 'skyscraper'],
       'skyscraper field should not be available if the user has no view permission for the targat template.'
     );
   }

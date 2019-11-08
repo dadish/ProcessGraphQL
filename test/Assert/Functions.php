@@ -2,22 +2,22 @@
 
 namespace ProcessWire\GraphQL\Test\Assert;
 
-use ProcessWire\GraphQL\Test\Constraint\SchemaFieldExists;
+use ProcessWire\GraphQL\Test\Constraint\TypePathExists;
 use PHPUnit\Framework\Assert;
 
-function schemaFieldExists()
+function typePathExists()
 {
-  return new SchemaFieldExists;
+  return new TypePathExists;
 }
 
-function assertSchemaFieldExists(array $fieldPath, $message = '')
+function assertTypePathExists(array $fieldPath, $message = '')
 {
-  assertThat($fieldPath, schemaFieldExists(), $message);
+  assertThat($fieldPath, typePathExists(), $message);
 }
 
-function assertSchemaFieldNotExists($fieldPath, $message = '')
+function assertTypePathNotExists($fieldPath, $message = '')
 {
-  assertThat($fieldPath, logicalNot(schemaFieldExists()), $message);
+  assertThat($fieldPath, logicalNot(typePathExists()), $message);
 }
 
 function assertStringContainsString(string $needle, string $haystack, string $message = ''): void

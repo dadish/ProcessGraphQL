@@ -2,7 +2,7 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class EditorViewNotAvailableFieldViewPermissionTest extends GraphqlTestCase {
 
@@ -35,8 +35,8 @@ class EditorViewNotAvailableFieldViewPermissionTest extends GraphqlTestCase {
   }
 
   public function testPermission() {
-    assertSchemaFieldNotExists(
-      ['query', 'skyscraper', 'list', 'title'],
+    assertTypePathNotExists(
+      ['Query', 'skyscraper', 'list', 'title'],
       '"title" field should not be available if user has no view permission for the "title" field.'
     );
   }

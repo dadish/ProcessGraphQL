@@ -3,7 +3,7 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-use function ProcessWire\GraphQL\Test\Assert\assertSchemaFieldNotExists;
+use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class EditorCreateNotAvailableFieldContextEditPermissionTest extends GraphqlTestCase {
 
@@ -54,8 +54,8 @@ class EditorCreateNotAvailableFieldContextEditPermissionTest extends GraphqlTest
   }
 
   public function testPermission() {
-    assertSchemaFieldNotExists(
-      ['mutation', 'createSkyscraper'],
+    assertTypePathNotExists(
+      ['Mutation', 'createSkyscraper'],
       'createSkyscraper mutation field should not be available if one of the required fields is not legal.'
     );
   }
