@@ -43,13 +43,26 @@ class UpdatePage
   {
     // prepare neccessary variables
     $pages = Utils::pages();
+    $user = Utils::user();
     $sanitizer = Utils::sanitizer();
     $values = (array) $args['page'];
     $id = (integer) $args['id'];
     $p = $pages->get($id);
 
+    // make sure the target page exists
     if ($p instanceof NullPage) {
       throw new ValidationError("Could not find the page `$p` to update.");
+    }
+
+    // if page-edit-created permission is installed and user has that permission
+    // make sure that user can edit this page
+    $pageEditCreatedPermission = Utils::permissions()->get('page-edit-created');
+    if (
+      $pageEditCreatedPermission->id &&
+      $user->hasPermission($pageEditCreatedPermission) &&
+      $p->createdUser->id !== $user->id
+    ) {
+      throw new ValidationError("You are not allowed to update the page '{$p->id}'.");
     }
 
     $p->of(false);

@@ -7,24 +7,12 @@ use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Schema;
 use ProcessWire\Template;
 use ProcessWire\Field;
+use ProcessWire\NullPage;
+use ProcessWire\Page;
 
 abstract class GraphqlTestCase extends TestCase {
 
   const settings = [];
-
-  const introspectionQuery = "{
-    __schema {
-      types {
-        ... on __Type {
-          kind
-          name
-          fields {
-            name
-          }
-        }
-      }
-    }
-  }";
 
   private static $defaultConfig;
   private static $originalAccessRules = [];
@@ -84,6 +72,24 @@ abstract class GraphqlTestCase extends TestCase {
       }
     }
 
+    if (isset($accessRules['roles'])) {
+      $originals['roles'] = [];
+      foreach ($accessRules['roles'] as $rules) {
+        if (!isset($rules['name'])) {
+          throw new \Error("role rule should have a name. E.g. 'name' => 'roleName'.");
+        }
+        $role = Utils::roles()->get($rules['name']);
+        $originals['roles'][] = [
+          'name' => $rules['name'],
+          'permissions' => $role->permissions->explode('name')
+        ];
+      }
+    }
+
+    if (isset($accessRules['permissions'])) {
+      $originals['permissions'] = Utils::permissions()->find("name!=0")->explode('name');
+    }
+
     self::$originalAccessRules = $originals;
     return $originals;
   }
@@ -123,13 +129,48 @@ abstract class GraphqlTestCase extends TestCase {
       Utils::module()->legalPageImageFields = array_merge(Utils::module()->legalPageImageFields, $settings['legalPageImageFields']);
     }
 
-    if (isset($settings['login'])) {
-      $username = $settings['login'];
-      Utils::session()->login($username, Utils::config()->testUsers[$username]);
-    }
-
     if (isset($settings['access'])) {
       self::rememberOriginalAccessRules($settings['access']);
+
+      if (isset($settings['access']['permissions'])) {
+        $permissions = $settings['access']['permissions'];
+        if (isset($permissions['add'])) {
+          foreach ($permissions['add'] as $permissionName) {
+            $permission = Utils::permissions()->get($permissionName);
+            if ($permission->id) {
+              continue;
+            }
+            $permission = Utils::permissions()->add($permissionName);
+            $permission->title = $permissionName;
+            $permission->save();
+          }
+        }
+        if (isset($permissions['remove'])) {
+          foreach ($permissions['remove'] as $permissionName) {
+            $permission = Utils::permissions()->get($permissionName);
+            if (!$permission->id) {
+              continue;
+            }
+            $permission->delete();
+          }
+        }
+      }
+
+      if (isset($settings['access']['roles'])) {
+        foreach ($settings['access']['roles'] as $rules) {
+          $role = Utils::roles()->get($rules['name']);
+          foreach ($rules as $action => $permissions) {
+            if (!in_array($action, ['add', 'remove'])) {
+              continue;
+            }
+            $method = $action . 'Permission';
+            foreach ($permissions as $permission) {
+              $role->$method($permission);
+            }
+          }
+        }
+      }
+
       if (isset($settings['access']['templates'])) {
         foreach ($settings['access']['templates'] as $rules) {
           $templateName = $rules['name'];
@@ -173,6 +214,11 @@ abstract class GraphqlTestCase extends TestCase {
           }
         }
       }
+    }
+
+    if (isset($settings['login'])) {
+      $username = $settings['login'];
+      Utils::session()->login($username, Utils::config()->testUsers[$username]);
     }
   }
 
@@ -226,6 +272,42 @@ abstract class GraphqlTestCase extends TestCase {
         if (isset($rules['context']) && $template instanceof Template) {
           Utils::fields()->saveFieldgroupContext($field, $template->fieldgroup);
         }
+      }
+    }
+
+    if (isset($accessRules['roles'])) {
+      foreach ($accessRules['roles'] as $rules) {
+        $role = Utils::roles()->get($rules['name']);
+        // remove all existing permissions
+        foreach ($role->permissions as $permission) {
+          $role->removePermission($permission);
+        }
+        // add all original permissions
+        foreach ($rules['permissions'] as $permission) {
+          $role->addPermission($permission);
+        }
+      }
+    }
+
+    if (isset($accessRules['permissions'])) {
+      // remove all permissions that were not in the
+      // original permissions list
+      $oldPermissions = implode('|', $accessRules['permissions']);
+      $newPermissions = Utils::permissions()->find("name!=$oldPermissions");
+      foreach ($newPermissions as $permission) {
+        $permission->delete();
+      }
+
+      // install back the permission if it is in the original list
+      // but not installed
+      foreach ($accessRules['permissions'] as $permissionName) {
+        $permission = Utils::permissions()->get($permissionName);
+        if ($permission->id) {
+          continue;
+        }
+        $permission = Utils::permissions()->add($permissionName);
+        $permission->title = $permissionName;
+        $permission->save();
       }
     }
   }

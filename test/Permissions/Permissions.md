@@ -5,7 +5,7 @@ Superuser
   - NotAvailable
     ✅ Template legal
     ✅ Required Fields legal
-    ✅ Template NoParent On
+    ✅ Template NoParents On
     - Template ParentTemplates
       ✅ Parent Template legal
       ✅ Parent Template NoChildren On
@@ -58,7 +58,7 @@ Editor
     ✅ Required Fields legal
     ✅ Required Fields Edit Permission
     ✅ Required Fields Context Edit Permission
-    ✅ Template NoParent On
+    ✅ Template NoParents On
     - Template ParentTemplates
       ✅ Parent Template legal
       ✅ Parent Template Add Permission
@@ -94,13 +94,13 @@ Editor
     ✅ Field Context Edit Permission
   ✅ Allowed
   - NotAllowed
-    - Template page-edit-created Permission
+    ✅ Template page-edit-created Permission
     - Rename
       - Name conflict
       - Template page-rename Permission
     - Move + Rename Conflict
     - Move
-      - NoParents off
+      - NoParents On
       - ParentTemplates Match
       - Template page-move Permission
       - Parent Template legal
