@@ -85,19 +85,20 @@ Editor
     ✅ Field Context View Permission
 
 - Update
-  - Available
+  ✅ Available
   - NotAvailable
-    - Template legal
-    - Template Edit Permission
-    - Fields Edit Permission
-    - Fields Context Edit Permission
-  - Allowed
+    ✅ Template legal
+    ✅ Template Edit Permission
+    ✅ Field legal
+    ✅ Field Edit Permission
+    ✅ Field Context Edit Permission
+  ✅ Allowed
   - NotAllowed
     - Template page-edit-created Permission
     - Rename
       - Name conflict
       - Template page-rename Permission
-    - Move + Rename
+    - Move + Rename Conflict
     - Move
       - NoParents off
       - ParentTemplates Match
