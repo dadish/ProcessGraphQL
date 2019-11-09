@@ -8,7 +8,6 @@ use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Type\PageType;
 use ProcessWire\GraphQL\Error\ExecutionError;
 use ProcessWire\GraphQL\Error\ValidationError;
-use ProcessWire\GraphQL\InputType\PageCreateInputType;
 use ProcessWire\GraphQL\InputType\PageUpdateInputType;
 use ProcessWire\WireException;
 
@@ -122,7 +121,7 @@ class UpdatePage
     unset($values['parent']);
     unset($values['name']);
 
-    PageCreateInputType::setValues($p, $values);
+    PageUpdateInputType::setValues($p, $values);
 
     // save the page to db
     try {

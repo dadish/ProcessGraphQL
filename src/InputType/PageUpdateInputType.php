@@ -2,6 +2,7 @@
 
 use GraphQL\Type\Definition\InputObjectType;
 use ProcessWire\Template;
+use ProcessWire\Page;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\InputType\PageCreateInputType;
@@ -37,5 +38,9 @@ class PageUpdateInputType
     $fields = array_merge($fields, PageCreateInputType::getTemplateFields($template));
 
     return $fields;
+  }
+
+  public static function setValues(Page $page, array $values) {
+    PageCreateInputType::setValues($page, $values);
   }
 }

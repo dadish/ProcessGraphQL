@@ -6,6 +6,8 @@ use ProcessWire\Template;
 use ProcessWire\Field;
 use ProcessWire\Page;
 use ProcessWire\GraphQL\Cache;
+use ProcessWire\GraphQL\Error\ValidationError;
+use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
 
 class PageCreateInputType
@@ -61,6 +63,11 @@ class PageCreateInputType
       // get the field's GraphQL input class
       $className = $field->type->className();
       if (in_array($className, $unsupportedFieldtypes)) {
+        continue;
+      }
+
+      // skip the fields that user has no edit permission to
+      if (!Permissions::canEditField($field, $template)) {
         continue;
       }
 
@@ -128,6 +135,11 @@ class PageCreateInputType
     // update the values from client
     foreach ($values as $fieldName => $value) {
       $field = Utils::fields()->get($fieldName);
+
+      // check if user has permission to edit this field
+      if (!Permissions::canEditField($field, $page->template)) {
+        throw new ValidationError("You are not allowed to update field '{$field->name}'");
+      }
       
       // skip if field cannot be found
       if (!$field instanceof Field) {
