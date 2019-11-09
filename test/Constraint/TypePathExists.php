@@ -151,7 +151,8 @@ class TypePathExists extends Constraint {
 
     // select the field
     $fieldName = $path[0];
-    $field = self::selectByProperty($type->fields, 'name', $fieldName);
+    $fields = $type->fields ?: $type->inputFields;
+    $field = self::selectByProperty($fields, 'name', $fieldName);
 
     // if there is no more field names to traverse then return what we got
     if (count($path) === 1) {
