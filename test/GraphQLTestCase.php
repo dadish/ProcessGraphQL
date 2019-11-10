@@ -7,8 +7,6 @@ use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Schema;
 use ProcessWire\Template;
 use ProcessWire\Field;
-use ProcessWire\NullPage;
-use ProcessWire\Page;
 
 abstract class GraphqlTestCase extends TestCase {
 
@@ -151,7 +149,7 @@ abstract class GraphqlTestCase extends TestCase {
             if (!$permission->id) {
               continue;
             }
-            $permission->delete();
+            Utils::permissions()->delete($permission);
           }
         }
       }
@@ -295,7 +293,7 @@ abstract class GraphqlTestCase extends TestCase {
       $oldPermissions = implode('|', $accessRules['permissions']);
       $newPermissions = Utils::permissions()->find("name!=$oldPermissions");
       foreach ($newPermissions as $permission) {
-        $permission->delete();
+        Utils::permissions()->delete($permission);
       }
 
       // install back the permission if it is in the original list

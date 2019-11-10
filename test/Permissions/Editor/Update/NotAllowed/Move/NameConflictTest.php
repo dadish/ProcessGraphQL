@@ -8,9 +8,10 @@ use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 class EditorMoveNameConflictTest extends GraphqlTestCase {
 
   /**
-   * + For superuser.
+   * + For editor.
    * + The target template is legal.
    * + The new parent template is legal.
+   * + User got all required permissions
    * - The new parent already has a child with the same name.
    */
   public static function getSettings()
@@ -18,7 +19,22 @@ class EditorMoveNameConflictTest extends GraphqlTestCase {
     return [
       'login' => 'editor',
       'legalTemplates' => ['city', 'skyscraper'],
-      'legalPageFields' => ['parentID']
+      'legalPageFields' => ['parentID'],
+      'access' => [
+        'templates' => [
+          [
+            'name' => 'city',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'addRoles' => ['editor'],
+          ],
+          [
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+          ]
+        ]
+      ]
     ];
   }
 
@@ -64,7 +80,7 @@ class EditorMoveNameConflictTest extends GraphqlTestCase {
     ];
 
     assertNotEquals($newParent->id, $skyscraper->parentID);
-    $res = self::execute($query, $variables); 
+    $res = self::execute($query, $variables);
     assertEquals(1, count($res->errors), 'Does not allow to move if new parent already has a page with the same name.');
     assertStringContainsString('parent', $res->errors[0]->message);
     assertStringContainsString('name', $res->errors[0]->message);

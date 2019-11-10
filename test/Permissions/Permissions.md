@@ -95,15 +95,13 @@ Editor
   ✅ Allowed
   - NotAllowed
     ✅ Template page-edit-created Permission
-    - Rename
-      - Name conflict
-      - Template page-rename Permission
-    - Move + Rename Conflict
+    ✅ Rename
+    ✅ Move + Rename Conflict
     - Move
-      - NoParents On
-      - ParentTemplates Match
+      ✅ Name conflict
+      ✅ Parent Template legal
+      ✅ ParentTemplates Match
       - Template page-move Permission
-      - Parent Template legal
       - Parent Template Add Permission
       - Parent Template NoChildren On
       - Parent Template ChildTemplates Match

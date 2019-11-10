@@ -8,7 +8,7 @@ use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 class EditorMoveRenameNotAllowedTest extends GraphqlTestCase {
 
   /**
-   * + For superuser.
+   * + For editor.
    * + The target template is legal.
    * + The parent template is legal.
    * - The new name is already taken under the new parent.
@@ -18,6 +18,21 @@ class EditorMoveRenameNotAllowedTest extends GraphqlTestCase {
     return [
       'login' => 'editor',
       'legalTemplates' => ['city', 'skyscraper'],
+      'access' => [
+        'templates' => [
+          [
+            'name' => 'city',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'addRoles' => ['editor'],
+          ],
+          [
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+          ]
+        ]
+      ]
     ];
   }
 

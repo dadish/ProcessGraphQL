@@ -8,14 +8,14 @@ use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
 
   /**
-   * + For superuser.
+   * + For editor.
    * + The target template is legal.
    * + The new parent template is legal.
+   * + User has all required permissions.
    * - The new parent template does not match the target template's parentTemplates property.
    */
   public static function getSettings()
   {
-    $architects = Utils::templates()->get("name=architects");
     return [
       'login' => 'editor',
       'legalTemplates' => ['city', 'skyscraper'],
@@ -23,7 +23,15 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'skyscraper',
-            'parentTemplates' => [$architects->id]
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'parentTemplates' => ['architects'] // <-- parent template "city" is not allowed
+          ],
+          [
+            'name' => 'city',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'addRoles' => ['editor'],
           ],
         ]
       ]
