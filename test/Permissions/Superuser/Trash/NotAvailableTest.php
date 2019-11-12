@@ -8,7 +8,7 @@ class SuperuserTrashNotAvailableTest extends GraphqlTestCase {
 
   /**
    * + For Superuser
-   * + The template is legal.
+   * - There is no legal template.
    */
   public static function getSettings()
   {
