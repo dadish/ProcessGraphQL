@@ -101,10 +101,10 @@ Editor
       ✅ Name conflict
       ✅ Parent Template legal
       ✅ ParentTemplates Match
-      - Template page-move Permission
-      - Parent Template Add Permission
-      - Parent Template NoChildren On
-      - Parent Template ChildTemplates Match
+      ✅ Template page-move Permission
+      ✅ Parent Template page-add Permission
+      ✅ Parent Template NoChildren On
+      ✅ Parent Template ChildTemplates Match
 
 - Trash
   - Available
@@ -117,10 +117,3 @@ Editor
   - NotAllowed
     - Template legal
     - Template Delete Permission | Template page-edit-trash-created Permission
-
-- Delete
-  - Available
-  - Allowed
-  - NotAllowed
-    - Template legal
-    - Template Delete Permission

@@ -5,26 +5,39 @@ use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
-class EditorMoveParentTemplateNoChildrenTest extends GraphqlTestCase {
+class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
 
   /**
-   * + For superuser.
+   * + For editor.
    * + The target template is legal.
    * + The new parent template is legal.
-   * - The parent template has noChildren checked.
+   * + The user has all required permissions.
+   * - The target template does not match parent template childTemplates rule.
    */
   public static function getSettings()
   {
+    $architect = Utils::pages()->get('name=architect');
     return [
       'login' => 'editor',
       'legalTemplates' => ['city', 'skyscraper'],
       'access' => [
         'templates' => [
           [
-            'name' => 'city',
-            'noChildren' => 1,
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-move']
+            ]
           ],
-        ],
+          [
+            'name' => 'city',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'addRoles' => ['editor'],
+            'childTemplates' => ['architect'], // <-- parent template has child templates without target template
+          ],
+        ]
       ],
     ];
   }
@@ -50,7 +63,7 @@ class EditorMoveParentTemplateNoChildrenTest extends GraphqlTestCase {
 
     assertNotEquals($newParent->id, $skyscraper->parentID);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template is not legal.');
+    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template has childTemplates without target template.');
     assertStringContainsString('parent', $res->errors[0]->message);
   }
 }

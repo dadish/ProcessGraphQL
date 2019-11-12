@@ -5,39 +5,48 @@ use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
-class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
+class EditorUpdateNotAllowedParentAddPermissionTest extends GraphqlTestCase {
 
   /**
-   * + For superuser.
+   * + For editor.
    * + The target template is legal.
-   * + The new parent template is legal.
-   * - The target template does not match parent template childTemplates rule.
+   * + The parent template is legal.
+   * - The user does not have page-add permission for parent template.
    */
   public static function getSettings()
   {
-    $architect = Utils::pages()->get('name=architect');
     return [
       'login' => 'editor',
-      'legalTemplates' => ['city', 'skyscraper'],
+      'legalTemplates' => ['skyscraper', 'city'],
+      'legalPageFields' => ['parentID'],
       'access' => [
         'templates' => [
           [
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-move']
+            ]
+          ],
+          [
             'name' => 'city',
-            'childTemplates' => [$architect->id],
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            // 'addRoles' => ['editor'], // <-- no page-add permission for parent template
           ],
         ],
-      ],
+      ]
     ];
   }
 
   public function testPermission() {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
-    
     $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
       updateSkyscraper(id: $id, page: $page) {
         id
-        name
+        parentID
       }
     }';
 
@@ -51,7 +60,7 @@ class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
 
     assertNotEquals($newParent->id, $skyscraper->parentID);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template is not legal.');
+    assertEquals(1, count($res->errors), 'Does not allow to move the page if user has no page-add permission for target parent template.');
     assertStringContainsString('parent', $res->errors[0]->message);
   }
 }
