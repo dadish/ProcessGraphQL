@@ -30,6 +30,9 @@ class EditorMoveParentTemplateTest extends GraphqlTestCase {
             'name' => 'skyscraper',
             'roles' => ['editor'],
             'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-move']
+            ]
           ]
         ]
       ]

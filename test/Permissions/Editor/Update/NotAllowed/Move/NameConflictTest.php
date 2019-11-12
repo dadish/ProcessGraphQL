@@ -5,7 +5,7 @@ use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
-class EditorMoveNameConflictTest extends GraphqlTestCase {
+class EditorNotAllowedMoveNameConflictTest extends GraphqlTestCase {
 
   /**
    * + For editor.
@@ -32,6 +32,9 @@ class EditorMoveNameConflictTest extends GraphqlTestCase {
             'name' => 'skyscraper',
             'roles' => ['editor'],
             'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-move']
+            ]
           ]
         ]
       ]
@@ -63,7 +66,7 @@ class EditorMoveNameConflictTest extends GraphqlTestCase {
     $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
     $futureSibling = Utils::pages()->get("template=skyscraper, sort=random, parent={$newParent}");
     $skyscraper->of(true);
-    $skyscraper->name = $futureSibling->name;
+    $skyscraper->name = $futureSibling->name; // <-- name is the same as future sibling
     $skyscraper->save();
     $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
       updateSkyscraper(id: $id, page: $page) {

@@ -5,20 +5,20 @@ use ProcessWire\GraphQL\Utils;
 
 use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
-class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
+class EditorUpdateNotAllowedMovePermissionTest extends GraphqlTestCase {
 
   /**
    * + For editor.
    * + The target template is legal.
-   * + The new parent template is legal.
-   * + User has all required permissions.
-   * - The new parent template does not match the target template's parentTemplates property.
+   * + The parent template is legal.
+   * - The page-move permission is installed and user does not have that permission.
    */
   public static function getSettings()
   {
     return [
       'login' => 'editor',
-      'legalTemplates' => ['city', 'skyscraper'],
+      'legalTemplates' => ['skyscraper', 'city'],
+      'legalPageFields' => ['parentID'],
       'access' => [
         'templates' => [
           [
@@ -26,9 +26,8 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
             'roles' => ['editor'],
             'editRoles' => ['editor'],
             'rolesPermissions' => [
-              'editor' => ['page-move'],
-            ],
-            'parentTemplates' => ['architects'] // <-- parent template "city" is not allowed
+              // 'editor' => ['page-move'] // <-- user should have page-move permission to move the page
+            ]
           ],
           [
             'name' => 'city',
@@ -36,7 +35,7 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
             'editRoles' => ['editor'],
             'addRoles' => ['editor'],
           ],
-        ]
+        ],
       ]
     ];
   }
@@ -44,11 +43,10 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
   public function testPermission() {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
-    
     $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
       updateSkyscraper(id: $id, page: $page) {
         id
-        name
+        parentID
       }
     }';
 
@@ -62,7 +60,7 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
 
     assertNotEquals($newParent->id, $skyscraper->parentID);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template is not legal.');
-    assertStringContainsString('parent', $res->errors[0]->message);
+    assertEquals(1, count($res->errors), 'Does not allow to move the page if page-move permission is installed and user does not have it.');
+    assertStringContainsString('move', $res->errors[0]->message);
   }
 }

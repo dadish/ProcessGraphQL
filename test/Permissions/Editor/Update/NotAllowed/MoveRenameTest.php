@@ -30,6 +30,9 @@ class EditorMoveRenameNotAllowedTest extends GraphqlTestCase {
             'name' => 'skyscraper',
             'roles' => ['editor'],
             'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-move']
+            ]
           ]
         ]
       ]
@@ -39,7 +42,7 @@ class EditorMoveRenameNotAllowedTest extends GraphqlTestCase {
   public function testPermission() {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newParent = Utils::pages()->get("template=city, sort=random, id!={$skyscraper->parentID}");
-    $newName = Utils::pages()->get("template=skyscraper, sort=random, parent=$newParent")->name;
+    $newName = Utils::pages()->get("template=skyscraper, sort=random, parent=$newParent")->name; // <-- the new name is already taken
     $query = 'mutation renamePage($id: ID!, $page: SkyscraperUpdateInput!){
       updateSkyscraper(id: $id, page: $page) {
         name

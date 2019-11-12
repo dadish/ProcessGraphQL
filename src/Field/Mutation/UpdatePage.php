@@ -84,6 +84,16 @@ class UpdatePage
         throw new ValidationError("Could not find the `parent` page with `$parentSelector`.");
       }
 
+      // if user is trying to move the page
+      // make sure user has page-move permission
+      $pageMovePermission = Utils::permissions()->get(Permissions::pageMovePermission);
+      if (
+        $p->parentID !== $parent->id &&
+        !$user->hasPermission($pageMovePermission, $p->template)
+      ) {
+        throw new ValidationError("You are not allowed to move the page '{$p->id}'.");
+      }
+
       // make sure user is allowed to add children to this parent
       $addTemplates = Permissions::getAddTemplates();
       if (!$addTemplates->has($parent->template)) {
