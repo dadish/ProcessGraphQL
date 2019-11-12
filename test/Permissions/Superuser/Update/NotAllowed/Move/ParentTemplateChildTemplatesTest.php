@@ -15,7 +15,6 @@ class SuperuserMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
    */
   public static function getSettings()
   {
-    $architect = Utils::pages()->get('name=architect');
     return [
       'login' => 'admin',
       'legalTemplates' => ['city', 'skyscraper'],
@@ -23,7 +22,7 @@ class SuperuserMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
         'templates' => [
           [
             'name' => 'city',
-            'childTemplates' => [$architect->id],
+            'childTemplates' => ['architect'], // <-- skyscraper is not allowed as a child.
           ],
         ],
       ],
