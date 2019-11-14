@@ -38,9 +38,6 @@ class EditorUpdateNotAllowedEditCreatedPermissionTest extends GraphqlTestCase {
             'name' => 'editor',
             'add' => ['page-edit-created'] // <-- can only edit pages created by herself
           ]
-        ],
-        'permissions' => [
-          'add' => ['page-edit-created'] // <-- page-edit-created permission should be installed in order to work
         ]
       ]
     ];

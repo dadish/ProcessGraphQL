@@ -108,12 +108,14 @@ Editor
 
 - Trash
   - Available
-    - Template Delete Permission
-    - Template page-edit-trash-created Permission
+    ✅ Template Delete Permission
+    ✅ Template page-edit-trash-created Permission
   - Not Available
-    - Template legal
-    - Template Delete Permission | Template page-edit-trash-created Permission
+    ✅ Template legal
+    ✅ Template Delete Permission | Template page-edit-trash-created Permission
   - Allowed
+    - Delete Permission
+    ✅ page-edit-trash-created permission
   - NotAllowed
-    - Template legal
-    - Template Delete Permission | Template page-edit-trash-created Permission
+    ✅ Template legal
+    ✅ Template Delete Permission | Template page-edit-trash-created Permission

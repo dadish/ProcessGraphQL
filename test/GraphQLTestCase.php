@@ -84,10 +84,6 @@ abstract class GraphqlTestCase extends TestCase {
       }
     }
 
-    if (isset($accessRules['permissions'])) {
-      $originals['permissions'] = Utils::permissions()->find("name!=0")->explode('name');
-    }
-
     self::$originalAccessRules = $originals;
     return $originals;
   }
@@ -129,30 +125,6 @@ abstract class GraphqlTestCase extends TestCase {
 
     if (isset($settings['access'])) {
       self::rememberOriginalAccessRules($settings['access']);
-
-      if (isset($settings['access']['permissions'])) {
-        $permissions = $settings['access']['permissions'];
-        if (isset($permissions['add'])) {
-          foreach ($permissions['add'] as $permissionName) {
-            $permission = Utils::permissions()->get($permissionName);
-            if ($permission->id) {
-              continue;
-            }
-            $permission = Utils::permissions()->add($permissionName);
-            $permission->title = $permissionName;
-            $permission->save();
-          }
-        }
-        if (isset($permissions['remove'])) {
-          foreach ($permissions['remove'] as $permissionName) {
-            $permission = Utils::permissions()->get($permissionName);
-            if (!$permission->id) {
-              continue;
-            }
-            Utils::permissions()->delete($permission);
-          }
-        }
-      }
 
       if (isset($settings['access']['roles'])) {
         foreach ($settings['access']['roles'] as $rules) {
@@ -284,28 +256,6 @@ abstract class GraphqlTestCase extends TestCase {
         foreach ($rules['permissions'] as $permission) {
           $role->addPermission($permission);
         }
-      }
-    }
-
-    if (isset($accessRules['permissions'])) {
-      // remove all permissions that were not in the
-      // original permissions list
-      $oldPermissions = implode('|', $accessRules['permissions']);
-      $newPermissions = Utils::permissions()->find("name!=$oldPermissions");
-      foreach ($newPermissions as $permission) {
-        Utils::permissions()->delete($permission);
-      }
-
-      // install back the permission if it is in the original list
-      // but not installed
-      foreach ($accessRules['permissions'] as $permissionName) {
-        $permission = Utils::permissions()->get($permissionName);
-        if ($permission->id) {
-          continue;
-        }
-        $permission = Utils::permissions()->add($permissionName);
-        $permission->title = $permissionName;
-        $permission->save();
       }
     }
   }

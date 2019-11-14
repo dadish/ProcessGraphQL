@@ -3,17 +3,30 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorTrashAllowedTest extends GraphqlTestCase {
+class EditorTrashAllowedDeletePermissionTest extends GraphqlTestCase {
 
   /**
-   * + For Superuser
+   * + For editor
    * + The template is legal.
+   * + The user has all required permissions
    */
   public static function getSettings()
   {
     return [
       'login' => 'editor',
       'legalTemplates' => ['skyscraper'],
+      'access' => [
+        'templates' => [
+          [
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-delete'] // <-- has page-delete permission
+            ]
+          ]
+        ],
+      ]
     ];
   }
 

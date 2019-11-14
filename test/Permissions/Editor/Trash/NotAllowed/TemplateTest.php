@@ -15,7 +15,27 @@ class EditorTrashNotAllowedTemplateTest extends GraphqlTestCase {
   {
     return [
       'login' => 'editor',
-      'legalTemplates' => ['city'],
+      'legalTemplates' => ['city'], // <-- skyscraper template is not legal
+      'access' => [
+        'templates' => [
+          [
+            'name' => 'skyscraper',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-delete']
+            ]
+          ],
+          [
+            'name' => 'city',
+            'roles' => ['editor'],
+            'editRoles' => ['editor'],
+            'rolesPermissions' => [
+              'editor' => ['page-delete']
+            ]
+          ]
+        ],
+      ]
     ];
   }
 
