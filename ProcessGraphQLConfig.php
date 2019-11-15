@@ -181,11 +181,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $inputfields = parent::getInputFields();
 
     // legalTemplates
-    $f = $this->modules->get('InputfieldCheckboxes');
+    $f = $this->modules->get('InputfieldAsmSelect');
     $f->optionColumns = 4;
     $f->attr('name', 'legalTemplates');
-    $f->label = 'Legal Templates';
-    $f->description = 'Only the templates that are selected here and have Access Control enabled will be handled by this module.';
+    $f->label = 'Templates';
+    $f->description = 'Choose which page templates you want to be served via GraphQL api.';
     $gotDisabledFields = false;
     foreach (\ProcessWire\wire('templates') as $template) {
       // skip repeater templates
@@ -197,7 +197,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
         $attributes['disabled'] = true;
         $gotDisabledFields = true;
       }
-      $label = $template->flags & Template::flagSystem ? "{$template->name} `(system)`" : $template->name;
+      $label = $template->flags & Template::flagSystem ? "{$template->name} (system)" : $template->name;
       $f->addOption($template->name, $label, $attributes);
     }
     $notes = "Please be careful with what you are exposing to the public. Choosing templates marked as `system` can lead to security vulnerabilities.";
@@ -209,26 +209,26 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $inputfields->add($f);
 
     // legalFields
-    $f = $this->modules->get('InputfieldCheckboxes');
+    $f = $this->modules->get('InputfieldAsmSelect');
     $f->optionColumns = 4;
     $f->attr('name', 'legalFields');
-    $f->label = 'Legal Fields';
-    $f->description = 'The fields that you select below will be available via your GraphQL api.';
+    $f->label = 'Fields';
+    $f->description = 'Choose which fields you want to be served via GraphQL api.';
     $f->notes = 'Please be careful with what you are exposing to the public. Choosing fields marked as `system` can to lead security vulnerabilities.';
     foreach (\ProcessWire\wire('fields')->find("name!=pass") as $field) {
       if ($field->type instanceof FieldtypeFieldsetOpen) continue;
       if ($field->type instanceof FieldtypeFieldsetClose) continue;
       if ($field->type instanceof FieldtypeFieldsetTabOpen) continue;
-      $f->addOption($field->name, $field->flags & Field::flagSystem ? "{$field->name} `(system)`" : $field->name);
+      $f->addOption($field->name, $field->flags & Field::flagSystem ? "{$field->name} (system)" : $field->name);
     }
     $inputfields->add($f);
 
     // legalPageFields
-    $f = $this->modules->get('InputfieldCheckboxes');
+    $f = $this->modules->get('InputfieldAsmSelect');
     $f->optionColumns = 4;
     $f->attr('name', 'legalPageFields');
-    $f->label = 'Legal Page Fields';
-    $f->description = 'Choose which built in `Page` fields you wish to be available via GraphQL api.';
+    $f->label = 'Page Fields';
+    $f->description = 'Choose which built in `Page` fields you want to be served via GraphQL api.';
     $f->notes = 'Be careful with fields like `parents` & `children` that will allow user to construct deeply nested queries that might be very expensive for your server to fulfill.';
     foreach (PageType::getBuiltInFields() as $field) {
       $f->addOption($field['name']);
@@ -236,11 +236,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $inputfields->add($f);
 
     // legalPageFileFields
-    $f = $this->modules->get('InputfieldCheckboxes');
+    $f = $this->modules->get('InputfieldAsmSelect');
     $f->optionColumns = 4;
     $f->attr('name', 'legalPageFileFields');
-    $f->label = 'Legal PageFile Fields';
-    $f->description = 'Choose which built in `PageFile` fields you wish to be available via GraphQL api.';
+    $f->label = 'PageFile Fields';
+    $f->description = 'Choose which built in `PageFile` fields you want to be served via GraphQL api.';
     $f->notes = 'These fields are also inherited by `PageImage`.';
     foreach (FileType::getBuiltInFields() as $field) {
       $f->addOption($field['name']);
@@ -248,11 +248,11 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $inputfields->add($f);
 
     // legalPageImageFields
-    $f = $this->modules->get('InputfieldCheckboxes');
+    $f = $this->modules->get('InputfieldAsmSelect');
     $f->optionColumns = 4;
     $f->attr('name', 'legalPageImageFields');
-    $f->label = 'Legal PageImage Fields';
-    $f->description = 'Choose which built in `PageImage` fields you wish to be available via GraphQL api.';
+    $f->label = 'PageImage Fields';
+    $f->description = 'Choose which built in `PageImage` fields you want to be served via GraphQL api.';
     foreach (ImageType::getBuiltInFields() as $field) {
       $f->addOption($field['name']);
     }
@@ -279,32 +279,27 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f = $this->modules->get('InputfieldInteger');
     $f->attr('name', 'maxLimit');
     $f->label = 'Max Limit';
-    $f->description = 'Set the maximum value for `limit` selector field.';
+    $f->description = 'Set the maximum value for `limit` selector field for GraphQL api.';
     $f->required = true;
     $inputfields->add($f);
-
-    // ADVANCED
-    $fSet = $this->modules->get('InputfieldFieldset');
-    $fSet->label = 'Advanced';
-    $fSet->collapsed = Inputfield::collapsedYes;
 
     // meQuery
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'meQuery');
     $f->label = 'me Query';
     $f->columnWidth = 50;
-    $desc = "Adds '`me`' query field. Allows user to query her credentials.";
+    $desc = "Adds `me` query field. Allows user to query her credentials.";
     $f->description = $desc;
-    $fSet->add($f);
+    $inputfields->add($f);
 
     // authQuery
     $f = $this->modules->get('InputfieldCheckbox');
     $f->attr('name', 'authQuery');
     $f->label = 'login/logout Query';
     $f->columnWidth = 50;
-    $desc = "Adds '`login`' & '`logout`' fields. Allows users to authenticate via GraphQL API.";
+    $desc = "Adds `login` & `logout` fields. Allows users to authenticate via GraphQL API.";
     $f->description = $desc;
-    $fSet->add($f);
+    $inputfields->add($f);
 
     $inputfields->add($fSet);
 
