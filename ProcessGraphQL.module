@@ -113,12 +113,12 @@ class ProcessGraphQL extends Process implements Module {
    */
 	public function setupGraphiQLAssets()
 	{
-		$this->config->scripts->add("https://cdn.jsdelivr.net/es6-promise/4.0.5/es6-promise.auto.min.js");
-		$this->config->scripts->add("https://cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js");
-		$this->config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react.min.js");
-		$this->config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react-dom.min.js");
-		$this->config->scripts->add($this->config->urls->ProcessGraphQL . 'GraphiQL/graphiql.min.js');
-		$this->config->styles->add($this->config->urls->ProcessGraphQL . 'GraphiQL/graphiql.css');
+		$this->config->scripts->add("https://unpkg.com/es6-promise@4.2.8/dist/es6-promise.auto.min.js");
+		$this->config->scripts->add("https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js");
+		$this->config->scripts->add("https://unpkg.com/react@16.12.0/umd/react.production.min.js");
+		$this->config->scripts->add("https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js");
+		$this->config->scripts->add('https://unpkg.com/graphiql@0.14.2/graphiql.min.js');
+		$this->config->styles->add('https://unpkg.com/graphiql@0.14.2/graphiql.css');
 		$this->config->js($this->className, [
 			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
 		]);

@@ -22,12 +22,12 @@ $config->js('ProcessGraphQL', [
   'GraphQLServerUrl' => 'http://localhost:8081',
 ]);
 
-$config->scripts->add("https://cdn.jsdelivr.net/es6-promise/4.0.5/es6-promise.auto.min.js");
-$config->scripts->add("https://cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js");
-$config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react.min.js");
-$config->scripts->add("https://cdn.jsdelivr.net/react/15.4.2/react-dom.min.js");
-$config->scripts->add('node_modules/graphiql/graphiql.min.js');
-$config->styles->add('node_modules/graphiql/graphiql.css');
+$config->scripts->add("https://unpkg.com/es6-promise@4.2.8/dist/es6-promise.auto.min.js");
+$config->scripts->add("https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js");
+$config->scripts->add("https://unpkg.com/react@16.12.0/umd/react.production.min.js");
+$config->scripts->add("https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js");
+$config->scripts->add('https://unpkg.com/graphiql@0.14.2/graphiql.min.js');
+$config->styles->add('https://unpkg.com/graphiql@0.14.2/graphiql.css');
 
 $filename = realpath($baseDir . $_SERVER['SCRIPT_NAME']);
 if ($filename === $baseDir) {

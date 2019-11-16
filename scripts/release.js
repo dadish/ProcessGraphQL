@@ -35,17 +35,6 @@ async function release(releaseLevel) {
     "Removing extraneous files from graphql-php"
   );
 
-  // copy the graphiql dependencies to our GraphiQL folder
-  await execute(
-    "cp",
-    [
-      path.resolve(`${__dirname}/../node_modules/graphiql/graphiql.min.js`),
-      path.resolve(`${__dirname}/../node_modules/graphiql/graphiql.css`),
-      path.resolve(`${__dirname}/../GraphiQL/`)
-    ],
-    "Extracting the graphiql dependencies from node_modules"
-  );
-
   // update the .module file version number.
   await updateFile(
     path.resolve(`${__dirname}/../ProcessGraphQL.module`),
