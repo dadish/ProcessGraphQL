@@ -2,6 +2,7 @@
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\ResolveInfo;
 use ProcessWire\Template;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\PageType;
@@ -137,7 +138,8 @@ class PageArrayType {
           'description' => "ProcessWire selector."
         ],
       ],
-      'resolve' => function ($pages, array $args) use ($template) {
+      'resolve' => function ($pages, array $args, $context, ResolveInfo $info) use ($template) {
+				$finderOptions = self::getFinderOptions($info);
 				$selector = "";
 				if ($template) {
 					$selector .= "template=$template, ";
@@ -146,9 +148,23 @@ class PageArrayType {
           $selector .= $args['s'] . ", ";
 				}
 				rtrim($selector, ", ");
-				return $pages->find(SelectorType::parseValue($selector));
+				return $pages->find(SelectorType::parseValue($selector), $finderOptions);
       }
     ];
+	}
+
+	public static function getFinderOptions(ResolveInfo $info)
+	{
+		$loadOptions = [];
+		$subfields = $info->getFieldSelection(1);
+		if (isset($subfields['list']) && is_array($subfields['list'])) {
+			$loadOptions['autojoin'] = true;
+			$loadOptions['joinFields'] = array_keys($subfields['list']);
+		}
+		$finderOptions = [
+			'loadOptions' => $loadOptions,
+		];
+		return $finderOptions;
 	}
 
 	public static function getPaginationFields()
