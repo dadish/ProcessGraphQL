@@ -6,12 +6,25 @@ use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
 class DbQueryCountTest extends GraphQLTestCase {
 
+  public static function getSettings()
+  {
+    return [
+      'login' => 'admin',
+      'legalTemplates' => ['architect', 'skyscraper'],
+      'legalFields' => [
+        'title', 'options', 'images',
+        'architects', 'born', 'resume',
+        'height', 'floors', 'year'
+      ],
+    ];
+  }
+
   /**
    * The lowest database query count so far. Taken from executing the $performanceQuery query.
    *
    * @var integer
    */
-  public static $bestQueryCount = 309;
+  public static $bestQueryCount = 442;
 
   /**
    * The query we use to test the performance of the module by counting
@@ -25,6 +38,9 @@ class DbQueryCountTest extends GraphQLTestCase {
       list{
         id
         title
+        height
+        floors
+        year
         images {
           url
           width
@@ -33,9 +49,9 @@ class DbQueryCountTest extends GraphQLTestCase {
         }
         architects{
           list{
+            id
             title
             created
-            id
             born
             resume{
               url
@@ -46,15 +62,6 @@ class DbQueryCountTest extends GraphQLTestCase {
       }
     }
   }';
-
-  public static function getSettings()
-  {
-    return [
-      'login' => 'admin',
-      'legalTemplates' => ['architect', 'skyscraper'],
-      'legalFields' => ['title', 'options', 'images', 'architects', 'born', 'resume'],
-    ];
-  }
 
   public function testDbQueryCount() {
     $queryCountStart = \ProcessWire\Database::getQueryLog();
