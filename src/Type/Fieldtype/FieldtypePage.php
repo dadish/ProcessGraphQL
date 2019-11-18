@@ -1,11 +1,13 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
+use GraphQL\Deferred;
 use ProcessWire\Page;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\Inputfield\InputfieldPage;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\SelectorType;
+use ProcessWire\GraphQL\PagesBuffer;
 
 class FieldtypePage
 {
@@ -34,11 +36,19 @@ class FieldtypePage
         'name' => $field->name,
         'description' => $desc,
         'type' => self::type($field),
-        'resolve' => function ($value) use ($field) {
-          $fieldName = $field->name;
-          $field = \ProcessWire\wire('fields')->get($fieldName);
-          $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
-          return $value->$fieldName->find(SelectorType::parseValue(""));
+        'resolve' => function ($value, $args, $context, $info) use ($field) {
+          $data = $value->getArray();
+          if (isset($data[$field->name])) {
+            PagesBuffer::add($field->name, $data[$field->name]);
+          }
+          return new Deferred(function () use ($value, $field, $info) {
+            $finderOptions = PageArrayType::getFinderOptions($info);
+            PagesBuffer::loadPages($field->name, $finderOptions);
+            $fieldName = $field->name;
+            $field = \ProcessWire\wire('fields')->get($fieldName);
+            $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
+            return $value->$fieldName->find(SelectorType::parseValue(""));
+          });
         }
       ];
     });
