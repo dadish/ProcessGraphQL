@@ -1,6 +1,7 @@
 <?php namespace ProcessWire;
 
 use GraphQL\GraphQL;
+use GraphQL\Error\Debug;
 use ProcessWire\HookEvent;
 use ProcessWire\GraphQL\Schema;
 use Processwire\ProcessGraphQLConfig;
@@ -181,8 +182,12 @@ class ProcessGraphQL extends Process implements Module {
 
 		// instantiating Processor and setting the schema
     $schema = Schema::getSchema();
-    $result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
-		$response = $result->toArray(true);
+		$result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
+		$debug = null;
+		if ($this->config->debug) {
+			$debug = $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE;
+		}
+		$response = $result->toArray($debug);
 		return $response;
 	}
 
