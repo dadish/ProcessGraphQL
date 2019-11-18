@@ -52,7 +52,7 @@ The ProcessGraphQL module will serve only the parts of your content which you ex
 The module configuration page provides you with exactly that. Here you should choose what parts of 
 your website should be available via GraphQL API. The options are grouped into four sections.
 
-#### Legal Templates
+#### Templates
 In this section you choose the _templates_ that you want ProcessGraphQL to handle. The pages associated 
 with the templates you choose here will be available to the _superuser_ immediately. You will see later 
 how you can grant access to these template to other user roles as well.
@@ -61,25 +61,25 @@ how you can grant access to these template to other user roles as well.
 > compatible with [GraphQL api naming rules][graphql-naming]. You will have to change the names of the template and/or 
 > field so that it conforms those rules if you want ProcessGraphQL module to handle for you.
 
-#### Legal Fields
+#### Fields
 Here you should choose the fields that you want to be available via GraphQL API. These fields also 
 will immediately be available to the _superuser_.
 
 > Beware when you choose _system_ templates & fields as legal for ProcessGraphQL module. This could 
 > potentially expose very sensitive information and undermine security of your website.
 
-#### Legal Page Fields
+#### Page Fields
 These are the built-in fields of the ProcessWire Page. You should choose only the ones you will 
 certainly need in your API. E.g. `created`, `id`, `name`, `url`, `path`, `createdUser`, `parent`, 
 `siblings` and so on.
 
-#### Legal PageFile Fields
+#### PageFile Fields
 Built-in fields of the FieldtypeFile and FieldtypeImage. E.g. `filesize`, `url`, `ext`, `basename` 
 and so on.
 
-Don't mind the __Advanced__ section for now. We will come to that later. After you chose all parts 
-you need, submit the module configuration. Now you can go to _Setup -> GraphQL_ and you will see 
-the GraphiQL GUI where you can query your GraphQL api. Go ahead and play with it.
+After you chose all parts you need, submit the module configuration. Now you can go to
+_Setup -> GraphQL_ and you will see the GraphiQL GUI where you can query your GraphQL api.
+Go ahead and play with it.
 
 ## Access Control
 As mentioned above, the GraphQL API will be accessible only by _superuser_. To grant access to users 
@@ -88,32 +88,27 @@ user with role `skyscraper-editor` to be able to view pages with template `skysc
 Templates -> skyscraper -> Access_, enable access settings, and make sure that `skyscraper-editor` 
 role has `View Page` rule.
 
-> The ProcessWire'a Access Control system is very flexible and allows you to fine tune your access rules 
-> the way you want. You will use it to control your GraphQL API as well. Learn more about ProcessWire's 
-> Access Control system [here][pw-access].
-
 The above configuration will allow the `skyscraper-editor` to view `skyscraper` pages' built-in fields 
 that you have enabled, but that's not the end of it. If you want the `skyscraper-editor` user to view 
-the template fields like _title, headline, body_, you will need to make those fields viewable in 
-their respective __Access__ settings.
+the template fields like _title, headline, body_, you will need to make those fields viewable too.
 
-You might say that this much restriction is too much. It is true, but no worries we got you covered. 
-This is just the default behavior and set that way to ensure maximum security. If you don't want to 
-go over fields' Access settings and setup rules for each of them manually, you can change the module's 
-behavior in the __Advanced__ section of the module configuration page. There are two options that change 
-the module's behavior regarding security.
+Select the __Basics__ tab for `skyscraper` template and press on the field `title`. There should be a modal that allows you to configure the `title` field in the context of `skyscraper` template. Press on the __Access__ tab and enable view access for `skyscraper-editor` role and now users that have `skyscraper-editor` role can view the `title` field of the `skyscraper` template.
 
-#### Grant Template Access
-If you check this field, all the legal templates that do not have their __Access__ settings enabled, will 
-be available to everyone. But they will still conform to __Access__ settings when they are enabled. 
-So you can restrict each template via their __Access__ settings.
+The ProcessWire's Access Control system is very flexible and allows you to fine tune your access rules
+the way you want. You will use it to control access to your GraphQL API as well. ProcessGraphQL treats
+exactly the way ProcessWire does. Below is the list of permissions supported by ProcessGraphQL.
 
-#### Grant Field Access
-This works the same as the above. Grants access to all fields that do not have __Access__ settings 
-enabled. This option could be useful in cases where you have 20 or something fields and you want 
-all of them be accessible and add restrictions to only few via field's Access settings. Remember that 
-you can also configure field Access rules in template context. That means you can make _images_ field 
-viewable in _skyscraper_ template and closed in others.
+  - `page-add`
+  - `page-create`
+  - `page-delete`
+  - `page-edit`
+  - `page-move`
+  - `page-view`
+  - `page-edit-created`
+  - `page-edit-trash-created`
+
+Learn more about ProcessWire's Access Control system [here][pw-access].
+
 
 ## API
 ### GraphQL endpoint
@@ -123,7 +118,8 @@ in your template file. Here is what it might look like
 <?php
 // /site/templates/graphql.php
 
-echo $modules->get('ProcessGraphQL')->executeGraphQL();
+$result = $modules->get('ProcessGraphQL')->executeGraphQL();
+echo json_encode($result);
 ```
 This will automatically capture the GraphQL request from your client and respond to it. If you need 
 some manual control on this, `executeGraphQL` accepts `$query` & `$variables` arguments and it will 
@@ -135,11 +131,11 @@ request from the client before passing it to ProcessGraphQL. Here how it might l
 
 $query = $input->post->query;
 $variables = $input->post->variables;
-...
+
 // modify your $query and $variables here...
-...
+
 $result = $modules->get('ProcessGraphQL')->executeGraphQL($query, $variables);
-echo $result;
+echo json_encode($result);
 ```
 
 ### GraphiQL endpoint
@@ -179,14 +175,14 @@ GraphQL query operation. Here how it could look like in your `graphql.php` templ
 ```php
 <?php namespace ProcessWire;
 
-use Youshido\GraphQL\Type\Scalar\StringType;
+use GraphQL\Type\Definition\Type;
 
 $processGraphQL = $modules->get('ProcessGraphQL');
 
 wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
     $query = $event->return;
     $query->addField('hello', [
-        'type' => new StringType(),
+        'type' => Type::string(),
         'resolve' => function () {
             return 'world!';
         }
@@ -196,8 +192,8 @@ wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
 echo $processGraphQL->executeGraphQL();
 ```
 The above code will add a `hello` field into your GraphQL api that reponds with the string `world`. 
-You should notice that we use third party library `Youshido\GraphQL` to modify our query. It's the 
-library used by ProcessGraphQL internally. We recommend you to checkout the [library documentation][youshido-graphql] 
+You should notice that we use third party library to modify our query. It's the  library used by
+ProcessGraphQL internally. We recommend you to checkout the [library documentation][webonyx-graphql] 
 to learn more about how you can modify your GraphQL api.
 
 #### getMutation() hook
@@ -237,6 +233,7 @@ At this moment ProcessGraphQL handles most of the ProcessWire's core fieldtypes.
 - FieldtypeTextareaLanguage
 - FieldtypeURL
 - FieldtypeMapMarker (via [GraphQLFieldtypeMapMarker][map-marker-graphql])
+- FieldtypeRepeater
 
 ### Third-party Fieldtypes Support
 You can add support for any third-party fieldtype by creating a module for it. The example module 
@@ -262,7 +259,7 @@ integer (id of the page) as a value.
 ##### public static function setValue(Page $page, Field $field, $value)
 Given the `$page`, `$field` and a `$value`, the method sets the value to the page's given field.
 
-> Note: The GraphQL api is built upon [Youshido/GraphQL][youshido-graphql] library. So the methods above should 
+> Note: The GraphQL api is built upon [webonyx/graphql-php][webonyx-graphql] library. So the methods above should 
 > be built using that library. Please see [GraphQLFieldtypeMapMarker][map-marker-graphql] module for reference.
 
 When your module is ready, just install it and it should be automatically used by ProcessGraphQL and 
@@ -284,9 +281,8 @@ your fieldtype should be available via your GraphQL api.
 [img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Filtering.gif
 [img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Fieldtypes.gif
 [img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Documentation.gif
-[youshido-graphql]: https://github.com/Youshido/GraphQL
 [travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
 [travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
 [map-marker-graphql]: https://github.com/dadish/GraphQLFieldtypeMapMarker
-[youshido-graphql]: https://github.com/youshido/graphql
+[webonyx-graphql]: https://github.com/webonyx/graphql-php
