@@ -12,7 +12,6 @@ class Permissions
   public const pageDeletePermission = 'page-delete';
   public const pageEditPermission = 'page-edit';
   public const pageMovePermission = 'page-move';
-  public const pageSortPermission = 'page-sort';
   public const pageViewPermission = 'page-view';
   public const pageEditCreatedPermission = 'page-edit-created';
   public const pageEditTrashCreatedPermission = 'page-edit-trash-created';
