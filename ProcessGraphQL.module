@@ -14,7 +14,7 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '1.0.1',
+			'version' => '1.0.2',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
