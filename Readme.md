@@ -96,7 +96,7 @@ Select the __Basics__ tab for `skyscraper` template and press on the field `titl
 
 The ProcessWire's Access Control system is very flexible and allows you to fine tune your access rules
 the way you want. You will use it to control access to your GraphQL API as well. ProcessGraphQL treats
-exactly the way ProcessWire does. Below is the list of permissions supported by ProcessGraphQL.
+permissions exactly the way ProcessWire does. Below is the list of permissions supported by ProcessGraphQL.
 
   - `page-add`
   - `page-create`
