@@ -301,7 +301,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
     $f->description = $desc;
     $inputfields->add($f);
 
-    $inputfields->add($fSet);
+    $inputfields->add($f);
 
     return $inputfields;
   }
