@@ -45,8 +45,8 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
     
-    $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
-      updateSkyscraper(id: $id, page: $page) {
+    $query = 'mutation movePage($page: SkyscraperUpdateInput!){
+      updateSkyscraper(page: $page) {
         id
         name
       }
@@ -54,8 +54,8 @@ class EditorMoveTemplateParentTemplatesTest extends GraphqlTestCase {
 
 
     $variables = [
-      'id' => $skyscraper->id,
       'page' => [
+        'id' => $skyscraper->id,
         'parent' => $newParent->id,
       ]
     ];

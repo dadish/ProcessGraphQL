@@ -20,7 +20,6 @@ class UpdatePage
       'description' => self::description($template),
       'type' => PageType::type($template),
       'args' => [
-        'id' => Type::nonNull(Type::id()),
         'page' => Type::nonNull(PageUpdateInputType::type($template)),
       ],
       'resolve' => function ($value, $args) use ($template) {
@@ -46,7 +45,7 @@ class UpdatePage
     $user = Utils::user();
     $sanitizer = Utils::sanitizer();
     $values = (array) $args['page'];
-    $id = (integer) $args['id'];
+    $id = (integer) $values['id'];
     $p = $pages->get($id);
 
     // make sure the target page exists
@@ -139,6 +138,9 @@ class UpdatePage
 
       $p->name = $name;
     }
+
+    // unset the id because you cannot update the id
+    unset($values['id']);
 
     // unset the parent and name as we set them above
     unset($values['parent']);

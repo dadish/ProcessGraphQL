@@ -33,15 +33,15 @@ class EditorRenameNotAllowedTest extends GraphqlTestCase {
   public function testPermission() {
     $architect = Utils::pages()->get("template=architect, sort=random");
     $newName = Utils::pages()->get("template=architect, sort=random, id!={$architect->id}")->name;
-    $query = 'mutation renamePage($id: ID!, $page: ArchitectUpdateInput!){
-      updateArchitect(id: $id, page: $page) {
+    $query = 'mutation renamePage($page: ArchitectUpdateInput!){
+      updateArchitect(page: $page) {
         name
       }
     }';
 
     $variables = [
-      'id' => $architect->id,
       'page' => [
+        'id' => $architect->id,
         'name' => $newName
       ]
     ];

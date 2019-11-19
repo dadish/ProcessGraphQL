@@ -22,16 +22,16 @@ class UpdatePageCaseOneTest extends GraphQLTestCase {
   public function testValue()
   {
   	$skyscraper = Utils::pages()->get("template=skyscraper");
-  	$query = 'mutation updatePage ($id: Int!, $page: SkyscraperUpdateInput!) {
-  		updateSkyscraper (id: $id, page: $page) {
+  	$query = 'mutation updatePage ($page: SkyscraperUpdateInput!) {
+  		updateSkyscraper (page: $page) {
   			title
   		}
   	}';
   	$variables = [
   		"page" => [
+				"id" => $skyscraper->id,
 				"title" => "Old Building Sky"
   		],
-      "id" => $skyscraper->id
   	];
 		$res = self::execute($query, $variables);
 		$this->assertEquals(2, count($res->errors), 'updateSkyscraper is not available if `skyscraper` template is not legal.');

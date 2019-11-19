@@ -49,16 +49,16 @@ class SuperuserMoveNameConflictTest extends GraphqlTestCase {
     $skyscraper->of(true);
     $skyscraper->name = $futureSibling->name;
     $skyscraper->save();
-    $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
-      updateSkyscraper(id: $id, page: $page) {
+    $query = 'mutation movePage($page: SkyscraperUpdateInput!){
+      updateSkyscraper(page: $page) {
         parentID
       }
     }';
 
 
     $variables = [
-      'id' => $skyscraper->id,
       'page' => [
+        'id' => $skyscraper->id,
         'parent' => $newParent->id,
       ]
     ];

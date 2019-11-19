@@ -1,5 +1,6 @@
 <?php namespace ProcessWire\GraphQL\InputType;
 
+use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\InputObjectType;
 use ProcessWire\Template;
 use ProcessWire\Page;
@@ -30,6 +31,13 @@ class PageUpdateInputType
   public static function getFields(Template $template)
   {
     $fields = [];
+
+    // add the page id
+    $fields[] = [
+      'name' => 'id',
+      'type' => Type::nonNull(Type::id()),
+      'description' => 'ProcessWire Page id of the page you want to update.',
+    ];
 
     // add built in fields
     $fields = array_merge($fields, PageCreateInputType::getBuiltInFields());

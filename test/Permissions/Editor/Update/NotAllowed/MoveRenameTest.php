@@ -43,15 +43,15 @@ class EditorMoveRenameNotAllowedTest extends GraphqlTestCase {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newParent = Utils::pages()->get("template=city, sort=random, id!={$skyscraper->parentID}");
     $newName = Utils::pages()->get("template=skyscraper, sort=random, parent=$newParent")->name; // <-- the new name is already taken
-    $query = 'mutation renamePage($id: ID!, $page: SkyscraperUpdateInput!){
-      updateSkyscraper(id: $id, page: $page) {
+    $query = 'mutation renamePage($page: SkyscraperUpdateInput!){
+      updateSkyscraper(page: $page) {
         name
       }
     }';
 
     $variables = [
-      'id' => $skyscraper->id,
       'page' => [
+        'id' => $skyscraper->id,
         'name' => $newName,
         'parent' => $newParent->id,
       ]

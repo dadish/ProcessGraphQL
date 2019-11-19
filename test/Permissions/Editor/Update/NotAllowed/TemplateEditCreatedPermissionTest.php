@@ -46,8 +46,8 @@ class EditorUpdateNotAllowedEditCreatedPermissionTest extends GraphqlTestCase {
   public function testPermission() {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $newTitle = 'New Title for Skyscraper';
-    $query = 'mutation movePage($id: ID!, $page: SkyscraperUpdateInput!){
-      updateSkyscraper(id: $id, page: $page) {
+    $query = 'mutation movePage($page: SkyscraperUpdateInput!){
+      updateSkyscraper(page: $page) {
         id
         title
       }
@@ -55,8 +55,8 @@ class EditorUpdateNotAllowedEditCreatedPermissionTest extends GraphqlTestCase {
 
 
     $variables = [
-      'id' => $skyscraper->id,
       'page' => [
+        'id' => $skyscraper->id,
         'title' => $newTitle,
       ]
     ];

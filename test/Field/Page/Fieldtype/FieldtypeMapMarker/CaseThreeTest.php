@@ -23,8 +23,8 @@ class FieldtypeMapMarkerCaseThreeTest extends GraphQLTestCase {
   public function testValue()
   {
     $skyscraper = Utils::pages()->get("template=skyscraper");
-    $query = 'mutation updatePage($id: ID!, $page: SkyscraperUpdateInput!) {
-      skyscraper: updateSkyscraper (id: $id, page: $page) {
+    $query = 'mutation updatePage($page: SkyscraperUpdateInput!) {
+      skyscraper: updateSkyscraper (page: $page) {
         id
         map {
           lat
@@ -40,8 +40,8 @@ class FieldtypeMapMarkerCaseThreeTest extends GraphQLTestCase {
     $zoom = 3;
     $name = "updated-building-with-location";
     $variables = [
-      'id' => $skyscraper->id,
       'page' => [
+        'id' => $skyscraper->id,
         'map' => [
           'lat' => $lat,
           'lng' => $lng,
