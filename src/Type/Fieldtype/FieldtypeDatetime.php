@@ -1,7 +1,8 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
+use ProcessWire\Page;
+use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\CustomScalarType;
-use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
 
@@ -41,11 +42,32 @@ class FieldtypeDatetime
         $desc = "Field with the type of {$field->type}";
       }
 
-      return Resolver::resolveWithDateFormatter([
+      return [
         'name' => $field->name,
         'description' => $desc,
         'type' => self::type($field),
-      ]);
+        'args' => [
+          'format' => [
+            'type' => Type::string(),
+            'description' => "PHP date formatting string. Refer to https://devdocs.io/php/function.date",
+          ],
+        ],
+        'resolve' => function (Page $page, array $args) use ($field) {
+          $name = $field->name;
+      
+          if (isset($args['format'])) {
+            $format = $args['format'];
+            $rawValue = $page->getUnformatted($name);
+            if ($rawValue) {
+              return date($format, $rawValue);
+            } else {
+              return "";
+            }
+          }
+          
+          return $page->$name;
+        }
+      ];
     });
   }
 

@@ -3,16 +3,21 @@
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
+use ProcessWire\NullPage;
 use ProcessWire\Template;
+use ProcessWire\WireData;
+use ProcessWire\FieldtypeDatetime;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
-use ProcessWire\GraphQL\Type\Resolver;
 use ProcessWire\GraphQL\Type\UserType;
 use ProcessWire\GraphQL\Type\PageArrayType;
+use ProcessWire\GraphQL\Type\SelectorType;
 
 class PageType
 {
+  private static $emptyUser;
+
   public static function &type($template = null)
   {
     $type = null;
@@ -37,14 +42,14 @@ class PageType
   {
     $type =& self::type();
     return [
-      Resolver::resolvePagefieldWithSelector([
+      self::resolvePagefieldWithSelector([
         'name' => 'child',
         'type' => $type,
         'description' => "The first child of this page. If the `s`(selector) argument is provided then the 
                           first matching child (subpage) that matches the given selector. Returns a Page or null.",
       ]),
 
-      Resolver::resolvePagefieldWithSelector([
+      self::resolvePagefieldWithSelector([
         'name' => 'children',
         'type' => PageArrayType::type(),
         'description' => "The number of children (subpages) this page has, optionally limiting to visible 
@@ -52,13 +57,13 @@ class PageType
                           (excludes unpublished, hidden, no-access, etc.)",
       ]),
 
-      Resolver::resolveWithDateFormatter([
+      self::resolveWithDateFormatter([
         'name' => 'created',
         'type' => Type::nonNull(Type::string()),
         'description' => 'Date of when the page was created.',
       ]),
 
-      Resolver::resolveUser([
+      self::resolveUser([
         'name' => 'createdUser',
         'type' => Type::nonNull(UserType::type()),
         'description' => 'The user that created this page.',
@@ -76,13 +81,13 @@ class PageType
         'description' => 'ProcessWire Page id.',
       ],
 
-      Resolver::resolveWithDateFormatter([
+      self::resolveWithDateFormatter([
         'name' => 'modified',
         'type' => Type::nonNull(Type::string()),
         'description' => 'Date of when the page was last modified.',
       ]),
 
-      Resolver::resolveUser([
+      self::resolveUser([
         'name' => 'modifiedUser',
         'type' => Type::nonNull(UserType::type()),
         'description' => 'The user that last modified this page.',
@@ -117,7 +122,7 @@ class PageType
         },
       ],
 
-      Resolver::resolvePagefieldWithSelector([
+      self::resolvePagefieldWithSelector([
         'name' => 'parent',
         'type' => $type,
         'description' => 'The parent Page object, or the closest parent matching the given selector. Returns `null` if there is no parent or no match.'
@@ -129,7 +134,7 @@ class PageType
         'description' => 'The numbered ID of the parent page or 0 if none.',
       ],
 
-      Resolver::resolvePagefieldWithSelector([
+      self::resolvePagefieldWithSelector([
         'name' => 'parents',
         'type' => Type::nonNull(PageArrayType::type()),
         'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector.",
@@ -231,5 +236,93 @@ class PageType
       return "PageType with template `" . $template->name . "`.";
     }
     return 'ProcessWire Page.';
+  }
+
+  public static function resolvePagefieldWithSelector(array $options)
+  {
+    return array_merge($options, [
+      'args' => [
+        's' => [
+          'type' => SelectorType::type(),
+          'description' => "ProcessWire selector."
+        ],
+      ],
+      'resolve' => function (Page $page, array $args) use ($options) {
+        $name = $options['name'];
+        $selector = "";
+        if (isset($args['s'])) {
+          $selector = SelectorType::parseValue($args['s']);
+        } else {
+          $selector = SelectorType::parseValue("");
+        }
+        $result = $page->$name($selector);
+        if ($result instanceof NullPage) return null;
+        return $result;
+      }
+    ]);
+  }
+
+  public static function getEmptyUser()
+  {
+    if (self::$emptyUser instanceof WireData) {
+      return self::$emptyUser;
+    }
+    $value = new WireData();
+    $value->name = '';
+    $value->email = '';
+    $value->id = '';
+
+    self::$emptyUser = $value;
+
+    return $value;
+  }
+
+  public static function resolveUser(array $options)
+  {
+    return array_merge($options, [
+      'resolve' => function (Page $page) use ($options) {
+        $name = $options['name'];
+        $result = $page->$name;
+        if ($result instanceof NullPage) {
+          return self::getEmptyUser();
+        }
+        if ($result instanceof Page) {
+          $templateName = $result->template->name;
+          if (Permissions::getViewTemplates()->find("name=$templateName")->count()) {
+            return $result;
+          } else {
+            return self::getEmptyUser();
+          }
+        }
+        return $result;
+      }
+    ]);
+  }
+
+  public static function resolveWithDateFormatter(array $options)
+  {
+    return array_merge($options, [
+      'args' => [
+        'format' => [
+          'type' => Type::string(),
+          'description' => "PHP date formatting string. Refer to https://devdocs.io/php/function.date",
+        ],
+      ],
+      'resolve' => function (Page $page, array $args) use ($options) {
+        $name = $options['name'];
+    
+        if (isset($args['format'])) {
+          $format = $args['format'];
+          $rawValue = $page->$name;
+          if ($rawValue) {
+            return date($format, $rawValue);
+          } else {
+            return "";
+          }
+        }
+        
+        return $page->$name;
+      }
+    ]);
   }
 }
