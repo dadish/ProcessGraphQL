@@ -1,7 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
 use ProcessWire\GraphQL\Cache;
-use ProcessWire\GraphQL\Type\Traits\FieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldTrait;
 
 class FieldtypeThirdParty
 {

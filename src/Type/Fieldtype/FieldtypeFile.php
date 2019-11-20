@@ -2,9 +2,9 @@
 
 use ProcessWire\GraphQL\Type\FileType;
 use GraphQL\Type\Definition\Type;
-use ProcessWire\GraphQL\Type\Traits\FieldTrait;
-use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
-use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\InputFieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\SetValueTrait;
 
 class FieldtypeFile
 {

@@ -5,8 +5,8 @@ use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\ObjectType;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\InputfieldSelectMultiple;
-use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
-use ProcessWire\GraphQL\Type\Traits\FieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\SetValueTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldTrait;
 
 class FieldtypeOptions
 { 

@@ -7,8 +7,8 @@ use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\PageArrayType;
 use ProcessWire\GraphQL\Type\SelectorType;
-use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
-use ProcessWire\GraphQL\Type\Traits\SetValueTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\InputFieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\SetValueTrait;
 
 class FieldtypeRepeater
 {

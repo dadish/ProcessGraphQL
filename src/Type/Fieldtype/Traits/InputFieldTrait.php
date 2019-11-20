@@ -1,4 +1,4 @@
-<?php namespace ProcessWire\GraphQL\Type\Traits;
+<?php namespace ProcessWire\GraphQL\Type\Fieldtype\Traits;
 
 trait InputFieldTrait
 {

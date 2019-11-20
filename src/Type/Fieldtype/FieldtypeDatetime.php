@@ -4,7 +4,7 @@ use ProcessWire\Page;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\CustomScalarType;
 use ProcessWire\GraphQL\Cache;
-use ProcessWire\GraphQL\Type\Traits\InputFieldTrait;
+use ProcessWire\GraphQL\Type\Fieldtype\Traits\InputFieldTrait;
 
 class FieldtypeDatetime
 { 
