@@ -2,13 +2,22 @@
 
 namespace ProcessWire\GraphQL\Type;
 
+use ProcessWire\WireData;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\GraphQL\Type\FileType;
-use ProcessWire\GraphQL\Type\EmptyImage;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Permissions;
+
+class EmptyImage extends WireData {
+
+  public function getVariations()
+  {
+    return new WireArray();
+  }
+
+}
 
 class ImageType {
 
