@@ -140,6 +140,15 @@ class Utils {
     return self::wire('languages');
   }
 
+  /**
+   * Shortcut for wire('database')
+   * @return ProcessWire\Database The ProcessWire $database API variable.
+   */
+  public static function database()
+  {
+    return self::wire('database');
+  }
+
  /**
   * An array of reserved words for future use
   * @return array Array of strings.
