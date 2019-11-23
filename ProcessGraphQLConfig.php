@@ -70,12 +70,6 @@ class ProcessGraphQLConfig extends Moduleconfig {
       ],
 
       /**
-       * The `pages` query field. Allows to perform $pages->find queries.
-       * @var boolean
-       */
-      'pagesQuery' => false,
-
-      /**
        * The `me` query field. Allows the user to query her credentials.
        * @var boolean
        */
