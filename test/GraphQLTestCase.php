@@ -123,6 +123,18 @@ abstract class GraphqlTestCase extends TestCase {
       Utils::module()->legalPageImageFields = array_merge(Utils::module()->legalPageImageFields, $settings['legalPageImageFields']);
     }
 
+    if (isset($settings['maxLimit'])) {
+      Utils::module()->maxLimit = $settings['maxLimit'];
+    }
+
+    if (isset($settings['meQuery'])) {
+      Utils::module()->meQuery = $settings['meQuery'];
+    }
+
+    if (isset($settings['authQuery'])) {
+      Utils::module()->authQuery = $settings['authQuery'];
+    }
+
     if (isset($settings['access'])) {
       self::rememberOriginalAccessRules($settings['access']);
 
