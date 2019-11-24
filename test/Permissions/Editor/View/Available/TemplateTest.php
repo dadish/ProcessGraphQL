@@ -38,9 +38,9 @@ class EditorViewAllowedTemplateTest extends GraphqlTestCase {
     }';
 
     $res = self::execute($query);
-    $this->assertNotNull($res->data->skyscraper->list, 'Should list the skyscraper pages.');
-    $this->assertNotNull($res->data->skyscraper->list[0]->id);
-    $this->assertNotNull($res->data->skyscraper->list[0]->name);
-    $this->assertNotNull($res->data->skyscraper->list[0]->url);
+    assertNotNull($res->data->skyscraper->list, 'Should list the skyscraper pages.');
+    assertNotNull($res->data->skyscraper->list[0]->id);
+    assertNotNull($res->data->skyscraper->list[0]->name);
+    assertNotNull($res->data->skyscraper->list[0]->url);
   }
 }

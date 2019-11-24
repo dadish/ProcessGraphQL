@@ -46,12 +46,12 @@ class EditorCanNotViewContextFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       1,
       count($res->errors),
       'Editor cannot view field if it is restricted in the context level.'
     );
-    $this->assertStringContainsString(
+    assertStringContainsString(
       'height',
       $res->errors[0]->message
     );

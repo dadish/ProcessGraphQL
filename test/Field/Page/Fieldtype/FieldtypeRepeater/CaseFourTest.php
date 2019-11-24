@@ -31,8 +31,8 @@ class FieldtypeRepeaterCaseFourTest extends GraphQLTestCase {
 		$newTitle = 'Slide 2 New Title';
 		$newSelected = "title*=boblibob!";
 		$page = Utils::pages()->get("template=list-all, slides.count=3");
-		$this->assertNotEquals($newTitle, $page->slides->get("id=$slideId")->title);
-		$this->assertNotEquals($newSelected, $page->slides->get("id=$slideId")->selected);
+		assertNotEquals($newTitle, $page->slides->get("id=$slideId")->title);
+		assertNotEquals($newSelected, $page->slides->get("id=$slideId")->selected);
 
   	$query = 'mutation updatePage ($page: ListAllUpdateInput!, $slideSelector: Selector){
 			updateListAll(page:$page) {
@@ -63,12 +63,12 @@ class FieldtypeRepeaterCaseFourTest extends GraphQLTestCase {
 		];
 
 		$res = self::execute($query, $variables);
-  	$this->assertEquals(
+  	assertEquals(
 			$newTitle,
   		$res->data->updateListAll->slides->list[0]->title,
   		'Updates the title correctly.'
 		);
-		$this->assertEquals(
+		assertEquals(
 			Utils::fields()->get("name=selected")->initValue . ", " . $newSelected,
 			$res->data->updateListAll->slides->list[0]->selected,
 			"Updates the selected correctly."

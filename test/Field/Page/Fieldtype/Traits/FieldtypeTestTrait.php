@@ -9,7 +9,7 @@ trait FieldtypeTestTrait {
   public function testFieldtype()
   {
     $field = Utils::fields()->get("name=" . self::FIELD_NAME);
-    $this->assertEquals(self::FIELD_TYPE, $field->type->className(), 'Tests correct fieldtype.');
+    assertEquals(self::FIELD_TYPE, $field->type->className(), 'Tests correct fieldtype.');
   }
 
 }

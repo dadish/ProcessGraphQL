@@ -36,10 +36,10 @@ class CreatePageCaseTwoTest extends GraphQLTestCase {
   	];
 		$res = self::execute($query, $variables);
 		$newBuildingSky = Utils::pages()->get("name=not-created-building-sky");
-		$this->assertEquals(2, count($res->errors), 'createSkyscraper does not exist if allowed parent page is not legal.');
-		$this->assertStringContainsString('SkyscraperCreateInput', $res->errors[0]->message);
-		$this->assertStringContainsString('createSkyscraper', $res->errors[1]->message);
-    $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createSkyscraper does not create a page.');
+		assertEquals(2, count($res->errors), 'createSkyscraper does not exist if allowed parent page is not legal.');
+		assertStringContainsString('SkyscraperCreateInput', $res->errors[0]->message);
+		assertStringContainsString('createSkyscraper', $res->errors[1]->message);
+    assertInstanceOf(NullPage::class, $newBuildingSky, 'createSkyscraper does not create a page.');
   }
 
 }

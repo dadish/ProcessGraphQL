@@ -2,7 +2,6 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertStringContainsString;
 
 class EditorCreateNotAllowedTemplateParentTemplateTest extends GraphqlTestCase {
 

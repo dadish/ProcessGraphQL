@@ -40,7 +40,7 @@ class FieldtypePageCaseOneTest extends GraphQLTestCase {
   		}
   	}";
 		$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
   		0,
   		count($res->data->skyscraper->list[0]->architects->list),
   		'Returns empty list.'
@@ -68,9 +68,9 @@ class FieldtypePageCaseOneTest extends GraphQLTestCase {
   		}
   	}";
 		$res = self::execute($query);
-		$this->assertEquals(0, count($res->data->skyscraper->list[0]->architects->list), 'Returns empty list.');
-  	$this->assertNull($res->data->skyscraper->list[0]->architects->first, 'Returns empty first item.');
-  	$this->assertNull($res->data->skyscraper->list[0]->architects->last, 'Returns empty last item.');
+		assertEquals(0, count($res->data->skyscraper->list[0]->architects->list), 'Returns empty list.');
+  	assertNull($res->data->skyscraper->list[0]->architects->first, 'Returns empty first item.');
+  	assertNull($res->data->skyscraper->list[0]->architects->last, 'Returns empty last item.');
   }
 
 }

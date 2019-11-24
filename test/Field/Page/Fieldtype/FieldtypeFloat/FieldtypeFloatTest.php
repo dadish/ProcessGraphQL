@@ -29,7 +29,7 @@ class FieldtypeFloatTest extends GraphqlTestCase {
       }
     }";
     $res = $this->execute($query);
-    $this->assertEquals($skyscraper->height, $res->data->skyscraper->list[0]->height, 'Retrieves field value.');
+    assertEquals($skyscraper->height, $res->data->skyscraper->list[0]->height, 'Retrieves field value.');
   }
 
 }

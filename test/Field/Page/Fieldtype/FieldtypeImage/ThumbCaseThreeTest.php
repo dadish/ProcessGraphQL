@@ -43,11 +43,11 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
   public function testThumbCreate()
   {
     // make sure user is logged in as an editor
-    $this->assertEquals(Utils::user()->name, 'editor', 'Logged in as an editor.');
-    $this->assertTrue(Utils::user()->hasRole('editor'), 'Editor has editor role.');
+    assertEquals(Utils::user()->name, 'editor', 'Logged in as an editor.');
+    assertTrue(Utils::user()->hasRole('editor'), 'Editor has editor role.');
 
     // make sure editor has explicit rights to view the skyscraper pages
-    $this->assertTrue(
+    assertTrue(
       Utils::templates()->get('skyscraper')->hasRole('editor', 'view'),
       'skyscraper template has view access for editor role.'
     );
@@ -55,7 +55,7 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
     // make sure editor has explicit right to view images field
     $editorRole = Utils::roles()->get('editor');
     $imagesField = Utils::fields()->get('images');
-    $this->assertTrue(
+    assertTrue(
       in_array($editorRole->id, $imagesField->viewRoles),
       'images field has view access for editor role.'
     );
@@ -89,9 +89,9 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
     $expectedThumb = $res->data->skyscraper->list[0]->images[0]->size;
     
     // make sure it responded the correct thumbnail
-    $this->assertEquals('', $expectedThumb->url, 'Retrieves correct image url.');
-    $this->assertEquals(0, $expectedThumb->width, 'Retrieves correct image width.');
-    $this->assertEquals(0, $expectedThumb->height, 'Retrieves correct image height.');
+    assertEquals('', $expectedThumb->url, 'Retrieves correct image url.');
+    assertEquals(0, $expectedThumb->width, 'Retrieves correct image width.');
+    assertEquals(0, $expectedThumb->height, 'Retrieves correct image height.');
   }
 
 }

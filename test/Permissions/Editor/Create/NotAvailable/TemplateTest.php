@@ -3,7 +3,6 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class EditorCreateNotAvailableTemplateTest extends GraphqlTestCase {
 

@@ -32,12 +32,12 @@ class FieldtypeImageDimensionsTest extends GraphQLTestCase {
 			}
 		}";
 		$res = self::execute($query);
-		$this->assertEquals(
+		assertEquals(
 			$skyscraper->images->first()->height,
 			$res->data->skyscraper->list[0]->images[0]->height,
 			'Retrieves image height.'
 		);
-		$this->assertEquals(
+		assertEquals(
 			$skyscraper->images->first()->width,
 			$res->data->skyscraper->list[0]->images[0]->width,
 			'Retrieves image width.'

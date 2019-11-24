@@ -31,7 +31,7 @@ class PageParentFieldCaseFourTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertTrue(is_null($res->data->skyscraper->list[0]->parent), 'parent returns null if no access.');
+    assertTrue(is_null($res->data->skyscraper->list[0]->parent), 'parent returns null if no access.');
   }
 
 }

@@ -29,9 +29,9 @@ class FieldtypeOptionsCaseOneTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals($architect->options->eq(0)->title, $res->data->architect->list[0]->options[0]->title, 'Retrieves correct option title at 0.');
-    $this->assertEquals($architect->options->eq(1)->value, $res->data->architect->list[0]->options[1]->value, 'Retrieves correct option value at 1.');
-    $this->assertEquals($architect->options->eq(2)->id, $res->data->architect->list[0]->options[2]->id, 'Retrieves correct option id at 2.');
+    assertEquals($architect->options->eq(0)->title, $res->data->architect->list[0]->options[0]->title, 'Retrieves correct option title at 0.');
+    assertEquals($architect->options->eq(1)->value, $res->data->architect->list[0]->options[1]->value, 'Retrieves correct option value at 1.');
+    assertEquals($architect->options->eq(2)->id, $res->data->architect->list[0]->options[2]->id, 'Retrieves correct option id at 2.');
   }
 
 }

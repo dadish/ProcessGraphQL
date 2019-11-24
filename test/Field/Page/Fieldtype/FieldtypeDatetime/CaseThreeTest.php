@@ -35,7 +35,7 @@ class FieldtypeDatetimeCaseThreeTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       date($format, $architect->getUnformatted('born')),
       $res->data->architect->list[0]->born,
       'Formats datetime value correctly via format argument.'

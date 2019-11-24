@@ -53,11 +53,11 @@ class FieldtypeMapMarkerCaseThreeTest extends GraphQLTestCase {
     $res = self::execute($query, $variables);
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->map;
-    $this->assertEquals($skyscraper->id, $res->data->skyscraper->id, 'Updates the correct page.');
-    $this->assertEquals($expectedMap->lat, $actualMap->lat, 'Updates lat correctly.');
-    $this->assertEquals($expectedMap->lng, $actualMap->lng, 'Updates lng correctly.');
-    $this->assertEquals($expectedMap->address, $actualMap->address, 'Updates address correctly.');
-    $this->assertEquals($expectedMap->zoom, $actualMap->zoom, 'Updates zoom correctly.');
+    assertEquals($skyscraper->id, $res->data->skyscraper->id, 'Updates the correct page.');
+    assertEquals($expectedMap->lat, $actualMap->lat, 'Updates lat correctly.');
+    assertEquals($expectedMap->lng, $actualMap->lng, 'Updates lng correctly.');
+    assertEquals($expectedMap->address, $actualMap->address, 'Updates address correctly.');
+    assertEquals($expectedMap->zoom, $actualMap->zoom, 'Updates zoom correctly.');
   }
 
 }

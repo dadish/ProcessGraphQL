@@ -1,7 +1,5 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Assert;
-
 use ProcessWire\GraphQL\Test\Constraint\TypePathExists;
 use PHPUnit\Framework\Assert;
 

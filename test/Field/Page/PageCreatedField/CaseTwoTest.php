@@ -30,7 +30,7 @@ class PageCreatedFieldCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
   	$res = $this->execute($query);
-  	$this->assertEquals(
+  	assertEquals(
       date($format, $skyscraper->created),
       $res->data->skyscraper->list[0]->created,
       'Retrieves correctly formatted `created` value.'

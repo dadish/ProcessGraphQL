@@ -29,7 +29,7 @@ class PageModifiedFieldCaseOneTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
       $skyscraper->modified,
       $res->data->skyscraper->list[0]->modified,
       'Retrieves correct default value of `modified` field of the page.'

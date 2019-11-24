@@ -29,7 +29,7 @@ class PageCreatedFieldCaseOneTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	$this->assertEquals($skyscraper->created, $res->data->skyscraper->list[0]->created, 'Retrieves correct default `created` value.');
+  	assertEquals($skyscraper->created, $res->data->skyscraper->list[0]->created, 'Retrieves correct default `created` value.');
   }
 
 }

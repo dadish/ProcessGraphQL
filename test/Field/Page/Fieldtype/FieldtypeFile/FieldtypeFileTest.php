@@ -31,7 +31,7 @@ class FieldtypeFileTest extends GraphQLTestCase {
   		}
   	}";
 		$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
   		$architect->resume->first()->url,
   		$res->data->architect->list[0]->resume[0]->url,
   		'Retrieves files value.'

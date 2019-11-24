@@ -36,10 +36,10 @@ class PageParentsFieldCaseOneTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals($skyscraper->parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
-    $this->assertEquals($skyscraper->parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
-    $this->assertEquals($skyscraper->parents[2]->name, $res->data->skyscraper->list[0]->parents->list[2]->name, 'Retrieves correct parent page at 2.');
-    $this->assertEquals($skyscraper->parents->count, $res->data->skyscraper->list[0]->parents->getTotal, 'Retrieves correct amount of parent pages.');
+    assertEquals($skyscraper->parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
+    assertEquals($skyscraper->parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
+    assertEquals($skyscraper->parents[2]->name, $res->data->skyscraper->list[0]->parents->list[2]->name, 'Retrieves correct parent page at 2.');
+    assertEquals($skyscraper->parents->count, $res->data->skyscraper->list[0]->parents->getTotal, 'Retrieves correct amount of parent pages.');
   }
 
 }

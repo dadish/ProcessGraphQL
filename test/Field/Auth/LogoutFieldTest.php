@@ -17,7 +17,7 @@ class LogoutFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     Utils::session()->login('admin', $config->testUsers['admin']);
     $user = Utils::user();
-    $this->assertTrue($user->isSuperuser());
+    assertTrue($user->isSuperuser());
 
     $query = '{
       logout {
@@ -25,7 +25,7 @@ class LogoutFieldTest extends GraphQLTestCase {
       }
     }';
     $res = self::execute($query);
-    $this->assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
+    assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
   }
 
   public function testLogoutFailure()
@@ -36,7 +36,7 @@ class LogoutFieldTest extends GraphQLTestCase {
       }
     }';
     $res = self::execute($query);
-    $this->assertObjectHasAttribute('errors', $res, 'Unable to logout via GraphQL');
+    assertObjectHasAttribute('errors', $res, 'Unable to logout via GraphQL');
   }
 
 }

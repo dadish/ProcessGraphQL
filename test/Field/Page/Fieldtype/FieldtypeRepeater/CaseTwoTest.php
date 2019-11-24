@@ -64,7 +64,7 @@ class FieldtypeRepeaterCaseTwoTest extends GraphQLTestCase {
 			]
 		];
 		$res = self::execute($query, $variables);
-  	$this->assertEquals(
+  	assertEquals(
 			2,
   		count($res->data->createListAll->slides->list),
   		'Creates wrong amount of repeater items.'

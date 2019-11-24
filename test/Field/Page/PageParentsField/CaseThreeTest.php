@@ -34,9 +34,9 @@ class PageParentsFieldCaseThreeTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     $parents = $skyscraper->parents("template=cities|home");
-    $this->assertEquals($parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
-    $this->assertEquals($parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
-    $this->assertEquals($parents->count, count($res->data->skyscraper->list[0]->parents->list), 'Retrieves correct amount of parent pages.');
+    assertEquals($parents[0]->name, $res->data->skyscraper->list[0]->parents->list[0]->name, 'Retrieves correct parent page at 0.');
+    assertEquals($parents[1]->name, $res->data->skyscraper->list[0]->parents->list[1]->name, 'Retrieves correct parent page at 1.');
+    assertEquals($parents->count, count($res->data->skyscraper->list[0]->parents->list), 'Retrieves correct amount of parent pages.');
   }
 
 }

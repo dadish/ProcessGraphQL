@@ -20,40 +20,40 @@ class ProcessGraphQLTest extends GraphQLTestCase {
   {
     $module = Utils::module();
     $default = '/processwire/setup/graphql/';
-    $this->assertEquals($default, $module->getGraphQLServerUrl());
+    assertEquals($default, $module->getGraphQLServerUrl());
 
     $custom = '/custom/graphql/server/path/';
     $module->GraphQLServerUrl = $custom;
-    $this->assertEquals($custom, $module->getGraphQLServerUrl());
+    assertEquals($custom, $module->getGraphQLServerUrl());
   }
 
   public function testGetRequestForPost()
   {
     // payload is null by default
     $request = Utils::module()->getRequest();
-    $this->assertNull($request['payload'], 'Request payload should be null by default');
+    assertNull($request['payload'], 'Request payload should be null by default');
 
     // payload could be set via $_POST['payload']
     $payload = 'payload in $_POST["payload"]';
     $_POST['payload'] = $payload;
     $request = Utils::module()->getRequest();
-    $this->assertEquals($payload, $request['payload']);
+    assertEquals($payload, $request['payload']);
 
     // payload could be set via $_POST['query']
     $payload = 'payload in $_POST["query"]';
     $_POST['query'] = $payload;
     $request = Utils::module()->getRequest();
-    $this->assertEquals($payload, $request['payload']);
+    assertEquals($payload, $request['payload']);
 
     // variables is null by default
     $request = Utils::module()->getRequest();
-    $this->assertNull($request['variables']);
+    assertNull($request['variables']);
 
     // variables could be set via $_POST['variables']
     $variables = '{ one: 1, two: "two" }';
     $_POST['variables'] = $variables;
     $request = Utils::module()->getRequest();
-    $this->assertEquals(json_decode($variables), $request['variables'], 'variables in $_POST["variables"]');
+    assertEquals(json_decode($variables), $request['variables'], 'variables in $_POST["variables"]');
   }
 
   public function testGetRequestForPhpInput()
@@ -62,8 +62,8 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     
     // payload & variables are null by default
     $request = Utils::module()->getRequest();
-    $this->assertNull($request['payload']);
-    $this->assertNull($request['variables']);
+    assertNull($request['payload']);
+    assertNull($request['variables']);
 
     // payload & variables could be set via php://input
     
@@ -74,17 +74,17 @@ class ProcessGraphQLTest extends GraphQLTestCase {
   {
     // should return GraphQL response with errors when no payload/query is provided
     $res = self::execute();
-    $this->assertEquals('Syntax Error: Unexpected <EOF>', $res->errors[0]->message);
+    assertEquals('Syntax Error: Unexpected <EOF>', $res->errors[0]->message);
 
     // accepts GraphQL request via arguments
     $payload = '{ me { name } }';
     $res = self::execute($payload);
-    $this->assertEquals('guest', $res->data->me->name, 'Accepts request via arguments');
+    assertEquals('guest', $res->data->me->name, 'Accepts request via arguments');
     
     // accepts GraphQL request via $_POST variable
     $_POST['payload'] = $payload;
     $res = self::execute();
-    $this->assertEquals('guest', $res->data->me->name, 'Accepts request via $_POST variable');
+    assertEquals('guest', $res->data->me->name, 'Accepts request via $_POST variable');
   }
   
   public function testGetQueryFieldsHook()
@@ -102,7 +102,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     });
 
     $res = self::execute('{ hello }');
-    $this->assertEquals('world!', $res->data->hello);
+    assertEquals('world!', $res->data->hello);
   }
 
   public function testGetMutationFieldsHook()
@@ -121,6 +121,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     });
 
     $res = self::execute('mutation { zombie }');
-    $this->assertEquals('apocalypse', $res->data->zombie);
+    assertFalse(isset($res->errors), 'There are errors.');
+    assertEquals('apocalypse', $res->data->zombie);
   }
 }

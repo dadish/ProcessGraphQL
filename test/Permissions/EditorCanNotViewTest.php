@@ -25,11 +25,11 @@ class EditorCanNotViewTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       1,
       count($res->errors),
       'Editor cannot view the skyscraper template if it does not have explicit access to it.'
     );
-    $this->assertStringContainsString('skyscraper', $res->errors[0]->message);
+    assertStringContainsString('skyscraper', $res->errors[0]->message);
   }
 }

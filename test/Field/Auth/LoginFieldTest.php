@@ -17,7 +17,7 @@ class LoginFieldTest extends GraphQLTestCase {
     $config = Utils::config();
     Utils::session()->login('admin', $config->testUsers['admin']);
     $user = Utils::user();
-    $this->assertEquals('admin', $user->name, 'Unable to login via $session->login()');
+    assertEquals('admin', $user->name, 'Unable to login via $session->login()');
   }
 
   public function testLoginSuccess()
@@ -31,7 +31,8 @@ class LoginFieldTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(200, $res->data->login->statusCode, 'Unable to login via GraphQL');
+    assertEquals(200, $res->data->login->statusCode, 'Unable to login via GraphQL');
+    assertFalse(isset($res->errors), 'There are errors.');
   }
 
   public function testLoginFailure()
@@ -44,8 +45,9 @@ class LoginFieldTest extends GraphQLTestCase {
         message
       }
     }";
-    $res = $this->execute($query);
-    $this->assertEquals(401, $res->data->login->statusCode, 'Unable to login via GraphQL');
+    $res = self::execute($query);
+    assertEquals(401, $res->data->login->statusCode, 'Unable to login via GraphQL');
+    assertFalse(isset($res->errors), 'There are errors.');
   }
 
 }

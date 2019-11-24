@@ -23,12 +23,12 @@ class SuperuserCanViewFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       $target->id,
       $res->data->skyscraper->list[0]->id,
       'Retrieves the correct id.'
     );
-    $this->assertEquals(
+    assertEquals(
       $target->title,
       $res->data->skyscraper->list[0]->title,
       'Superuser can view title field if it is legal.'

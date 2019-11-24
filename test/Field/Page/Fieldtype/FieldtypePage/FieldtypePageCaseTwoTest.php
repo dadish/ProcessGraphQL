@@ -39,19 +39,19 @@ class FieldtypePageCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
   		$skyscraper->architects->count,
   		count($res->data->skyscraper->list[0]->architects->list),
   		'Returns architect pages.'
   	);
 
-    $this->assertEquals(
+    assertEquals(
       $skyscraper->architects[0]->id,
       $res->data->skyscraper->list[0]->architects->list[0]->id,
       'Returns correct first architect page.'
     );
 
-    $this->assertEquals(
+    assertEquals(
       $skyscraper->architects[1]->id,
       $res->data->skyscraper->list[0]->architects->list[1]->id,
       'Returns correct second architect page.'

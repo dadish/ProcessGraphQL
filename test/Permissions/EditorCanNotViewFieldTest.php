@@ -35,11 +35,11 @@ class EditorCanNotViewFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       1,
       count($res->errors),
       'Editor can not view the height field if it does not have explicit access to it.'
     );
-    $this->assertStringContainsString('height', $res->errors[0]->message);
+    assertStringContainsString('height', $res->errors[0]->message);
   }
 }

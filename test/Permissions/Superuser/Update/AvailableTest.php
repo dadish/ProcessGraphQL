@@ -2,7 +2,6 @@
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertTypePathExists;
 
 class SuperuserUpdateAvailableTest extends GraphqlTestCase {
 

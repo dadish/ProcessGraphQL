@@ -35,17 +35,17 @@ class FieldtypeRepeaterCaseOneTest extends GraphQLTestCase {
   		}
   	}";
 		$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
   		count($p->slides),
   		count($res->data->listAll->list[0]->slides->list),
   		'Returns correct repeater items count.'
 		);
-		$this->assertEquals(
+		assertEquals(
 			$p->slides[0]->id,
 			$res->data->listAll->list[0]->slides->list[0]->id,
 			'Returns correct id for the first repeater item'
 		);
-		$this->assertEquals(
+		assertEquals(
 			$p->slides[0]->title,
 			$res->data->listAll->list[0]->slides->list[0]->title,
 			'Returns correct title for the first repeater item'

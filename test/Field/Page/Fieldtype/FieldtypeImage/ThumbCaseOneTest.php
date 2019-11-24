@@ -36,7 +36,7 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
     $thumbHeight = 300;
 
     // make sure the thumbnail does not exist before we create it
-    $this->assertEquals(
+    assertEquals(
       0,
       $image->getVariations()->count,
       'No thumbnail prior to test.'
@@ -67,16 +67,16 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
     $filename = realpath($GLOBALS['pwDir'] . $actualThumb->url);
 
     // make sure it created the thumbnail
-    $this->assertTrue(file_exists($filename), 'Admin creates the thumbnail.');
-    $this->assertTrue(is_file($filename), 'Created thumbnail is a file.');
+    assertTrue(file_exists($filename), 'Admin creates the thumbnail.');
+    assertTrue(is_file($filename), 'Created thumbnail is a file.');
     
     // expected thumb
     $expectedThumb = $image->size($thumbWidth, $thumbHeight);
 
     // make sure it created the correct thumbnail
-    $this->assertEquals($expectedThumb->url, $actualThumb->url, 'Correct url for created thumbnail.');
-    $this->assertEquals($expectedThumb->width, $actualThumb->width, 'Correct width for created thumbnail.');
-    $this->assertEquals($expectedThumb->height, $actualThumb->height, 'Correct height for created thumbnail.');
+    assertEquals($expectedThumb->url, $actualThumb->url, 'Correct url for created thumbnail.');
+    assertEquals($expectedThumb->width, $actualThumb->width, 'Correct width for created thumbnail.');
+    assertEquals($expectedThumb->height, $actualThumb->height, 'Correct height for created thumbnail.');
 
     // clean up after test
     unlink($filename);

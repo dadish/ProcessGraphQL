@@ -37,8 +37,8 @@ class CreatePageCaseFiveTest extends GraphQLTestCase {
   	];
 		$res = self::execute($query, $variables);
 		$newBuildingSky = Utils::pages()->get("name=not-created-basic-page");
-		$this->assertEquals(1, count($res->errors), 'createBasicPage does not resolve if parent page template is not legal.');
-    $this->assertInstanceOf(NullPage::class, $newBuildingSky, 'createBasicPage does not create a page.');
+		assertEquals(1, count($res->errors), 'createBasicPage does not resolve if parent page template is not legal.');
+		assertInstanceOf(NullPage::class, $newBuildingSky, 'createBasicPage does not create a page.');
   }
 
 }

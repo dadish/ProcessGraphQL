@@ -36,9 +36,9 @@ class UpdatePageCaseTwoTest extends GraphQLTestCase {
   		],
   	];
 		$res = self::execute($query, $variables);
-		$this->assertEquals(1, count($res->errors), '`title` field is invalid for SkyscraperUpdateInputType if `title` field is not legal.');
-		$this->assertStringContainsString('title', $res->errors[0]->message);		
-  	$this->assertTrue($skyscraper->title !== $variables['page']['title'], 'updateSkyscraper does not update the `title`.');
+		assertEquals(1, count($res->errors), '`title` field is invalid for SkyscraperUpdateInputType if `title` field is not legal.');
+		assertStringContainsString('title', $res->errors[0]->message);		
+  	assertTrue($skyscraper->title !== $variables['page']['title'], 'updateSkyscraper does not update the `title`.');
   }
 
 }

@@ -25,7 +25,7 @@ class PageUrlFieldTest extends GraphQLTestCase {
   		}
   	}";
 		$res = self::execute($query);
-  	$this->assertEquals($skyscraper->url, $res->data->skyscraper->list[0]->url, 'Retrieves `url` field of the page.');
+  	assertEquals($skyscraper->url, $res->data->skyscraper->list[0]->url, 'Retrieves `url` field of the page.');
   }
 
 }

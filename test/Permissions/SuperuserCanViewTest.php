@@ -23,17 +23,17 @@ class SuperuserCanViewTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       $target->id,
       $res->data->skyscraper->list[0]->id,
       'Retrieves the correct id.'
     );
-    $this->assertEquals(
+    assertEquals(
       $target->name,
       $res->data->skyscraper->list[0]->name,
       'Retrieves the correct name.'
     );
-    $this->assertEquals(
+    assertEquals(
       $target->url,
       $res->data->skyscraper->list[0]->url,
       'Retrieves the correct url.'

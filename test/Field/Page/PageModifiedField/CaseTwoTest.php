@@ -30,7 +30,7 @@ class PageModifiedFieldCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	$this->assertEquals(
+  	assertEquals(
       date($format, $skyscraper->modified),
       $res->data->skyscraper->list[0]->modified,
       'Retrieves correctly formatted value of `modified` field of the page.'

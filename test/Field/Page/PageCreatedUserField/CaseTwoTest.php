@@ -34,9 +34,9 @@ class PageCreatedUserFieldCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
     $res = self::execute($query);
-    $this->assertEquals('', $res->data->skyscraper->list[0]->createdUser->name, '`createdUser->name` is empty string when no access.');
-    $this->assertEquals('', $res->data->skyscraper->list[0]->createdUser->email, '`createdUser->email` is empty string when no access.');
-  	$this->assertEquals('', $res->data->skyscraper->list[0]->createdUser->id, '`createdUser->id` is empty string when no access.');
+    assertEquals('', $res->data->skyscraper->list[0]->createdUser->name, '`createdUser->name` is empty string when no access.');
+    assertEquals('', $res->data->skyscraper->list[0]->createdUser->email, '`createdUser->email` is empty string when no access.');
+  	assertEquals('', $res->data->skyscraper->list[0]->createdUser->id, '`createdUser->id` is empty string when no access.');
   }
 
 }

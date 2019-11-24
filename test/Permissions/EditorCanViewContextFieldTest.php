@@ -47,12 +47,12 @@ class EditorCanViewContextFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       $target->id,
       $res->data->skyscraper->list[0]->id,
       'Retrieves correct id.'
     );
-    $this->assertEquals(
+    assertEquals(
       $target->height,
       $res->data->skyscraper->list[0]->height,
       'Editor can  view the height field if it has explicit access to it in template context.'

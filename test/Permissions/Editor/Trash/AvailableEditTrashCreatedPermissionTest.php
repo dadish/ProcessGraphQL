@@ -4,7 +4,6 @@ use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\Permissions;
 
-use function ProcessWire\GraphQL\Test\Assert\assertTypePathExists;
 
 class EditorTrashAvailableEditTrashCreatedPermissionTest extends GraphqlTestCase {
 

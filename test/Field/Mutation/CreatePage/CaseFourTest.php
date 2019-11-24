@@ -34,7 +34,7 @@ class CreatePageCaseFourTest extends GraphQLTestCase {
   		]
   	];
 		$res = self::execute($query, $variables);
-		$this->assertStringContainsString(
+		assertStringContainsString(
 			'Field value.title of required type PageTitle!',
 			$res->errors[0]->message
 		);

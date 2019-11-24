@@ -33,7 +33,7 @@ class PageParentsFieldCaseFourTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(0, count($res->data->skyscraper->list[0]->parents->list), 'parents returns empty list if no access.');
+    assertEquals(0, count($res->data->skyscraper->list[0]->parents->list), 'parents returns empty list if no access.');
   }
 
 }

@@ -24,11 +24,11 @@ class SuperuserCanNotViewFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(
+    assertEquals(
       1,
       count($res->errors),
       'Superuser can not view the title field if it is not legal.'
     );
-    $this->assertStringContainsString('title', $res->errors[0]->message);
+    assertStringContainsString('title', $res->errors[0]->message);
   }
 }

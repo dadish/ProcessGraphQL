@@ -34,8 +34,8 @@ class PageChildrenFieldCaseFourTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     $children = $home->children("template=cities"); // only cities template is allowed
-    $this->assertEquals($children->count, count($res->data->home->list[0]->children->list), 'Returns the correct number of pages.');
-    $this->assertEquals($children[0]->name, $res->data->home->list[0]->children->list[0]->name, 'Returns the correct page at 0.');
+    assertEquals($children->count, count($res->data->home->list[0]->children->list), 'Returns the correct number of pages.');
+    assertEquals($children[0]->name, $res->data->home->list[0]->children->list[0]->name, 'Returns the correct page at 0.');
   }
 
 }

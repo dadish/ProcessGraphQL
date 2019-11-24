@@ -34,10 +34,10 @@ class UpdatePageCaseOneTest extends GraphQLTestCase {
   		],
   	];
 		$res = self::execute($query, $variables);
-		$this->assertEquals(2, count($res->errors), 'updateSkyscraper is not available if `skyscraper` template is not legal.');
-		$this->assertStringContainsString('SkyscraperUpdateInput', $res->errors[0]->message);
-		$this->assertStringContainsString('updateSkyscraper', $res->errors[1]->message);
-  	$this->assertTrue($skyscraper->title !== $variables['page']['title'], 'updateSkyscraper does not update the `title`.');
+		assertEquals(2, count($res->errors), 'updateSkyscraper is not available if `skyscraper` template is not legal.');
+		assertStringContainsString('SkyscraperUpdateInput', $res->errors[0]->message);
+		assertStringContainsString('updateSkyscraper', $res->errors[1]->message);
+  	assertTrue($skyscraper->title !== $variables['page']['title'], 'updateSkyscraper does not update the `title`.');
   }
 
 }

@@ -59,12 +59,12 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
     $skyscraper = Utils::pages()->get("template=skyscraper, name=$name");
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->map;
-    $this->assertEquals($skyscraper->title, $res->data->skyscraper->title, 'Creates skyscraper page with correct title.');
-    $this->assertEquals($skyscraper->name, $res->data->skyscraper->name, 'Creates skyscraper page with correct name.');
-    $this->assertEquals($expectedMap->lat, $actualMap->lat, 'Retreives correct lat.');
-    $this->assertEquals($expectedMap->lng, $actualMap->lng, 'Retreives correct lng.');
-    $this->assertEquals($expectedMap->address, $actualMap->address, 'Retreives correct address.');
-    $this->assertEquals($expectedMap->zoom, $actualMap->zoom, 'Retreives correct zoom.');
+    assertEquals($skyscraper->title, $res->data->skyscraper->title, 'Creates skyscraper page with correct title.');
+    assertEquals($skyscraper->name, $res->data->skyscraper->name, 'Creates skyscraper page with correct name.');
+    assertEquals($expectedMap->lat, $actualMap->lat, 'Retreives correct lat.');
+    assertEquals($expectedMap->lng, $actualMap->lng, 'Retreives correct lng.');
+    assertEquals($expectedMap->address, $actualMap->address, 'Retreives correct address.');
+    assertEquals($expectedMap->zoom, $actualMap->zoom, 'Retreives correct zoom.');
   }
 
 }

@@ -38,8 +38,8 @@ class FieldtypeDatetimeCaseTwoTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
 
-    $this->assertTrue($architect->outputFormatting(), 'Output formatting is on.');
-    $this->assertEquals(
+    assertTrue($architect->outputFormatting(), 'Output formatting is on.');
+    assertEquals(
       $architect->born,
       $res->data->architect->list[0]->born,
       'Retrieves correctly formatted datetime value.'

@@ -1,10 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Test\Permissions;
 
-use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
-
-use function ProcessWire\GraphQL\Test\Assert\assertTypePathExists;
 
 class EditorCreateAvailableTest extends GraphqlTestCase {
 

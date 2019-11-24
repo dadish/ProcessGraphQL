@@ -62,11 +62,11 @@ class EditorCreateNotAllowedParentTemplateAddPermissionTest extends GraphqlTestC
     ];
 
     $res = self::execute($query, $variables);
-    $this->assertEquals(
+    assertEquals(
       1,
       count($res->errors),
       'Should not allow to create a page if user has no add permission for parent template.'
     );
-    $this->assertStringContainsString('parent', $res->errors[0]->message);
+    assertStringContainsString('parent', $res->errors[0]->message);
   }
 }

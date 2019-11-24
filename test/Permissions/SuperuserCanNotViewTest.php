@@ -23,7 +23,7 @@ class SuperuserCanNotViewTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    $this->assertEquals(1, count($res->errors));
-    $this->assertStringContainsString('architect', $res->errors[0]->message);
+    assertEquals(1, count($res->errors));
+    assertStringContainsString('architect', $res->errors[0]->message);
   }
 }

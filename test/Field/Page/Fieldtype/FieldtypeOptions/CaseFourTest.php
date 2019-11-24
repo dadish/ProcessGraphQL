@@ -48,12 +48,12 @@ class FieldtypeOptionsCaseFourTest extends GraphQLTestCase {
   	];
   	$res = self::execute($query, $variables);
     $newArchitect = Utils::pages()->get("template=architect, name=$name");
-    $this->assertTrue(!$newArchitect instanceof NullPage, 'New Page is created.');
-    $this->assertEquals($name, $newArchitect->name, 'New Page has correct name.');
-    $this->assertEquals($title, $newArchitect->title, 'New Page has correct title.');
-    $this->assertEquals('Mon', $newArchitect->options->eq(0)->title, 'New Page has correct option title at 0.');
-    $this->assertEquals('Thursday', $newArchitect->options->eq(1)->value, 'New Page has correct option value at 1.');
-    $this->assertEquals('6', $newArchitect->options->eq(2)->id, 'New Page has correct option id at 2.');
+    assertTrue(!$newArchitect instanceof NullPage, 'New Page is created.');
+    assertEquals($name, $newArchitect->name, 'New Page has correct name.');
+    assertEquals($title, $newArchitect->title, 'New Page has correct title.');
+    assertEquals('Mon', $newArchitect->options->eq(0)->title, 'New Page has correct option title at 0.');
+    assertEquals('Thursday', $newArchitect->options->eq(1)->value, 'New Page has correct option value at 1.');
+    assertEquals('6', $newArchitect->options->eq(2)->id, 'New Page has correct option id at 2.');
   }
 
 }

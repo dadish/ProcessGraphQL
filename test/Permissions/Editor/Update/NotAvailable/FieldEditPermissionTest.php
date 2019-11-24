@@ -3,7 +3,6 @@
 use ProcessWire\GraphQL\Test\Constraint\TypePathExists;
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-use function ProcessWire\GraphQL\Test\Assert\assertTypePathNotExists;
 
 class EditorUpdateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
 

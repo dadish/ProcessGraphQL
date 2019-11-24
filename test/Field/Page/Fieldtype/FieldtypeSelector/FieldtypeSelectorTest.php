@@ -29,7 +29,7 @@ class FieldtypePageSelectorTest extends GraphQLTestCase {
   		}
   	}";
     $res = self::execute($query);
-  	$this->assertEquals($home->selected, $res->data->home->list[0]->selected, 'Retrieves selector value.');
+  	assertEquals($home->selected, $res->data->home->list[0]->selected, 'Retrieves selector value.');
   }
 
 }

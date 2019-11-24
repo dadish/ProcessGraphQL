@@ -36,7 +36,7 @@ class PageParentsFieldCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-    $this->assertEquals(0, count($res->data->skyscraper->list[0]->parents->list), 'Returns empty list when no access to parent pages template.');
+    assertEquals(0, count($res->data->skyscraper->list[0]->parents->list), 'Returns empty list when no access to parent pages template.');
   }
 
 }

@@ -44,7 +44,7 @@ class SuperuserCreateNotAllowedParentTemplateTest extends GraphqlTestCase {
     ];
 
     $res = self::execute($query, $variables);
-    $this->assertEquals(1, count($res->errors), 'Should not allow to create a page if parent template is not legal.');
-    $this->assertStringContainsString('parent', $res->errors[0]->message);
+    assertEquals(1, count($res->errors), 'Should not allow to create a page if parent template is not legal.');
+    assertStringContainsString('parent', $res->errors[0]->message);
   }
 }

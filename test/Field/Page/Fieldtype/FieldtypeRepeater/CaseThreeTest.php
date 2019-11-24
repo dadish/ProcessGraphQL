@@ -28,7 +28,7 @@ class FieldtypeRepeaterCaseThreeTest extends GraphQLTestCase {
   public function testValue()
   {
 		$page = Utils::pages()->get("template=list-all, slides.count=3");
-		$this->assertEquals(3, count($page->slides));
+		assertEquals(3, count($page->slides));
 
   	$query = 'mutation updatePage ($page: ListAllUpdateInput!){
 			updateListAll(page:$page) {
@@ -50,12 +50,12 @@ class FieldtypeRepeaterCaseThreeTest extends GraphQLTestCase {
 		];
 
 		$res = self::execute($query, $variables);
-  	$this->assertEquals(
+  	assertEquals(
 			2,
   		$res->data->updateListAll->slides->getTotal,
   		'Removes the correct amount of repeaters.'
 		);
-		$this->assertEquals(
+		assertEquals(
 			"5755",
 			$res->data->updateListAll->slides->list[0]->id,
 			"Removes the correct repeater items."

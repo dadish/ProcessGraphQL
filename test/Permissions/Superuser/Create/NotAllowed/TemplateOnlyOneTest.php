@@ -43,7 +43,7 @@ class SuperuserCreateNotAllowedTemplateOnlyOneTest extends GraphqlTestCase {
     ];
 
     $res = self::execute($query, $variables);
-    $this->assertEquals(1, count($res->errors), 'Should not allow to create a page with OnlyOne checked if there is already a page with that template.');
-    $this->assertStringContainsString('Only one', $res->errors[0]->message);
+    assertEquals(1, count($res->errors), 'Should not allow to create a page with OnlyOne checked if there is already a page with that template.');
+    assertStringContainsString('Only one', $res->errors[0]->message);
   }
 }

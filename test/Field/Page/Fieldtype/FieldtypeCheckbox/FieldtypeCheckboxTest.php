@@ -29,7 +29,7 @@ class FieldtypeCheckboxTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    $this->assertFalse($res->data->skyscraper->list[0]->featured);
+    assertFalse($res->data->skyscraper->list[0]->featured);
   }
 
   public function testFalsyValue()
@@ -43,7 +43,7 @@ class FieldtypeCheckboxTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    $this->assertTrue($res->data->skyscraper->list[0]->featured);
+    assertTrue($res->data->skyscraper->list[0]->featured);
   }
 
 }

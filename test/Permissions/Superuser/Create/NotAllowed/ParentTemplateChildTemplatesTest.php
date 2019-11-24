@@ -52,7 +52,7 @@ class SuperuserCreateNotAllowedParentTemplateChildTemplatesTest extends GraphqlT
     ];
 
     $res = self::execute($query, $variables);
-    $this->assertEquals(1, count($res->errors), 'Should not allow to create a page under the page with template that has childTemplates without target template.');
-    $this->assertStringContainsString('parent', $res->errors[0]->message);
+    assertEquals(1, count($res->errors), 'Should not allow to create a page under the page with template that has childTemplates without target template.');
+    assertStringContainsString('parent', $res->errors[0]->message);
   }
 }
