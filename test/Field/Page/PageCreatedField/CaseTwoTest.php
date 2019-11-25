@@ -35,6 +35,7 @@ class PageCreatedFieldCaseTwoTest extends GraphQLTestCase {
       $res->data->skyscraper->list[0]->created,
       'Retrieves correctly formatted `created` value.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

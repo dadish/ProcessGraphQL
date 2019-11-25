@@ -29,7 +29,8 @@ class FieldtypeEmailTest extends GraphQLTestCase {
   		}
     }";
     $res = self::execute($query);
-  	assertEquals($architect->email, $res->data->architect->list[0]->email, 'Retrieves email value.');
+    assertEquals($architect->email, $res->data->architect->list[0]->email, 'Retrieves email value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

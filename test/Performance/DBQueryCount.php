@@ -91,7 +91,7 @@ class DbQueryCountTest extends GraphQLTestCase {
     assertEquals($skyscrapers->count(), count($res->data->skyscraper->list), 'Incorrect number of skyscrapers fetched.');
 
     // assert no errors
-    assertFalse(isset($res->errors), 'There are errors.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
 
     // assert valid skyscraper
     $expected = $skyscrapers->get("images.count>1, sort=random");

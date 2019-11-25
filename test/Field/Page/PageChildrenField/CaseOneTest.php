@@ -36,7 +36,8 @@ class PageChildrenFieldCaseOneTest extends GraphQLTestCase {
   	}";
     $res = self::execute($query);
     assertEquals($city->children->count, count($res->data->city->list[0]->children->list), 'Retrieves children pages.');
-  	assertEquals($city->children[0]->name, $res->data->city->list[0]->children->list[0]->name, 'Retrieves children in correct order.');
+    assertEquals($city->children[0]->name, $res->data->city->list[0]->children->list[0]->name, 'Retrieves children in correct order.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

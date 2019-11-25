@@ -29,7 +29,8 @@ class FieldtypeURLTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($home->sponsor, $res->data->home->list[0]->sponsor, 'Retrieves sponsor value.');
+    assertEquals($home->sponsor, $res->data->home->list[0]->sponsor, 'Retrieves sponsor value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

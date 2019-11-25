@@ -60,5 +60,6 @@ class FieldtypeRepeaterCaseThreeTest extends GraphQLTestCase {
 			$res->data->updateListAll->slides->list[0]->id,
 			"Removes the correct repeater items."
 		);
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
 	}
 }

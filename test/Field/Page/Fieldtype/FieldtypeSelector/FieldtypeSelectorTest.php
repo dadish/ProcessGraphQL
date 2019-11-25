@@ -29,7 +29,8 @@ class FieldtypePageSelectorTest extends GraphQLTestCase {
   		}
   	}";
     $res = self::execute($query);
-  	assertEquals($home->selected, $res->data->home->list[0]->selected, 'Retrieves selector value.');
+    assertEquals($home->selected, $res->data->home->list[0]->selected, 'Retrieves selector value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

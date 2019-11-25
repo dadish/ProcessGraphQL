@@ -33,7 +33,8 @@ class PageChildFieldCaseOneTest extends GraphQLTestCase {
   		}
   	}";
     $res = self::execute($query);
-  	assertEquals($city->child->name, $res->data->city->list[0]->child->name, 'Retrieves child page.');
+    assertEquals($city->child->name, $res->data->city->list[0]->child->name, 'Retrieves child page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

@@ -44,6 +44,7 @@ class FieldtypeCheckboxTest extends GraphQLTestCase {
     }";
     $res = $this->execute($query);
     assertTrue($res->data->skyscraper->list[0]->featured);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

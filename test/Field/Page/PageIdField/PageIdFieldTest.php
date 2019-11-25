@@ -25,7 +25,8 @@ class PageIdFieldTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($skyscraper->id, $res->data->skyscraper->list[0]->id, 'Retrieves `id` field of the page.');
+		assertEquals($skyscraper->id, $res->data->skyscraper->list[0]->id, 'Retrieves `id` field of the page.');
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

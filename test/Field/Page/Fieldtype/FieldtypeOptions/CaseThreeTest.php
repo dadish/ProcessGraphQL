@@ -46,6 +46,7 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
   		]
   	];
     $res = self::execute($query, $variables);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
 
     $newCity = Utils::pages()->get("template=city, name=$name");
     assertTrue(!$newCity instanceof NullPage, 'New Page is created.');

@@ -27,5 +27,6 @@ class SuperuserViewAllowedFieldTest extends GraphqlTestCase {
 
     $res = self::execute($query);
     assertNotNull($res->data->skyscraper->list[0]->title, 'Should show title field if it is legal.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

@@ -25,7 +25,8 @@ class PagePathFieldTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($skyscraper->path, $res->data->skyscraper->list[0]->path, 'Retrieves `path` field of the page.');
+		assertEquals($skyscraper->path, $res->data->skyscraper->list[0]->path, 'Retrieves `path` field of the page.');
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

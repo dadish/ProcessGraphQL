@@ -57,5 +57,6 @@ class EditorCanViewContextFieldTest extends GraphqlTestCase {
       $res->data->skyscraper->list[0]->height,
       'Editor can  view the height field if it has explicit access to it in template context.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

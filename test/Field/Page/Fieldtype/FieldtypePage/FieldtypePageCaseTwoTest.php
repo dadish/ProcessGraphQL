@@ -56,6 +56,7 @@ class FieldtypePageCaseTwoTest extends GraphQLTestCase {
       $res->data->skyscraper->list[0]->architects->list[1]->id,
       'Returns correct second architect page.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

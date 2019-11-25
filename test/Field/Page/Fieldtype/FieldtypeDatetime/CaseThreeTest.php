@@ -40,6 +40,7 @@ class FieldtypeDatetimeCaseThreeTest extends GraphQLTestCase {
       $res->data->architect->list[0]->born,
       'Formats datetime value correctly via format argument.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

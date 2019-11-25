@@ -65,6 +65,7 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
     assertEquals($expectedMap->lng, $actualMap->lng, 'Retreives correct lng.');
     assertEquals($expectedMap->address, $actualMap->address, 'Retreives correct address.');
     assertEquals($expectedMap->zoom, $actualMap->zoom, 'Retreives correct zoom.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

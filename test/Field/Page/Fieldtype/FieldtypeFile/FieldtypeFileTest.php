@@ -35,7 +35,8 @@ class FieldtypeFileTest extends GraphQLTestCase {
   		$architect->resume->first()->url,
   		$res->data->architect->list[0]->resume[0]->url,
   		'Retrieves files value.'
-  	);
+		);
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

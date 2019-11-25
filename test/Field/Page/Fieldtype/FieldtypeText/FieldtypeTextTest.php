@@ -29,7 +29,8 @@ class FieldtypeTextTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($skyscraper->freebase_guid, $res->data->skyscraper->list[0]->freebase_guid, 'Retrieves freebase_guid value.');
+    assertEquals($skyscraper->freebase_guid, $res->data->skyscraper->list[0]->freebase_guid, 'Retrieves freebase_guid value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

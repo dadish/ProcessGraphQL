@@ -29,7 +29,8 @@ class PageArrayLastFieldTest extends GraphQLTestCase {
   	$res = self::execute($query);
     assertEquals($lastCity->name, $res->data->city->last->name, 'Retrieves correct name of the last page.');
     assertEquals($lastCity->id, $res->data->city->last->id, 'Retrieves correct id of the last page.');
-  	assertEquals($lastCity->title, $res->data->city->last->title, 'Retrieves correct title of the last page.');
+    assertEquals($lastCity->title, $res->data->city->last->title, 'Retrieves correct title of the last page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

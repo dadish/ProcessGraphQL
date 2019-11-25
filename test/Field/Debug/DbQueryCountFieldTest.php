@@ -29,6 +29,7 @@ class DbQueryCountFieldTest extends GraphQLTestCase {
     }';
     $res = self::execute($query);
     assertObjectHasAttribute('errors', $res, 'When debug turned off, `dbQueryCount` field must be unavailable.');
+    assertStringContainsString('dbQuery', $res->errors[0]->message, 'Incorrect error message.');
   }
 
   public function testValue()
@@ -39,6 +40,7 @@ class DbQueryCountFieldTest extends GraphQLTestCase {
     }';
     $res = self::execute($query);
     assertEquals(count(\ProcessWire\Database::getQueryLog()), count($res->data->dbQuery), '`dbQueryCount` must return the number of db query logs');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

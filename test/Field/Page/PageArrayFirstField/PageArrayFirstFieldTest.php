@@ -29,7 +29,8 @@ class PageArrayFirstFieldTest extends GraphQLTestCase {
     $res = self::execute($query);
     assertEquals($firstCity->name, $res->data->city->first->name, 'Retrieves correct name of the first page.');
     assertEquals($firstCity->id, $res->data->city->first->id, 'Retrieves correct id of the first page.');
-  	assertEquals($firstCity->title, $res->data->city->first->title, 'Retrieves correct title of the first page.');
+    assertEquals($firstCity->title, $res->data->city->first->title, 'Retrieves correct title of the first page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

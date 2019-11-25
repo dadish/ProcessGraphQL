@@ -41,5 +41,6 @@ class SuperuserUpdateAllowedTest extends GraphqlTestCase {
     $res = self::execute($query, $variables);
     assertEquals($res->data->updateSkyscraper->title, $newTitle, 'Allows to update the page title if both template and field are legal.');
     assertEquals($newTitle, $skyscraper->title, 'Updates the title of the target.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

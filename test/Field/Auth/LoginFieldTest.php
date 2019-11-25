@@ -32,7 +32,7 @@ class LoginFieldTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     assertEquals(200, $res->data->login->statusCode, 'Unable to login via GraphQL');
-    assertFalse(isset($res->errors), 'There are errors.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
   public function testLoginFailure()
@@ -47,7 +47,7 @@ class LoginFieldTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     assertEquals(401, $res->data->login->statusCode, 'Unable to login via GraphQL');
-    assertFalse(isset($res->errors), 'There are errors.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

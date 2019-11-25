@@ -80,11 +80,13 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     $payload = '{ me { name } }';
     $res = self::execute($payload);
     assertEquals('guest', $res->data->me->name, 'Accepts request via arguments');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
     
     // accepts GraphQL request via $_POST variable
     $_POST['payload'] = $payload;
     $res = self::execute();
     assertEquals('guest', $res->data->me->name, 'Accepts request via $_POST variable');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
   
   public function testGetQueryFieldsHook()
@@ -103,6 +105,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
 
     $res = self::execute('{ hello }');
     assertEquals('world!', $res->data->hello);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
   public function testGetMutationFieldsHook()
@@ -121,7 +124,7 @@ class ProcessGraphQLTest extends GraphQLTestCase {
     });
 
     $res = self::execute('mutation { zombie }');
-    assertFalse(isset($res->errors), 'There are errors.');
     assertEquals('apocalypse', $res->data->zombie);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

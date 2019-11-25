@@ -36,6 +36,7 @@ class PageChildrenFieldCaseTwoTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     assertEquals(0, count($res->data->city->list[0]->children->list), 'Returns empty list when has no access children pages.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

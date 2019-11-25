@@ -50,5 +50,6 @@ class FieldtypeRepeaterCaseOneTest extends GraphQLTestCase {
 			$res->data->listAll->list[0]->slides->list[0]->title,
 			'Returns correct title for the first repeater item'
 		);
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
 	}
 }

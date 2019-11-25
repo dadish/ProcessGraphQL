@@ -34,6 +34,7 @@ class PageModifiedFieldCaseOneTest extends GraphQLTestCase {
       $res->data->skyscraper->list[0]->modified,
       'Retrieves correct default value of `modified` field of the page.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

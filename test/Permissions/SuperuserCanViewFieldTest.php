@@ -33,5 +33,6 @@ class SuperuserCanViewFieldTest extends GraphqlTestCase {
       $res->data->skyscraper->list[0]->title,
       'Superuser can view title field if it is legal.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

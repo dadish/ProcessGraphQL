@@ -31,5 +31,6 @@ class SuperuserViewAllowedTemplateTest extends GraphqlTestCase {
     assertNotNull($res->data->skyscraper->list[0]->id);
     assertNotNull($res->data->skyscraper->list[0]->name);
     assertNotNull($res->data->skyscraper->list[0]->url);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

@@ -35,6 +35,7 @@ class FieldtypeDatetimeCaseOneTest extends GraphQLTestCase {
     }";
     $res = self::execute($query);
     assertEquals($architect->born, $res->data->architect->list[0]->born, 'Retrieves datetime value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

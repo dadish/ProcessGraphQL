@@ -33,7 +33,8 @@ class PageParentFieldCaseTwoTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertTrue(is_null($res->data->city->list[0]->parent), 'Returns null when no access to parent page template.');
+    assertTrue(is_null($res->data->city->list[0]->parent), 'Returns null when no access to parent page template.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

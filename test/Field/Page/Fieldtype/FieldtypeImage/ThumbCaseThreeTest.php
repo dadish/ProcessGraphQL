@@ -86,6 +86,8 @@ class FieldtypeImageThumbCaseThreeTest extends GraphQLTestCase {
     }";
 
     $res = self::execute($query);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+
     $expectedThumb = $res->data->skyscraper->list[0]->images[0]->size;
     
     // make sure it responded the correct thumbnail

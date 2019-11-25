@@ -33,5 +33,6 @@ class SuperuserTrashAllowedTest extends GraphqlTestCase {
     $res = self::execute($query, $variables);
     assertEquals($res->data->trash->id, $skyscraper->id, 'Trashes the page.');
     assertTrue($skyscraper->isTrash(), 'Trashes the correct page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

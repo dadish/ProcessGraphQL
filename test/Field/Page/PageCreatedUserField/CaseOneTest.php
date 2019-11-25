@@ -33,7 +33,8 @@ class PageCreatedUserFieldCaseOneTest extends GraphQLTestCase {
   		}
   	}";
   	$res = $this->execute($query);
-  	assertEquals($skyscraper->createdUser->name, $res->data->skyscraper->list[0]->createdUser->name, 'Retrieves `createdUser` field of the page.');
+    assertEquals($skyscraper->createdUser->name, $res->data->skyscraper->list[0]->createdUser->name, 'Retrieves `createdUser` field of the page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

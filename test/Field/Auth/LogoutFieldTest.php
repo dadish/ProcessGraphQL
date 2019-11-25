@@ -26,6 +26,7 @@ class LogoutFieldTest extends GraphQLTestCase {
     }';
     $res = self::execute($query);
     assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
   public function testLogoutFailure()

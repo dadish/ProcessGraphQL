@@ -32,7 +32,8 @@ class PageModifiedUserFieldCaseOneTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($skyscraper->modifiedUser->name, $res->data->skyscraper->list[0]->modifiedUser->name, 'Retrieves `modifiedUser` field of the page.');
+    assertEquals($skyscraper->modifiedUser->name, $res->data->skyscraper->list[0]->modifiedUser->name, 'Retrieves `modifiedUser` field of the page.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

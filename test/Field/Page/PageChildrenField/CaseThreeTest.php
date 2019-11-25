@@ -37,6 +37,7 @@ class PageChildrenFieldCaseThreeTest extends GraphQLTestCase {
     assertEquals($children->count, count($res->data->home->list[0]->children->list), 'Returns the correct number of pages.');
     assertEquals($children[0]->name, $res->data->home->list[0]->children->list[0]->name, 'Returns the correct page at 0.');
     assertEquals($children[1]->name, $res->data->home->list[0]->children->list[1]->name, 'Returns the correct page at 0.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

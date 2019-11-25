@@ -43,7 +43,8 @@ class UpdatePageCaseThreeTest extends GraphQLTestCase {
   	];
     $res = self::execute($query, $variables);
     assertEquals($variables['page']['title'], $res->data->skyscraper->title, 'updateSkyscraper returns updated value of the `title`.');
-  	assertEquals($variables['page']['title'], $skyscraper->title, 'updateSkyscraper updates value of the `title`.');
+    assertEquals($variables['page']['title'], $skyscraper->title, 'updateSkyscraper updates value of the `title`.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

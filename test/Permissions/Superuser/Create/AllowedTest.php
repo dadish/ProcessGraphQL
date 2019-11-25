@@ -56,5 +56,6 @@ class SuperuserCreateAllowedOnlyOneTest extends GraphqlTestCase {
     $res = self::execute($query, $variables);
     assertEquals('search', $res->data->createSearch->name, 'Should allow to create a page with OnlyOne checked if there is not already a page with that template.');
     assertEquals('Search', $res->data->createSearch->title);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 }

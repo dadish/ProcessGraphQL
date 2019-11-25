@@ -46,7 +46,9 @@ class FieldtypeOptionsCaseFourTest extends GraphQLTestCase {
         "options" => $option,
   		]
   	];
-  	$res = self::execute($query, $variables);
+    $res = self::execute($query, $variables);
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+
     $newArchitect = Utils::pages()->get("template=architect, name=$name");
     assertTrue(!$newArchitect instanceof NullPage, 'New Page is created.');
     assertEquals($name, $newArchitect->name, 'New Page has correct name.');

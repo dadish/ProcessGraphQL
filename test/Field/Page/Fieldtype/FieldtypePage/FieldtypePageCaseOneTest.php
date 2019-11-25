@@ -70,7 +70,8 @@ class FieldtypePageCaseOneTest extends GraphQLTestCase {
 		$res = self::execute($query);
 		assertEquals(0, count($res->data->skyscraper->list[0]->architects->list), 'Returns empty list.');
   	assertNull($res->data->skyscraper->list[0]->architects->first, 'Returns empty first item.');
-  	assertNull($res->data->skyscraper->list[0]->architects->last, 'Returns empty last item.');
+		assertNull($res->data->skyscraper->list[0]->architects->last, 'Returns empty last item.');
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

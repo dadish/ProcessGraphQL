@@ -29,7 +29,8 @@ class FieldtypePageTitleTest extends GraphQLTestCase {
   		}
   	}";
   	$res = $this->execute($query);
-  	assertEquals($skyscraper->title, $res->data->skyscraper->list[0]->title, 'Retrieves title value.');
+    assertEquals($skyscraper->title, $res->data->skyscraper->list[0]->title, 'Retrieves title value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

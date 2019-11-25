@@ -30,6 +30,7 @@ class FieldtypeIntegerTest extends GraphqlTestCase {
     }";
     $res = self::execute($query);
     assertEquals($skyscraper->floors, $res->data->skyscraper->list[0]->floors, 'Retrieves field value.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

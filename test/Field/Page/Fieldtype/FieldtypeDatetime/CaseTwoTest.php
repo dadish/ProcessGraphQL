@@ -44,6 +44,7 @@ class FieldtypeDatetimeCaseTwoTest extends GraphQLTestCase {
       $res->data->architect->list[0]->born,
       'Retrieves correctly formatted datetime value.'
     );
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

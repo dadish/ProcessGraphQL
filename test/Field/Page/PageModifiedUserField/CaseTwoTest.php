@@ -36,7 +36,8 @@ class PageModifiedUserFieldCaseTwoTest extends GraphQLTestCase {
   	$res = self::execute($query);
     assertEquals('', $res->data->skyscraper->list[0]->modifiedUser->name, '`modifiedUser->name` is empty string when no access.');
     assertEquals('', $res->data->skyscraper->list[0]->modifiedUser->email, '`modifiedUser->email` is empty string when no access.');
-  	assertEquals('', $res->data->skyscraper->list[0]->modifiedUser->id, '`modifiedUser->id` is empty string when no access.');
+    assertEquals('', $res->data->skyscraper->list[0]->modifiedUser->id, '`modifiedUser->id` is empty string when no access.');
+    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }

@@ -25,7 +25,8 @@ class PageParentIDFieldTest extends GraphQLTestCase {
   		}
   	}";
   	$res = self::execute($query);
-  	assertEquals($skyscraper->parentID, $res->data->skyscraper->list[0]->parentID, 'Retrieves `parentID` field of the page.');
+		assertEquals($skyscraper->parentID, $res->data->skyscraper->list[0]->parentID, 'Retrieves `parentID` field of the page.');
+		assertObjectNotHasAttribute('errors', $res, 'There are errors.');
   }
 
 }
