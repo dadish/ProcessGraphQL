@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
+    "test:cover": "phpdbg -qrr vendor/phpunit/phpunit/phpunit --bootstrap test/bootstrap.php --coverage-html coverage --whitelist src test",
     "test:performance": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBQueryCount.php\"",
     "posttest": "php test/cleanup.php",
     "release": "node scripts/release.js",
