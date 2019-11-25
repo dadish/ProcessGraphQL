@@ -3,6 +3,9 @@
 // start the PHP session
 ob_start();
 
+// increase the php memory limit for testing
+ini_set('memory_limit', '512M');
+
 // paths
 $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
