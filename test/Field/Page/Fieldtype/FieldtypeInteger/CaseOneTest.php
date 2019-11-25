@@ -6,7 +6,7 @@ use \ProcessWire\GraphQL\Test\GraphqlTestCase;
 use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use \ProcessWire\GraphQL\Utils;
 
-class FieldtypeIntegerTest extends GraphqlTestCase {  
+class FieldtypeIntegerCaseOneTest extends GraphqlTestCase {  
 
   const settings = [
     'login' => 'admin',
@@ -20,7 +20,7 @@ class FieldtypeIntegerTest extends GraphqlTestCase {
 
   public function testValue()
   {
-    $skyscraper = Utils::pages()->find("template=skyscraper, sort=random")->first();
+    $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id=$skyscraper->id\") {
         list {

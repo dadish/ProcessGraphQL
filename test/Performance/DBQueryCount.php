@@ -118,7 +118,7 @@ class DbQueryCountTest extends GraphQLTestCase {
     $expected = $skyscrapers->get("architects=$architectsWithResumes, sort=random");
     assertNotNull($expected, 'No expected skyscraper to check.');
     $actual = self::getListItemId($res->data->skyscraper->list, $expected->id);
-    assertEquals(count($expected->architects), count($actual->architects), 'Incorrect architects amount.');
+    assertEquals(count($expected->architects), count($actual->architects->list), 'Incorrect architects amount.');
     assertEquals($expected->architects[0]->id, $actual->architects->list[0]->id, 'Incorrect architect id.');
     assertEquals($expected->architects[0]->title, $actual->architects->list[0]->title, 'Incorrect architect title.');
     assertEquals($expected->architects[0]->created, $actual->architects->list[0]->created, 'Incorrect architect created.');
