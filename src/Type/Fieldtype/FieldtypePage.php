@@ -2,6 +2,7 @@
 
 use GraphQL\Deferred;
 use ProcessWire\Page;
+use ProcessWire\PageArray;
 use ProcessWire\FieldtypePage as PWFieldtypePage;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Type\Inputfield\InputfieldPage;
@@ -37,17 +38,24 @@ class FieldtypePage
         'description' => $desc,
         'type' => self::type($field),
         'resolve' => function ($value, $args, $context, $info) use ($field) {
+          $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
           $data = $value->getArray();
           if (isset($data[$field->name])) {
-            PagesBuffer::add($field->name, $data[$field->name]);
+            $data = $data[$field->name];
+            if (!empty($data)) {
+              PagesBuffer::add($field->name, $data);
+            }
           }
           return new Deferred(function () use ($value, $field, $info) {
             $finderOptions = PageArrayType::getFinderOptions($info);
             PagesBuffer::loadPages($field->name, $finderOptions);
             $fieldName = $field->name;
             $field = \ProcessWire\wire('fields')->get($fieldName);
-            $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
-            return $value->$fieldName->find(SelectorType::parseValue(""));
+            $value = $value->$fieldName;
+            if (!$value instanceof PageArray) {
+              return new PageArray();
+            }
+            return $value->find(SelectorType::parseValue(""));
           });
         }
       ];
