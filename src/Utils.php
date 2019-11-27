@@ -216,7 +216,7 @@ class Utils {
   public static function isRepeaterTemplate(Template $template)
   {
     // if it's not prefixed with "repeater_" then it's not a repeater template
-    if (strpos($template->name, 'repeater_' !== 0)) {
+    if (strpos($template->name, 'repeater_') !== 0) {
       return false;
     }
 
