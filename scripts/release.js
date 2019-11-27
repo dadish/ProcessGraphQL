@@ -46,9 +46,6 @@ async function release(releaseLevel) {
   // add changes to git stage
   await execute("git", ["add", "."], "");
 
-  // remove node_modules from git stage
-  await execute("git", ["reset", "node_modules"], "");
-
   // commit whatever on git stage
   await execute("git", [
     "commit",
