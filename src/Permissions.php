@@ -416,4 +416,12 @@ class Permissions
       return self::canAdd($template);
     });
   }
+
+  public static function turnOnApiAccess()
+  {
+    foreach (Utils::module()->legalFields as $fieldName) {
+      $field = Utils::fields()->get($fieldName);
+      $field->flags = $field->flags | Field::flagAccessAPI;
+    }
+  }
 }
