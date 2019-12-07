@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Schema as GraphQLSchema;
 
+use ProcessWire\Languages;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Permissions;
@@ -14,6 +15,7 @@ use ProcessWire\GraphQL\Field\Debug\DbQuery;
 use ProcessWire\GraphQL\Field\Mutation\CreatePage;
 use ProcessWire\GraphQL\Field\Mutation\TrashPage;
 use ProcessWire\GraphQL\Field\Mutation\UpdatePage;
+use ProcessWire\GraphQL\Field\Language;
 
 class Schema
 {
@@ -79,6 +81,12 @@ class Schema
     // Debugging
     if (\ProcessWire\Wire('config')->debug) {
       $queryFields[] = DbQuery::field();
+    }
+
+    // Language
+    $languages = Utils::languages();
+    if ($languages && $languages instanceof Languages) {
+      $queryFields[] = Language::field();
     }
 
     // let the user modify the query operation
