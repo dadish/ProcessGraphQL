@@ -13,8 +13,8 @@
     "posttest": "php test/cleanup.php",
     "release": "node scripts/release.js",
     "postinstall": "composer install",
-    "start:client": "php -S localhost:8080 test/client.php",
-    "start:server": "php -S localhost:8081 test/server.php",
+    "start:client": "php -S 127.0.0.1:8080 test/client.php",
+    "start:server": "php -S 127.0.0.1:8081 test/server.php",
     "start": "npm-run-all --parallel start:client start:server"
   },
   "repository": {
