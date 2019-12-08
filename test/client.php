@@ -19,7 +19,7 @@ $wire = new ProcessWire($wireConfig);
 $config = $wire->fuel('config');
 
 $config->js('ProcessGraphQL', [
-  'GraphQLServerUrl' => 'http://localhost:8081',
+  'GraphQLServerUrl' => 'http://127.0.0.1:8091',
 ]);
 
 $config->scripts->add("https://unpkg.com/es6-promise@4.2.8/dist/es6-promise.auto.min.js");
