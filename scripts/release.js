@@ -17,16 +17,16 @@ async function release(releaseLevel) {
     "Switching to the release branch"
   );
 
-  // remove files that we don't need in the production code
-  await execute("rm", ["-rf", ...extraneousFiles], "Removing extraneous files");
-
-  // we removed all the vendor code in the previous step
-  // now we install it again, but only the production dependencies.
+  // remove all php vendor code except the required for production
+  await execute("rm", ["-rf", "vendor"], "Removing extraneous files");
   await execute(
     "composer",
     ["install", "--no-dev"],
     "Installing php dependencies (--no-dev)"
   );
+
+  // remove the rest of the files that we don't need in the production code
+  await execute("rm", ["-rf", ...extraneousFiles], "Removing extraneous files");
 
   // remove verdor's files that we don't use in production code
   await execute(
@@ -54,7 +54,7 @@ async function release(releaseLevel) {
   ]);
 
   // version tag
-  await execute("npm", ["version", releaseLevel], "Tagging the release.");
+  await execute("git", ["tag", `v${releaseLevel}`], "Tagging the release.");
 
   // switch back to master
   await execute(
@@ -71,7 +71,7 @@ async function release(releaseLevel) {
   );
 
   // install all deps back
-  await execute("composer", ["install"], "Install all vendor deps back.");
+  await execute("npm", ["install"], "Install all vendor deps back.");
 
   // update package.json version
   await execute(
