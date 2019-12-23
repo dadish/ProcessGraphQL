@@ -63,7 +63,7 @@ async function release(releaseLevel) {
     "Switching back to master branch."
   );
 
-  // delete the master branch
+  // delete the release branch
   await execute(
     "git",
     ["branch", "-D", "release"],
