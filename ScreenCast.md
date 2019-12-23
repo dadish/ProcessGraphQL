@@ -1,4 +1,4 @@
-## ProcessGraphQL ScreenCast
+# ProcessGraphQL ScreenCast
 
 Query only what you need and how you need it.
 
