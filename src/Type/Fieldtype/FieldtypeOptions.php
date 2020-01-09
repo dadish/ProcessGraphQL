@@ -21,8 +21,8 @@ class FieldtypeOptions
 
   public static function type($field)
   {
-    return Cache::type(self::$name, function () use ($field) {
-      $type = new ObjectType([
+    $type = Cache::type(self::$name, function () use ($field) {
+      return new ObjectType([
         'name' => self::$name,
         'description' => self::$description,
         'fields' => [
@@ -52,13 +52,13 @@ class FieldtypeOptions
           ]
         ],
       ]);
-
-      if (self::isMultiple($field)) {
-        return Type::listOf($type);
-      }
-
-      return $type;
     });
+
+    if (self::isMultiple($field)) {
+      return Type::listOf($type);
+    }
+
+    return $type;
   }
 
   public static function inputType($field)
