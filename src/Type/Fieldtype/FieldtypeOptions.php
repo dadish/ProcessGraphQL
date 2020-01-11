@@ -5,6 +5,8 @@ use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\ObjectType;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\InputfieldSelectMultiple;
+use ProcessWire\Field;
+use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Fieldtype\Traits\SetValueTrait;
 use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldTrait;
 
@@ -63,7 +65,7 @@ class FieldtypeOptions
 
   public static function inputType($field)
   {
-    return Cache::type(self::$inputName, function () use ($field) {
+    return Cache::type(self::getName($field), function () use ($field) {
       $options = [];
       foreach ($field->type->getOptions($field) as $option) {
         $options[$option->title ? $option->title : $option->value] = [
@@ -73,7 +75,7 @@ class FieldtypeOptions
       }
 
       $type = new EnumType([
-        'name' => self::$inputName,
+        'name' => self::getName($field),
         'description' => "Possible values for the ". self::$name .".",
         'values' => $options,
       ]);
@@ -109,5 +111,14 @@ class FieldtypeOptions
         'type' => self::inputType($field),
       ];
     });
+  }
+
+  public static function getName(Field $field = null)
+  {
+    if ($field instanceof Field) {
+      return Utils::normalizeTypeName("{$field->name}".self::$inputName);
+    }
+
+    return self::$inputName;
   }
 }
