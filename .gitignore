@@ -1,9 +1,0 @@
-vendor
-node_modules
-coverage
-.vscode
-
-*.old
-*.old/*
-*.new
-*.new/*
