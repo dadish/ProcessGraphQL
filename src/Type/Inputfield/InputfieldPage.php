@@ -3,6 +3,7 @@
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
+use ProcessWire\FieldtypePage;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Utils;
 
@@ -52,6 +53,7 @@ class InputfieldPage
 
   public static function setValue(Page $page, $field, $value)
   {
+    $field->derefAsPage = FieldtypePage::derefAsPageArray;
     $fieldName = $field->name;
     $fieldValue = $page->$fieldName;
     if (isset($value['add'])) {
