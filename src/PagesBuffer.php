@@ -55,6 +55,7 @@ class PagesBuffer
       self::$pageIDs[$group] = [];
     }
     self::$pageIDs[$group] = array_merge(self::$pageIDs[$group], $ids);
+    return $ids;
   }
 
   public static function get($group)

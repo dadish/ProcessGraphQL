@@ -38,19 +38,21 @@ class FieldtypePage
         'description' => $desc,
         'type' => self::type($field),
         'resolve' => function ($value, $args, $context, $info) use ($field) {
-          $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
           $data = $value->getArray();
           if (isset($data[$field->name])) {
             $data = $data[$field->name];
             if (!empty($data)) {
-              PagesBuffer::add($field->name, $data);
+              $pageIDs = PagesBuffer::add($field->name, $data);
+              if (count($pageIDs)) {
+                $value->data($field->name, $pageIDs);
+              }
             }
           }
           return new Deferred(function () use ($value, $field, $info) {
             $finderOptions = PageArrayType::getFinderOptions($info);
             PagesBuffer::loadPages($field->name, $finderOptions);
             $fieldName = $field->name;
-            $field = \ProcessWire\wire('fields')->get($fieldName);
+            $field->derefAsPage = PWFieldtypePage::derefAsPageArray;
             $value = $value->$fieldName;
             if (!$value instanceof PageArray) {
               return new PageArray();
