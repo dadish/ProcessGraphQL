@@ -828,16 +828,16 @@
         },
         {
             "name": "processwire/processwire",
-            "version": "3.0.123",
+            "version": "3.0.148",
             "source": {
                 "type": "git",
                 "url": "https://github.com/processwire/processwire.git",
-                "reference": "649d2569abc10bac43e98ca98db474dd3d6603ca"
+                "reference": "51629cdd5f381d3881133baf83e1bd2d9306f867"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/processwire/processwire/zipball/649d2569abc10bac43e98ca98db474dd3d6603ca",
-                "reference": "649d2569abc10bac43e98ca98db474dd3d6603ca",
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/51629cdd5f381d3881133baf83e1bd2d9306f867",
+                "reference": "51629cdd5f381d3881133baf83e1bd2d9306f867",
                 "shasum": ""
             },
             "require": {
@@ -857,9 +857,9 @@
             "authors": [
                 {
                     "name": "Ryan Cramer",
-                    "role": "Developer",
                     "email": "ryan@processwire.com",
-                    "homepage": "https://processwire.com"
+                    "homepage": "https://processwire.com",
+                    "role": "Developer"
                 }
             ],
             "description": "ProcessWire CMS/CMF",
@@ -870,7 +870,7 @@
                 "cms",
                 "processwire"
             ],
-            "time": "2018-12-21T19:30:49+00:00"
+            "time": "2020-01-02T17:06:16+00:00"
         },
         {
             "name": "ryancramerdesign/fieldtypemapmarker",
