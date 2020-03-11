@@ -17,6 +17,7 @@ class PageChildrenFieldCaseOneTest extends GraphQLTestCase {
     'login' => 'admin',
     'legalTemplates' => ['city', 'skyscraper'],
     'legalPageFields' => ['children'],
+    'maxLimit' => 500
   ];
 
 	
