@@ -14,6 +14,7 @@
 6. [API](#api)
 7. [Features](#features)
 8. [Development](https://github.com/dadish/ProcessGraphQL/wiki/Development)
+9. [Troubleshooting](#troubleshooting)
 
 ## About ProcessGraphQL
 
@@ -242,6 +243,33 @@ Given the `$page`, `$field` and a `$value`, the method sets the value to the pag
 > Note: The GraphQL api is built upon [webonyx/graphql-php][webonyx-graphql] library. So the methods above should be built using that library. Please see [GraphQLFieldtypeMapMarker][map-marker-graphql] module for reference.
 
 When your module is ready, just install it and it should be automatically used by ProcessGraphQL and your fieldtype should be available via your GraphQL api.
+
+## Troubleshooting
+
+### Syntax Error: Unexpected &lt;EOF&gt;
+
+If you are getting an error response from your GraphQL API with the following structure
+
+```json
+{
+  "errors": [
+    {
+      "message": "Syntax Error: Unexpected <EOF>",
+      "extensions": {
+        "category": "graphql"
+      },
+      "locations": [
+        {
+          "line": 1,
+          "column": 1
+        }
+      ]
+    }
+  ]
+}
+```
+
+then it is probably because ProcessGraphQL is not receiving your query. The reason for this could be that the url you're making a request to does not end with `/` (forward slash). In ProcessWire, the urls `/graphql` and `/graphql/` are treated differently. If you are making a request to `/graphql` (without forward slash at the end) the ProcessWire could be redirecting to `/graphql/` (with forward slash at the end) instead of passing it to your template. When your request is redirected from `/graphql` to `/graphql/` the content of your POST is being lost in the middle and never reaches your `graphql.php` template. So make sure the url that you're making a request to is exactly what you intend it to be.
 
 ## License
 
