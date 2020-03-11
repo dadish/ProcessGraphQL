@@ -80,6 +80,9 @@ $module->install();
 $pages = $wire->fuel('pages');
 $pages->setOutputFormatting(true);
 
+// set $page wire
+$wire->wire('page', $pages->get('/'));
+
 // disable cache for $pages->get() & $pages->find() if they have random sorting
 $pages->addHookBefore('find', function ($event) {
 	$selector = $event->arguments('selector');
