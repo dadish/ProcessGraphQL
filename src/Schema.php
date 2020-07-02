@@ -45,6 +45,9 @@ class Schema
       $schema['mutation'] = $mutation;
     }
 
+    // Let the user or other modules modify the schema.
+    $schema = Utils::module()->modifySchema($schema);
+
     self::$schema = new GraphQLSchema($schema);
   }
 

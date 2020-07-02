@@ -34,6 +34,19 @@ class ProcessGraphQL extends Process implements Module {
 		$this->addHookAfter('Template::changed', $this, 'hookTemplateNameChange');
 	}
 
+	/**
+   * The hook for modifying the GraphQL schema types by the user.
+   * The schema is an array of types that will be set to GraphQL types.
+   * Custom types could be added bu just appending them into an array.
+   * See the documentation of the library used by this module to learn more
+   * @see  The GraphQL lib https://github.com/webonyx/graphql-php
+   * @param  $schema    
+   * @return $schema
+   */
+	public function ___modifySchema($schema) {
+		return $schema;
+	}
+
   /**
    * Updates the legalTemplates on name change. Template names for ProcessWire
    * are not necessarily valid for GraphQL field naming. Those names that are
