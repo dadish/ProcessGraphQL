@@ -47,7 +47,7 @@ class SuperuserCreateAllowedOnlyOneTest extends GraphqlTestCase {
 
     $variables = [
       'page' => [
-        'parent' => 1,
+        'parent' => '1',
         'name' => 'search',
         'title' => 'Search'
       ]
