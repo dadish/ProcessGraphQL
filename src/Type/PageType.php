@@ -6,7 +6,6 @@ use ProcessWire\Page;
 use ProcessWire\NullPage;
 use ProcessWire\Template;
 use ProcessWire\WireData;
-use ProcessWire\FieldtypeDatetime;
 use ProcessWire\GraphQL\Cache;
 use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
