@@ -53,7 +53,7 @@ class EditorCreateNotAllowedTemplateOnlyOneTest extends GraphqlTestCase {
 
     $variables = [
       'page' => [
-        'parent' => 1,
+        'parent' => '1',
         'name' => 'search-3',
         'title' => 'Search 3'
       ]
