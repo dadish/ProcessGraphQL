@@ -1,7 +1,7 @@
 <?php namespace ProcessWire;
 
 use GraphQL\GraphQL;
-use GraphQL\Error\Debug;
+use GraphQL\Error\DebugFlag;
 use ProcessWire\GraphQL\Permissions;
 use ProcessWire\HookEvent;
 use ProcessWire\GraphQL\Schema;
@@ -185,9 +185,9 @@ class ProcessGraphQL extends Process implements Module {
 		$schema = Schema::getSchema();
 		Permissions::turnOnApiAccess();
 		$result = GraphQL::executeQuery($schema, $payload, $this->pages, null, $variables);
-		$debug = null;
+		$debug = false;
 		if ($this->config->debug) {
-			$debug = $debug = Debug::INCLUDE_DEBUG_MESSAGE | Debug::INCLUDE_TRACE;
+			$debug = $debug = DebugFlag::INCLUDE_DEBUG_MESSAGE | DebugFlag::INCLUDE_TRACE;
 		}
 		$response = $result->toArray($debug);
 		return $response;
