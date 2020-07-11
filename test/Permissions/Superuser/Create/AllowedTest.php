@@ -31,7 +31,9 @@ class SuperuserCreateAllowedOnlyOneTest extends GraphqlTestCase {
   public static function setUpBeforeClass()
   {
     $searchPage = Utils::pages()->get("template=search");
-    $searchPage->delete();
+    if ($searchPage->id) {
+      $searchPage->delete();
+    }
     parent::setUpBeforeClass();
   }
 
