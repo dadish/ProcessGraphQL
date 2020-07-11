@@ -9,7 +9,10 @@
   "scripts": {
     "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
     "test:cover": "phpdbg -qrr vendor/phpunit/phpunit/phpunit --bootstrap test/bootstrap.php --coverage-html coverage --whitelist src test",
-    "test:performance": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBQueryCount.php\"",
+    "test:performance:totalCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBQueryCount.php\"",
+    "test:performance:longCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBLongQueryCount.php\"",
+    "test:performance:shortCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBShortQueryCount.php\"",
+    "test:performance": "npm-run-all test:performance:*",
     "posttest": "php test/cleanup.php",
     "release": "node scripts/release.js",
     "postinstall": "composer install",
