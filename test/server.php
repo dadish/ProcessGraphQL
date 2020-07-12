@@ -43,6 +43,7 @@ function cors() {
 }
 
 $module = $modules->get('ProcessGraphQL');
+$module->legalPageFields = array_merge($module->legalPageFields, ['parent', 'parents', 'child', 'children']);
 $module->legalTemplates = ['skyscrapers', 'skyscraper', 'architects', 'architect', 'cities', 'city', 'list-all'];
 $module->legalFields = ['abbreviation', 'architects', 'body', 'born', 'email', 'featured', 'floors', 'freebase_guid', 'height', 'images', 'map', 'options', 'options_single', 'resume', 'selected', 'skyscrapers', 'sponsor', 'title', 'wikipedia_id', 'year', 'slides'];
 $module->maxLimit = 500;
