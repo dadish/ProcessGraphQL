@@ -1,6 +1,7 @@
 <?php namespace ProcessWire\GraphQL\Type;
 
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\Type;
 use ProcessWire\Page;
 use ProcessWire\NullPage;
@@ -23,13 +24,20 @@ class PageType
     if ($template instanceof Template) {
       $type =& self::templateType($template);
     } else {
-      $type =& Cache::type(self::getName(), function () {
-        return new ObjectType([
+      $type =& Cache::type(self::getName(), function () use ($type) {
+        return new InterfaceType([
           'name' => self::getName(),
           'description' => self::getDescription(),
           'fields' => function () {
             return self::getLegalBuiltInFields();
           },
+          'resolveType' => function($value) use ($type) {
+            $resolvedType = $type;
+            if ($value->id && $value->template instanceof Template) {
+              $resolvedType =& self::templateType($value->template);
+            }
+            return $resolvedType;
+          }
         ]);
       });
     }
@@ -170,12 +178,16 @@ class PageType
   public static function &templateType(Template $template)
   {
     $temlpateType =& Cache::type(self::getName($template), function () use ($template) {
+      $type =& self::type();
       return new ObjectType([
         'name' => self::getName($template),
         'description' => self::getDescription($template),
         'fields' => function () use ($template) {
           return self::getFields($template);
         },
+        'interfaces' => [
+          $type
+        ]
       ]);
     });
     return $temlpateType;
