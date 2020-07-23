@@ -1,8 +1,10 @@
 <?php namespace ProcessWire\GraphQL\Field\Mutation;
 
 use GraphQL\Type\Definition\Type;
+use ProcessWire\GraphQL\Error\ExecutionError;
 use ProcessWire\Template;
 use ProcessWire\Page;
+use ProcessWire\NullPage;
 use ProcessWire\GraphQL\Permissions;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Error\ValidationError;
@@ -121,7 +123,7 @@ class CreatePage
     }
 
     // If we did not return till now then no good!
-    throw new ResolveException("Could not create page `$name` with template `{$template->name}`");
+    throw new ExecutionError("Could not create page `$name` with template `{$template->name}`");
   }
 }
 

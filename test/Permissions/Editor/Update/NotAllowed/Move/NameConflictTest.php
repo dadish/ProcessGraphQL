@@ -77,7 +77,7 @@ class EditorNotAllowedMoveNameConflictTest extends GraphqlTestCase {
     $variables = [
       'page' => [
         'id' => $skyscraper->id,
-        'parent' => $newParent->id,
+        'parent' => (string) $newParent->id,
       ]
     ];
 
