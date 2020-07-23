@@ -1,5 +1,6 @@
 <?php namespace ProcessWire\GraphQL\Type\Fieldtype;
 
+use DateTime;
 use ProcessWire\Page;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\CustomScalarType;
@@ -24,7 +25,7 @@ class FieldtypeDatetime
           return (string) $value;
         },
         'parseValue' => function ($value) {
-          return (string) $value;
+          return new DateTime($value);
         },
         'parseLiteral' => function ($valueNode) {
           return (string) $valueNode->value;
