@@ -8,7 +8,6 @@ namespace ProcessWire\GraphQL\Test\Field\Page;
 
 use \ProcessWire\GraphQL\Utils;
 use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 
 class FieldtypeDatetimeCaseThreeTest extends GraphQLTestCase {
 
@@ -17,10 +16,6 @@ class FieldtypeDatetimeCaseThreeTest extends GraphQLTestCase {
     'legalTemplates' => ['architect'],
     'legalFields' => ['born'],
   ];
-  const FIELD_NAME = 'born';
-  const FIELD_TYPE = 'FieldtypeDatetime';
-
-  use FieldtypeTestTrait;
 
   public function testValue()
   {
