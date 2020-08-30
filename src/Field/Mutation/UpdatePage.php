@@ -59,7 +59,8 @@ class UpdatePage
     if (
       $pageEditCreatedPermission->id &&
       $user->hasPermission($pageEditCreatedPermission) &&
-      $p->createdUser->id !== $user->id
+      $p->createdUser->id !== $user->id &&
+      !$user->isSuperuser()
     ) {
       throw new ValidationError("You are not allowed to update the page '{$p->id}'.");
     }
