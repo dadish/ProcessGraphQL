@@ -750,6 +750,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-07-25T05:29:42+00:00"
         },
         {
@@ -838,16 +839,16 @@
         },
         {
             "name": "processwire/processwire",
-            "version": "3.0.148",
+            "version": "3.0.164",
             "source": {
                 "type": "git",
                 "url": "https://github.com/processwire/processwire.git",
-                "reference": "51629cdd5f381d3881133baf83e1bd2d9306f867"
+                "reference": "b429de71e33066f611b0bf6e2cc3782b7e5dafa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/processwire/processwire/zipball/51629cdd5f381d3881133baf83e1bd2d9306f867",
-                "reference": "51629cdd5f381d3881133baf83e1bd2d9306f867",
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/b429de71e33066f611b0bf6e2cc3782b7e5dafa3",
+                "reference": "b429de71e33066f611b0bf6e2cc3782b7e5dafa3",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +881,7 @@
                 "cms",
                 "processwire"
             ],
-            "time": "2020-01-02T17:06:16+00:00"
+            "time": "2020-07-31T17:51:05+00:00"
         },
         {
             "name": "ryancramerdesign/fieldtypemapmarker",
