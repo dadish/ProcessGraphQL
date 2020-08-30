@@ -11,10 +11,10 @@
   ],
   "require": {
     "php": "^7.1",
-    "webonyx/graphql-php": "^14.0"
+    "webonyx/graphql-php": "^14.3.0"
   },
   "require-dev": {
-    "processwire/processwire": "3.0.*",
+    "processwire/processwire": "^3.0.164",
     "ryancramerdesign/fieldtypemapmarker": "1.0.0",
     "dadish/graphqlfieldtypemapmarker": "2.0.0",
     "phpunit/phpunit": "^7.5"
