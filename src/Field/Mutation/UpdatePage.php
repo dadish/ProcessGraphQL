@@ -77,7 +77,10 @@ class UpdatePage
 
       // find the parent
       $parentSelector = $values['parent'];
-      $parent = $pages->find($sanitizer->selectorValue($parentSelector))->first();
+      if (!ctype_digit($parentSelector)) {
+        $parentSelector = $sanitizer->pagePathName($parentSelector);
+      }
+      $parent = $pages->get($parentSelector);
 
       // if no parent then no good. No child should born without a parent!
       if (!$parent || $parent instanceof NullPage) {
