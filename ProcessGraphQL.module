@@ -104,7 +104,7 @@ class ProcessGraphQL extends Process implements Module {
   public function executeGraphiQL()
   {
 		$this->setupGraphiQLAssets();
-    $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/full.php';
+    $fullFilename = $this->config->paths->site . 'modules/ProcessGraphQL/graphiql/full.php';
 		return wireRenderFile($fullFilename, [
 			'fullGraphiQL' => true,
 		]);
@@ -117,7 +117,7 @@ class ProcessGraphQL extends Process implements Module {
 	public function executeGraphiQLPartial()
 	{
 		$this->setupGraphiQLAssets();
-		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/GraphiQL/partial.php';
+		$partialFilename = $this->config->paths->site . 'modules/ProcessGraphQL/graphiql/partial.php';
 		return wireRenderFile($partialFilename, [
 			'fullGraphiQL' => false,
 		]);

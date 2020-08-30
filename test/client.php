@@ -31,7 +31,7 @@ $config->styles->add('https://unpkg.com/graphiql@0.14.2/graphiql.css');
 
 $filename = realpath($baseDir . $_SERVER['SCRIPT_NAME']);
 if ($filename === $baseDir) {
-  require_once(realpath("$baseDir/GraphiQL/full.php"));
+  require_once(realpath("$baseDir/graphiql/full.php"));
   return;
 }
 
