@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Create;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class SuperuserCreateAvailableTest extends GraphqlTestCase {
-
+class AvailableTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The template should be legal.
@@ -12,15 +11,16 @@ class SuperuserCreateAvailableTest extends GraphqlTestCase {
    * + All the required fields should be legal.
    */
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper', 'city'],
-    'legalFields' => ['title'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper", "city"],
+    "legalFields" => ["title"],
   ];
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathExists(
-      ['Mutation', 'createSkyscraper'],
-      'createSKyscrpaer mutation field should be available.'
+      ["Mutation", "createSkyscraper"],
+      "createSKyscrpaer mutation field should be available."
     );
   }
 }

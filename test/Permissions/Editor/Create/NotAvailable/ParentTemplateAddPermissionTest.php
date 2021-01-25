@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorCreateNotAvailableParentTemplateAddPermissionTest extends GraphqlTestCase {
-
+class ParentTemplateAddPermissionTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The template is legal.
@@ -18,36 +19,37 @@ class EditorCreateNotAvailableParentTemplateAddPermissionTest extends GraphqlTes
     $editorRole = Utils::roles()->get("editor");
 
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
-            'createRoles' => [$editorRole->id],
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+            "editRoles" => [$editorRole->id],
+            "createRoles" => [$editorRole->id],
           ],
           [
-            'name' => 'city',
-            'roles' => [$editorRole->id],
-          ]
+            "name" => "city",
+            "roles" => [$editorRole->id],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'editRoles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "editRoles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'Create field should not be available if configured parent template is not legal.'
+      ["Mutation", "createSkyscraper"],
+      "Create field should not be available if configured parent template is not legal."
     );
   }
 }

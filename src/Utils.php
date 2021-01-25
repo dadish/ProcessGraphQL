@@ -9,16 +9,17 @@
 namespace ProcessWire\GraphQL;
 
 use ProcessWire\Field;
+use ProcessWire\ProcessWire;
 use ProcessWire\Template;
 
-class Utils {
-
- /**
-  * Same as ProcessWire wire function.
-  * @param  string $name The name of the api. E.g. `pages`, `modules`, `templates`.
-  * @return mixed       Returns the ProcessWire API variable.
-  */
-  public static function wire($name='wire')
+class Utils
+{
+  /**
+   * Same as ProcessWire wire function.
+   * @param  string $name The name of the api. E.g. `pages`, `modules`, `templates`.
+   * @return mixed       Returns the ProcessWire API variable.
+   */
+  public static function wire($name = "wire")
   {
     return \ProcessWire\wire($name);
   }
@@ -29,106 +30,106 @@ class Utils {
    */
   public static function pages()
   {
-    return self::wire('pages');
+    return self::wire("pages");
   }
 
- /**
-  * Shortcut for wire('user')
-  * @return \ProcessWire\User The ProcessWire $user API variable.
-  */
+  /**
+   * Shortcut for wire('user')
+   * @return \ProcessWire\User The ProcessWire $user API variable.
+   */
   public static function user()
   {
-    return self::wire('user');
+    return self::wire("user");
   }
 
- /**
-  * Shortcut for wire('users')
-  * @return \ProcessWire\Users The ProcessWire $users variable.
-  */
+  /**
+   * Shortcut for wire('users')
+   * @return \ProcessWire\Users The ProcessWire $users variable.
+   */
   public static function users()
   {
-    return self::wire('users');
+    return self::wire("users");
   }
 
- /**
-  * Shortcut for wire('modules')
-  * @return \ProcessWire\Modules The ProcessWire $modules API variable
-  */
+  /**
+   * Shortcut for wire('modules')
+   * @return \ProcessWire\Modules The ProcessWire $modules API variable
+   */
   public static function modules()
   {
-    return self::wire('modules');
+    return self::wire("modules");
   }
 
- /**
-  * Shortcut for wire('templates')
-  * @return \ProcessWire\Templates The ProcessWire $templates API variable.
-  */
+  /**
+   * Shortcut for wire('templates')
+   * @return \ProcessWire\Templates The ProcessWire $templates API variable.
+   */
   public static function templates()
   {
-    return self::wire('templates');
+    return self::wire("templates");
   }
 
- /**
-  * Shortcut for wire('fields')
-  * @return \ProcessWire\Fields The ProcessWire $fields API variable.
-  */
+  /**
+   * Shortcut for wire('fields')
+   * @return \ProcessWire\Fields The ProcessWire $fields API variable.
+   */
   public static function fields()
   {
-    return self::wire('fields');
+    return self::wire("fields");
   }
 
- /**
-  * Shortcut for wire('sanitizer')
-  * @return \ProcessWire\Sanitizer The ProcessWire $sanitizer variable.
-  */
+  /**
+   * Shortcut for wire('sanitizer')
+   * @return \ProcessWire\Sanitizer The ProcessWire $sanitizer variable.
+   */
   public static function sanitizer()
   {
-    return self::wire('sanitizer');
+    return self::wire("sanitizer");
   }
 
- /**
-  * Shortcut for wire('config')
-  * @return \ProcessWire\Config The ProcessWire $config API variable.
-  */
+  /**
+   * Shortcut for wire('config')
+   * @return \ProcessWire\Config The ProcessWire $config API variable.
+   */
   public static function config()
   {
-    return self::wire('config');
+    return self::wire("config");
   }
 
- /**
-  * Shortcut for wire('session')
-  * @return \ProcessWire\Session The ProcessWire $session variable.
-  */
+  /**
+   * Shortcut for wire('session')
+   * @return \ProcessWire\Session The ProcessWire $session variable.
+   */
   public static function session()
   {
-    return self::wire('session');
+    return self::wire("session");
   }
 
- /**
-  * Shortcut for wire('users')
-  * @return \ProcessWire\Users The ProcessWire $users variabe.
-  */
+  /**
+   * Shortcut for wire('users')
+   * @return \ProcessWire\Users The ProcessWire $users variabe.
+   */
   public static function roles()
   {
-    return self::wire('roles');
+    return self::wire("roles");
   }
 
- /**
-  * Shortcut for wire('permissions')
-  * @return \ProcessWire\Permissions The ProcessWire $permissions variable.
-  */
+  /**
+   * Shortcut for wire('permissions')
+   * @return \ProcessWire\Permissions The ProcessWire $permissions variable.
+   */
   public static function permissions()
   {
-    return self::wire('permissions');
+    return self::wire("permissions");
   }
 
- /**
-  * Returns the ProcessGraphQL module instance.
-  * @return \ProcessWire\ProcessGraphQL The ProcessGraphQL module instance
-  */
+  /**
+   * Returns the ProcessGraphQL module instance.
+   * @return \ProcessWire\ProcessGraphQL The ProcessGraphQL module instance
+   */
   public static function module()
   {
-    return self::modules()->get('ProcessGraphQL');
+    return self::modules()->get("ProcessGraphQL");
   }
 
   /**
@@ -137,7 +138,7 @@ class Utils {
    */
   public static function languages()
   {
-    return self::wire('languages');
+    return self::wire("languages");
   }
 
   /**
@@ -146,22 +147,39 @@ class Utils {
    */
   public static function database()
   {
-    return self::wire('database');
+    return self::wire("database");
   }
 
- /**
-  * An array of reserved words for future use
-  * @return array Array of strings.
-  */
+  /**
+   * An array of reserved words for future use
+   * @return array Array of strings.
+   */
   public static function getReservedWords()
   {
     return [
-      'me', 'debug', 'login', 'logout',
-      'pages','templates','template','fields',
-      'roles', 'permissions', 'config', 'system',
-      'wire', 'enum', 'trash', 'users', 'setup',
-      'modules', 'access', 'find', 'logs', 'site',
-      'core',
+      "me",
+      "debug",
+      "login",
+      "logout",
+      "pages",
+      "templates",
+      "template",
+      "fields",
+      "roles",
+      "permissions",
+      "config",
+      "system",
+      "wire",
+      "enum",
+      "trash",
+      "users",
+      "setup",
+      "modules",
+      "access",
+      "find",
+      "logs",
+      "site",
+      "core",
     ];
   }
 
@@ -172,17 +190,21 @@ class Utils {
    */
   public static function pwFieldToGraphqlClass(Field $field)
   {
-
-    
     // use local field if available
-    $className = "\\ProcessWire\\GraphQL\\Type\\Fieldtype\\" . $field->type->className();
+    $className =
+      "\\ProcessWire\\GraphQL\\Type\\Fieldtype\\" . $field->type->className();
     if (class_exists($className)) {
       return $className;
     }
 
     // use third party field if available
-    $thirdPartyFieldtypeClassName = "ProcessWire\\GraphQL\\Type\\Fieldtype\\FieldtypeThirdParty";
-    if (class_exists($thirdPartyFieldtypeClassName::getThirdPartyClassName($field))) {
+    $thirdPartyFieldtypeClassName =
+      "ProcessWire\\GraphQL\\Type\\Fieldtype\\FieldtypeThirdParty";
+    if (
+      class_exists(
+        $thirdPartyFieldtypeClassName::getThirdPartyClassName($field)
+      )
+    ) {
       return $thirdPartyFieldtypeClassName;
     }
 
@@ -195,7 +217,7 @@ class Utils {
    */
   public static function placeholder()
   {
-    return 'placeholder';
+    return "placeholder";
   }
 
   public static function normalizeFieldName($name)
@@ -216,7 +238,7 @@ class Utils {
   public static function isRepeaterTemplate(Template $template)
   {
     // if it's not prefixed with "repeater_" then it's not a repeater template
-    if (strpos($template->name, 'repeater_') !== 0) {
+    if (strpos($template->name, "repeater_") !== 0) {
       return false;
     }
 
@@ -229,17 +251,17 @@ class Utils {
   }
 }
 
-function log($data, $label = '')
+function log($data, $label = "")
 {
   echo "\n======================================\n";
   if ($label) {
     echo "$label\n";
   }
   echo $data;
-  echo "\n======================================\n";  
+  echo "\n======================================\n";
 }
 
-function logArr($data, $label = '')
+function logArr($data, $label = "")
 {
   log(json_encode($data, JSON_PRETTY_PRINT), $label);
 }

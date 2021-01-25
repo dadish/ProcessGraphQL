@@ -1,11 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Update\NotAllowed;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class SuperuserRenameNotAllowedTest extends GraphqlTestCase {
-
+class RenameTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -14,14 +13,17 @@ class SuperuserRenameNotAllowedTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['architect'],
+      "login" => "admin",
+      "legalTemplates" => ["architect"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $architect = Utils::pages()->get("template=architect, sort=random");
-    $newName = Utils::pages()->get("template=architect, sort=random, id!={$architect->id}")->name;
+    $newName = Utils::pages()->get(
+      "template=architect, sort=random, id!={$architect->id}"
+    )->name;
     $query = 'mutation renamePage($page: ArchitectUpdateInput!){
       updateArchitect(page: $page) {
         name
@@ -29,16 +31,24 @@ class SuperuserRenameNotAllowedTest extends GraphqlTestCase {
     }';
 
     $variables = [
-      'page' => [
-        'id' => $architect->id,
-        'name' => $newName
-      ]
+      "page" => [
+        "id" => $architect->id,
+        "name" => $newName,
+      ],
     ];
 
-    assertNotEquals($newName, $architect->name);
+    self::assertNotEquals($newName, $architect->name);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to updates the name if it conflicts.');
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Does not allow to updates the name if it conflicts."
+    );
     assertStringContainsString($newName, $res->errors[0]->message);
-    assertNotEquals($newName, $architect->name, 'Does not update the name of the target.');
+    self::assertNotEquals(
+      $newName,
+      $architect->name,
+      "Does not update the name of the target."
+    );
   }
 }

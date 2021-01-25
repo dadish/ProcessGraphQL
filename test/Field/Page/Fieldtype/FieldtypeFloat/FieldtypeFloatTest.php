@@ -1,26 +1,28 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeFloat;
 
-use \ProcessWire\GraphQL\Test\GraphqlTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphqlTestCase;
+use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use ProcessWire\GraphQL\Utils;
 
-class FieldtypeFloatTest extends GraphqlTestCase {  
-
+class FieldtypeFloatTest extends GraphqlTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['height'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["height"],
   ];
-  const FIELD_NAME = 'height';
-  const FIELD_TYPE = 'FieldtypeFloat';
+  const FIELD_NAME = "height";
+  const FIELD_TYPE = "FieldtypeFloat";
 
   use FieldtypeTestTrait;
 
   public function testValue()
   {
-    $skyscraper = Utils::pages()->find("template=skyscraper, sort=random")->first();
+    $skyscraper = Utils::pages()
+      ->find("template=skyscraper, sort=random")
+      ->first();
     $query = "{
       skyscraper(s: \"id=$skyscraper->id\") {
         list {
@@ -29,8 +31,11 @@ class FieldtypeFloatTest extends GraphqlTestCase {
       }
     }";
     $res = $this->execute($query);
-    assertEquals($skyscraper->height, $res->data->skyscraper->list[0]->height, 'Retrieves field value.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $skyscraper->height,
+      $res->data->skyscraper->list[0]->height,
+      "Retrieves field value."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

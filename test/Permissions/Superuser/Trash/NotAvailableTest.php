@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Trash;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class SuperuserTrashNotAvailableTest extends GraphqlTestCase {
-
+class NotAvailableTest extends GraphqlTestCase
+{
   /**
    * + For Superuser
    * - There is no legal template.
@@ -12,11 +11,12 @@ class SuperuserTrashNotAvailableTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
+      "login" => "admin",
     ];
   }
 
-  public function testPermission() {
-    assertTypePathNotExists(['Mutation', 'trash']);
+  public function testPermission()
+  {
+    assertTypePathNotExists(["Mutation", "trash"]);
   }
 }

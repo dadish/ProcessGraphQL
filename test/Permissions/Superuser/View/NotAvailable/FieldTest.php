@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\View\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class SuperuserViewNotAvailableFieldTest extends GraphqlTestCase {
-
+class FieldTest extends GraphqlTestCase
+{
   /**
    * + The template is legal.
    * - The title field is not legal.
@@ -12,12 +11,13 @@ class SuperuserViewNotAvailableFieldTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['skyscraper'],
+      "login" => "admin",
+      "legalTemplates" => ["skyscraper"],
     ];
   }
 
-  public function testPermission() {
-    assertTypePathNotExists(['Query', 'skyscraper', 'list', 'title']);
+  public function testPermission()
+  {
+    assertTypePathNotExists(["Query", "skyscraper", "list", "title"]);
   }
 }

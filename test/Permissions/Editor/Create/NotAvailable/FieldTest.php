@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorCreateNotAvailableFieldTest extends GraphqlTestCase {
-
+class FieldTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The template is legal.
@@ -18,36 +19,37 @@ class EditorCreateNotAvailableFieldTest extends GraphqlTestCase {
     $editorRole = Utils::roles()->get("editor");
 
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'], 
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
-            'createRoles' => [$editorRole->id],
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+            "editRoles" => [$editorRole->id],
+            "createRoles" => [$editorRole->id],
           ],
           [
-            'name' => 'city',
-            'roles' => [$editorRole->id],
-            'addRoles' => [$editorRole->id],
-          ]
+            "name" => "city",
+            "roles" => [$editorRole->id],
+            "addRoles" => [$editorRole->id],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'editRoles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "editRoles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'createSkyscraper mutation field should not be available if one of the required fields is not legal.'
+      ["Mutation", "createSkyscraper"],
+      "createSkyscraper mutation field should not be available if one of the required fields is not legal."
     );
   }
 }

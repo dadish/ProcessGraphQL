@@ -2,23 +2,22 @@
 
 /**
  * Creates page properly
- * 
+ *
  */
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeMapMarker;
 
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use ProcessWire\GraphQL\Utils;
 
-class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
-
+class CaseTwoTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper', 'city'],
-    'legalFields' => ['map', 'title'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper", "city"],
+    "legalFields" => ["map", "title"],
   ];
-
 
   public function testValue()
   {
@@ -38,20 +37,20 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
     }';
     $lat = 0.002303;
     $lng = -0.032713;
-    $address = '1324 Manhattan, New York';
+    $address = "1324 Manhattan, New York";
     $zoom = 2;
     $name = "new-building-with-location";
     $title = "New Building with Location";
     $variables = [
-      'page' => [
-        'parent' => "$city->id",
-        'name' => $name,
-        'title' => $title,
-        'map' => [
-          'lat' => $lat,
-          'lng' => $lng,
-          'address' => $address,
-          'zoom' => $zoom,
+      "page" => [
+        "parent" => "$city->id",
+        "name" => $name,
+        "title" => $title,
+        "map" => [
+          "lat" => $lat,
+          "lng" => $lng,
+          "address" => $address,
+          "zoom" => $zoom,
         ],
       ],
     ];
@@ -59,13 +58,36 @@ class FieldtypeMapMarkerCaseTwoTest extends GraphQLTestCase {
     $skyscraper = Utils::pages()->get("template=skyscraper, name=$name");
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->map;
-    assertEquals($skyscraper->title, $res->data->skyscraper->title, 'Creates skyscraper page with correct title.');
-    assertEquals($skyscraper->name, $res->data->skyscraper->name, 'Creates skyscraper page with correct name.');
-    assertEquals($expectedMap->lat, $actualMap->lat, 'Retreives correct lat.');
-    assertEquals($expectedMap->lng, $actualMap->lng, 'Retreives correct lng.');
-    assertEquals($expectedMap->address, $actualMap->address, 'Retreives correct address.');
-    assertEquals($expectedMap->zoom, $actualMap->zoom, 'Retreives correct zoom.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $skyscraper->title,
+      $res->data->skyscraper->title,
+      "Creates skyscraper page with correct title."
+    );
+    self::assertEquals(
+      $skyscraper->name,
+      $res->data->skyscraper->name,
+      "Creates skyscraper page with correct name."
+    );
+    self::assertEquals(
+      $expectedMap->lat,
+      $actualMap->lat,
+      "Retreives correct lat."
+    );
+    self::assertEquals(
+      $expectedMap->lng,
+      $actualMap->lng,
+      "Retreives correct lng."
+    );
+    self::assertEquals(
+      $expectedMap->address,
+      $actualMap->address,
+      "Retreives correct address."
+    );
+    self::assertEquals(
+      $expectedMap->zoom,
+      $actualMap->zoom,
+      "Retreives correct zoom."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

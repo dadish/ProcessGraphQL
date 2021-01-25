@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorCreateNotAvailableParentTemplateNoChildrenTest extends GraphqlTestCase {
-
+class ParentTemplateNoChildrenTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The template should be legal.
@@ -18,38 +19,39 @@ class EditorCreateNotAvailableParentTemplateNoChildrenTest extends GraphqlTestCa
     $editorRole = Utils::roles()->get("editor");
 
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
-            'createRoles' => [$editorRole->id],
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+            "editRoles" => [$editorRole->id],
+            "createRoles" => [$editorRole->id],
           ],
           [
-            'name' => 'city',
-            'roles' => [$editorRole->id],
-            'addRoles' => [$editorRole->id],
-            'noChildren' => 1,
-          ]
+            "name" => "city",
+            "roles" => [$editorRole->id],
+            "addRoles" => [$editorRole->id],
+            "noChildren" => 1,
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'editRoles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "editRoles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'Create field should not be available if configured parent template has noChildren checked.'
+      ["Mutation", "createSkyscraper"],
+      "Create field should not be available if configured parent template has noChildren checked."
     );
   }
 }

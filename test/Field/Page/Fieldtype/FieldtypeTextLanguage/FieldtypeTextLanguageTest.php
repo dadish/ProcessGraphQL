@@ -1,27 +1,27 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeTexLanguage;
 
-use \ProcessWire\GraphQL\Utils;
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 
-class FieldtypeTextLanguageTest extends GraphQLTestCase {
-
+class FieldtypeTextLanguageTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['basic-page'],
-    'legalFields' => ['creator'],
+    "login" => "admin",
+    "legalTemplates" => ["basic-page"],
+    "legalFields" => ["creator"],
   ];
-  const FIELD_NAME = 'creator';
-  const FIELD_TYPE = 'FieldtypeTextLanguage';
+  const FIELD_NAME = "creator";
+  const FIELD_TYPE = "FieldtypeTextLanguage";
 
   use FieldtypeTestTrait;
-	
+
   public function testValue()
   {
-  	$page = Utils::pages()->get("template=basic-page, creator!=''");
-  	$query = "{
+    $page = Utils::pages()->get("template=basic-page, creator!=''");
+    $query = "{
   		basicPage (s: \"id=$page->id\") {
   			list {
   				creator
@@ -29,14 +29,18 @@ class FieldtypeTextLanguageTest extends GraphQLTestCase {
   		}
   	}";
     $res = self::execute($query);
-    assertEquals($page->creator, $res->data->basicPage->list[0]->creator, 'Retrieves creator value.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $page->creator,
+      $res->data->basicPage->list[0]->creator,
+      "Retrieves creator value."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-	
+
   public function testLanguageValue()
   {
-  	$page = Utils::pages()->get("template=basic-page, creator!=''");
-  	$query = 'query getBasicPage($s: Selector!){
+    $page = Utils::pages()->get("template=basic-page, creator!=''");
+    $query = 'query getBasicPage($s: Selector!){
       language (name: "ru")
   		basicPage (s: $s) {
   			list {
@@ -45,10 +49,14 @@ class FieldtypeTextLanguageTest extends GraphQLTestCase {
   		}
     }';
     $variables = [
-      's' => "id=$page->id"
+      "s" => "id=$page->id",
     ];
-  	$res = self::execute($query, $variables);
-    assertEquals($page->getLanguageValue('ru', 'creator'), $res->data->basicPage->list[0]->creator, 'Retrieves creator language value.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    $res = self::execute($query, $variables);
+    self::assertEquals(
+      $page->getLanguageValue("ru", "creator"),
+      $res->data->basicPage->list[0]->creator,
+      "Retrieves creator language value."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 }

@@ -1,10 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Trash;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserTrashAllowedTest extends GraphqlTestCase {
-
+class AllowedTest extends GraphqlTestCase
+{
   /**
    * + For Superuser
    * + The template is legal.
@@ -12,12 +12,13 @@ class SuperuserTrashAllowedTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['skyscraper'],
+      "login" => "admin",
+      "legalTemplates" => ["skyscraper"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     $query = 'mutation trashPage($id: ID!) {
       trash(id: $id) {
@@ -26,13 +27,17 @@ class SuperuserTrashAllowedTest extends GraphqlTestCase {
       }
     }';
     $variables = [
-      'id' => $skyscraper->id,
+      "id" => $skyscraper->id,
     ];
 
-    assertFalse($skyscraper->isTrash());
+    self::assertFalse($skyscraper->isTrash());
     $res = self::execute($query, $variables);
-    assertEquals($res->data->trash->id, $skyscraper->id, 'Trashes the page.');
-    assertTrue($skyscraper->isTrash(), 'Trashes the correct page.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $res->data->trash->id,
+      $skyscraper->id,
+      "Trashes the page."
+    );
+    self::assertTrue($skyscraper->isTrash(), "Trashes the correct page.");
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 }

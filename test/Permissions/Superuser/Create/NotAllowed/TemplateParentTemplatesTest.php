@@ -1,10 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Create\NotAllowed;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserCreateNotAllowedTemplateParentTemplatesTest extends GraphqlTestCase {
-
+class TemplateParentTemplatesTest extends GraphqlTestCase
+{
   /**
    * + The target template is legal.
    * + The target parent template is legal.
@@ -14,13 +14,14 @@ class SuperuserCreateNotAllowedTemplateParentTemplatesTest extends GraphqlTestCa
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'legalFields' => ['title'],
+      "login" => "admin",
+      "legalTemplates" => ["city", "skyscraper"],
+      "legalFields" => ["title"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $architects = Utils::pages()->get("template=architects");
     $query = 'mutation createPage($page: SkyscraperCreateInput!) {
       createSkyscraper(page: $page) {
@@ -32,15 +33,19 @@ class SuperuserCreateNotAllowedTemplateParentTemplatesTest extends GraphqlTestCa
     }';
 
     $variables = [
-      'page' => [
-        'parent' => $architects->id,
-        'name' => 'search-2',
-        'title' => 'Search 2'
-      ]
+      "page" => [
+        "parent" => $architects->id,
+        "name" => "search-2",
+        "title" => "Search 2",
+      ],
     ];
 
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Should not allow to create a page under the page with template that is not in parentTemplates of the target template.');
-    assertStringContainsString('parent', $res->errors[0]->message);
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Should not allow to create a page under the page with template that is not in parentTemplates of the target template."
+    );
+    assertStringContainsString("parent", $res->errors[0]->message);
   }
 }

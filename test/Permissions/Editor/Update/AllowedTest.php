@@ -1,10 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Editor\Update;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorUpdateAllowedTest extends GraphqlTestCase {
-
+class AllowedTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -13,31 +13,32 @@ class EditorUpdateAllowedTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-          ]
+            "name" => "skyscraper",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'viewRoles' => ['editor'],
-            'editRoles' => ['editor'],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "viewRoles" => ["editor"],
+            "editRoles" => ["editor"],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
-    $newTitle = 'New Title for Skyscraper';
+    $newTitle = "New Title for Skyscraper";
     $query = 'mutation movePage($page: SkyscraperUpdateInput!){
       updateSkyscraper(page: $page) {
         id
@@ -45,17 +46,24 @@ class EditorUpdateAllowedTest extends GraphqlTestCase {
       }
     }';
 
-
     $variables = [
-      'page' => [
-        'id' => $skyscraper->id,
-        'title' => $newTitle,
-      ]
+      "page" => [
+        "id" => $skyscraper->id,
+        "title" => $newTitle,
+      ],
     ];
 
-    assertNotEquals($newTitle, $skyscraper->title);
-    $res = self::execute($query, $variables); 
-    assertEquals($res->data->updateSkyscraper->title, $newTitle, 'Allows to update the page title if both template and field are legal.');
-    assertEquals($newTitle, $skyscraper->title, 'Updates the title of the target.');
+    self::assertNotEquals($newTitle, $skyscraper->title);
+    $res = self::execute($query, $variables);
+    self::assertEquals(
+      $res->data->updateSkyscraper->title,
+      $newTitle,
+      "Allows to update the page title if both template and field are legal."
+    );
+    self::assertEquals(
+      $newTitle,
+      $skyscraper->title,
+      "Updates the title of the target."
+    );
   }
 }

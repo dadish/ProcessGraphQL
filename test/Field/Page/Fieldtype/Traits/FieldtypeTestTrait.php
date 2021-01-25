@@ -2,14 +2,17 @@
 
 namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits;
 
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Utils;
 
-trait FieldtypeTestTrait {
-
+trait FieldtypeTestTrait
+{
   public function testFieldtype()
   {
     $field = Utils::fields()->get("name=" . self::FIELD_NAME);
-    assertEquals(self::FIELD_TYPE, $field->type->className(), 'Tests correct fieldtype.');
+    self::assertEquals(
+      self::FIELD_TYPE,
+      $field->type->className(),
+      "Tests correct fieldtype."
+    );
   }
-
 }

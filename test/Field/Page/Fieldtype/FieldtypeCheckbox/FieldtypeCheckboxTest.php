@@ -1,20 +1,20 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\Field\Page\FieldtypeCheckbox;
 
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
+use ProcessWire\GraphQL\Utils;
 
-class FieldtypeCheckboxTest extends GraphQLTestCase {
-
+class FieldtypeCheckboxTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['featured'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["featured"],
   ];
-  const FIELD_NAME = 'featured';
-  const FIELD_TYPE = 'FieldtypeCheckbox';
+  const FIELD_NAME = "featured";
+  const FIELD_TYPE = "FieldtypeCheckbox";
 
   use FieldtypeTestTrait;
 
@@ -29,7 +29,7 @@ class FieldtypeCheckboxTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    assertFalse($res->data->skyscraper->list[0]->featured);
+    self::assertFalse($res->data->skyscraper->list[0]->featured);
   }
 
   public function testFalsyValue()
@@ -43,8 +43,7 @@ class FieldtypeCheckboxTest extends GraphQLTestCase {
       }
     }";
     $res = $this->execute($query);
-    assertTrue($res->data->skyscraper->list[0]->featured);
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertTrue($res->data->skyscraper->list[0]->featured);
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

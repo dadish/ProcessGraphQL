@@ -5,20 +5,27 @@ use PHPUnit\Framework\Assert;
 
 function typePathExists()
 {
-  return new TypePathExists;
+  return new TypePathExists();
 }
 
-function assertTypePathExists(array $fieldPath, $message = '')
+function assertTypePathExists(array $fieldPath, $message = "")
 {
-  assertThat($fieldPath, typePathExists(), $message);
+  Assert::assertThat($fieldPath, typePathExists(), $message);
 }
 
-function assertTypePathNotExists($fieldPath, $message = '')
+function assertTypePathNotExists($fieldPath, $message = "")
 {
-  assertThat($fieldPath, logicalNot(typePathExists()), $message);
+  Assert::assertThat(
+    $fieldPath,
+    Assert::logicalNot(typePathExists()),
+    $message
+  );
 }
 
-function assertStringContainsString(string $needle, string $haystack, string $message = ''): void
-{
+function assertStringContainsString(
+  string $needle,
+  string $haystack,
+  string $message = ""
+): void {
   Assert::assertStringContainsString(...\func_get_args());
 }

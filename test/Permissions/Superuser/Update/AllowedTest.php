@@ -1,10 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Update;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserUpdateAllowedTest extends GraphqlTestCase {
-
+class AllowedTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -13,15 +13,16 @@ class SuperuserUpdateAllowedTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['skyscraper'],
-      'legalFields' => ['title']
+      "login" => "admin",
+      "legalTemplates" => ["skyscraper"],
+      "legalFields" => ["title"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
-    $newTitle = 'New Title for Skyscraper';
+    $newTitle = "New Title for Skyscraper";
     $query = 'mutation movePage($page: SkyscraperUpdateInput!){
       updateSkyscraper(page: $page) {
         id
@@ -29,18 +30,25 @@ class SuperuserUpdateAllowedTest extends GraphqlTestCase {
       }
     }';
 
-
     $variables = [
-      'page' => [
-        'id' => $skyscraper->id,
-        'title' => $newTitle,
-      ]
+      "page" => [
+        "id" => $skyscraper->id,
+        "title" => $newTitle,
+      ],
     ];
 
-    assertNotEquals($newTitle, $skyscraper->title);
+    self::assertNotEquals($newTitle, $skyscraper->title);
     $res = self::execute($query, $variables);
-    assertEquals($res->data->updateSkyscraper->title, $newTitle, 'Allows to update the page title if both template and field are legal.');
-    assertEquals($newTitle, $skyscraper->title, 'Updates the title of the target.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $res->data->updateSkyscraper->title,
+      $newTitle,
+      "Allows to update the page title if both template and field are legal."
+    );
+    self::assertEquals(
+      $newTitle,
+      $skyscraper->title,
+      "Updates the title of the target."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 }

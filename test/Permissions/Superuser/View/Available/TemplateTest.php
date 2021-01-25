@@ -1,21 +1,22 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\View\Available;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-class SuperuserViewAllowedTemplateTest extends GraphqlTestCase {
-
+class TemplateTest extends GraphqlTestCase
+{
   /**
    * + The template is legal.
    */
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['skyscraper'],
+      "login" => "admin",
+      "legalTemplates" => ["skyscraper"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $query = '{
       skyscraper{
         list{
@@ -27,10 +28,13 @@ class SuperuserViewAllowedTemplateTest extends GraphqlTestCase {
     }';
 
     $res = self::execute($query);
-    assertNotNull($res->data->skyscraper->list, 'Should list the skyscraper pages.');
-    assertNotNull($res->data->skyscraper->list[0]->id);
-    assertNotNull($res->data->skyscraper->list[0]->name);
-    assertNotNull($res->data->skyscraper->list[0]->url);
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertNotNull(
+      $res->data->skyscraper->list,
+      "Should list the skyscraper pages."
+    );
+    self::assertNotNull($res->data->skyscraper->list[0]->id);
+    self::assertNotNull($res->data->skyscraper->list[0]->name);
+    self::assertNotNull($res->data->skyscraper->list[0]->url);
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 }

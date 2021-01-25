@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorCreateNotAvailableTemplateCreatePermissionTest extends GraphqlTestCase {
-
+class TemplateCreatePermissionTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The configured parent template is legal.
@@ -18,37 +19,38 @@ class EditorCreateNotAvailableTemplateCreatePermissionTest extends GraphqlTestCa
     $editorRole = Utils::roles()->get("editor");
 
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'], 
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+            "editRoles" => [$editorRole->id],
             // no create roles thus cannot create a skyscraper
           ],
           [
-            'name' => 'city',
-            'roles' => [$editorRole->id],
-            'addRoles' => [$editorRole->id],
-          ]
+            "name" => "city",
+            "roles" => [$editorRole->id],
+            "addRoles" => [$editorRole->id],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'editRoles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "editRoles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'Create field should not be available if target template is not legal.'
+      ["Mutation", "createSkyscraper"],
+      "Create field should not be available if target template is not legal."
     );
   }
 }

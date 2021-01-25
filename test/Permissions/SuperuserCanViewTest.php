@@ -3,16 +3,16 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserCanViewTest extends GraphqlTestCase {
-
+class SuperuserCanViewTest extends GraphqlTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
   ];
 
-
-  public function testSuperuserCanView() {
-    $target = Utils::pages()->get('template=skyscraper, sort=random');
+  public function testSuperuserCanView()
+  {
+    $target = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id={$target->id}\") {
         list {
@@ -23,21 +23,21 @@ class SuperuserCanViewTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals(
+    self::assertEquals(
       $target->id,
       $res->data->skyscraper->list[0]->id,
-      'Retrieves the correct id.'
+      "Retrieves the correct id."
     );
-    assertEquals(
+    self::assertEquals(
       $target->name,
       $res->data->skyscraper->list[0]->name,
-      'Retrieves the correct name.'
+      "Retrieves the correct name."
     );
-    assertEquals(
+    self::assertEquals(
       $target->url,
       $res->data->skyscraper->list[0]->url,
-      'Retrieves the correct url.'
+      "Retrieves the correct url."
     );
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 }

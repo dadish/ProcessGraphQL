@@ -5,9 +5,9 @@ namespace ProcessWire\GraphQL\Test\Fields\Auth;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class LogoutFieldTest extends GraphQLTestCase {
-
-  public function tearDown()
+class LogoutFieldTest extends GraphQLTestCase
+{
+  public function tearDown(): void
   {
     Utils::session()->logout();
   }
@@ -15,9 +15,9 @@ class LogoutFieldTest extends GraphQLTestCase {
   public function testLogout()
   {
     $config = Utils::config();
-    Utils::session()->login('admin', $config->testUsers['admin']);
+    Utils::session()->login("admin", $config->testUsers["admin"]);
     $user = Utils::user();
-    assertTrue($user->isSuperuser());
+    self::assertTrue($user->isSuperuser());
 
     $query = '{
       logout {
@@ -25,8 +25,12 @@ class LogoutFieldTest extends GraphQLTestCase {
       }
     }';
     $res = self::execute($query);
-    assertEquals(200, $res->data->logout->statusCode, 'Unable to logout via GraphQL');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      200,
+      $res->data->logout->statusCode,
+      "Unable to logout via GraphQL"
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
 
   public function testLogoutFailure()
@@ -37,7 +41,10 @@ class LogoutFieldTest extends GraphQLTestCase {
       }
     }';
     $res = self::execute($query);
-    assertObjectHasAttribute('errors', $res, 'Unable to logout via GraphQL');
+    self::assertObjectHasAttribute(
+      "errors",
+      $res,
+      "Unable to logout via GraphQL"
+    );
   }
-
 }

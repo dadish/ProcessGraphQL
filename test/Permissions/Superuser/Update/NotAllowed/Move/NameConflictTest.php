@@ -1,11 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Update\NotAllowed\Move;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class SuperuserMoveNameConflictTest extends GraphqlTestCase {
-
+class NameConflictTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -15,16 +14,16 @@ class SuperuserMoveNameConflictTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'legalPageFields' => ['parentID']
+      "login" => "admin",
+      "legalTemplates" => ["city", "skyscraper"],
+      "legalPageFields" => ["parentID"],
     ];
   }
 
   private static $skyscraper = null;
-  private static $originalName = '';
+  private static $originalName = "";
 
-  public static function setUpBeforeClass()
+  public static function setUpBeforeClass(): void
   {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
     self::$skyscraper = $skyscraper;
@@ -32,7 +31,7 @@ class SuperuserMoveNameConflictTest extends GraphqlTestCase {
     parent::setUpBeforeClass();
   }
 
-  public static function tearDownAfterClass()
+  public static function tearDownAfterClass(): void
   {
     $skyscraper = self::$skyscraper;
     $skyscraper->of(true);
@@ -41,10 +40,15 @@ class SuperuserMoveNameConflictTest extends GraphqlTestCase {
     parent::tearDownAfterClass();
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = self::$skyscraper;
-    $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
-    $futureSibling = Utils::pages()->get("template=skyscraper, sort=random, parent={$newParent}");
+    $newParent = Utils::pages()->get(
+      "template=city, id!={$skyscraper->parentID}, sort=random"
+    );
+    $futureSibling = Utils::pages()->get(
+      "template=skyscraper, sort=random, parent={$newParent}"
+    );
     $skyscraper->of(true);
     $skyscraper->name = $futureSibling->name;
     $skyscraper->save();
@@ -54,18 +58,21 @@ class SuperuserMoveNameConflictTest extends GraphqlTestCase {
       }
     }';
 
-
     $variables = [
-      'page' => [
-        'id' => $skyscraper->id,
-        'parent' => (string) $newParent->id,
-      ]
+      "page" => [
+        "id" => $skyscraper->id,
+        "parent" => (string) $newParent->id,
+      ],
     ];
 
-    assertNotEquals($newParent->id, $skyscraper->parentID);
-    $res = self::execute($query, $variables); 
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent already has a page with the same name.');
-    assertStringContainsString('parent', $res->errors[0]->message);
-    assertStringContainsString('name', $res->errors[0]->message);
+    self::assertNotEquals($newParent->id, $skyscraper->parentID);
+    $res = self::execute($query, $variables);
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Does not allow to move if new parent already has a page with the same name."
+    );
+    assertStringContainsString("parent", $res->errors[0]->message);
+    assertStringContainsString("name", $res->errors[0]->message);
   }
 }

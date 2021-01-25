@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Update\NotAllowed\Move;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
-
+class ParentTemplateChildTemplatesTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The target template is legal.
@@ -15,36 +16,39 @@ class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
    */
   public static function getSettings()
   {
-    $architect = Utils::pages()->get('name=architect');
+    $architect = Utils::pages()->get("name=architect");
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["city", "skyscraper"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-            'rolesPermissions' => [
-              'editor' => ['page-move']
-            ]
+            "name" => "skyscraper",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+            "rolesPermissions" => [
+              "editor" => ["page-move"],
+            ],
           ],
           [
-            'name' => 'city',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-            'addRoles' => ['editor'],
-            'childTemplates' => ['architect'], // <-- parent template has child templates without target template
+            "name" => "city",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+            "addRoles" => ["editor"],
+            "childTemplates" => ["architect"], // <-- parent template has child templates without target template
           ],
-        ]
+        ],
       ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
-    $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
-    
+    $newParent = Utils::pages()->get(
+      "template=city, id!={$skyscraper->parentID}, sort=random"
+    );
+
     $query = 'mutation movePage($page: SkyscraperUpdateInput!){
       updateSkyscraper(page: $page) {
         id
@@ -52,17 +56,20 @@ class EditorMoveParentTemplateChildTemplatesTest extends GraphqlTestCase {
       }
     }';
 
-
     $variables = [
-      'page' => [
-        'id' => $skyscraper->id,
-        'parent' => $newParent->id,
-      ]
+      "page" => [
+        "id" => $skyscraper->id,
+        "parent" => $newParent->id,
+      ],
     ];
 
-    assertNotEquals($newParent->id, $skyscraper->parentID);
+    self::assertNotEquals($newParent->id, $skyscraper->parentID);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template has childTemplates without target template.');
-    assertStringContainsString('parent', $res->errors[0]->message);
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Does not allow to move if new parent template has childTemplates without target template."
+    );
+    assertStringContainsString("parent", $res->errors[0]->message);
   }
 }

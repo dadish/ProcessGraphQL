@@ -24,7 +24,14 @@ if (file_exists($installFile)) {
 }
 
 // overwrite site-default's config.php with our own custom one
-copy(__DIR__ . "/pw-config.php", $siteDir . "/config.php");
+copy(__DIR__ . "/site/config.php", $siteDir . "/config.php");
+
+// symlink site/classes directory
+$classesDir = __DIR__ . "/site/classes";
+$classesDestDir = $siteDir . "/classes";
+if (!file_exists($classesDestDir)) {
+	\symlink($classesDir, $classesDestDir);
+}
 
 // create necessary asset dirs
 $sessionsDir = $siteDir . "/assets/sessions";
@@ -64,9 +71,9 @@ use ProcessWire\ProcessWire;
 
 $config = ProcessWire::buildConfig($pwDir, null, [
   "siteDir" => "site-default"
-  ]);
+]);
 
-	require_once realpath(__DIR__ . "/databaseReset.php");
+require_once realpath(__DIR__ . "/databaseReset.php");
 
 // Fire up ProcessWire!!!
 $wire = new ProcessWire($config);

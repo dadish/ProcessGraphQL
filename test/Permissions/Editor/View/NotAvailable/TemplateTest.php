@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Editor\View\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class EditorViewNotAvailableTemplateTest extends GraphqlTestCase {
-
+class TemplateTest extends GraphqlTestCase
+{
   /**
    * + For Editor.
    * + The target template is not legal.
@@ -12,23 +11,24 @@ class EditorViewNotAvailableTemplateTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['architect', 'city'], // <-- the skyscraper template is not legal
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["architect", "city"], // <-- the skyscraper template is not legal
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => ['editor'],
-          ]
-        ]
-      ]
+            "name" => "skyscraper",
+            "roles" => ["editor"],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Query', 'skyscraper'],
-      'skyscraper field should not be available if skyscraper template is not legal.'
+      ["Query", "skyscraper"],
+      "skyscraper field should not be available if skyscraper template is not legal."
     );
   }
 }

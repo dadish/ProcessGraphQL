@@ -1,11 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class SuperuserCreateNotAvailableParentTemplateChildTemplatesTest extends GraphqlTestCase {
-
+class ParentTemplateChildTemplatesTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The template is legal.
@@ -17,24 +16,25 @@ class SuperuserCreateNotAvailableParentTemplateChildTemplatesTest extends Graphq
   {
     $architectTemplate = Utils::templates()->get("architect");
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "admin",
+      "legalTemplates" => ["city", "skyscraper"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'city',
-            'childTemplates' => [$architectTemplate->id],
-          ]
-        ]
-      ]
+            "name" => "city",
+            "childTemplates" => [$architectTemplate->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'Create field should not be available if configured parent template has childTemplates that does not match target template.'
+      ["Mutation", "createSkyscraper"],
+      "Create field should not be available if configured parent template has childTemplates that does not match target template."
     );
   }
 }

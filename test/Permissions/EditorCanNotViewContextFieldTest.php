@@ -3,39 +3,40 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorCanNotViewContextFieldTest extends GraphqlTestCase {
-
+class EditorCanNotViewContextFieldTest extends GraphqlTestCase
+{
   public static function getSettings()
   {
-    $editorRole = Utils::roles()->get('editor');
+    $editorRole = Utils::roles()->get("editor");
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper'],
-      'legalFields' => ['height'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper"],
+      "legalFields" => ["height"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-          ]
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'height',
-            'viewRoles' => [$editorRole->id],
+            "name" => "height",
+            "viewRoles" => [$editorRole->id],
           ],
           [
-            'name' => 'height',
-            'context' => 'skyscraper',
-            'viewRoles' => [],
-          ]
-        ]
-      ]
+            "name" => "height",
+            "context" => "skyscraper",
+            "viewRoles" => [],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testEditorCanNotViewContextField() {
-    $target = Utils::pages()->get('template=skyscraper, sort=random');
+  public function testEditorCanNotViewContextField()
+  {
+    $target = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id={$target->id}\") {
         list {
@@ -46,14 +47,11 @@ class EditorCanNotViewContextFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals(
+    self::assertEquals(
       1,
       count($res->errors),
-      'Editor cannot view field if it is restricted in the context level.'
+      "Editor cannot view field if it is restricted in the context level."
     );
-    assertStringContainsString(
-      'height',
-      $res->errors[0]->message
-    );
+    assertStringContainsString("height", $res->errors[0]->message);
   }
 }

@@ -3,18 +3,19 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorCanNotViewTest extends GraphqlTestCase {
-
+class EditorCanNotViewTest extends GraphqlTestCase
+{
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper'],
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper"],
     ];
   }
 
-  public function testEditorCanNotView() {
-    $target = Utils::pages()->get('template=skyscraper, sort=random');
+  public function testEditorCanNotView()
+  {
+    $target = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id={$target->id}\") {
         list {
@@ -25,11 +26,11 @@ class EditorCanNotViewTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals(
+    self::assertEquals(
       1,
       count($res->errors),
-      'Editor cannot view the skyscraper template if it does not have explicit access to it.'
+      "Editor cannot view the skyscraper template if it does not have explicit access to it."
     );
-    assertStringContainsString('skyscraper', $res->errors[0]->message);
+    assertStringContainsString("skyscraper", $res->errors[0]->message);
   }
 }

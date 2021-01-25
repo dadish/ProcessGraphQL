@@ -1,29 +1,31 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Teste\FieldtypeInteger;
 
-use \ProcessWire\GraphQL\Test\GraphqlTestCase;
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphqlTestCase;
+use ProcessWire\GraphQL\Utils;
 
-class FieldtypeIntegerCaseThreeTest extends GraphqlTestCase {  
-
+class CaseThreeTest extends GraphqlTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['floors'],
-    'access' => [
-      'fields' => [
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["floors"],
+    "access" => [
+      "fields" => [
         [
-          'name' => 'floors',
-          'zeroNotEmpty' => true
-        ]
-      ]
-    ]
+          "name" => "floors",
+          "zeroNotEmpty" => true,
+        ],
+      ],
+    ],
   ];
 
   public function testValue()
   {
-    $skyscraper = Utils::pages()->get("template=skyscraper, sort=random, floors=''");
+    $skyscraper = Utils::pages()->get(
+      "template=skyscraper, sort=random, floors=''"
+    );
     $query = "{
       skyscraper(s: \"id=$skyscraper->id\") {
         list {
@@ -32,8 +34,10 @@ class FieldtypeIntegerCaseThreeTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertNull($res->data->skyscraper->list[0]->floors, 'Retrieves incorrect value.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertNull(
+      $res->data->skyscraper->list[0]->floors,
+      "Retrieves incorrect value."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

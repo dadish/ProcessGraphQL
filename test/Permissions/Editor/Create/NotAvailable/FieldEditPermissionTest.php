@@ -1,10 +1,11 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class EditorCreateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
-
+class FieldEditPermissionTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The template is legal.
@@ -16,41 +17,42 @@ class EditorCreateNotAvailableFieldEditPermissionTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'], 
-      'legalFields' => ['title', 'images'], 
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "legalFields" => ["title", "images"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-            'createRoles' => ['editor'],
+            "name" => "skyscraper",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+            "createRoles" => ["editor"],
           ],
           [
-            'name' => 'city',
-            'roles' => ['editor'],
-            'addRoles' => ['editor'],
-          ]
+            "name" => "city",
+            "roles" => ["editor"],
+            "addRoles" => ["editor"],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'images',
-            'editRoles' => ['editor'],
+            "name" => "images",
+            "editRoles" => ["editor"],
           ],
           [
-            'name' => 'title',
+            "name" => "title",
             // 'editRoles' => ['editor'], // <-- has no edit permission to the required "title" field.
           ],
-        ]
-      ]
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'createSkyscraper mutation field should not be available if user has no edit permission on the required field.'
+      ["Mutation", "createSkyscraper"],
+      "createSkyscraper mutation field should not be available if user has no edit permission on the required field."
     );
   }
 }

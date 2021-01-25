@@ -7,18 +7,19 @@
     "test": "test"
   },
   "scripts": {
-    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test\"",
+    "test": "composer exec -v \"phpunit --bootstrap test/bootstrap.php --exclude-group performance test\"",
     "test:cover": "phpdbg -qrr vendor/phpunit/phpunit/phpunit --bootstrap test/bootstrap.php --coverage-html coverage --whitelist src test",
-    "test:performance:totalCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBQueryCount.php\"",
-    "test:performance:longCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBLongQueryCount.php\"",
-    "test:performance:shortCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DBShortQueryCount.php\"",
+    "test:performance:totalCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DbQueryCountTest.php\"",
+    "test:performance:longCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DbLongQueryCountTest.php\"",
+    "test:performance:shortCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DbShortQueryCountTest.php\"",
     "test:performance": "npm-run-all test:performance:*",
     "posttest": "php test/cleanup.php",
     "release": "node scripts/release.js",
     "postinstall": "composer install",
     "start:client": "php -S 127.0.0.1:8090 test/client.php",
     "start:server": "php -S 127.0.0.1:8091 test/server.php",
-    "start": "npm-run-all --parallel start:client start:server"
+    "start": "npm-run-all --parallel start:client start:server",
+    "prettier": "prettier"
   },
   "repository": {
     "type": "git",
@@ -35,11 +36,13 @@
   },
   "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
   "devDependencies": {
+    "@prettier/plugin-php": "^0.16.1",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
     "graphql": "^14.5.8",
     "npm-run-all": "^4.1.5",
-    "ora": "^3.4.0"
+    "ora": "^3.4.0",
+    "prettier": "^2.2.1"
   },
   "dependencies": {}
 }

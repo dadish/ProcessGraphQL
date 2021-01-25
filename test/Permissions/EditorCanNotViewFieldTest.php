@@ -3,28 +3,29 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorCanNotViewFieldTest extends GraphqlTestCase {
-
+class EditorCanNotViewFieldTest extends GraphqlTestCase
+{
   public static function getSettings()
   {
-    $editorRole = Utils::roles()->get('editor');
+    $editorRole = Utils::roles()->get("editor");
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper'],
-      'legalFields' => ['height'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper"],
+      "legalFields" => ["height"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testEditorCanNotViewField() {
-    $target = Utils::pages()->get('template=skyscraper, sort=random');
+  public function testEditorCanNotViewField()
+  {
+    $target = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id={$target->id}\") {
         list {
@@ -35,11 +36,11 @@ class EditorCanNotViewFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals(
+    self::assertEquals(
       1,
       count($res->errors),
-      'Editor can not view the height field if it does not have explicit access to it.'
+      "Editor can not view the height field if it does not have explicit access to it."
     );
-    assertStringContainsString('height', $res->errors[0]->message);
+    assertStringContainsString("height", $res->errors[0]->message);
   }
 }

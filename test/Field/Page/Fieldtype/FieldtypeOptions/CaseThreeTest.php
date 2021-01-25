@@ -5,27 +5,26 @@
  * stores single option
  */
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype\FieldtypeOptions;
+namespace ProcessWire\GraphQL\Test\FieldtypeOptions;
 
-use \ProcessWire\GraphQL\Utils;
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
 use ProcessWire\NullPage;
 
-class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
-
+class CaseThreeTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['cities', 'city'],
-    'legalFields' => ['options_single', 'title'],
+    "login" => "admin",
+    "legalTemplates" => ["cities", "city"],
+    "legalFields" => ["options_single", "title"],
   ];
 
-	
   public function testValue()
   {
     $name = "new-city";
     $title = "New City";
-    $option = 'Mon';
-  	$query = 'mutation createPage ($page: CityCreateInput!) {
+    $option = "Mon";
+    $query = 'mutation createPage ($page: CityCreateInput!) {
   		createCity (page: $page) {
   			name
   			id
@@ -37,22 +36,25 @@ class FieldtypeOptionsCaseThreeTest extends GraphQLTestCase {
         }
   		}
   	}';
-  	$variables = [
-  		"page" => [
-  			"parent" => "4049",
-				"name" => $name,
-				"title" => $title,
+    $variables = [
+      "page" => [
+        "parent" => "4049",
+        "name" => $name,
+        "title" => $title,
         "options_single" => $option,
-  		]
-  	];
+      ],
+    ];
     $res = self::execute($query, $variables);
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
 
     $newCity = Utils::pages()->get("template=city, name=$name");
-    assertTrue(!$newCity instanceof NullPage, 'New Page is created.');
-    assertEquals($name, $newCity->name, 'New Page has correct name.');
-    assertEquals($title, $newCity->title, 'New Page has correct title.');
-    assertEquals($option, $newCity->options_single->title, 'New Page has correct option title.');
+    self::assertTrue(!$newCity instanceof NullPage, "New Page is created.");
+    self::assertEquals($name, $newCity->name, "New Page has correct name.");
+    self::assertEquals($title, $newCity->title, "New Page has correct title.");
+    self::assertEquals(
+      $option,
+      $newCity->options_single->title,
+      "New Page has correct option title."
+    );
   }
-
 }

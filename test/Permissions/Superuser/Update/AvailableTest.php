@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Update;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class SuperuserUpdateAvailableTest extends GraphqlTestCase {
-
+class AvailableTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -12,15 +11,16 @@ class SuperuserUpdateAvailableTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['city'],
+      "login" => "admin",
+      "legalTemplates" => ["city"],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathExists(
-      ['Mutation', 'updateCity'],
-      'The update field should be available for superuser if the target template is legal.'
+      ["Mutation", "updateCity"],
+      "The update field should be available for superuser if the target template is legal."
     );
   }
 }

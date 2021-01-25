@@ -2,22 +2,21 @@
 
 /**
  * Retreives correct values.
- * 
+ *
  */
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeMapMarker;
 
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
-use \ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Utils;
 
-class FieldtypeMapMarkerCaseOneTest extends GraphQLTestCase {
-
+class CaseOneTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['map'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["map"],
   ];
-
 
   public function testValue()
   {
@@ -37,11 +36,26 @@ class FieldtypeMapMarkerCaseOneTest extends GraphQLTestCase {
     $res = self::execute($query);
     $expectedMap = $skyscraper->map;
     $actualMap = $res->data->skyscraper->list[0]->map;
-    assertEquals($expectedMap->lat, $actualMap->lat, 'Retreives correct lat.');
-    assertEquals($expectedMap->lng, $actualMap->lng, 'Retreives correct lng.');
-    assertEquals($expectedMap->address, $actualMap->address, 'Retreives correct address.');
-    assertEquals($expectedMap->zoom, $actualMap->zoom, 'Retreives correct zoom.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $expectedMap->lat,
+      $actualMap->lat,
+      "Retreives correct lat."
+    );
+    self::assertEquals(
+      $expectedMap->lng,
+      $actualMap->lng,
+      "Retreives correct lng."
+    );
+    self::assertEquals(
+      $expectedMap->address,
+      $actualMap->address,
+      "Retreives correct address."
+    );
+    self::assertEquals(
+      $expectedMap->zoom,
+      $actualMap->zoom,
+      "Retreives correct zoom."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

@@ -5,19 +5,19 @@
  * No need for explicit access settings.
  */
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeImage;
 
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
-class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
-
+class ThumbCaseOneTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['images'],
-    'legalPageImageFields' => ['size'],
-    'legalPageFileFields' => ['url'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["images"],
+    "legalPageImageFields" => ["size"],
+    "legalPageFileFields" => ["url"],
   ];
 
   // page that is used for this test case solely
@@ -27,7 +27,7 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
   {
     // get the test page
     $skyscraper = Utils::pages()->get("id=" . self::PAGE_ID);
-    
+
     // get image from the images field
     $image = $skyscraper->images->first();
 
@@ -36,10 +36,10 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
     $thumbHeight = 300;
 
     // make sure the thumbnail does not exist before we create it
-    assertEquals(
+    self::assertEquals(
       0,
       $image->getVariations()->count,
-      'No thumbnail prior to test.'
+      "No thumbnail prior to test."
     );
 
     // build graphql query
@@ -59,25 +59,37 @@ class FieldtypeImageThumbCaseOneTest extends GraphQLTestCase {
 
     // execute graphql
     $res = self::execute($query);
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
 
     // the thumb created by graphql
     $actualThumb = $res->data->skyscraper->list[0]->images[0]->size;
 
     // the created thumb's filename
-    $filename = realpath($GLOBALS['pwDir'] . $actualThumb->url);
+    $filename = realpath($GLOBALS["pwDir"] . $actualThumb->url);
 
     // make sure it created the thumbnail
-    assertTrue(file_exists($filename), 'Admin creates the thumbnail.');
-    assertTrue(is_file($filename), 'Created thumbnail is a file.');
-    
+    self::assertTrue(file_exists($filename), "Admin creates the thumbnail.");
+    self::assertTrue(is_file($filename), "Created thumbnail is a file.");
+
     // expected thumb
     $expectedThumb = $image->size($thumbWidth, $thumbHeight);
 
     // make sure it created the correct thumbnail
-    assertEquals($expectedThumb->url, $actualThumb->url, 'Correct url for created thumbnail.');
-    assertEquals($expectedThumb->width, $actualThumb->width, 'Correct width for created thumbnail.');
-    assertEquals($expectedThumb->height, $actualThumb->height, 'Correct height for created thumbnail.');
+    self::assertEquals(
+      $expectedThumb->url,
+      $actualThumb->url,
+      "Correct url for created thumbnail."
+    );
+    self::assertEquals(
+      $expectedThumb->width,
+      $actualThumb->width,
+      "Correct width for created thumbnail."
+    );
+    self::assertEquals(
+      $expectedThumb->height,
+      $actualThumb->height,
+      "Correct height for created thumbnail."
+    );
 
     // clean up after test
     unlink($filename);

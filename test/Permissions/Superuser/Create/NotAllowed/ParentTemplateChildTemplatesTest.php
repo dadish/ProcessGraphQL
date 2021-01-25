@@ -1,10 +1,10 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Create\NotAllowed;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserCreateNotAllowedParentTemplateChildTemplatesTest extends GraphqlTestCase {
-
+class ParentTemplateChildTemplatesTest extends GraphqlTestCase
+{
   /**
    * + The template can be created under any parent.
    * + The target parent template is legal
@@ -14,26 +14,27 @@ class SuperuserCreateNotAllowedParentTemplateChildTemplatesTest extends GraphqlT
   {
     $listAll = Utils::pages()->get("template=list-all");
     return [
-      'login' => 'admin',
-      'legalTemplates' => ['home', 'search'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "admin",
+      "legalTemplates" => ["home", "search"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'search',
-            'noParents' => 0,
-            'noChildren' => 0, // search page can be created under another search page
+            "name" => "search",
+            "noParents" => 0,
+            "noChildren" => 0, // search page can be created under another search page
           ],
           [
-            'name' => 'home',
-            'childTemplates' => [$listAll->id], // but we will try to create the search page under homepage
-          ]
-        ]
-      ]
+            "name" => "home",
+            "childTemplates" => [$listAll->id], // but we will try to create the search page under homepage
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $query = 'mutation createPage($page: SearchCreateInput!) {
       createSearch(page: $page) {
         id
@@ -44,15 +45,19 @@ class SuperuserCreateNotAllowedParentTemplateChildTemplatesTest extends GraphqlT
     }';
 
     $variables = [
-      'page' => [
-        'parent' => 1,
-        'name' => 'search-2',
-        'title' => 'Search 2'
-      ]
+      "page" => [
+        "parent" => 1,
+        "name" => "search-2",
+        "title" => "Search 2",
+      ],
     ];
 
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Should not allow to create a page under the page with template that has childTemplates without target template.');
-    assertStringContainsString('parent', $res->errors[0]->message);
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Should not allow to create a page under the page with template that has childTemplates without target template."
+    );
+    assertStringContainsString("parent", $res->errors[0]->message);
   }
 }

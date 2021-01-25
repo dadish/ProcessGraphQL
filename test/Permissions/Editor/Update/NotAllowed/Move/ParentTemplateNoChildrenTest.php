@@ -1,11 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Update\NotAllowed\Move;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-
-class EditorMoveParentTemplateNoChildrenTest extends GraphqlTestCase {
-
+class ParentTemplateNoChildrenTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The target template is legal.
@@ -16,35 +17,38 @@ class EditorMoveParentTemplateNoChildrenTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['city', 'skyscraper'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["city", "skyscraper"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-            'rolesPermissions' => [
-              'editor' => ['page-move']
-            ]
+            "name" => "skyscraper",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+            "rolesPermissions" => [
+              "editor" => ["page-move"],
+            ],
           ],
           [
-            'name' => 'city',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
-            'addRoles' => ['editor'],
-            'childTemplates' => ['skyscraper'],
-            'noChildren' => 1 // <-- parent template has noChildren checked.
+            "name" => "city",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
+            "addRoles" => ["editor"],
+            "childTemplates" => ["skyscraper"],
+            "noChildren" => 1, // <-- parent template has noChildren checked.
           ],
-        ]
+        ],
       ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     $skyscraper = Utils::pages()->get("template=skyscraper, sort=random");
-    $newParent = Utils::pages()->get("template=city, id!={$skyscraper->parentID}, sort=random");
-    
+    $newParent = Utils::pages()->get(
+      "template=city, id!={$skyscraper->parentID}, sort=random"
+    );
+
     $query = 'mutation movePage($page: SkyscraperUpdateInput!){
       updateSkyscraper(page: $page) {
         id
@@ -52,17 +56,20 @@ class EditorMoveParentTemplateNoChildrenTest extends GraphqlTestCase {
       }
     }';
 
-
     $variables = [
-      'page' => [
-        'id' => $skyscraper->id,
-        'parent' => $newParent->id,
-      ]
+      "page" => [
+        "id" => $skyscraper->id,
+        "parent" => $newParent->id,
+      ],
     ];
 
-    assertNotEquals($newParent->id, $skyscraper->parentID);
+    self::assertNotEquals($newParent->id, $skyscraper->parentID);
     $res = self::execute($query, $variables);
-    assertEquals(1, count($res->errors), 'Does not allow to move if new parent template has noChildren checked.');
-    assertStringContainsString('parent', $res->errors[0]->message);
+    self::assertEquals(
+      1,
+      count($res->errors),
+      "Does not allow to move if new parent template has noChildren checked."
+    );
+    assertStringContainsString("parent", $res->errors[0]->message);
   }
 }

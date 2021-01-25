@@ -1,10 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Superuser\Create\NotAvailable;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class SuperuserCreateNotAvailableTemplateTest extends GraphqlTestCase {
-
+class TemplateTest extends GraphqlTestCase
+{
   /**
    * + For superuser.
    * + The configured parent template is legal.
@@ -12,15 +11,16 @@ class SuperuserCreateNotAvailableTemplateTest extends GraphqlTestCase {
    * - But the target template is not legal
    */
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['city'],
-    'legalFields' => ['title'],
+    "login" => "admin",
+    "legalTemplates" => ["city"],
+    "legalFields" => ["title"],
   ];
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['Mutation', 'createSkyscraper'],
-      'Create field should not be available if target template is not legal.'
+      ["Mutation", "createSkyscraper"],
+      "Create field should not be available if target template is not legal."
     );
   }
 }

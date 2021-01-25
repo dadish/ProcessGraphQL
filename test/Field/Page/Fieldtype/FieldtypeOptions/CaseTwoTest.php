@@ -1,19 +1,18 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Field\Page\Fieldtype;
+namespace ProcessWire\GraphQL\Test\FieldtypeOptions;
 
-use \ProcessWire\GraphQL\Utils;
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
-class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
-
+class CaseTwoTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['city'],
-    'legalFields' => ['options_single'],
+    "login" => "admin",
+    "legalTemplates" => ["city"],
+    "legalFields" => ["options_single"],
   ];
 
-  
   public function testValue()
   {
     $city = Utils::pages()->get("template=city, options_single.count>0");
@@ -29,10 +28,21 @@ class FieldtypeOptionsCaseTwoTest extends GraphQLTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals($city->options_single->title, $res->data->city->list[0]->options_single->title, 'Retrieves correct option title.');
-    assertEquals($city->options_single->value, $res->data->city->list[0]->options_single->value, 'Retrieves correct option value.');
-    assertEquals($city->options_single->id, $res->data->city->list[0]->options_single->id, 'Retrieves correct option id.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $city->options_single->title,
+      $res->data->city->list[0]->options_single->title,
+      "Retrieves correct option title."
+    );
+    self::assertEquals(
+      $city->options_single->value,
+      $res->data->city->list[0]->options_single->value,
+      "Retrieves correct option value."
+    );
+    self::assertEquals(
+      $city->options_single->id,
+      $res->data->city->list[0]->options_single->id,
+      "Retrieves correct option id."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

@@ -1,11 +1,9 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php namespace ProcessWire\GraphQL\Test\Permissions\Editor\Update\NotAvailable;
 
-use ProcessWire\GraphQL\Test\Constraint\TypePathExists;
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 
-
-class EditorUpdateNotAvailableFieldTest extends GraphqlTestCase {
-
+class FieldTest extends GraphqlTestCase
+{
   /**
    * + For Editor.
    * + The tamplet is legal.
@@ -15,36 +13,37 @@ class EditorUpdateNotAvailableFieldTest extends GraphqlTestCase {
   public static function getSettings()
   {
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['city'],
-      'legalFields' => ['images'], // <-- the "title" field is not legal.
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["city"],
+      "legalFields" => ["images"], // <-- the "title" field is not legal.
+      "access" => [
+        "templates" => [
           [
-            'name' => 'city',
-            'roles' => ['editor'],
-            'editRoles' => ['editor'],
+            "name" => "city",
+            "roles" => ["editor"],
+            "editRoles" => ["editor"],
           ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'viewRoles' => ['editor'],
-            'editRoles' => ['editor'],
+            "name" => "title",
+            "viewRoles" => ["editor"],
+            "editRoles" => ["editor"],
           ],
           [
-            'name' => 'images',
-            'viewRoles' => ['editor'],
-            'editRoles' => ['editor'],
+            "name" => "images",
+            "viewRoles" => ["editor"],
+            "editRoles" => ["editor"],
           ],
-        ]
-      ]
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathNotExists(
-      ['CityUpdateInput', 'title'],
+      ["CityUpdateInput", "title"],
       'The "title" field for CityUpdateInput should not be available if the "title" field is not legal.'
     );
   }

@@ -1,10 +1,12 @@
-<?php namespace ProcessWire\GraphQL\Test\Permissions;
+<?php
+
+namespace ProcessWire\GraphQL\Test\Permissions\Editor\Create;
 
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class EditorCreateAvailableTest extends GraphqlTestCase {
-
+class AvailableTest extends GraphqlTestCase
+{
   /**
    * + For editor.
    * + The template should be legal.
@@ -17,37 +19,38 @@ class EditorCreateAvailableTest extends GraphqlTestCase {
     $editorRole = Utils::roles()->get("editor");
 
     return [
-      'login' => 'editor',
-      'legalTemplates' => ['skyscraper', 'city'],
-      'legalFields' => ['title'],
-      'access' => [
-        'templates' => [
+      "login" => "editor",
+      "legalTemplates" => ["skyscraper", "city"],
+      "legalFields" => ["title"],
+      "access" => [
+        "templates" => [
           [
-            'name' => 'skyscraper',
-            'roles' => [$editorRole->id],
-            'editRoles' => [$editorRole->id],
-            'createRoles' => [$editorRole->id],
+            "name" => "skyscraper",
+            "roles" => [$editorRole->id],
+            "editRoles" => [$editorRole->id],
+            "createRoles" => [$editorRole->id],
           ],
           [
-            'name' => 'city',
-            'roles' => [$editorRole->id],
-            'addRoles' => [$editorRole->id],
-          ]
+            "name" => "city",
+            "roles" => [$editorRole->id],
+            "addRoles" => [$editorRole->id],
+          ],
         ],
-        'fields' => [
+        "fields" => [
           [
-            'name' => 'title',
-            'editRoles' => [$editorRole->id],
-          ]
-        ]
-      ]
+            "name" => "title",
+            "editRoles" => [$editorRole->id],
+          ],
+        ],
+      ],
     ];
   }
 
-  public function testPermission() {
+  public function testPermission()
+  {
     assertTypePathExists(
-      ['Mutation', 'createSkyscraper'],
-      'createSKyscrpaer mutation field should be available.'
+      ["Mutation", "createSkyscraper"],
+      "createSKyscrpaer mutation field should be available."
     );
   }
 }

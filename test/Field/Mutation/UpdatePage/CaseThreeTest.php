@@ -5,24 +5,23 @@
  * update a skyscraper page
  */
 
-namespace ProcessWire\GraphQL\Test\Field\Mutation\CreatePage;
+namespace ProcessWire\GraphQL\Test\Field\Mutation\UpdatePage;
 
-use \ProcessWire\GraphQL\Utils;
-use \ProcessWire\GraphQL\Test\GraphQLTestCase;
+use ProcessWire\GraphQL\Utils;
+use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
-class UpdatePageCaseThreeTest extends GraphQLTestCase {
-
+class CaseThreeTest extends GraphQLTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['title', 'height', 'floors', 'body'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["title", "height", "floors", "body"],
   ];
 
-	
   public function testValue()
   {
-  	$skyscraper = Utils::pages()->get("template=skyscraper");
-  	$query = 'mutation updatePage ($page: SkyscraperUpdateInput!) {
+    $skyscraper = Utils::pages()->get("template=skyscraper");
+    $query = 'mutation updatePage ($page: SkyscraperUpdateInput!) {
   		skyscraper: updateSkyscraper (page: $page) {
   			name
   			id
@@ -32,19 +31,26 @@ class UpdatePageCaseThreeTest extends GraphQLTestCase {
         body
   		}
   	}';
-  	$variables = [
-  		"page" => [
+    $variables = [
+      "page" => [
         "id" => $skyscraper->id,
-				"title" => "Updated Building Sky",
+        "title" => "Updated Building Sky",
         "height" => 123,
         "floors" => 13,
-        "body" => "Everyone has a plan until they get the first hit."
-  		],
-  	];
+        "body" => "Everyone has a plan until they get the first hit.",
+      ],
+    ];
     $res = self::execute($query, $variables);
-    assertEquals($variables['page']['title'], $res->data->skyscraper->title, 'updateSkyscraper returns updated value of the `title`.');
-    assertEquals($variables['page']['title'], $skyscraper->title, 'updateSkyscraper updates value of the `title`.');
-    assertObjectNotHasAttribute('errors', $res, 'There are errors.');
+    self::assertEquals(
+      $variables["page"]["title"],
+      $res->data->skyscraper->title,
+      "updateSkyscraper returns updated value of the `title`."
+    );
+    self::assertEquals(
+      $variables["page"]["title"],
+      $skyscraper->title,
+      "updateSkyscraper updates value of the `title`."
+    );
+    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
-
 }

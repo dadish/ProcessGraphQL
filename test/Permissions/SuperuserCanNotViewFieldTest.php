@@ -3,16 +3,17 @@
 use ProcessWire\GraphQL\Test\GraphqlTestCase;
 use ProcessWire\GraphQL\Utils;
 
-class SuperuserCanNotViewFieldTest extends GraphqlTestCase {
-
+class SuperuserCanNotViewFieldTest extends GraphqlTestCase
+{
   const settings = [
-    'login' => 'admin',
-    'legalTemplates' => ['skyscraper'],
-    'legalFields' => ['height'],
+    "login" => "admin",
+    "legalTemplates" => ["skyscraper"],
+    "legalFields" => ["height"],
   ];
 
-  public function testSuperuserCanNotViewField() {
-    $target = Utils::pages()->get('template=skyscraper, sort=random');
+  public function testSuperuserCanNotViewField()
+  {
+    $target = Utils::pages()->get("template=skyscraper, sort=random");
     $query = "{
       skyscraper(s: \"id={$target->id}\") {
         list {
@@ -24,11 +25,11 @@ class SuperuserCanNotViewFieldTest extends GraphqlTestCase {
       }
     }";
     $res = self::execute($query);
-    assertEquals(
+    self::assertEquals(
       1,
       count($res->errors),
-      'Superuser can not view the title field if it is not legal.'
+      "Superuser can not view the title field if it is not legal."
     );
-    assertStringContainsString('title', $res->errors[0]->message);
+    assertStringContainsString("title", $res->errors[0]->message);
   }
 }
