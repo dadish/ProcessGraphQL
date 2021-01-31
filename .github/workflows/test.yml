@@ -1,7 +1,7 @@
 name: learn-github-actions
 on: [push]
 jobs:
-  check-bats-version:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,11 +18,9 @@ jobs:
         with:
           php-version: '7.1'
           ini-values: post_max_size=256M, max_execution_time=180
-          coverage: none
-          tools: phpunit
 
-      # - name: Install Dependencies
-      #   - run: npm install
+      - name: Install Dependencies
+        - run: npm install
 
       # - name: Check Versions
       #   - run: node --version
