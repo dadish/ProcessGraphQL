@@ -16,7 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.1'
+          php-version: '8.0'
           ini-values: post_max_size=256M, max_execution_time=180
 
       - name: Dependencies
