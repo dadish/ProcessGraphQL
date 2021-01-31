@@ -27,4 +27,6 @@ jobs:
           tools: composer
 
       - name: Dependencies
-        run: echo ${{ matrix.phpunit }}
+        run: composer require@${{ matrix.phpunit }}
+        run: composer update
+        run: composer install
