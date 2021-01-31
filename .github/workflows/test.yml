@@ -21,10 +21,10 @@ jobs:
           coverage: none
           tools: phpunit
 
-      - name: Install Dependencies
-        - run: npm install
+      # - name: Install Dependencies
+      #   - run: npm install
 
-      - name: Check Versions
-        - run: node --version
-        - run: php --version
-        - run: composer --version
+      # - name: Check Versions
+      #   - run: node --version
+      #   - run: php --version
+      #   - run: composer --version

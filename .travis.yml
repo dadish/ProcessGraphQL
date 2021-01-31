@@ -27,3 +27,4 @@ script:
 branches:
   except:
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    - learn-github-actions
