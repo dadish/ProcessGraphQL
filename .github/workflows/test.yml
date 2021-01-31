@@ -27,7 +27,6 @@ jobs:
           tools: composer
 
       - name: Dependencies
-        run:
-          - composer require@${{ matrix.phpunit }}
-          - composer update
-          - composer install
+        - run: composer require@${{ matrix.phpunit }}
+        - run: composer update
+        - run: composer install
