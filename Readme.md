@@ -148,7 +148,7 @@ echo $ProcessGraphQL->executeGraphiQL();
 
 There could be cases when you want to include some custom fields into your GraphQL query and mutation operation. There are two ProcessWire hooks that allows you to do that.
 
-#### getQuery() hook
+#### getQueryFields() hook
 
 You can hook into `getQuery` method of the `ProcessGraphQL` class to add some custom fields into your GraphQL query operation. Here how it could look like in your `graphql.php` template file.
 
@@ -159,14 +159,18 @@ use GraphQL\Type\Definition\Type;
 
 $processGraphQL = $modules->get('ProcessGraphQL');
 
-wire()->addHookAfter('ProcessGraphQL::getQuery', function ($event) {
-    $query = $event->return;
-    $query->addField('hello', [
-        'type' => Type::string(),
-        'resolve' => function () {
-            return 'world!';
-        }
-    ]);
+wire()->addHookAfter("ProcessGraphQL::getQueryFields", function (
+  $event
+) {
+  $fields = $event->return;
+  $fields[] = [
+    "name" => "hello",
+    "type" => Type::string(),
+    "resolve" => function () {
+      return "world!";
+    },
+  ];
+  $event->return = $fields;
 });
 
 echo $processGraphQL->executeGraphQL();
@@ -176,7 +180,7 @@ The above code will add a `hello` field into your GraphQL api that reponds with 
 
 #### getMutation() hook
 
-You can also hook into `getMutation` method of `ProcessGraphQL` class to add custom fields into your GraphQL mutation operation. It works exactly like the `getQuery` hook method.
+You can also hook into `getMutationFields` method of `ProcessGraphQL` class to add custom fields into your GraphQL mutation operation. It works exactly like the `getQuery` hook method.
 
 ## Features
 
