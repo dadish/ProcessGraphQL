@@ -8,8 +8,8 @@ jobs:
         include:
           - php-version: 7.1
             phpunit: 7.5
-          # - php-version: 8.0
-          #   phpunit: 9.5
+          - php-version: 8.0
+            phpunit: 9.5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,6 +28,6 @@ jobs:
 
       - name: Dependencies
         run: |
-          composer require phpunit/phpunit ${{ matrix.phpunit }} --dev
-          composer update
+          composer require phpunit/phpunit ^${{ matrix.phpunit }} --dev
+          composer update --with-all-dependencies
           npm install
