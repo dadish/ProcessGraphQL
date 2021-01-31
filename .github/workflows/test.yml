@@ -4,8 +4,27 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - run: npm install -g bats
-      - run: bats -v
+      - name: Checkout
+        uses: actions/checkout@v2
 
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-lates: true
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.1'
+          ini-values: post_max_size=256M, max_execution_time=180
+          coverage: none
+          tools: phpunit
+
+      - name: Install Dependencies
+        - run: npm install
+
+      - name: Check Versions
+        - run: node --version
+        - run: php --version
+        - run: composer --version
