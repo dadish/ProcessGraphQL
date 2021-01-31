@@ -1,5 +1,4 @@
 name: learn-github-actions
-on: [push]
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -19,7 +18,7 @@ jobs:
           php-version: '7.1'
           ini-values: post_max_size=256M, max_execution_time=180
 
-      - name: Install Dependencies
+      - name: Dependencies
         - run: npm install
 
       # - name: Check Versions
