@@ -28,6 +28,7 @@ jobs:
 
       - name: Dependencies
         run: |
+          rm composer.lock
           composer require phpunit/phpunit ^${{ matrix.phpunit }} --dev
           composer update --with-all-dependencies
           npm install
