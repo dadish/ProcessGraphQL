@@ -28,6 +28,6 @@ jobs:
 
       - name: Dependencies
         run: |
-          composer require phpunit@${{ matrix.phpunit }}
+          composer require phpunit/phpunit@${{ matrix.phpunit }}
           composer update
           composer install
