@@ -1,8 +1,9 @@
 name: test
 on: [push]
 jobs:
-  setup:
+  test:
     runs-on: ubuntu-latest
+    contiainer: ubuntu:latest
     strategy:
       matrix:
         include:
@@ -10,6 +11,14 @@ jobs:
             phpunit: 7.5
           - php-version: 8.0
             phpunit: 9.5
+    services:
+      mysql:
+        image: mysql:8.0.23
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: processgraphql
+          MYSQL_USER: processgraphql
+          MYSQL_PASSWORD: processgraphql
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -32,3 +41,6 @@ jobs:
           composer require phpunit/phpunit ^${{ matrix.phpunit }} --dev
           composer update --with-all-dependencies
           npm install
+
+      - name: Test
+        run: npm test
