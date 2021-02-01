@@ -6,8 +6,8 @@ jobs:
     strategy:
       matrix:
         include:
-          # - php-version: 7.1
-          #   phpunit: 7.5
+          - php-version: 7.1
+            phpunit: 7.5
           - php-version: 8.0
             phpunit: 9.5
     services:
