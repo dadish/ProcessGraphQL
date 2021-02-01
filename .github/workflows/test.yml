@@ -3,7 +3,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu:latest
+    container: ubuntu:bionic
     strategy:
       matrix:
         include:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-          check-lates: true
+          check-latest: true
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
