@@ -108,7 +108,7 @@ $config->dbLowercaseTables = true;
  * Installer: Database Configuration
  *
  */
-$config->dbHost = "mysql";
+$config->dbHost = "localhost";
 $config->dbName = "processgraphql";
 $config->dbUser = "processgraphql";
 $config->dbPass = "processgraphql";
