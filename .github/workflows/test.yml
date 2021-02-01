@@ -18,6 +18,9 @@ jobs:
           MYSQL_DATABASE: processgraphql
           MYSQL_USER: processgraphql
           MYSQL_PASSWORD: processgraphql
+        options: >-
+          -p 3306:3306
+
         ports:
           - 3306:3306
     steps:
