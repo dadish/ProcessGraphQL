@@ -3,7 +3,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu:bionic
+    container: ubuntu:latest
     strategy:
       matrix:
         include:
@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: '14'
           check-latest: true
+
+      - name: Install Sudo
+        run: |
+          apt-get update
+          apt-get install sudo
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
