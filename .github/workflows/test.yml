@@ -3,7 +3,6 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu:latest
     strategy:
       matrix:
         include:
@@ -19,6 +18,8 @@ jobs:
           MYSQL_DATABASE: processgraphql
           MYSQL_USER: processgraphql
           MYSQL_PASSWORD: processgraphql
+        ports:
+          - 3306:3306
     steps:
       - name: Checkout
         uses: actions/checkout@v2
