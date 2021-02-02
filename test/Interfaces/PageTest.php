@@ -1,6 +1,6 @@
 <?php
 
-namespace ProcessWire\GraphQL\Test\Interface;
+namespace ProcessWire\GraphQL\Test\Interfaces;
 
 /**
  * It supports page interfaces.
