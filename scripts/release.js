@@ -3,7 +3,7 @@ const {
   extraneousFiles,
   vendorExtraneousFiles,
   execute,
-  updateFile
+  updateFile,
 } = require("./commons");
 
 async function release(releaseLevel) {
@@ -50,18 +50,14 @@ async function release(releaseLevel) {
   await execute("git", [
     "commit",
     "-m",
-    "Remove extraneous files for release."
+    "Remove extraneous files for release.",
   ]);
 
   // version tag
   await execute("git", ["tag", `v${releaseLevel}`], "Tagging the release.");
 
-  // switch back to master
-  await execute(
-    "git",
-    ["checkout", "master"],
-    "Switching back to master branch."
-  );
+  // switch back to main
+  await execute("git", ["checkout", "main"], "Switching back to main branch.");
 
   // delete the release branch
   await execute(
@@ -77,10 +73,10 @@ async function release(releaseLevel) {
   await execute(
     "npm",
     ["version", releaseLevel, "--no-git-tag-version"],
-    "Incrementing the package version on the master branch"
+    "Incrementing the package version on the main branch"
   );
 
-  // update the .module file version number on master branch
+  // update the .module file version number on main branch
   await updateFile(
     path.resolve(__dirname + "/../ProcessGraphQL.module"),
     /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/,
@@ -92,7 +88,7 @@ async function release(releaseLevel) {
   await execute(
     "git",
     ["commit", "--all", "-m", releaseLevel],
-    "Committing package version update on master branch."
+    "Committing package version update on main branch."
   );
 }
 

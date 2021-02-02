@@ -24,7 +24,7 @@ Here is an example of ProcessGraphQL in action after installing it to [skyscrape
 
 ![ProcessGraphQL Simple Query][img-query]
 
-See more [demo here](https://github.com/dadish/ProcessGraphQL/blob/master/ScreenCast.md).
+See more [demo here](https://github.com/dadish/ProcessGraphQL/blob/main/ScreenCast.md).
 
 ## Requirements
 
@@ -277,7 +277,7 @@ then it is probably because ProcessGraphQL is not receiving your query. The reas
 
 ## License
 
-[MIT](https://github.com/dadish/ProcessGraphQL/blob/master/LICENSE)
+[MIT](https://github.com/dadish/ProcessGraphQL/blob/main/LICENSE)
 
 [graphql]: http://graphql.org/
 [graphql-naming]: http://facebook.github.io/graphql/#sec-Names
@@ -287,12 +287,10 @@ then it is probably because ProcessGraphQL is not receiving your query. The reas
 [pw-selectors]: https://processwire.com/api/selectors/
 [pw-access]: http://processwire.com/api/user-access/
 [pw-api-selectors-limit]: https://processwire.com/api/selectors#limit
-[img-query]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Query.gif
-[img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Filtering.gif
-[img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Fieldtypes.gif
-[img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/master/imgs/ProcessGraphQL-Documentation.gif
-[travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
-[travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
+[img-query]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Query.gif
+[img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Filtering.gif
+[img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Fieldtypes.gif
+[img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Documentation.gif
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
 [map-marker-graphql]: https://github.com/dadish/GraphQLFieldtypeMapMarker
 [webonyx-graphql]: https://github.com/webonyx/graphql-php

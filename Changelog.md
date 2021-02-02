@@ -90,7 +90,7 @@ This release introduces lots of changes to repository structure and development 
 
 ### Changed
 
-- The master branch no longer tracks the vendor directory. This means that it is not suitable as a ProcessWire module. Instead you need to use [latest release][latest-release] tags as a ProcessWire module. Release branches are a minified version of this module that includes everything needed and works out of the box. The master branch is used for development.
+- The main branch no longer tracks the vendor directory. This means that it is not suitable as a ProcessWire module. Instead you need to use [latest release][latest-release] tags as a ProcessWire module. Release branches are a minified version of this module that includes everything needed and works out of the box. The main branch is used for development.
 - Now we have a Continious Integration implemented. [![Build Status][travis-ci-badge]][travis-ci] This means that people can contribute confidently by running test suite and be sure that nothing has broken and a pull-request will be merged.
 - `$ProcessGraphQL->executeGraphQL` now accepts `payload` & `variables` as an argument. This allows you to modify the payload from client and manually pass it to the module to meet your needs.
 
@@ -276,8 +276,6 @@ This release introduces lots of changes to repository structure and development 
 
 - Fixed some bugs.
 
-[module-access-control]: https://github.com/dadish/ProcessGraphQL/tree/master#access-control
+[module-access-control]: https://github.com/dadish/ProcessGraphQL/tree/main#access-control
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
-[travis-ci-badge]: https://www.travis-ci.org/dadish/ProcessGraphQL.svg?branch=master
-[travis-ci]: https://travis-ci.org/dadish/ProcessGraphQL/
 [webonyx/graphql-php]: https://github.com/webonyx/graphql-php
