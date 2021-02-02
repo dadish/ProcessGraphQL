@@ -7,14 +7,14 @@ use ProcessWire\GraphQL\Utils;
 
 class Permissions
 {
-  public const pageAddPermission = 'page-add';
-  public const pageCreatePermission = 'page-create';
-  public const pageDeletePermission = 'page-delete';
-  public const pageEditPermission = 'page-edit';
-  public const pageMovePermission = 'page-move';
-  public const pageViewPermission = 'page-view';
-  public const pageEditCreatedPermission = 'page-edit-created';
-  public const pageEditTrashCreatedPermission = 'page-edit-trash-created';
+  public const pageAddPermission = "page-add";
+  public const pageCreatePermission = "page-create";
+  public const pageDeletePermission = "page-delete";
+  public const pageEditPermission = "page-edit";
+  public const pageMovePermission = "page-move";
+  public const pageViewPermission = "page-view";
+  public const pageEditCreatedPermission = "page-edit-created";
+  public const pageEditTrashCreatedPermission = "page-edit-trash-created";
 
   /**
    * Checks if the page using this template can be viewed by the current user.
@@ -60,23 +60,27 @@ class Permissions
     }
 
     // can't create if allowed parents are not legal
-    if ($template->noParents == 0 && count($template->parentTemplates)) {
-      
+    if (!$template->noParents && count($template->parentTemplates)) {
       // filter out the parents that has noChildren checked or
       // has configured childTemplates without the target template
-      $parentTemplates = array_filter($template->parentTemplates, function ($templateId) use ($template) {
+      $parentTemplates = array_filter($template->parentTemplates, function (
+        $templateId
+      ) use ($template) {
         $parentTemplate = Utils::templates()->get($templateId);
         if ($parentTemplate->noChildren) {
           return false;
         }
-        if (count($parentTemplate->childTemplates) && !in_array($template->id, $parentTemplate->childTemplates)) {
+        if (
+          count($parentTemplate->childTemplates) &&
+          !in_array($template->id, $parentTemplate->childTemplates)
+        ) {
           return false;
         }
         return true;
       });
 
       // get templates that user can add pages to
-      $addTemplates = self::getAddTemplates()->explode('id');
+      $addTemplates = self::getAddTemplates()->explode("id");
       if (!count(array_intersect($addTemplates, $parentTemplates))) {
         return false;
       }
@@ -219,7 +223,11 @@ class Permissions
 
     // can't add a page if the allowed childTemplates are not legal
     if ($template->noChildren == 0 && count($template->childTemplates)) {
-      if (!count(array_intersect(self::getTemplateIds(), $template->childTemplates))) {
+      if (
+        !count(
+          array_intersect(self::getTemplateIds(), $template->childTemplates)
+        )
+      ) {
         return false;
       }
     }
@@ -251,7 +259,7 @@ class Permissions
    */
   public static function canEditField(Field $field, Template $template)
   {
-    return self::hasFieldPermission('edit', $field, $template);
+    return self::hasFieldPermission("edit", $field, $template);
   }
 
   /**
@@ -263,7 +271,7 @@ class Permissions
    */
   public static function canViewField(Field $field, Template $template)
   {
-    return self::hasFieldPermission('view', $field, $template);
+    return self::hasFieldPermission("view", $field, $template);
   }
 
   /**
@@ -274,8 +282,11 @@ class Permissions
    * @param  Template $template   The context of the field.
    * @return boolean              Returns true if user has rights and false otherwise
    */
-  public static function hasFieldPermission(string $permission, Field $field, Template $template)
-  {
+  public static function hasFieldPermission(
+    string $permission,
+    Field $field,
+    Template $template
+  ) {
     $user = Utils::user();
 
     // can view/edit a field if superuser
@@ -289,7 +300,7 @@ class Permissions
       return false;
     }
 
-    $roles = $permission . 'Roles';
+    $roles = $permission . "Roles";
 
     foreach ($user->roles as $role) {
       if (in_array($role->id, $field->$roles)) {
@@ -300,7 +311,6 @@ class Permissions
     return false;
   }
 
-
   /**
    * Tells if the template or field has access control defined.
    *
@@ -309,7 +319,7 @@ class Permissions
    */
   public static function definesAccess($context)
   {
-    return (boolean) $context->useRoles;
+    return (bool) $context->useRoles;
   }
 
   /**
@@ -320,7 +330,7 @@ class Permissions
   public static function getTemplates()
   {
     $templates = Utils::templates();
-    $legalTemplateNames = implode('|', Utils::module()->legalTemplates);
+    $legalTemplateNames = implode("|", Utils::module()->legalTemplates);
     return $templates->find("name=$legalTemplateNames");
   }
 
@@ -331,7 +341,7 @@ class Permissions
    */
   public static function getTemplateIds()
   {
-    return array_merge([], self::getTemplates()->explode('id'));
+    return array_merge([], self::getTemplates()->explode("id"));
   }
 
   public static function filterTemplatesByPermission($predicator)
