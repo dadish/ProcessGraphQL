@@ -153,6 +153,12 @@ class PageType
         'description' => "The page's URL path from the homepage (i.e. /about/staff/ryan/)",
       ],
 
+      self::resolveReferencesWithSelector([
+        'name' => 'references',
+        'type' => Type::nonNull(PageArrayType::type()),
+        'description' => "Return this page's parent pages as PageArray. Optionally filtered by a selector and a field name.",
+      ]),
+
       [
         'name' => 'template',
         'type' => Type::nonNull(Type::string()),
@@ -267,6 +273,35 @@ class PageType
           $selector = SelectorType::parseValue("");
         }
         $result = $page->$name($selector);
+        if ($result instanceof NullPage) return null;
+        return $result;
+      }
+    ]);
+  }
+
+  public static function resolveReferencesWithSelector(array $options)
+  {
+    return array_merge($options, [
+      'args' => [
+        's' => [
+          'type' => SelectorType::type(),
+          'description' => "ProcessWire selector."
+        ],
+        'f' => [
+          'type' => Type::string(), // TODO: could also be of type Field or bool
+          'description' => "ProcessWire field name."
+        ]
+      ],
+      'resolve' => function (Page $page, array $args) use ($options) {
+        $name = $options['name'];
+        $selector = "";
+        if (isset($args['s'])) {
+          $selector = SelectorType::parseValue($args['s']);
+        } else {
+          $selector = SelectorType::parseValue("");
+        }
+        $field = isset($args['f']) ? $args['f'] : "";
+        $result = $page->$name($selector, $field);
         if ($result instanceof NullPage) return null;
         return $result;
       }
