@@ -36,16 +36,26 @@ class CaseTwoTest extends GraphQLTestCase
     ];
     $res = self::execute($query, $variables);
     $newBuildingSky = Utils::pages()->get("name=$name");
-    \ProcessWire\GraphQL\logArr($res);
     self::assertEquals(
-      1,
+      2,
       count($res->errors),
-      "createSkyscraper does not exist if allowed parent page is not legal."
+      // "createSkyscraper does not exist if allowed parent page is not legal."
+      "Should have two errors."
+    );
+    self::assertStringContainsString(
+      "SkyscraperCreateInput",
+      $res->errors[0]->message,
+      "'SkyscraperCreateInput' type should not exist."
+    );
+    self::assertStringContainsString(
+      "createSkyscraper",
+      $res->errors[1]->message,
+      "'createSkyscraper' field should not exist."
     );
     self::assertInstanceOf(
       NullPage::class,
       $newBuildingSky,
-      "createSkyscraper does not create a page."
+      "'createSkyscraper' does not create a page."
     );
   }
 }
