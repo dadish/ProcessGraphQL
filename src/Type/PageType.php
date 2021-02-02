@@ -52,15 +52,15 @@ class PageType
       self::resolvePagefieldWithSelector([
         'name' => 'child',
         'type' => $type,
-        'description' => "The first child of this page. If the `s`(selector) argument is provided then the 
+        'description' => "The first child of this page. If the `s`(selector) argument is provided then the
                           first matching child (subpage) that matches the given selector. Returns a Page or null.",
       ]),
 
       self::resolvePagefieldWithSelector([
         'name' => 'children',
         'type' => PageArrayType::type(),
-        'description' => "The number of children (subpages) this page has, optionally limiting to visible 
-                          pages. When argument `visible` true, number includes only visible children 
+        'description' => "The number of children (subpages) this page has, optionally limiting to visible
+                          pages. When argument `visible` true, number includes only visible children
                           (excludes unpublished, hidden, no-access, etc.)",
       ]),
 
@@ -109,8 +109,8 @@ class PageType
       [
         'name' => 'numChildren',
         'type' => Type::nonNull(Type::int()),
-        'description' => "The number of children (subpages) this page has, optionally limiting to 
-                          visible pages. When argument `visible` true, number includes only visible 
+        'description' => "The number of children (subpages) this page has, optionally limiting to
+                          visible pages. When argument `visible` true, number includes only visible
                           children (excludes unpublished, hidden, no-access, etc.)",
         'args' => [
           'visible' => [
@@ -321,7 +321,7 @@ class PageType
       ],
       'resolve' => function (Page $page, array $args) use ($options) {
         $name = $options['name'];
-    
+
         if (isset($args['format'])) {
           $format = $args['format'];
           $rawValue = $page->$name;
@@ -331,7 +331,7 @@ class PageType
             return "";
           }
         }
-        
+
         return $page->$name;
       }
     ]);
