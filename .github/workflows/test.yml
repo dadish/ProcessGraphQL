@@ -9,9 +9,9 @@ jobs:
           - php-version: 7.2
             phpunit: 7.5
             mysql: 5.7.33
-          # - php-version: 8.0
-          #   phpunit: 9.5
-          #   mysql: 8.0.23
+          - php-version: 8.0
+            phpunit: 9.5
+            mysql: 8.0.23
     services:
       mysql:
         image: mysql:${{ matrix.mysql }}
