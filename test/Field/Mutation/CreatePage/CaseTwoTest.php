@@ -36,6 +36,7 @@ class CaseTwoTest extends GraphQLTestCase
     ];
     $res = self::execute($query, $variables);
     $newBuildingSky = Utils::pages()->get("name=$name");
+    \ProcessWire\GraphQL\logArr($res);
     self::assertEquals(
       1,
       count($res->errors),
