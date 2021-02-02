@@ -1,6 +1,6 @@
 # ProcessGraphQL
 
-[![Travis-CI Status][travis-ci-badge]][travis-ci]
+[![Test Status](https://github.com/dadish/ProcessGraphQL/workflows/Test/badge.svg)](https://github.com/dadish/ProcessGraphQL/actions)
 
 [GraphQL][graphql] for [ProcessWire][pw].
 
