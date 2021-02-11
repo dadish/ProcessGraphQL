@@ -14,7 +14,7 @@
     "test:performance:shortCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DbShortQueryCountTest.php\"",
     "test:performance": "npm-run-all test:performance:*",
     "posttest": "php test/cleanup.php",
-    "release": "node scripts/release.js",
+    "release": "semantic-release",
     "postinstall": "composer install",
     "start:client": "php -S 127.0.0.1:8090 test/client.php",
     "start:server": "php -S 127.0.0.1:8091 test/server.php",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dadish/ProcessGraphQL.git"
+    "url": "git+https://github.com/dadish-etudes/ProcessGraphQL.git"
   },
   "keywords": [
     "GraphQL",
@@ -32,17 +32,19 @@
   "author": "Nurguly Ashyrov <nurguly.ashyorov@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dadish/ProcessGraphQL/issues"
+    "url": "https://github.com/dadish-etudes/ProcessGraphQL/issues"
   },
-  "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
+  "homepage": "https://github.com/dadish-etudes/ProcessGraphQL#readme",
   "devDependencies": {
     "@prettier/plugin-php": "^0.16.1",
+    "@semantic-release/exec": "^5.0.0",
     "execa": "^2.0.4",
     "fs-extra": "^8.1.0",
     "graphql": "^14.5.8",
     "npm-run-all": "^4.1.5",
     "ora": "^3.4.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "semantic-release": "^17.3.7"
   },
   "dependencies": {}
 }

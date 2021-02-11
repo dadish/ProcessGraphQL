@@ -93,15 +93,16 @@ async function release(releaseLevel) {
 }
 
 const releaseLevel = process.argv[2];
-if (!releaseLevel) {
-  console.error(
-    "Error: Should provide a version argument. See `npm help version`."
-  );
-  process.exit(1);
-}
+console.log("releaseLevel", releaseLevel);
+// if (!releaseLevel) {
+//   console.error(
+//     "Error: Should provide a version argument. See `npm help version`."
+//   );
+//   process.exit(1);
+// }
 
-try {
-  release(releaseLevel);
-} catch (err) {
-  console.error(err);
-}
+// try {
+//   release(releaseLevel);
+// } catch (err) {
+//   console.error(err);
+// }
