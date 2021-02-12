@@ -4,7 +4,7 @@ module.exports = {
     [
       "@semantic-release/commit-analyzer",
       {
-        parseOpts: { headerPattern: "*" },
+        releaseRules: [{ type: "build", release: "patch" }],
       },
     ],
     [
