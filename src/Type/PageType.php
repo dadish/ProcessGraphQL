@@ -164,6 +164,13 @@ class PageType
         'type' => Type::nonNull(Type::string()),
         'description' => "The page's URL path from the server's document root (may be the same as the `path`)",
       ],
+      
+      self::resolvePagefieldWithSelector([
+        'name' => 'references',
+        'type' => PageArrayType::type(),
+        'description' => "Return pages that have Page reference fields pointing to this one (references)",
+      ])
+      
     ];
   }
 
