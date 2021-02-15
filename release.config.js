@@ -13,5 +13,11 @@ module.exports = {
         prepareCmd: "node scripts/release.js ${nextRelease.version}",
       },
     ],
+    [
+      "@semantic-release/github",
+      {
+        assets: ["src"],
+      },
+    ],
   ],
 };
