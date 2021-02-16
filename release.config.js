@@ -16,7 +16,17 @@ module.exports = {
     [
       "@semantic-release/github",
       {
-        assets: ["src"],
+        assets: [
+          "graphiql",
+          "src",
+          "templates",
+          "composer.json",
+          "LICENSE",
+          "package.json",
+          "ProcessGraphQL.module",
+          "ProcessGraphQLConfig.php",
+          "Readme.md",
+        ],
       },
     ],
   ],
