@@ -93,7 +93,10 @@ async function release(releaseLevel) {
 }
 
 const releaseLevel = process.argv[2];
+console.log("🚀🚀🚀");
 console.log("releaseLevel", releaseLevel);
+console.log("🚀🚀🚀");
+
 // if (!releaseLevel) {
 //   console.error(
 //     "Error: Should provide a version argument. See `npm help version`."
