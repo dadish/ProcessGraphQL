@@ -8,15 +8,8 @@ const {
 } = require("./commons");
 
 async function release(releaseLevel) {
-  // switch to the release branch
-  await execute(
-    "git",
-    ["checkout", `v${releaseLevel}`],
-    "Switching to the release branch"
-  );
-
   // remove all php vendor code except the required for production
-  await execute("rm", ["-rf", "vendor"], "Removing extraneous files");
+  await execute("rm", ["-rf", "vendor"], "Remove dev dependant vendor files");
   await execute(
     "composer",
     ["install", "--no-dev"],
@@ -42,40 +35,13 @@ async function release(releaseLevel) {
   );
 
   // add changes to git stage
-  await execute("git", ["add", "."], "");
+  await execute("git", ["add", "."], "Add changes to git stage");
 
   // commit whatever on git stage
   await execute(
     "git",
-    [
-      "commit",
-      "-m",
-      "chore(release): [skip ci] remove extraneous files for release.",
-    ],
+    ["commit", "-m", `chore(release): [skip ci] v${releaseLevel}`],
     "Commit changes to the release branch"
-  );
-
-  // switch back to main
-  await execute("git", ["checkout", "dev"], "Switching back to main branch.");
-
-  // update the .module file version number on dev branch
-  await updateFile(
-    path.resolve(__dirname + "/../ProcessGraphQL.module"),
-    /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/,
-    `'version' => '${releaseLevel}'`,
-    "Update version in ProcessGraphQL.module file."
-  );
-
-  // commit version update
-  await execute(
-    "git",
-    [
-      "commit",
-      "--all",
-      "-m",
-      `chore(release): [skip ci] update module version ${releaseLevel}`,
-    ],
-    "Committing package version update on dev branch."
   );
 }
 
