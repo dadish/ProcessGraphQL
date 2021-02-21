@@ -14,7 +14,7 @@ async function release(releaseLevel) {
   // switch to the release branch
   await execute(
     "git",
-    ["checkout", releaseLevel],
+    ["checkout", `v${releaseLevel}`],
     "Switching to the release branch"
   );
 
