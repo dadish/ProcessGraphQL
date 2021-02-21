@@ -34,8 +34,15 @@ async function release(releaseLevel) {
     "Update version in ProcessGraphQL.module file."
   );
 
-  // add changes to git stage
-  await execute("git", ["add", "."], "Add changes to git stage");
+  // add all changes to git stage
+  await execute("git", ["add", "."], "Add all changes to git stage");
+
+  // rmeove node_modules from git stage
+  await execute(
+    "git",
+    ["reset", "node_modules"],
+    "Remove node_modules from git stage."
+  );
 
   // commit whatever on git stage
   await execute(

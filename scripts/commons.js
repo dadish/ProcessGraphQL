@@ -5,7 +5,6 @@ const extraneousFiles = [
   "bin",
   "imgs",
   "test",
-  "node_modules",
   "coverage",
   "scripts",
   ".travis.yml",
