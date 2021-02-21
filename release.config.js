@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
     [
       "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
       {
         releaseRules: [{ type: "build", release: "patch" }],
       },
@@ -29,5 +30,6 @@ module.exports = {
         ],
       },
     ],
+    "@semantic-release/github",
   ],
 };
