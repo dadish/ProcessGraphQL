@@ -2,6 +2,7 @@ const execa = require("execa");
 const fs = require("fs-extra");
 
 const extraneousFiles = [
+  ".github",
   "bin",
   "imgs",
   "test",

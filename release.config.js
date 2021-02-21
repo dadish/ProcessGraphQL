@@ -9,27 +9,19 @@ module.exports = {
     ],
     "@semantic-release/release-notes-generator",
     [
-      "@semantic-release/git",
-      {
-        assets: [
-          "graphiql",
-          "src",
-          "templates",
-          "composer.json",
-          "LICENSE",
-          "package.json",
-          "ProcessGraphQL.module",
-          "ProcessGraphQLConfig.php",
-          "Readme.md",
-        ],
-      },
-    ],
-    [
       "@semantic-release/exec",
       {
         prepareCmd: "node scripts/release.js ${nextRelease.version}",
       },
     ],
     "@semantic-release/github",
+    [
+      "@semantic-release/git",
+      {
+        assets: ["package.json", "ProcessGraphQL.module"],
+        message:
+          "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
+      },
+    ],
   ],
 };

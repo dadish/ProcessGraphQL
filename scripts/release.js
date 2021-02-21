@@ -50,8 +50,6 @@ async function release(releaseLevel) {
     ["commit", "-m", `chore(release): [skip ci] v${releaseLevel}`],
     "Commit changes to the release branch"
   );
-
-  await execute("npm", ["install"], "Install back dependencies.");
 }
 
 const releaseLevel = process.argv[2];
