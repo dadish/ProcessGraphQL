@@ -6,7 +6,7 @@ const extraneousFiles = [
   "bin",
   "imgs",
   "test",
-  'node_modules',
+  "node_modules",
   "coverage",
   "scripts",
   ".travis.yml",
@@ -19,7 +19,7 @@ const extraneousFiles = [
   "Todo.md",
   ".gitignore",
   "GraphiQL/package.json",
-  "GraphiQL/package-lock.json"
+  "GraphiQL/package-lock.json",
 ];
 
 const vendorExtraneousFiles = [
@@ -32,13 +32,13 @@ const vendorExtraneousFiles = [
   "vendor/webonyx/graphql-php/phpcs.xml.dist",
   "vendor/webonyx/graphql-php/phpstan.neon.dist",
   "vendor/webonyx/graphql-php/README.md",
-  "vendor/webonyx/graphql-php/UPGRADE.md"
+  "vendor/webonyx/graphql-php/UPGRADE.md",
 ];
 
 const fakeSpinner = {
   start: () => {},
   succeed: () => {},
-  fail: () => {}
+  fail: () => {},
 };
 
 async function updateFile(filename, matcher, replaceStr, message) {
@@ -57,19 +57,21 @@ async function updateFile(filename, matcher, replaceStr, message) {
 
 async function execute(file, arguments, message) {
   const spinner = message ? ora(message) : fakeSpinner;
+  let result = {};
   try {
     spinner.start();
-    await execa(file, arguments);
+    const result = await execa(file, arguments);
     spinner.succeed();
   } catch (err) {
     spinner.fail();
     throw new Error(err);
   }
+  return result;
 }
 
 module.exports = {
   extraneousFiles,
   vendorExtraneousFiles,
   updateFile,
-  execute
+  execute,
 };

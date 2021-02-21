@@ -8,17 +8,22 @@ const {
 } = require("./commons");
 
 async function release(releaseLevel) {
-  const { stdout } = await execa("git", ["status"]);
-  console.log(stdout);
   // // create the release branch
   // await execute("git", ["branch", "release"], "Creating the release branch");
 
-  // // switch to the release branch
-  // await execute(
-  //   "git",
-  //   ["checkout", "release"],
-  //   "Switching to the release branch"
-  // );
+  // switch to the release branch
+  await execute(
+    "git",
+    ["checkout", releaseLevel],
+    "Switching to the release branch"
+  );
+
+  const { stdout } = await execute(
+    "git",
+    ["status"],
+    "Getting the git status."
+  );
+  console.log(stdout);
 
   // // remove all php vendor code except the required for production
   // await execute("rm", ["-rf", "vendor"], "Removing extraneous files");
@@ -59,8 +64,8 @@ async function release(releaseLevel) {
   // // version tag
   // await execute("git", ["tag", `v${releaseLevel}`], "Tagging the release.");
 
-  // // switch back to main
-  // await execute("git", ["checkout", "main"], "Switching back to main branch.");
+  // switch back to main
+  await execute("git", ["checkout", "main"], "Switching back to main branch.");
 
   // // delete the release branch
   // await execute(
