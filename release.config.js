@@ -9,12 +9,6 @@ module.exports = {
     ],
     "@semantic-release/release-notes-generator",
     [
-      "@semantic-release/exec",
-      {
-        prepareCmd: "node scripts/release.js ${nextRelease.version}",
-      },
-    ],
-    [
       "@semantic-release/git",
       {
         assets: [
@@ -28,6 +22,12 @@ module.exports = {
           "ProcessGraphQLConfig.php",
           "Readme.md",
         ],
+      },
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        prepareCmd: "node scripts/release.js ${nextRelease.version}",
       },
     ],
     "@semantic-release/github",
