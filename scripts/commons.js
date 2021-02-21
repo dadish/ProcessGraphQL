@@ -1,6 +1,5 @@
 const execa = require("execa");
 const fs = require("fs-extra");
-const ora = require("ora");
 
 const extraneousFiles = [
   "bin",
@@ -42,28 +41,27 @@ const fakeSpinner = {
 };
 
 async function updateFile(filename, matcher, replaceStr, message) {
-  const spinner = message ? ora(message) : fakeSpinner;
   try {
-    spinner.start();
+    console.log(`🟡 ${message}`);
     let content = await fs.readFile(filename, "utf8");
     content = content.replace(matcher, replaceStr);
     await fs.writeFile(filename, content);
-    spinner.succeed();
+    console.log(`✅ ${message}`);
   } catch (err) {
-    spinner.fail();
+    console.log("🔴 error", err);
     throw new Error(err);
   }
 }
 
 async function execute(file, arguments, message) {
-  const spinner = message ? ora(message) : fakeSpinner;
   let result = {};
   try {
-    spinner.start();
+    console.log(`🟡 ${message}`);
     result = await execa(file, arguments);
-    spinner.succeed();
+    console.log(result.stdout);
+    console.log(`✅ ${message}`);
   } catch (err) {
-    spinner.fail();
+    console.log("🔴 error", err);
     throw new Error(err);
   }
   return result;

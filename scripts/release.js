@@ -45,11 +45,15 @@ async function release(releaseLevel) {
   await execute("git", ["add", "."], "");
 
   // commit whatever on git stage
-  await execute("git", [
-    "commit",
-    "-m",
-    "chore(release): [skip ci] remove extraneous files for release.",
-  ]);
+  await execute(
+    "git",
+    [
+      "commit",
+      "-m",
+      "chore(release): [skip ci] remove extraneous files for release.",
+    ],
+    "Commit changes to the release branch"
+  );
 
   // switch back to main
   await execute("git", ["checkout", "dev"], "Switching back to main branch.");
