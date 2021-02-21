@@ -60,7 +60,7 @@ async function execute(file, arguments, message) {
   let result = {};
   try {
     spinner.start();
-    const result = await execa(file, arguments);
+    result = await execa(file, arguments);
     spinner.succeed();
   } catch (err) {
     spinner.fail();
