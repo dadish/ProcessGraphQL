@@ -9,6 +9,13 @@ module.exports = {
     ],
     "@semantic-release/release-notes-generator",
     [
+      "@semantic-release/changelog",
+      {
+        changelogFile: "Changelog.md",
+      },
+    ],
+    "@semantic-release/npm",
+    [
       "@semantic-release/exec",
       {
         prepareCmd: "node scripts/release.js ${nextRelease.version}",
@@ -20,7 +27,7 @@ module.exports = {
       {
         assets: ["package.json", "ProcessGraphQL.module", "Changelog.md"],
         message:
-          "chore(release): [skip ci] ${nextRelease.version}\n\n${nextRelease.notes}",
+          "chore(releasing): [skip ci] ${nextRelease.version}\n\n${nextRelease.notes}",
       },
     ],
   ],

@@ -19,6 +19,9 @@ const extraneousFiles = [
   ".gitignore",
   "GraphiQL/package.json",
   "GraphiQL/package-lock.json",
+  "release.config.js",
+  ".editorconfig",
+  ".prettierrc",
 ];
 
 const vendorExtraneousFiles = [
@@ -32,6 +35,9 @@ const vendorExtraneousFiles = [
   "vendor/webonyx/graphql-php/phpstan.neon.dist",
   "vendor/webonyx/graphql-php/README.md",
   "vendor/webonyx/graphql-php/UPGRADE.md",
+  "vendor/webonyx/graphql-php/.github",
+  "vendor/webonyx/graphql-php/.coveralls.yml",
+  "vendor/webonyx/graphql-php/phpstan-baseline.neon",
 ];
 
 const fakeSpinner = {
