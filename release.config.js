@@ -18,7 +18,7 @@ module.exports = {
     [
       "@semantic-release/git",
       {
-        assets: ["package.json", "ProcessGraphQL.module"],
+        assets: ["package.json", "ProcessGraphQL.module", "Changelog.md"],
         message:
           "chore(release): [skip ci] ${nextRelease.version}\n\n${nextRelease.notes}",
       },
