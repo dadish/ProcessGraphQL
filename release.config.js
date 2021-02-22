@@ -14,7 +14,13 @@ module.exports = {
         changelogFile: "Changelog.md",
       },
     ],
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        npmPublish: false,
+        tarballDir: false,
+      },
+    ],
     [
       "@semantic-release/exec",
       {
