@@ -20,7 +20,7 @@ module.exports = {
       {
         assets: ["package.json", "ProcessGraphQL.module"],
         message:
-          "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
+          "chore(release): [skip ci] ${nextRelease.version}\n\n${nextRelease.notes}",
       },
     ],
   ],
