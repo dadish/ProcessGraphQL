@@ -40,7 +40,7 @@ async function release(releaseLevel) {
   // rmeove node_modules from git stage
   await execute(
     "git",
-    ["reset", "node_modules"],
+    ["reset", "node_modules", "package.json"],
     "Remove node_modules from git stage."
   );
 

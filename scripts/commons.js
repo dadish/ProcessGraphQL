@@ -12,7 +12,6 @@ const extraneousFiles = [
   "Changelog.md",
   "composer.lock",
   "composer.json",
-  "package.json",
   "package-lock.json",
   "ScreenCast.md",
   "Todo.md",
