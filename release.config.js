@@ -35,7 +35,9 @@ module.exports = {
     [
       "@semantic-release/github",
       {
-        assets: [{ path: "ProcessGraphQL.zip", label: "ProcessWire Module" }],
+        assets: [
+          { path: "ProcessGraphQL.zip", label: "ProcessWire Module (zip)" },
+        ],
       },
     ],
   ],
