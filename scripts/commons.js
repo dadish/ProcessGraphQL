@@ -1,48 +1,25 @@
 const execa = require("execa");
 const fs = require("fs-extra");
 
-const extraneousFiles = [
-  ".github",
-  "bin",
-  "imgs",
-  "test",
-  "coverage",
-  ".travis.yml",
-  "Changelog.md",
-  "composer.lock",
-  "composer.json",
-  "package-lock.json",
-  "ScreenCast.md",
-  "Todo.md",
-  ".gitignore",
-  "GraphiQL/package.json",
-  "GraphiQL/package-lock.json",
-  "release.config.js",
-  ".editorconfig",
-  ".prettierrc",
+const releaseDirectories = [
+  "graphiql",
+  "src",
+  "templates",
+  "vendor/webonyx/graphql-php/src",
 ];
 
-const vendorExtraneousFiles = [
-  "vendor/webonyx/graphql-php/docs",
-  "vendor/webonyx/graphql-php/examples",
-  "vendor/webonyx/graphql-php/.scrutinizer.yml",
-  "vendor/webonyx/graphql-php/CHANGELOG.md",
+const releaseFiles = [
   "vendor/webonyx/graphql-php/composer.json",
   "vendor/webonyx/graphql-php/LICENSE",
-  "vendor/webonyx/graphql-php/phpcs.xml.dist",
-  "vendor/webonyx/graphql-php/phpstan.neon.dist",
   "vendor/webonyx/graphql-php/README.md",
-  "vendor/webonyx/graphql-php/UPGRADE.md",
-  "vendor/webonyx/graphql-php/.github",
-  "vendor/webonyx/graphql-php/.coveralls.yml",
-  "vendor/webonyx/graphql-php/phpstan-baseline.neon",
+  "vendor/autoload.php",
+  "Changelog.md",
+  "composer.json",
+  "LICENSE",
+  "ProcessGraphQL.module",
+  "ProcessGraphQLConfig.php",
+  "Readme.md",
 ];
-
-const fakeSpinner = {
-  start: () => {},
-  succeed: () => {},
-  fail: () => {},
-};
 
 async function updateFile(filename, matcher, replaceStr, message) {
   try {
@@ -72,8 +49,8 @@ async function execute(file, arguments, message) {
 }
 
 module.exports = {
-  extraneousFiles,
-  vendorExtraneousFiles,
+  releaseDirectories,
+  releaseFiles,
   updateFile,
   execute,
 };

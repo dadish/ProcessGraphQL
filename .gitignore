@@ -7,3 +7,5 @@ coverage
 *.old/*
 *.new
 *.new/*
+
+ProcessGraphQL.zip

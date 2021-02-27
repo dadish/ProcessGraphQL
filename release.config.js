@@ -31,10 +31,13 @@ module.exports = {
       "@semantic-release/git",
       {
         assets: ["package.json", "ProcessGraphQL.module", "Changelog.md"],
-        message:
-          "chore(releasing): [skip ci] ${nextRelease.version}\n\n${nextRelease.notes}",
       },
     ],
-    "@semantic-release/github",
+    [
+      "@semantic-release/github",
+      {
+        assets: [{ path: "ProcessGraphQL.zip", label: "ProcessWire Module" }],
+      },
+    ],
   ],
 };

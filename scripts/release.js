@@ -1,31 +1,61 @@
-const execa = require("execa");
+const fs = require("fs");
+const process = require("process");
+const archiver = require("archiver");
 const path = require("path");
 const {
-  extraneousFiles,
-  vendorExtraneousFiles,
+  releaseDirectories,
+  releaseFiles,
   execute,
   updateFile,
 } = require("./commons");
 
+const tarballReleaseFiles = () =>
+  new Promise((resolve, reject) => {
+    // create a file to stream archive data to.
+    const zipFilename = `${process.cwd()}/ProcessGraphQL.zip`;
+    const output = fs.createWriteStream(zipFilename);
+    const archive = archiver("zip", {
+      zlib: { level: 9 }, // Sets the compression level.
+    });
+
+    // This event is fired when the data source is drained no matter what was the data source.
+    // It is not part of this library but rather from the NodeJS Stream API.
+    // @see: https://nodejs.org/api/stream.html#stream_event_end
+    output.on("end", function () {
+      resolve();
+    });
+
+    // good practice to catch warnings (ie stat failures and other non-blocking errors)
+    archive.on("warning", function (err) {
+      reject(err);
+    });
+
+    // good practice to catch this error explicitly
+    archive.on("error", function (err) {
+      reject(err);
+    });
+
+    // pipe archive data to the file
+    archive.pipe(output);
+
+    // add all the directories
+    releaseDirectories.forEach((dirname) => {
+      const source = `${process.cwd()}/${dirname}`;
+      archive.directory(source, dirname);
+    });
+
+    // add all the files
+    releaseFiles.forEach((name) => {
+      const source = `${process.cwd()}/${name}`;
+      archive.file(source, { name });
+    });
+
+    // finalize the archive (ie we are done appending files but streams have to finish yet)
+    // 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
+    archive.finalize();
+  });
+
 async function release(releaseLevel) {
-  // remove all php vendor code except the required for production
-  await execute("rm", ["-rf", "vendor"], "Remove dev dependant vendor files");
-  await execute(
-    "composer",
-    ["install", "--no-dev"],
-    "Installing php dependencies (--no-dev)"
-  );
-
-  // remove the rest of the files that we don't need in the production code
-  await execute("rm", ["-rf", ...extraneousFiles], "Removing extraneous files");
-
-  // remove verdor's files that we don't use in production code
-  await execute(
-    "rm",
-    ["-rf", ...vendorExtraneousFiles],
-    "Removing extraneous files from graphql-php"
-  );
-
   // update the .module file version number.
   await updateFile(
     path.resolve(`${__dirname}/../ProcessGraphQL.module`),
@@ -34,22 +64,7 @@ async function release(releaseLevel) {
     "Update version in ProcessGraphQL.module file."
   );
 
-  // add all changes to git stage
-  await execute("git", ["add", "."], "Add all changes to git stage");
-
-  // remeove node_modules from git stage
-  await execute(
-    "git",
-    ["reset", "node_modules", "package.json", "scripts"],
-    "Remove node_modules from git stage."
-  );
-
-  // commit whatever on git stage
-  await execute(
-    "git",
-    ["commit", "-m", `chore(release): [skip ci] v${releaseLevel}`],
-    "Commit changes to the release branch"
-  );
+  await tarballReleaseFiles();
 }
 
 const releaseLevel = process.argv[2];
