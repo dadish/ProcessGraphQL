@@ -1,3 +1,10 @@
+## [1.4.1-rc.10](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.1-rc.9...v1.4.1-rc.10) (2021-02-27)
+
+
+### Bug Fixes
+
+* **release:** append "(zip)" suffix to release asset label ([0dadc99](https://github.com/dadish-etudes/ProcessGraphQL/commit/0dadc997de641274424161aed2fedab791237887))
+
 ## [1.4.1-rc.9](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.1-rc.8...v1.4.1-rc.9) (2021-02-27)
 
 
