@@ -14,7 +14,7 @@
     "test:performance:shortCount": "composer exec -v \"phpunit --bootstrap test/bootstrap.php test/Performance/DbShortQueryCountTest.php\"",
     "test:performance": "npm-run-all test:performance:*",
     "posttest": "php test/cleanup.php",
-    "release": "node scripts/release.js",
+    "release": "semantic-release",
     "postinstall": "composer install",
     "start:client": "php -S 127.0.0.1:8090 test/client.php",
     "start:server": "php -S 127.0.0.1:8091 test/server.php",
