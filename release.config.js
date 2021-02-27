@@ -23,7 +23,15 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: "node scripts/release.js ${nextRelease.version}",
+        verifyConditionsCmd: "node scripts/command.js verifyConditionsCmd",
+        analyzeCommitsCmd: "node scripts/command.js analyzeCommitsCmd",
+        verifyReleaseCmd: "node scripts/command.js verifyReleaseCmd",
+        generateNotesCmd: "node scripts/command.js generateNotesCmd",
+        prepareCmd: "node scripts/command.js prepareCmd",
+        addChannelCmd: "node scripts/command.js addChannelCmd",
+        publishCmd: "node scripts/command.js publishCmd",
+        successCmd: "node scripts/command.js successCmd",
+        failCmd: "node scripts/command.js failCmd",
       },
     ],
     [
