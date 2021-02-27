@@ -1,13 +1,3 @@
-## [1.4.1-rc.9](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.1-rc.8...v1.4.1-rc.9) (2021-02-27)
-
-
-### Bug Fixes
-
-* **build:** publish the module files as a release asset ([3c04dbf](https://github.com/dadish-etudes/ProcessGraphQL/commit/3c04dbf7701412f64c87eee48418e96f38b3c199))
-* **build:** release with semantic-release ([f671e33](https://github.com/dadish-etudes/ProcessGraphQL/commit/f671e334585319d6218d4e3e154ee6a76305161c))
-* **build:** trigger another release ([6847b7a](https://github.com/dadish-etudes/ProcessGraphQL/commit/6847b7a74c7e6b6487469d12f197c0d3f60a18e6))
-* **changelog:** cleanup the Changelog.md ([df7c123](https://github.com/dadish-etudes/ProcessGraphQL/commit/df7c123e5bd6ff83d1d81b5aa849eb4ab48c207c))
-
 ## [1.0.2] - 2019-11-19
 
 ### Added

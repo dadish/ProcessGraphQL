@@ -24,7 +24,6 @@ module.exports = {
       "@semantic-release/exec",
       {
         prepareCmd: "node scripts/release.js ${nextRelease.version}",
-        publishCmd: "node scripts/revert.js",
       },
     ],
     [
