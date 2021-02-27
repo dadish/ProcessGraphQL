@@ -7,7 +7,6 @@ const extraneousFiles = [
   "imgs",
   "test",
   "coverage",
-  "scripts",
   ".travis.yml",
   "Changelog.md",
   "composer.lock",
