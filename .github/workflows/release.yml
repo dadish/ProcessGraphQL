@@ -3,10 +3,58 @@ on:
   push:
     branches:
       - main
-      - dev
+      - stable
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - php-version: 7.2
+            phpunit: 7.5
+            mysql: 5.7.33
+          - php-version: 8.0
+            phpunit: 9.5
+            mysql: 8.0.23
+    services:
+      mysql:
+        image: mysql:${{ matrix.mysql }}
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: processgraphql
+          MYSQL_USER: processgraphql
+          MYSQL_PASSWORD: processgraphql
+        ports:
+          - 3306:3306
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-latest: true
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php-version }}'
+          tools: composer
+
+      - name: Dependencies
+        run: |
+          rm composer.lock
+          composer require phpunit/phpunit ^${{ matrix.phpunit }} --dev
+          composer update --with-all-dependencies
+          npm install
+
+      - name: Test
+        run: npm test
+
   release:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
