@@ -1,3 +1,5 @@
+## [1.4.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.1...v1.4.2) (2021-04-08)
+
 ## [1.4.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.0...v1.4.1) (2021-02-27)
 
 
