@@ -92,7 +92,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Echo
-        run: |
-          git checkout main
-          git merge stable
-          git push
+        run: git push origin main
