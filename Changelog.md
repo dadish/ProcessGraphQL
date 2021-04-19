@@ -1,3 +1,5 @@
+## [1.4.4](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.3...v1.4.4) (2021-04-16)
+
 ## [1.4.4-rc.5](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4-rc.4...v1.4.4-rc.5) (2021-04-19)
 
 
@@ -12,7 +14,6 @@
 
 * **todo:** remove extra empty line at the end ([7348abf](https://github.com/dadish-etudes/ProcessGraphQL/commit/7348abf138d1f42cf537537d64ddf347367c3404))
 
-## [1.4.4](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.3...v1.4.4) (2021-04-16)
 
 ## [1.4.4-rc.3](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4-rc.2...v1.4.4-rc.3) (2021-04-16)
 
