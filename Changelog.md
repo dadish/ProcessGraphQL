@@ -1,3 +1,12 @@
+## [1.4.5](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4...v1.4.5) (2021-04-19)
+
+
+### Bug Fixes
+
+* **infra:** another commit message body test ([608922b](https://github.com/dadish-etudes/ProcessGraphQL/commit/608922be74805aab0be070af22d09c412587f6a3))
+* **infra:** testing how the body of this commit will appear in... ([a11e4a7](https://github.com/dadish-etudes/ProcessGraphQL/commit/a11e4a721fc44919c5648b2df35e8df59832e8f9))
+* **todo:** remove extra empty line at the end ([7348abf](https://github.com/dadish-etudes/ProcessGraphQL/commit/7348abf138d1f42cf537537d64ddf347367c3404))
+
 ## [1.4.5-rc.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.5-rc.1...v1.4.5-rc.2) (2021-04-19)
 
 ## [1.4.5-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4...v1.4.5-rc.1) (2021-04-19)
