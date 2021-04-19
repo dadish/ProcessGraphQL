@@ -1,3 +1,10 @@
+## [1.4.4-rc.5](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4-rc.4...v1.4.4-rc.5) (2021-04-19)
+
+
+### Bug Fixes
+
+* **infra:** testing how the body of this commit will appear in... ([a11e4a7](https://github.com/dadish-etudes/ProcessGraphQL/commit/a11e4a721fc44919c5648b2df35e8df59832e8f9))
+
 ## [1.4.4-rc.4](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.4-rc.3...v1.4.4-rc.4) (2021-04-19)
 
 
