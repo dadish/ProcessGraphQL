@@ -88,9 +88,8 @@ jobs:
     needs: release
     if: github.ref == 'refs/heads/stable'
     steps:
-      - name: Update Main
-        uses: actions/checkout@v2
-        run: |
+      - uses: actions/checkout@v2
+      - run: |
           git fetch origin main
           git checkout main
           git merge stable
