@@ -52,36 +52,36 @@ jobs:
   #     - name: Test
   #       run: npm test
 
-  release:
-    runs-on: ubuntu-latest
-    # needs: test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # release:
+  #   runs-on: ubuntu-latest
+  #   # needs: test
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          check-latest: true
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: '14'
+  #         check-latest: true
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0'
-          tools: composer
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: '8.0'
+  #         tools: composer
 
-      - name: Dependencies
-        run: |
-          npm install
-          rm -rf vendor
-          composer install --no-dev
+  #     - name: Dependencies
+  #       run: |
+  #         npm install
+  #         rm -rf vendor
+  #         composer install --no-dev
 
-      - name: Release
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run release
+  #     - name: Release
+  #       env:
+  #         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  #       run: npm run release
 
   update-main:
     runs-on: ubuntu-latest
@@ -90,6 +90,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          git fetch
           git fetch origin main
           git checkout main
           git merge stable
