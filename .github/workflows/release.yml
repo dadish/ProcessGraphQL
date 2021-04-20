@@ -91,9 +91,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Echo
-        run: |
-          git fetch origin main:main
-          git checkout main
-          git merge stable
-          git push
+      - name: Merge Stable
+        uses: robotology/gh-action-nightly-merge@v1.3.1
+        with:
+          stable_branch: 'stable'
+          development_branch: 'main'
+          allow_ff: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
