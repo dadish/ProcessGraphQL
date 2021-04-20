@@ -92,7 +92,7 @@ jobs:
         with:
           fetch-depth: 10
       - run: |
-          git fetch origin main
+          git fetch origin main --depth=10
           git checkout main
           git merge stable
           git push origin main
