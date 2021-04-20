@@ -1,3 +1,15 @@
+## [1.4.11](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.10...v1.4.11) (2021-04-20)
+
+
+### Bug Fixes
+
+* **infra:** make release job dependant on tests ([a5ff95c](https://github.com/dadish-etudes/ProcessGraphQL/commit/a5ff95cd2bbb740a60d89ebd5a805f1b66dab50c))
+* **infra:** merge stable into main after a release ([ae6a083](https://github.com/dadish-etudes/ProcessGraphQL/commit/ae6a083371f9eaea262175367a90bd754f0d53e5))
+* **infra:** merge stable into main after a release ([78f37db](https://github.com/dadish-etudes/ProcessGraphQL/commit/78f37dbbb737f38e8cc7dd98d6b7fcc1a3b00838))
+* **infra:** merge stable into main after a release ([fe722f2](https://github.com/dadish-etudes/ProcessGraphQL/commit/fe722f2700caedd62ae66794e3a6243b89776ee8))
+* **infra:** merge stable into main after a release ([bbe2854](https://github.com/dadish-etudes/ProcessGraphQL/commit/bbe2854d9832df96c3d0b61abefb398975777975))
+* **infra:** merge stable into main after a release ([3b0da51](https://github.com/dadish-etudes/ProcessGraphQL/commit/3b0da5107cd6d4642726f24dedf290376fdca36f))
+
 ## [1.4.10](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.9...v1.4.10) (2021-04-20)
 
 
