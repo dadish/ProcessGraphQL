@@ -1,3 +1,10 @@
+## [1.4.12-rc.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.12-rc.1...v1.4.12-rc.2) (2021-04-20)
+
+
+### Bug Fixes
+
+* **release:** update the module version on release ([920d590](https://github.com/dadish-etudes/ProcessGraphQL/commit/920d590ef0ede21296598af7d4211675e69d43f9))
+
 ## [1.4.12-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.11...v1.4.12-rc.1) (2021-04-20)
 
 
