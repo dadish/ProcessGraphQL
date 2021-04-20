@@ -97,5 +97,6 @@ jobs:
           stable_branch: 'stable'
           development_branch: 'main'
           allow_ff: true
+          allow_forks: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
