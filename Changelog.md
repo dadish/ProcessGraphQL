@@ -1,3 +1,10 @@
+## [1.4.7](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.6...v1.4.7) (2021-04-20)
+
+
+### Bug Fixes
+
+* **infra:** sync the main branch with stable after release ([16bb58a](https://github.com/dadish-etudes/ProcessGraphQL/commit/16bb58a0e9b49ff859b41adc434df0f0a30b7dac))
+
 ## [1.4.6](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.5...v1.4.6) (2021-04-19)
 
 ## [1.4.6-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.5...v1.4.6-rc.1) (2021-04-19)
