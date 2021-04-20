@@ -59,7 +59,7 @@ async function release(releaseLevel) {
   // update the .module file version number.
   await updateFile(
     path.resolve(`${__dirname}/../ProcessGraphQL.module`),
-    /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/,
+    /\'version\' => \'\d+\.\d+\.\d+(-rc\.\d+)?\'/,
     `'version' => '${releaseLevel}'`,
     "Update version in ProcessGraphQL.module file."
   );
