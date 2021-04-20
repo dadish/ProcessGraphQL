@@ -89,8 +89,9 @@ jobs:
     if: github.ref == 'refs/heads/stable'
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 10
       - run: |
-          git fetch
           git fetch origin main
           git checkout main
           git merge stable
