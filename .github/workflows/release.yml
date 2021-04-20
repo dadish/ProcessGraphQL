@@ -88,15 +88,10 @@ jobs:
     needs: release
     if: github.ref == 'refs/heads/stable'
     steps:
-      - name: Checkout
+      - name: Update Main
         uses: actions/checkout@v2
-
-      - name: Merge Stable
-        uses: robotology/gh-action-nightly-merge@v1.3.1
-        with:
-          stable_branch: 'stable'
-          development_branch: 'main'
-          allow_ff: true
-          allow_forks: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git fetch origin main
+          git checkout main
+          git merge stable
+          git push origin main
