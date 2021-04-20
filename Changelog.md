@@ -1,3 +1,10 @@
+## [1.4.12-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.11...v1.4.12-rc.1) (2021-04-20)
+
+
+### Bug Fixes
+
+* **workflow:** set proper names to github jobs ([cd408a1](https://github.com/dadish-etudes/ProcessGraphQL/commit/cd408a13c7de83058960e953ce36c4feeb53cab3))
+
 ## [1.4.11](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.10...v1.4.11) (2021-04-20)
 
 
