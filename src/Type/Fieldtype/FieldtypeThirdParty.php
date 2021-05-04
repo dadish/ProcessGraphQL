@@ -10,7 +10,7 @@ class FieldtypeThirdParty
   public static function &type($field)
   {
     $thirdPartyClassName = self::getThirdPartyClassName($field);
-    $type =& Cache::type($thirdPartyClassName, function () use ($field, $thirdPartyClassName) {
+    $type =& Cache::type("type--{$field->name}", function () use ($field, $thirdPartyClassName) {
       return $thirdPartyClassName::getType($field);
     });
     return $type;
