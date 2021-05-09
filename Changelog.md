@@ -1,3 +1,10 @@
+# [1.5.0-rc.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.5.0-rc.1...v1.5.0-rc.2) (2021-05-09)
+
+
+### Bug Fixes
+
+* **release:** remove custom commit-analyzer rule ([cc64a4d](https://github.com/dadish-etudes/ProcessGraphQL/commit/cc64a4da62a774ca18c642f793fa7a5e0a7118e4))
+
 # [1.5.0-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.12-rc.2...v1.5.0-rc.1) (2021-05-09)
 
 
