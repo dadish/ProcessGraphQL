@@ -1,3 +1,10 @@
+# [1.5.0-rc.1](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.12-rc.2...v1.5.0-rc.1) (2021-05-09)
+
+
+### Features
+
+* **build:** test minor version bump ([ed7e35f](https://github.com/dadish-etudes/ProcessGraphQL/commit/ed7e35f0164861f8aec1aac18d0f9ee7737a33ff))
+
 ## [1.4.12-rc.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.4.12-rc.1...v1.4.12-rc.2) (2021-04-20)
 
 
