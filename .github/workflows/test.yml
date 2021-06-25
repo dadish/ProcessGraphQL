@@ -1,6 +1,7 @@
 name: Test
 on:
-  pull_request:
+  repository_dispatch:
+    types: ['test-main']
     branches:
       - main
 jobs:

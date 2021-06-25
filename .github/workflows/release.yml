@@ -1,9 +1,9 @@
 name: Release
 on:
-  push:
+  repository_dispatch:
+    types: ['release-main']
     branches:
-      - main
-      - stable
+     - main
 jobs:
   test:
     name: Test
