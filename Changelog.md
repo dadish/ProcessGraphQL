@@ -1,3 +1,11 @@
+# [1.5.0-rc.3](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.5.0-rc.2...v1.5.0-rc.3) (2021-06-27)
+
+
+### Bug Fixes
+
+* **ci:** fix release workflo ([8d525cb](https://github.com/dadish-etudes/ProcessGraphQL/commit/8d525cb2913e0b0ec73bd9a97c759ede64356a09))
+* **infra:** run release when test workflow finishes ([fc16ee0](https://github.com/dadish-etudes/ProcessGraphQL/commit/fc16ee08ebe8cdb333d12d0e552b84f5a5510e3a))
+
 # [1.5.0-rc.2](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.5.0-rc.1...v1.5.0-rc.2) (2021-05-09)
 
 
