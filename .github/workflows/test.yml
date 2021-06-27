@@ -1,9 +1,12 @@
 name: Test
 on:
-  repository_dispatch:
-    types: ['test-main']
+  pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
+      - stable
 jobs:
   test:
     runs-on: ubuntu-latest
