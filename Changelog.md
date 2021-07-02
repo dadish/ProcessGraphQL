@@ -1,3 +1,10 @@
+# [1.5.0-rc.4](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.5.0-rc.3...v1.5.0-rc.4) (2021-07-02)
+
+
+### Bug Fixes
+
+* **ci:** use custom docker image for release run ([c67a34b](https://github.com/dadish-etudes/ProcessGraphQL/commit/c67a34b64fd7e9321316ecb7e30ba758dbc903d9))
+
 # [1.5.0-rc.3](https://github.com/dadish-etudes/ProcessGraphQL/compare/v1.5.0-rc.2...v1.5.0-rc.3) (2021-06-27)
 
 
