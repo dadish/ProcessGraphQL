@@ -1,95 +1,65 @@
+const fs = require("fs");
+const process = require("process");
+const archiver = require("archiver");
 const path = require("path");
-const {
-  extraneousFiles,
-  vendorExtraneousFiles,
-  execute,
-  updateFile,
-} = require("./commons");
+const { releaseDirectories, releaseFiles, updateFile } = require("./commons");
+
+const tarballReleaseFiles = () =>
+  new Promise((resolve, reject) => {
+    // create a file to stream archive data to.
+    const zipFilename = `${process.cwd()}/ProcessGraphQL.zip`;
+    const output = fs.createWriteStream(zipFilename);
+    const archive = archiver("zip", {
+      zlib: { level: 9 }, // Sets the compression level.
+    });
+
+    // This event is fired when the data source is drained no matter what was the data source.
+    // It is not part of this library but rather from the NodeJS Stream API.
+    // @see: https://nodejs.org/api/stream.html#stream_event_end
+    output.on("end", function () {
+      resolve();
+    });
+
+    // good practice to catch warnings (ie stat failures and other non-blocking errors)
+    archive.on("warning", function (err) {
+      reject(err);
+    });
+
+    // good practice to catch this error explicitly
+    archive.on("error", function (err) {
+      reject(err);
+    });
+
+    // pipe archive data to the file
+    archive.pipe(output);
+
+    // add all the directories
+    releaseDirectories.forEach((dirname) => {
+      const source = `${process.cwd()}/${dirname}`;
+      archive.directory(source, dirname);
+    });
+
+    // add all the files
+    releaseFiles.forEach((name) => {
+      const source = `${process.cwd()}/${name}`;
+      archive.file(source, { name });
+    });
+
+    // finalize the archive (ie we are done appending files but streams have to finish yet)
+    // 'close', 'end' or 'finish' may be fired right after calling this method so register to them beforehand
+    archive.finalize();
+  });
 
 async function release(releaseLevel) {
-  // create the release branch
-  await execute("git", ["branch", "release"], "Creating the release branch");
-
-  // switch to the release branch
-  await execute(
-    "git",
-    ["checkout", "release"],
-    "Switching to the release branch"
-  );
-
-  // remove all php vendor code except the required for production
-  await execute("rm", ["-rf", "vendor"], "Removing extraneous files");
-  await execute(
-    "composer",
-    ["install", "--no-dev"],
-    "Installing php dependencies (--no-dev)"
-  );
-
-  // remove the rest of the files that we don't need in the production code
-  await execute("rm", ["-rf", ...extraneousFiles], "Removing extraneous files");
-
-  // remove verdor's files that we don't use in production code
-  await execute(
-    "rm",
-    ["-rf", ...vendorExtraneousFiles],
-    "Removing extraneous files from graphql-php"
-  );
-
   // update the .module file version number.
   await updateFile(
     path.resolve(`${__dirname}/../ProcessGraphQL.module`),
-    /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/,
+    /\'version\' => \'\d+\.\d+\.\d+(-rc\.\d+)?\'/,
     `'version' => '${releaseLevel}'`,
     "Update version in ProcessGraphQL.module file."
   );
 
-  // add changes to git stage
-  await execute("git", ["add", "."], "");
-
-  // commit whatever on git stage
-  await execute("git", [
-    "commit",
-    "-m",
-    "Remove extraneous files for release.",
-  ]);
-
-  // version tag
-  await execute("git", ["tag", `v${releaseLevel}`], "Tagging the release.");
-
-  // switch back to main
-  await execute("git", ["checkout", "main"], "Switching back to main branch.");
-
-  // delete the release branch
-  await execute(
-    "git",
-    ["branch", "-D", "release"],
-    "Deleting the release branch"
-  );
-
-  // install all deps back
-  await execute("npm", ["install"], "Install all vendor deps back.");
-
-  // update package.json version
-  await execute(
-    "npm",
-    ["version", releaseLevel, "--no-git-tag-version"],
-    "Incrementing the package version on the main branch"
-  );
-
-  // update the .module file version number on main branch
-  await updateFile(
-    path.resolve(__dirname + "/../ProcessGraphQL.module"),
-    /\'version\' => \'\d+\.\d+\.\d+(-rc\d+)?\'/,
-    `'version' => '${releaseLevel}'`,
-    "Update version in ProcessGraphQL.module file."
-  );
-
-  // commit version update
-  await execute(
-    "git",
-    ["commit", "--all", "-m", releaseLevel],
-    "Committing package version update on main branch."
-  );
+  await tarballReleaseFiles();
 }
 
 const releaseLevel = process.argv[2];

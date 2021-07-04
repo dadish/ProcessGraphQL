@@ -1,0 +1,106 @@
+version: 2.1
+workflows:
+  version: 2
+  release-main:
+    jobs:
+      - test:
+          name: Test php:7.2, phpunit:7.5, mysql:5.7.34
+          context:
+            - dockerhub-credentials
+          php: "7.2"
+          phpunit: "7.5"
+          mysql: "5.7.34"
+
+      - test:
+          name: Test php:8.0, phpunit:9.5, mysql:8.0.23
+          context:
+            - dockerhub-credentials
+          php: "8.0"
+          phpunit: "9.5"
+          mysql: "8.0.25"
+
+      - release:
+          name: Release
+          type: approval
+          context:
+            - dockerhub-credentials
+            - github-credentials
+            - npm-credentials
+          requires:
+            - Test php:7.2, phpunit:7.5, mysql:5.7.34
+            - Test php:8.0, phpunit:9.5, mysql:8.0.23
+          filters:
+            branches:
+              only: main
+
+jobs:
+  test:
+    parameters:
+      php:
+        description: The PHP version
+        type: string
+      mysql:
+        description: The MySQL version
+        type: string
+      phpunit:
+        description: The phpunit version
+        type: string
+    docker:
+      - image: cimg/php:<<parameters.php>>
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+      - image: mysql:<<parameters.mysql>>
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: processgraphql
+          MYSQL_USER: processgraphql
+          MYSQL_PASSWORD: processgraphql
+    steps:
+      - checkout
+
+      - run:
+          name: Install Dependencies
+          command: |
+            rm composer.lock
+            composer require phpunit/phpunit ^<<parameters.phpunit>> --dev
+            composer update --with-all-dependencies
+            composer install
+
+      # Our primary container isn't MYSQL so run a sleep command until it's ready.
+      - run:
+          name: Waiting for MySQL
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+
+      - run:
+          name: Run Tests
+          command: |
+            composer exec -v "phpunit --bootstrap test/bootstrap.php --exclude-group performance test"
+
+  release:
+    docker:
+      - image: dadish/processgraphql-primary:0.4.1
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            npm install
+            rm -rf vendor
+            composer install --no-dev
+      - run:
+          name: Release
+          command: npm run release

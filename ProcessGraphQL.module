@@ -15,13 +15,13 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '1.3.0',
+			'version' => '1.5.0-rc.4',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
 			'autoload' => 'process=ProcessTemplate',
 			'icon' => 'object-group',
-      'requires' => array("PHP>=7.1", "ProcessWire>=3.0.62"),
+      'requires' => array("PHP>=7.2", "ProcessWire>=3.0.62"),
 			);
 	}
 
@@ -40,7 +40,7 @@ class ProcessGraphQL extends Process implements Module {
    * Custom types could be added bu just appending them into an array.
    * See the documentation of the library used by this module to learn more
    * @see  The GraphQL lib https://github.com/webonyx/graphql-php
-   * @param  $schema    
+   * @param  $schema
    * @return $schema
    */
 	public function ___modifySchema($schema) {
@@ -212,7 +212,7 @@ class ProcessGraphQL extends Process implements Module {
 	 * Custom fields could be added bu just appending them into an array.
    * See the documentation of the library used by this module to learn more
    * @see  The GraphQL lib https://github.com/webonyx/graphql-php
-   * @param  $queryFields    
+   * @param  $queryFields
    * @return $queryFields
    */
   public function ___getQueryFields($queryFields)
