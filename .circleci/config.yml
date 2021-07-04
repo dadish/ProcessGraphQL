@@ -21,6 +21,7 @@ workflows:
 
       - release:
           name: Release
+          type: approval
           context:
             - dockerhub-credentials
             - github-credentials
