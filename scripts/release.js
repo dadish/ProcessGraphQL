@@ -2,12 +2,7 @@ const fs = require("fs");
 const process = require("process");
 const archiver = require("archiver");
 const path = require("path");
-const {
-  releaseDirectories,
-  releaseFiles,
-  execute,
-  updateFile,
-} = require("./commons");
+const { releaseDirectories, releaseFiles, updateFile } = require("./commons");
 
 const tarballReleaseFiles = () =>
   new Promise((resolve, reject) => {
