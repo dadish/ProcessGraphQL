@@ -28,6 +28,9 @@ workflows:
           requires:
             - Test php:7.2, phpunit:7.5, mysql:5.7.34
             - Test php:8.0, phpunit:9.5, mysql:8.0.23
+          filters:
+            branches:
+              only: main
 
 jobs:
   test:
