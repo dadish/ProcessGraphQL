@@ -143,4 +143,4 @@ jobs:
             git checkout main
             git pull origin main
             git merge stable
-            git push -q https://${GH_TOKEN}@github.com/dadish-etudes/processgraphql.git main
+            git push -q https://${GH_TOKEN}@github.com/dadish/processgraphql.git main
