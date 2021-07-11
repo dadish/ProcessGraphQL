@@ -1,10 +1,18 @@
 version: 2.1
+
+.release_branches: &release_branches
+  filters:
+    branches:
+      only:
+        - main
+        - stable
+
 workflows:
   version: 2
-  release-main:
+  main:
     jobs:
       - test:
-          name: Test php:7.2, phpunit:7.5, mysql:5.7.34
+          name: test-php-7.2
           context:
             - dockerhub-credentials
           php: "7.2"
@@ -12,26 +20,44 @@ workflows:
           mysql: "5.7.34"
 
       - test:
-          name: Test php:8.0, phpunit:9.5, mysql:8.0.23
+          name: test-php-8.0
           context:
             - dockerhub-credentials
           php: "8.0"
           phpunit: "9.5"
           mysql: "8.0.25"
 
-      - release:
-          name: Release
+      - approve_release:
+          name: approve-release
+          <<: *release_branches
           type: approval
+          requires:
+            - test-php-7.2
+            - test-php-8.0
+
+      - release:
+          name: release
+          <<: *release_branches
           context:
             - dockerhub-credentials
             - github-credentials
             - npm-credentials
           requires:
-            - Test php:7.2, phpunit:7.5, mysql:5.7.34
-            - Test php:8.0, phpunit:9.5, mysql:8.0.23
+            - approve-release
+
+      - sync-main-branch:
+          name: sync-main-branch
+          context:
+            - github-credentials
           filters:
             branches:
-              only: main
+              only:
+                - stable
+          requires:
+            - release
+
+
+
 
 jobs:
   test:
@@ -104,3 +130,17 @@ jobs:
       - run:
           name: Release
           command: npm run release
+
+  sync-main-branch:
+    docker:
+      - image: cimg/base:2021.07
+    steps:
+      - checkout
+      - run:
+          name: Merge stabe to main
+          command: |
+            git pull origin stable
+            git checkout main
+            git pull origin main
+            git merge stable
+            git push -q https://${GH_TOKEN}@github.com/dadish-etudes/processgraphql.git main
