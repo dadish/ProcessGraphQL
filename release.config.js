@@ -36,4 +36,5 @@ module.exports = {
       },
     ],
   ],
+  dryRun: true
 };
