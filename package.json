@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dadish-etudes/ProcessGraphQL.git"
+    "url": "git+https://github.com/dadish/ProcessGraphQL.git"
   },
   "keywords": [
     "GraphQL",
@@ -32,9 +32,9 @@
   "author": "Nurguly Ashyrov <nurguly.ashyorov@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dadish-etudes/ProcessGraphQL/issues"
+    "url": "https://github.com/dadish/ProcessGraphQL/issues"
   },
-  "homepage": "https://github.com/dadish-etudes/ProcessGraphQL#readme",
+  "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
   "devDependencies": {
     "@prettier/plugin-php": "^0.16.1",
     "@semantic-release/changelog": "^5.0.1",
