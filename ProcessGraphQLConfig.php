@@ -45,6 +45,7 @@ class ProcessGraphQLConfig extends Moduleconfig {
         'name',
         'httpUrl',
         'template',
+        'references',
         ],
 
       /**
@@ -113,12 +114,12 @@ class ProcessGraphQLConfig extends Moduleconfig {
       $this->files->copy($from, $to);
       $this->message(sprintf($this->_('Created template files: %s'), 'graphql.php & graphiql.php'));
     } catch(\Exception $e) {
-      $this->error($e->getMessage()); 
+      $this->error($e->getMessage());
     }
-    
+
     foreach($pageNames as $name => $title) {
 
-      // create the templates  
+      // create the templates
       try {
         $template = $this->wire(new Template());
         $template->name = $name;
@@ -131,10 +132,10 @@ class ProcessGraphQLConfig extends Moduleconfig {
         $template->noAppendTemplateFile = true;
         $template->noPrependTemplateFile = true;
         $template->save();
-        $this->message(sprintf($this->_('Added template and fieldgroup: %s'), $name)); 
+        $this->message(sprintf($this->_('Added template and fieldgroup: %s'), $name));
       } catch(\Exception $e) {
-        $this->error($e->getMessage()); 
-        continue; 
+        $this->error($e->getMessage());
+        continue;
       }
 
       // create the pages
@@ -145,10 +146,10 @@ class ProcessGraphQLConfig extends Moduleconfig {
         $p->parent = $this->pages->get(1); // root page
         $p->title = $title;
         $p->save();
-        $this->message(sprintf($this->_('Created page: %s'), $name)); 
+        $this->message(sprintf($this->_('Created page: %s'), $name));
       } catch(\Exception $e) {
-        $this->error($e->getMessage()); 
-        continue; 
+        $this->error($e->getMessage());
+        continue;
       }
     }
   }
