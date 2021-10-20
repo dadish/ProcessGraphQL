@@ -36,7 +36,9 @@ See more [demo here](https://github.com/dadish/ProcessGraphQL/blob/main/ScreenCa
 
 ## Installation
 
-To install the module, go to __Modules -> Install -> Add New__. Scroll down to get to the section __Add Module from URL__. Paste the URL of the [latest release][latest-release] into the __Module ZIP file URL__ field and press __Download__.
+To install the module, go to __Modules -> Install -> Add New__. Scroll down to get to the section __Add Module from URL__. Paste the URL of the zip file of this module into the __Module ZIP file URL__ field and press __Download__. You can find the zip file of the module in the [latest release][latest-release] page. Be sure to choose the one that says `ProcessWire Module (zip)`.
+
+[!ProcessWire Module (zip)][img-assets]
 
 ProcessWire will download this module and place it at `/site/modules/` directory for you. After you did that, you should see __GraphQL__ module among others. Go ahead and press __Install__ button next to it.
 
@@ -292,6 +294,7 @@ then it is probably because ProcessGraphQL is not receiving your query. The reas
 [img-filtering]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Filtering.gif
 [img-fieldtypes]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Fieldtypes.gif
 [img-documentation]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/ProcessGraphQL-Documentation.gif
+[img-assets]: https://raw.githubusercontent.com/dadish/ProcessGraphQL/main/imgs/module-files.png
 [latest-release]: https://github.com/dadish/ProcessGraphQL/releases/latest
 [map-marker-graphql]: https://github.com/dadish/GraphQLFieldtypeMapMarker
 [webonyx-graphql]: https://github.com/webonyx/graphql-php
