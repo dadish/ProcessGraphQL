@@ -20,11 +20,11 @@ workflows:
           mysql: "5.7.34"
 
       - test:
-          name: test-php-8.0
+          name: test-php-8.1
           context:
             - dockerhub-credentials
-          php: "8.0"
-          phpunit: "9.5"
+          php: "8.1"
+          phpunit: "9.5.10"
           mysql: "8.0.25"
 
       - approve_release:
@@ -33,7 +33,7 @@ workflows:
           type: approval
           requires:
             - test-php-7.2
-            - test-php-8.0
+            - test-php-8.1
 
       - release:
           name: release
