@@ -14,12 +14,23 @@
     "webonyx/graphql-php": "^14.11.3"
   },
   "require-dev": {
-    "processwire/processwire": "3.0.184",
+    "processwire/processwire": ">=3.0.200",
     "ryancramerdesign/fieldtypemapmarker": "1.0.0",
     "dadish/graphqlfieldtypemapmarker": "2.0.0",
     "phpunit/phpunit": "9.5.10"
   },
   "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "processwire/processwire",
+        "version": "3.0.200",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/processwire/processwire/archive/dev.zip"
+        }
+      }
+    },
     {
       "type": "package",
       "package": {
