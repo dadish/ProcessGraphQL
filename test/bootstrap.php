@@ -9,7 +9,7 @@ ini_set('memory_limit', '512M');
 // paths
 $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
-$siteDir = realpath($pwDir . "/site-default/");
+$siteDir = realpath($pwDir . "/site-blank/");
 $moduleDir = $siteDir . "/modules/ProcessGraphQL";
 $testFilesDir = realpath($baseDir . "/test/files");
 $siteFilesDir = $siteDir . "/assets/files";
@@ -23,7 +23,7 @@ if (file_exists($installFile)) {
 	unlink($installFile);
 }
 
-// overwrite site-default's config.php with our own custom one
+// overwrite site-blank's config.php with our own custom one
 copy(__DIR__ . "/site/config.php", $siteDir . "/config.php");
 
 // symlink site/classes directory
@@ -70,7 +70,7 @@ if (!file_exists($siteFilesDir)) {
 use ProcessWire\ProcessWire;
 
 $config = ProcessWire::buildConfig($pwDir, null, [
-  "siteDir" => "site-default"
+  "siteDir" => "site-blank"
 ]);
 
 require_once realpath(__DIR__ . "/databaseReset.php");
