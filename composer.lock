@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2589d065b559262e5ef7e443be898079",
+    "content-hash": "f8e4017c95838fc70c044b708389311a",
     "packages": [
         {
             "name": "webonyx/graphql-php",
@@ -1029,12 +1029,52 @@
         },
         {
             "name": "processwire/processwire",
-            "version": "3.0.200",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/processwire/processwire.git",
+                "reference": "af950078ed001757fab7ab1ab801f7a0d26d2153"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/processwire/processwire/archive/dev.zip"
+                "url": "https://api.github.com/repos/processwire/processwire/zipball/af950078ed001757fab7ab1ab801f7a0d26d2153",
+                "reference": "af950078ed001757fab7ab1ab801f7a0d26d2153",
+                "shasum": ""
             },
-            "type": "library"
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "wire/core/ProcessWire.php"
+                ]
+            },
+            "license": [
+                "MPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Cramer",
+                    "email": "ryan@processwire.com",
+                    "homepage": "https://processwire.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ProcessWire CMS/CMF",
+            "homepage": "https://processwire.com",
+            "keywords": [
+                "cmf",
+                "cms",
+                "content management system",
+                "processwire"
+            ],
+            "support": {
+                "source": "https://github.com/processwire/processwire/tree/dev",
+                "issues": "https://github.com/processwire/processwire/issues"
+            },
+            "time": "2022-06-24T17:32:16+00:00"
         },
         {
             "name": "ryancramerdesign/fieldtypemapmarker",
@@ -2120,7 +2160,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "processwire/processwire": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
