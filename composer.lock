@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8e4017c95838fc70c044b708389311a",
+    "content-hash": "4f632246ee92e3ad5f9f5973d30682c0",
     "packages": [
         {
             "name": "webonyx/graphql-php",
@@ -1075,6 +1075,15 @@
                 "issues": "https://github.com/processwire/processwire/issues"
             },
             "time": "2022-06-24T17:32:16+00:00"
+        },
+        {
+            "name": "processwire/site-default",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/processwire/site-default/archive/master.zip"
+            },
+            "type": "library"
         },
         {
             "name": "ryancramerdesign/fieldtypemapmarker",

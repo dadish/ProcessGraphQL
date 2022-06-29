@@ -9,7 +9,7 @@ ini_set('memory_limit', '512M');
 // paths
 $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
-$siteDir = realpath($pwDir . "/site-blank/");
+$siteDir = realpath($baseDir . "/vendor/processwire/site-default/");
 $moduleDir = $siteDir . "/modules/ProcessGraphQL";
 $testFilesDir = realpath($baseDir . "/test/files");
 $siteFilesDir = $siteDir . "/assets/files";
@@ -23,7 +23,7 @@ if (file_exists($installFile)) {
 	unlink($installFile);
 }
 
-// overwrite site-blank's config.php with our own custom one
+// overwrite site-defaults's config.php with our own custom one
 copy(__DIR__ . "/site/config.php", $siteDir . "/config.php");
 
 // symlink site/classes directory
@@ -62,6 +62,13 @@ if (!file_exists($mapMarkerGraphQLDestDir)) {
 	\symlink($mapMarkerGraphQLDir, $mapMarkerGraphQLDestDir);
 }
 
+// symlink the site-default to vendor/processwire/processwire/site
+// so it is next to wire directory.
+$siteDirDest = $pwDir . "/site";
+if (!file_exists($siteDirDest)) {
+	\symlink($siteDir, $siteDirDest);
+}
+
 // symlink skyscrapers pages files to site's asset files
 if (!file_exists($siteFilesDir)) {
 	\symlink($testFilesDir, $siteFilesDir);
@@ -69,9 +76,7 @@ if (!file_exists($siteFilesDir)) {
 
 use ProcessWire\ProcessWire;
 
-$config = ProcessWire::buildConfig($pwDir, null, [
-  "siteDir" => "site-blank"
-]);
+$config = ProcessWire::buildConfig($pwDir);
 
 require_once realpath(__DIR__ . "/databaseReset.php");
 
