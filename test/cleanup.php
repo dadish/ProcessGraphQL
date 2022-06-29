@@ -8,9 +8,7 @@ require_once $baseDir . "/vendor/autoload.php";
 
 use ProcessWire\ProcessWire;
 
-$config = ProcessWire::buildConfig($pwDir, null, [
-  "siteDir" => "site-default"
-]);
+$config = ProcessWire::buildConfig($pwDir);
 
 require_once realpath(__DIR__ . "/databaseReset.php");
 
