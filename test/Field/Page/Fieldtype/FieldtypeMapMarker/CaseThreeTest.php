@@ -8,7 +8,6 @@
 namespace ProcessWire\GraphQL\Test\FieldtypeMapMarker;
 
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
-use ProcessWire\GraphQL\Test\Field\Page\Fieldtype\Traits\FieldtypeTestTrait;
 use ProcessWire\GraphQL\Utils;
 
 class CaseThreeTest extends GraphQLTestCase
@@ -37,7 +36,6 @@ class CaseThreeTest extends GraphQLTestCase
     $lng = -0.098562;
     $address = "23576 Broadway, Chicago";
     $zoom = 3;
-    $name = "updated-building-with-location";
     $variables = [
       "page" => [
         "id" => $skyscraper->id,
@@ -50,30 +48,29 @@ class CaseThreeTest extends GraphQLTestCase
       ],
     ];
     $res = self::execute($query, $variables);
-    $expectedMap = $skyscraper->map;
-    $actualMap = $res->data->skyscraper->map;
+    $actualMap = Utils::pages()->get($skyscraper->id)->map;
     self::assertEquals(
       $skyscraper->id,
       $res->data->skyscraper->id,
       "Updates the correct page."
     );
     self::assertEquals(
-      $expectedMap->lat,
+      $lat,
       $actualMap->lat,
       "Updates lat correctly."
     );
     self::assertEquals(
-      $expectedMap->lng,
+      $lng,
       $actualMap->lng,
       "Updates lng correctly."
     );
     self::assertEquals(
-      $expectedMap->address,
+      $address,
       $actualMap->address,
       "Updates address correctly."
     );
     self::assertEquals(
-      $expectedMap->zoom,
+      $zoom,
       $actualMap->zoom,
       "Updates zoom correctly."
     );
