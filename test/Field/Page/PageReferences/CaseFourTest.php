@@ -11,7 +11,7 @@ namespace ProcessWire\GraphQL\Test\FieldtypePageReferences;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Test\GraphQLTestCase;
 
-class CaseThreeTest extends GraphQLTestCase
+class CaseFourTest extends GraphQLTestCase
 {
   public static function getSettings()
   {
@@ -26,6 +26,10 @@ class CaseThreeTest extends GraphQLTestCase
         "templates" => [
           [
             "name" => "architect",
+            "roles" => [$editorRole->id],
+          ],
+          [
+            "name" => "skyscraper",
             "roles" => [$editorRole->id],
           ],
         ],
@@ -49,15 +53,20 @@ class CaseThreeTest extends GraphQLTestCase
   		}
   	}";
     $res = self::execute($query);
-    self::assertNotEquals(
-      count($architect->references()),
-      count($res->data->architect->list[0]->references->list),
-      "Returned number of reference pages is not the same as the actual number of reference pages."
+    self::assertEquals(
+      $architect->references()[0]->name,
+      $res->data->architect->list[0]->references->list[0]->name,
+      "Retrieves correct reference page at 0."
     );
     self::assertEquals(
-      0,
-      count($res->data->architect->list[0]->references->list),
-      "Returns empty list when user has no access to referenced pages template."
+      $architect->references()[1]->name,
+      $res->data->architect->list[0]->references->list[1]->name,
+      "Retrieves correct reference page at 1."
+    );
+    self::assertEquals(
+      $architect->references->count,
+      $res->data->architect->list[0]->references->getTotal,
+      "Retrieves correct amount of reference pages."
     );
     self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
   }
