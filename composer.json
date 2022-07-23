@@ -16,7 +16,7 @@
   "require-dev": {
     "processwire/processwire": "dev-dev",
     "processwire/site-default": "1.0.0",
-    "ryancramerdesign/fieldtypemapmarker": "1.0.0",
+    "ryancramerdesign/fieldtypemapmarker": "2.0.9",
     "dadish/graphqlfieldtypemapmarker": "2.0.0",
     "phpunit/phpunit": "9.5.10"
   },
@@ -32,7 +32,7 @@
         "version": "1.0.0",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/processwire/site-default/archive/master.zip"
+          "url": "https://github.com/processwire/site-default/archive/9e2b5e3e38f2392b6c3065680d1f47bad1f46171.zip"
         }
       }
     },
@@ -40,10 +40,10 @@
       "type": "package",
       "package": {
         "name": "ryancramerdesign/fieldtypemapmarker",
-        "version": "1.0.0",
+        "version": "2.0.9",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/ryancramerdesign/fieldtypemapmarker/archive/master.zip"
+          "url": "https://github.com/ryancramerdesign/fieldtypemapmarker/archive/917edef8efe92bf8bdbdff62b66f6eca581ca57e.zip"
         }
       }
     },
@@ -54,7 +54,7 @@
         "version": "2.0.0",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/dadish/graphqlfieldtypemapmarker/archive/master.zip"
+          "url": "https://github.com/dadish/GraphQLFieldtypeMapMarker/archive/9bdf8aa9dadddf3aa63bb9982f971cda1d515e22.zip"
         }
       }
     }
