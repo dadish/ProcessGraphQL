@@ -9,3 +9,4 @@ coverage
 *.new/*
 
 ProcessGraphQL.zip
+.DS_Store
