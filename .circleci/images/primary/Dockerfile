@@ -18,6 +18,7 @@ RUN apk add \
   php7-mysqli \
   php7-xmlwriter \
   php7-xml \
+  php7-ctype \
   composer
 
 ENTRYPOINT ["echo", "Started!"]
