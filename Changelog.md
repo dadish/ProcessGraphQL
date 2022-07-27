@@ -1,3 +1,24 @@
+# [1.4.0-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2022-07-27)
+
+
+### Bug Fixes
+
+* **ci:** add php ctype extension ([6051409](https://github.com/dadish/ProcessGraphQL/commit/6051409903c81096313cde3b64531d10cc2910d1))
+* **composer:** update the composer.lock file. ([b006710](https://github.com/dadish/ProcessGraphQL/commit/b006710ddd25ca22af97c4239b51529baa38727c))
+* **deps:** perform tests on a site-blank profile instead of site-default ([8eb1f84](https://github.com/dadish/ProcessGraphQL/commit/8eb1f84ee3a60aa6f8c8bac011ea4cab791c81de))
+* **deps:** update ci run for php 8 ([b49f7e0](https://github.com/dadish/ProcessGraphQL/commit/b49f7e0b6d5551b07217cd9e3cfece9ab9199b6b))
+* **deps:** update php dependencies to work with php 8.1 ([96465c3](https://github.com/dadish/ProcessGraphQL/commit/96465c36ad7e58e6dd6f4980b391fc12a3963ecc))
+* **deps:** upgrade processwire/processwire to version 3.0.184 ([f44209c](https://github.com/dadish/ProcessGraphQL/commit/f44209cdd0afb8c4f783ad527b15a060e2cc691c))
+* **deps:** upgrade processwire/processwire to version 3.0.200 ([6ca94ad](https://github.com/dadish/ProcessGraphQL/commit/6ca94ad9febc46303fd28ee24b0af5d7e2bf7cdc))
+* **deps:** use processwire/processwire as a "vcs" repository. ([caf27b3](https://github.com/dadish/ProcessGraphQL/commit/caf27b3061b8c9010e112b8202aa46bdcf424c6e))
+* **deps:** use site-default for testing instead of site-blank ([a00703e](https://github.com/dadish/ProcessGraphQL/commit/a00703eb45ef490af74be8a391a2de8965cf2eae))
+* **third-party-fieldtype:** allow multiple types to be created by third-party fieldtypes ([2146054](https://github.com/dadish/ProcessGraphQL/commit/2146054f942a784b07d843959d01109e6dd96862))
+
+
+### Features
+
+* **deps:** upgrade php dependencies ([530a72e](https://github.com/dadish/ProcessGraphQL/commit/530a72e349d7a262d26af9452f5681fa36ee5d33))
+
 # [1.4.0-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.3.2...v1.4.0-rc.1) (2021-07-17)
 
 
