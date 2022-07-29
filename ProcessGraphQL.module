@@ -15,7 +15,7 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '1.4.0-rc.2',
+			'version' => '1.4.0-rc.3',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
@@ -128,12 +128,10 @@ class ProcessGraphQL extends Process implements Module {
    */
 	public function setupGraphiQLAssets()
 	{
-		$this->config->scripts->add("https://unpkg.com/es6-promise@4.2.8/dist/es6-promise.auto.min.js");
-		$this->config->scripts->add("https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js");
-		$this->config->scripts->add("https://unpkg.com/react@16.12.0/umd/react.production.min.js");
-		$this->config->scripts->add("https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js");
-		$this->config->scripts->add('https://unpkg.com/graphiql@0.14.2/graphiql.min.js');
-		$this->config->styles->add('https://unpkg.com/graphiql@0.14.2/graphiql.css');
+		$this->config->scripts->add("https://unpkg.com/react@18.2.0/umd/react.production.min.js");
+		$this->config->scripts->add("https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js");
+		$this->config->scripts->add('https://unpkg.com/graphiql@1.10.0/graphiql.min.js');
+		$this->config->styles->add('https://unpkg.com/graphiql@1.10.0/graphiql.css');
 		$this->config->js($this->className, [
 			'GraphQLServerUrl' => $this->getGraphQLServerUrl(),
 		]);

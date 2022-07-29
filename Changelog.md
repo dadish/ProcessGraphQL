@@ -1,3 +1,10 @@
+# [1.4.0-rc.3](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0-rc.2...v1.4.0-rc.3) (2022-07-29)
+
+
+### Features
+
+* **graphiql:** add support for request headers ([c0fb4be](https://github.com/dadish/ProcessGraphQL/commit/c0fb4beece26453d46f782fc95df1fa29b476051))
+
 # [1.4.0-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0-rc.1...v1.4.0-rc.2) (2022-07-27)
 
 
