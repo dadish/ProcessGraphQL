@@ -8,9 +8,7 @@ require_once $baseDir . "/vendor/autoload.php";
 
 use ProcessWire\ProcessWire;
 
-$wireConfig = ProcessWire::buildConfig($pwDir, null, [
-"siteDir" => "site-default"
-]);
+$wireConfig = ProcessWire::buildConfig($pwDir);
 $wire = new ProcessWire($wireConfig);
 
 // =====================
@@ -18,16 +16,9 @@ $wire = new ProcessWire($wireConfig);
 // =====================
 $config = $wire->fuel('config');
 
-$config->js('ProcessGraphQL', [
-  'GraphQLServerUrl' => 'http://127.0.0.1:8091',
-]);
-
-$config->scripts->add("https://unpkg.com/es6-promise@4.2.8/dist/es6-promise.auto.min.js");
-$config->scripts->add("https://unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js");
-$config->scripts->add("https://unpkg.com/react@16.12.0/umd/react.production.min.js");
-$config->scripts->add("https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js");
-$config->scripts->add('https://unpkg.com/graphiql@0.14.2/graphiql.min.js');
-$config->styles->add('https://unpkg.com/graphiql@0.14.2/graphiql.css');
+$graphql = $wire->fuel('modules')->get('ProcessGraphQL');
+$graphql->GraphQLServerUrl = 'http://127.0.0.1:8091';
+$graphql->setupGraphiQLAssets();
 
 $filename = realpath($baseDir . $_SERVER['SCRIPT_NAME']);
 if ($filename === $baseDir) {

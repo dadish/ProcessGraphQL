@@ -11,9 +11,7 @@ require_once $baseDir . "/vendor/autoload.php";
 
 use ProcessWire\ProcessWire;
 
-$wireConfig = ProcessWire::buildConfig($pwDir, null, [
-"siteDir" => "site-default"
-]);
+$wireConfig = ProcessWire::buildConfig($pwDir);
 $wire = new ProcessWire($wireConfig);
 $modules = $wire->fuel('modules');
 
