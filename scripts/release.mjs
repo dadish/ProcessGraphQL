@@ -1,8 +1,8 @@
-const fs = require("fs");
-const process = require("process");
-const archiver = require("archiver");
-const path = require("path");
-const { releaseDirectories, releaseFiles, updateFile } = require("./commons");
+import fs from "fs";
+import process from "process";
+import archiver from "archiver";
+import path from "path";
+import { releaseDirectories, releaseFiles, updateFile } from "./commons.mjs";
 
 const tarballReleaseFiles = () =>
   new Promise((resolve, reject) => {

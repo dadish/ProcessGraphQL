@@ -1,14 +1,14 @@
-const execa = require("execa");
-const fs = require("fs-extra");
+import { execa } from "execa";
+import * as fs from "fs-extra";
 
-const releaseDirectories = [
+export const releaseDirectories = [
   "graphiql",
   "src",
   "templates",
   "vendor/webonyx/graphql-php/src",
 ];
 
-const releaseFiles = [
+export const releaseFiles = [
   "vendor/webonyx/graphql-php/composer.json",
   "vendor/webonyx/graphql-php/LICENSE",
   "vendor/webonyx/graphql-php/README.md",
@@ -21,7 +21,7 @@ const releaseFiles = [
   "Readme.md",
 ];
 
-async function updateFile(filename, matcher, replaceStr, message) {
+export async function updateFile(filename, matcher, replaceStr, message) {
   try {
     console.log(`🟡 ${message}`);
     let content = await fs.readFile(filename, "utf8");
@@ -34,11 +34,11 @@ async function updateFile(filename, matcher, replaceStr, message) {
   }
 }
 
-async function execute(file, arguments, message) {
+export async function execute(file, args, message) {
   let result = {};
   try {
     console.log(`🟡 ${message}`);
-    result = await execa(file, arguments);
+    result = await execa(file, args);
     console.log(result.stdout);
     console.log(`✅ ${message}`);
   } catch (err) {
@@ -47,10 +47,3 @@ async function execute(file, arguments, message) {
   }
   return result;
 }
-
-module.exports = {
-  releaseDirectories,
-  releaseFiles,
-  updateFile,
-  execute,
-};
