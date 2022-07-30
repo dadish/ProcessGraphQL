@@ -1,3 +1,11 @@
+## [1.4.1-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0...v1.4.1-rc.1) (2022-07-30)
+
+
+### Bug Fixes
+
+* **deps:** update npm dependencies to the latest ([021947b](https://github.com/dadish/ProcessGraphQL/commit/021947b5b1daba048c35de5481820ba8a6b9ec8f))
+* **scripts:** use import instead of require ([6265229](https://github.com/dadish/ProcessGraphQL/commit/6265229c345dab8d834a66325ebd702ee85eba38))
+
 # [1.4.0](https://github.com/dadish/ProcessGraphQL/compare/v1.3.2...v1.4.0) (2022-07-29)
 
 
