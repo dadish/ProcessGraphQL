@@ -1,8 +1,12 @@
 import fs from "fs";
 import process from "process";
 import archiver from "archiver";
-import path from "path";
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
 import { releaseDirectories, releaseFiles, updateFile } from "./commons.mjs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const tarballReleaseFiles = () =>
   new Promise((resolve, reject) => {
