@@ -1,3 +1,32 @@
+## [1.4.1-rc.4](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.3...v1.4.1-rc.4) (2022-07-30)
+
+
+### Bug Fixes
+
+* **scrips:** import fs as a commonjs module ([6aac63d](https://github.com/dadish/ProcessGraphQL/commit/6aac63dcd350d44039ca3f6eb71beb363574f634))
+
+## [1.4.1-rc.3](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.2...v1.4.1-rc.3) (2022-07-30)
+
+
+### Bug Fixes
+
+* **scrips:** __dirname is undefined ([8dbc180](https://github.com/dadish/ProcessGraphQL/commit/8dbc18079a6c591c15f4bab680772673517f0185))
+
+## [1.4.1-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.1...v1.4.1-rc.2) (2022-07-30)
+
+
+### Bug Fixes
+
+* **deps:** keep composer autolaod files ([9fb6f12](https://github.com/dadish/ProcessGraphQL/commit/9fb6f12215f4cfd18b851bb29f10d186d54580b7))
+
+## [1.4.1-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0...v1.4.1-rc.1) (2022-07-30)
+
+
+### Bug Fixes
+
+* **deps:** update npm dependencies to the latest ([021947b](https://github.com/dadish/ProcessGraphQL/commit/021947b5b1daba048c35de5481820ba8a6b9ec8f))
+* **scripts:** use import instead of require ([6265229](https://github.com/dadish/ProcessGraphQL/commit/6265229c345dab8d834a66325ebd702ee85eba38))
+
 # [1.4.0](https://github.com/dadish/ProcessGraphQL/compare/v1.3.2...v1.4.0) (2022-07-29)
 
 

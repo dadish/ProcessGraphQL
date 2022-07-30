@@ -1,6 +1,6 @@
 {
   "name": "processgraphql",
-  "version": "1.4.0",
+  "version": "1.4.1-rc.4",
   "description": "GraphQL for ProcessWire",
   "main": "index.js",
   "directories": {
@@ -36,17 +36,16 @@
   },
   "homepage": "https://github.com/dadish/ProcessGraphQL#readme",
   "devDependencies": {
-    "@prettier/plugin-php": "^0.16.1",
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/exec": "^5.0.0",
-    "@semantic-release/git": "^9.0.0",
-    "archiver": "^5.2.0",
-    "execa": "^2.0.4",
-    "fs-extra": "^8.1.0",
-    "graphql": "^14.5.8",
+    "@prettier/plugin-php": "^0.18.9",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "archiver": "^5.3.1",
+    "execa": "^6.1.0",
+    "fs-extra": "^10.1.0",
+    "graphql": "^16.5.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.2.1",
-    "semantic-release": "^17.3.7"
-  },
-  "dependencies": {}
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.3"
+  }
 }
