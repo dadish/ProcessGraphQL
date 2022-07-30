@@ -1,3 +1,10 @@
+## [1.4.1-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.1...v1.4.1-rc.2) (2022-07-30)
+
+
+### Bug Fixes
+
+* **deps:** keep composer autolaod files ([9fb6f12](https://github.com/dadish/ProcessGraphQL/commit/9fb6f12215f4cfd18b851bb29f10d186d54580b7))
+
 ## [1.4.1-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.0...v1.4.1-rc.1) (2022-07-30)
 
 
