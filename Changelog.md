@@ -1,3 +1,10 @@
+## [1.4.1-rc.3](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.2...v1.4.1-rc.3) (2022-07-30)
+
+
+### Bug Fixes
+
+* **scrips:** __dirname is undefined ([8dbc180](https://github.com/dadish/ProcessGraphQL/commit/8dbc18079a6c591c15f4bab680772673517f0185))
+
 ## [1.4.1-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.1...v1.4.1-rc.2) (2022-07-30)
 
 
