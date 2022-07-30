@@ -1,3 +1,10 @@
+## [1.4.1-rc.4](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.3...v1.4.1-rc.4) (2022-07-30)
+
+
+### Bug Fixes
+
+* **scrips:** import fs as a commonjs module ([6aac63d](https://github.com/dadish/ProcessGraphQL/commit/6aac63dcd350d44039ca3f6eb71beb363574f634))
+
 ## [1.4.1-rc.3](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1-rc.2...v1.4.1-rc.3) (2022-07-30)
 
 
