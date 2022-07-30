@@ -6,6 +6,7 @@ export const releaseDirectories = [
   "src",
   "templates",
   "vendor/webonyx/graphql-php/src",
+  "vendor/composer",
 ];
 
 export const releaseFiles = [
