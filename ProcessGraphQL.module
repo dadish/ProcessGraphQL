@@ -21,7 +21,7 @@ class ProcessGraphQL extends Process implements Module {
 			'singular' => true,
 			'autoload' => 'process=ProcessTemplate',
 			'icon' => 'object-group',
-      'requires' => array("PHP>=7.2", "ProcessWire>=3.0.62"),
+      'requires' => array("PHP>=7.2", "ProcessWire>=3.0.210"),
 			);
 	}
 
