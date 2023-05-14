@@ -99,7 +99,7 @@ class ThumbCaseTwoTest extends GraphQLTestCase
     }";
 
     $res = self::execute($query);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
 
     $expectedThumb = $res->data->skyscraper->list[0]->images[0]->size;
 

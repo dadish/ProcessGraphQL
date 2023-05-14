@@ -45,6 +45,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->city->list[0]->children->list[0]->name,
       "Retrieves children in correct order."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

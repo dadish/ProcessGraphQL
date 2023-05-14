@@ -55,6 +55,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->parents->getTotal,
       "Retrieves correct amount of parent pages."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

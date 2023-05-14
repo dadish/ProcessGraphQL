@@ -29,6 +29,6 @@ class PageNumChildrenTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->numChildren,
       "Retrieves `numChildren` field of the page."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

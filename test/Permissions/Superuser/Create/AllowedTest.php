@@ -63,6 +63,6 @@ class AllowedTest extends GraphqlTestCase
       "Should allow to create a page with OnlyOne checked if there is not already a page with that template."
     );
     self::assertEquals("Search", $res->data->createSearch->title);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

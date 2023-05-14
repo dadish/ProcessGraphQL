@@ -29,9 +29,10 @@ class ProcessGraphQLTest extends GraphQLTestCase
 
   public function testGetRequestForPost()
   {
-    // payload is null by default
+    // payload is empty string by default
     $request = Utils::module()->getRequest();
-    self::assertNull(
+    self::assertEquals(
+      "",
       $request["payload"],
       "Request payload should be null by default"
     );
@@ -67,9 +68,9 @@ class ProcessGraphQLTest extends GraphQLTestCase
   {
     $_SERVER["CONTENT_TYPE"] = "application/json";
 
-    // payload & variables are null by default
+    // payload & variables are empty by default
     $request = Utils::module()->getRequest();
-    self::assertNull($request["payload"]);
+    self::assertEquals("", $request["payload"]);
     self::assertNull($request["variables"]);
 
     // payload & variables could be set via php://input
@@ -94,7 +95,7 @@ class ProcessGraphQLTest extends GraphQLTestCase
       $res->data->me->name,
       "Accepts request via arguments"
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
 
     // accepts GraphQL request via $_POST variable
     $_POST["payload"] = $payload;
@@ -104,7 +105,7 @@ class ProcessGraphQLTest extends GraphQLTestCase
       $res->data->me->name,
       'Accepts request via $_POST variable'
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 
   public function testGetQueryFieldsHook()
@@ -125,7 +126,7 @@ class ProcessGraphQLTest extends GraphQLTestCase
 
     $res = self::execute("{ hello }");
     self::assertEquals("world!", $res->data->hello);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 
   public function testGetMutationFieldsHook()
@@ -147,6 +148,6 @@ class ProcessGraphQLTest extends GraphQLTestCase
 
     $res = self::execute("mutation { zombie }");
     self::assertEquals("apocalypse", $res->data->zombie);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

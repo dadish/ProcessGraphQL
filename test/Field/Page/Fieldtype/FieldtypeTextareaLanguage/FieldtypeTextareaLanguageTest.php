@@ -34,7 +34,7 @@ class FieldtypeTextareaLanguageTest extends GraphQLTestCase
       $res->data->basicPage->list[0]->address,
       "Retrieves address value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 
   public function testLanguageValue()
@@ -57,6 +57,6 @@ class FieldtypeTextareaLanguageTest extends GraphQLTestCase
       $res->data->basicPage->list[0]->address,
       "Retrieves address language value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

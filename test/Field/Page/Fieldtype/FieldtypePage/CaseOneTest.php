@@ -85,6 +85,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->architects->last,
       "Returns empty last item."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

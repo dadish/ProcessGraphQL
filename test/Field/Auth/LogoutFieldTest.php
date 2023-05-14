@@ -30,7 +30,7 @@ class LogoutFieldTest extends GraphQLTestCase
       $res->data->logout->statusCode,
       "Unable to logout via GraphQL"
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 
   public function testLogoutFailure()
@@ -41,7 +41,7 @@ class LogoutFieldTest extends GraphQLTestCase
       }
     }';
     $res = self::execute($query);
-    self::assertObjectHasAttribute(
+    self::assertObjectHasProperty(
       "errors",
       $res,
       "Unable to logout via GraphQL"

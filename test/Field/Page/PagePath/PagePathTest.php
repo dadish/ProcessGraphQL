@@ -29,6 +29,6 @@ class PagePathTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->path,
       "Retrieves `path` field of the page."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

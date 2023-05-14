@@ -38,7 +38,7 @@ class RenameTest extends GraphqlTestCase
       "page" => [
         "id" => $skyscraper->id,
         "name" => $newName,
-        "parent" => $newParent->id,
+        "parent" => (string) $newParent->id,
       ],
     ];
 

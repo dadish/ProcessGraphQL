@@ -34,6 +34,6 @@ class FieldtypeSelectorTest extends GraphQLTestCase
       $res->data->home->list[0]->selected,
       "Retrieves selector value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

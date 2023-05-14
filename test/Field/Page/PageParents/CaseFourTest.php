@@ -37,6 +37,6 @@ class CaseFourTest extends GraphQLTestCase
       count($res->data->skyscraper->list[0]->parents->list),
       "parents returns empty list if no access."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

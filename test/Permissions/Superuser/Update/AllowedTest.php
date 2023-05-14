@@ -49,6 +49,6 @@ class AllowedTest extends GraphqlTestCase
       $skyscraper->title,
       "Updates the title of the target."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }

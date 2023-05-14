@@ -114,7 +114,7 @@ class DbQueryCountTest extends GraphQLTestCase
     );
 
     // assert no errors
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
 
     // assert valid skyscraper
     $expected = $skyscrapers->get("images.count>1, sort=random");

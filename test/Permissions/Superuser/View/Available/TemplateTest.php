@@ -35,6 +35,6 @@ class TemplateTest extends GraphqlTestCase
     self::assertNotNull($res->data->skyscraper->list[0]->id);
     self::assertNotNull($res->data->skyscraper->list[0]->name);
     self::assertNotNull($res->data->skyscraper->list[0]->url);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
   }
 }
