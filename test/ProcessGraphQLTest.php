@@ -29,9 +29,10 @@ class ProcessGraphQLTest extends GraphQLTestCase
 
   public function testGetRequestForPost()
   {
-    // payload is null by default
+    // payload is empty string by default
     $request = Utils::module()->getRequest();
-    self::assertNull(
+    self::assertEquals(
+      "",
       $request["payload"],
       "Request payload should be null by default"
     );
@@ -67,9 +68,9 @@ class ProcessGraphQLTest extends GraphQLTestCase
   {
     $_SERVER["CONTENT_TYPE"] = "application/json";
 
-    // payload & variables are null by default
+    // payload & variables are empty by default
     $request = Utils::module()->getRequest();
-    self::assertNull($request["payload"]);
+    self::assertEquals("", $request["payload"]);
     self::assertNull($request["variables"]);
 
     // payload & variables could be set via php://input

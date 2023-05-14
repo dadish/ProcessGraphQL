@@ -164,9 +164,9 @@ class ProcessGraphQL extends Process implements Module {
 		} else {
 				$requestData = $_POST;
 		}
-		$payload = isset($requestData['query']) ? $requestData['query'] : null;
-		if (is_null($payload)) {
-			$payload = isset($requestData['payload']) ? $requestData['payload'] : null;
+		$payload = isset($requestData['query']) ? $requestData['query'] : "";
+		if (empty($payload)) {
+			$payload = isset($requestData['payload']) ? $requestData['payload'] : "";
 		}
 		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
 
@@ -184,7 +184,7 @@ class ProcessGraphQL extends Process implements Module {
    * Executes GraphQL api.
    * @return string GraphQL api JSON response.
    */
-	public function ___executeGraphQL($payload = null, $variables = null)
+	public function ___executeGraphQL($payload = "", $variables = null)
 	{
 		if (!$payload) {
 			$request = $this->getRequest();

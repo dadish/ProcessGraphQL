@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": "^7.1||^8.0",
-    "webonyx/graphql-php": "^14.11.3"
+    "webonyx/graphql-php": "^15.4.0"
   },
   "require-dev": {
     "processwire/processwire": "dev-dev",
