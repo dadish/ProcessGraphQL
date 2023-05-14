@@ -9,9 +9,10 @@ use ProcessWire\Field;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Type\Fieldtype\Traits\SetValueTrait;
 use ProcessWire\GraphQL\Type\Fieldtype\Traits\FieldTrait;
+use ProcessWire\Page;
 
 class FieldtypeOptions
-{ 
+{
   use FieldTrait;
   use SetValueTrait;
 
@@ -62,6 +63,34 @@ class FieldtypeOptions
 
     return $type;
   }
+
+  public static function field($field)
+  {
+    return Cache::field($field->name, function () use ($field) {
+      // description
+      $desc = $field->description;
+      if (!$desc) {
+        $desc = "Field with the type of {$field->type}";
+      }
+
+      return [
+        'name' => $field->name,
+        'description' => $desc,
+        'type' => self::type($field),
+        'resolve' => function (Page $page, array $args) use ($field) {
+          $fieldName = $field->name;
+
+          // If a single option field does not have an id, then it means it's empty.
+          if (!self::isMultiple($field) && !$page->$fieldName->id) {
+            return null;
+          }
+
+          return $page->$fieldName;
+        }
+      ];
+    });
+  }
+
 
   public static function inputType($field)
   {
