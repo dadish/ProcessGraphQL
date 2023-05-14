@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1...v1.4.2) (2023-05-14)
+
+
+### Bug Fixes
+
+* **FeildtypeOptions:** fix error for empty values when it's a single option ([7a02e9d](https://github.com/dadish/ProcessGraphQL/commit/7a02e9d1af24dda78fd40ebb4a96710a55fe67e4))
+
 ## [1.4.2-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1...v1.4.2-rc.1) (2023-05-14)
 
 
