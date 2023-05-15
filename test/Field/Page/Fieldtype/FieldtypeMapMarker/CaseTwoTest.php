@@ -88,6 +88,6 @@ class CaseTwoTest extends GraphQLTestCase
       $actualMap->zoom,
       "Retreives correct zoom."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

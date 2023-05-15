@@ -46,7 +46,7 @@ class CaseFourTest extends GraphQLTestCase
       ],
     ];
     $res = self::execute($query, $variables);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
 
     $newArchitect = Utils::pages()->get("template=architect, name=$name");
     self::assertTrue(

@@ -48,6 +48,6 @@ class CaseThreeTest extends GraphQLTestCase
       count($res->data->skyscraper->list[0]->parents->list),
       "Retrieves correct amount of parent pages."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

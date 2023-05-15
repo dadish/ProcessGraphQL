@@ -44,6 +44,6 @@ class DimensionsTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->images[0]->width,
       "Retrieves image width."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

@@ -29,6 +29,6 @@ class PageIdTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->id,
       "Retrieves `id` field of the page."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

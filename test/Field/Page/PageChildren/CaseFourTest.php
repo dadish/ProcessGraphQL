@@ -43,6 +43,6 @@ class CaseFourTest extends GraphQLTestCase
       $res->data->home->list[0]->children->list[0]->name,
       "Returns the correct page at 0."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

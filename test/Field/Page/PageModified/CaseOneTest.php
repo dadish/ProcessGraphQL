@@ -33,6 +33,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->modified,
       "Retrieves correct default value of `modified` field of the page."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

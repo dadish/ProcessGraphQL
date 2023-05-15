@@ -74,6 +74,6 @@ class CaseThreeTest extends GraphQLTestCase
       $actualMap->zoom,
       "Updates zoom correctly."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

@@ -4,7 +4,7 @@ use GraphQL\Error\ClientAware;
 
 class ValidationError extends \Exception implements ClientAware
 {
-  public function isClientSafe()
+  public function isClientSafe(): bool
   {
     return true;
   }

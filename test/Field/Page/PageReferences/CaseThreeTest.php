@@ -59,6 +59,6 @@ class CaseThreeTest extends GraphQLTestCase
       count($res->data->architect->list[0]->references->list),
       "Returns empty list when user has no access to referenced pages template."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

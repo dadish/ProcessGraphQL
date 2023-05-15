@@ -34,6 +34,6 @@ class CaseOneTest extends GraphqlTestCase
       $res->data->skyscraper->list[0]->floors,
       "Retrieves field value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

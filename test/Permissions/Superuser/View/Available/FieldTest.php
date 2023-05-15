@@ -31,6 +31,6 @@ class FieldTest extends GraphqlTestCase
       $res->data->skyscraper->list[0]->title,
       "Should show title field if it is legal."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

@@ -4,7 +4,7 @@ use GraphQL\Error\ClientAware;
 
 class ExecutionError extends \Exception implements ClientAware
 {
-  public function isClientSafe()
+  public function isClientSafe(): bool
   {
     return true;
   }

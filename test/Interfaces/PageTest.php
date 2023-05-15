@@ -57,6 +57,6 @@ class PageTest extends GraphQLTestCase
       $res->data->city->list[0]->children->list[0]->year,
       "Retrieves correct skyscraper year."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

@@ -38,6 +38,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->architect->list[0]->born,
       "Retrieves datetime value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

@@ -36,6 +36,6 @@ class CaseTwoTest extends GraphQLTestCase
       is_null($res->data->city->list[0]->child),
       "Returns null when no access to child page template."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }
