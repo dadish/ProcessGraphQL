@@ -1,3 +1,20 @@
+# [2.0.0-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.2...v2.0.0-rc.1) (2023-05-15)
+
+
+### Bug Fixes
+
+* **test:** make tests compatible with phpunit 9 and 10. ([91ac9c7](https://github.com/dadish/ProcessGraphQL/commit/91ac9c7bc1aabb86b5aa95f7088ae418e225de89))
+
+
+### Features
+
+* **deps:** update webonyx/graphql-php into latest version ([395c9b5](https://github.com/dadish/ProcessGraphQL/commit/395c9b5215d6f4f2e05ff1f7f0c8847cb927b33a))
+
+
+### BREAKING CHANGES
+
+* **deps:** The webonyx/graphql-php from now on requires PHP version 7.4 and higher. So do we from now on.
+
 ## [1.4.2](https://github.com/dadish/ProcessGraphQL/compare/v1.4.1...v1.4.2) (2023-05-14)
 
 
