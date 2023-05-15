@@ -40,6 +40,6 @@ class CaseTwoTest extends GraphQLTestCase
       count($res->data->skyscraper->list[0]->parents->list),
       "Returns empty list when no access to parent pages template."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

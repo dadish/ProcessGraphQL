@@ -45,6 +45,6 @@ class CaseThreeTest extends GraphQLTestCase
       $res->data->skyscraper->id,
       "createSkyscraper creates skyscraper page if everything is ok."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

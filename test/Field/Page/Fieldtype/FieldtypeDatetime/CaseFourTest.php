@@ -38,6 +38,6 @@ class CaseFourTest extends GraphQLTestCase
       $res->data->architect->born,
       "Accepts string as an input value."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

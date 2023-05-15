@@ -37,6 +37,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->city->list[0]->child->name,
       "Retrieves child page."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

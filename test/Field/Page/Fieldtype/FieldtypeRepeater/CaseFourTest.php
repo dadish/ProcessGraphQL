@@ -76,6 +76,6 @@ class CaseFourTest extends GraphQLTestCase
       $res->data->updateListAll->slides->list[0]->selected,
       "Updates the selected correctly."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

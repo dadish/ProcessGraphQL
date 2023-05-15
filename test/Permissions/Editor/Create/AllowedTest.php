@@ -75,7 +75,7 @@ class AllowedTest extends GraphqlTestCase
     ];
 
     $res = self::execute($query, $variables);
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
     self::assertEquals(
       "search",
       $res->data->createSearch->name,

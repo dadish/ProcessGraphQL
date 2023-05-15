@@ -84,6 +84,6 @@ class CaseFiveTest extends GraphQLTestCase
       $res->data->listAll->list[0]->slides->list[0]->body,
       "Returns correct body for the first repeater item"
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

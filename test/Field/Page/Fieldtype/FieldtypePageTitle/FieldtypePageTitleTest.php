@@ -34,6 +34,6 @@ class FieldtypePageTitleTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->title,
       "Retrieves title value."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

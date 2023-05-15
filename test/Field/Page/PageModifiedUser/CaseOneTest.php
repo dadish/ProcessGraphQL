@@ -36,6 +36,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->modifiedUser->name,
       "Retrieves `modifiedUser` field of the page."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

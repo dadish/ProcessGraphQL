@@ -29,6 +29,6 @@ class PageTemplateTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->template,
       "Retrieves `template` field of the page."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

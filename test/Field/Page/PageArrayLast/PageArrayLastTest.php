@@ -43,6 +43,6 @@ class PageArrayLastTest extends GraphQLTestCase
       $res->data->city->last->title,
       "Retrieves correct title of the last page."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

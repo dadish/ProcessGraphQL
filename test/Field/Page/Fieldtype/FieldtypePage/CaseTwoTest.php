@@ -53,6 +53,6 @@ class CaseTwoTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->architects->list[1]->id,
       "Returns correct second architect page."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

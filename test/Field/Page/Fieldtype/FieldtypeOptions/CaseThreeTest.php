@@ -45,7 +45,7 @@ class CaseThreeTest extends GraphQLTestCase
       ],
     ];
     $res = self::execute($query, $variables);
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
 
     $newCity = Utils::pages()->get("template=city, name=$name");
     self::assertTrue(!$newCity instanceof NullPage, "New Page is created.");

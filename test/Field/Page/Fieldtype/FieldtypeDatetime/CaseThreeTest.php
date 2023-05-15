@@ -34,6 +34,6 @@ class CaseThreeTest extends GraphQLTestCase
       $res->data->architect->list[0]->born,
       "Formats datetime value correctly via format argument."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

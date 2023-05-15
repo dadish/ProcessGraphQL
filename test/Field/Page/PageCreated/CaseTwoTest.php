@@ -34,6 +34,6 @@ class CaseTwoTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->created,
       "Retrieves correctly formatted `created` value."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

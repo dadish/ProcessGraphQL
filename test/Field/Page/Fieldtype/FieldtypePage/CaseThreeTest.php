@@ -56,6 +56,6 @@ class CaseThreeTest extends GraphQLTestCase
       "Returns empty architect page array."
     );
 
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

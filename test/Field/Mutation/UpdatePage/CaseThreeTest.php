@@ -51,6 +51,6 @@ class CaseThreeTest extends GraphQLTestCase
       $skyscraper->title,
       "updateSkyscraper updates value of the `title`."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

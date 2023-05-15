@@ -38,6 +38,6 @@ class AllowedTest extends GraphqlTestCase
       "Trashes the page."
     );
     self::assertTrue($skyscraper->isTrash(), "Trashes the correct page.");
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

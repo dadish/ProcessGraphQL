@@ -34,6 +34,6 @@ class CaseFourTest extends GraphQLTestCase
       is_null($res->data->skyscraper->list[0]->parent),
       "parent returns null if no access."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

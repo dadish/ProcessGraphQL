@@ -34,6 +34,6 @@ class FieldtypeTextareaTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->body,
       "Retrieves body value."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

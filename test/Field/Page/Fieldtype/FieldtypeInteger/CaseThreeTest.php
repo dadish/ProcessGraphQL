@@ -38,6 +38,6 @@ class CaseThreeTest extends GraphqlTestCase
       $res->data->skyscraper->list[0]->floors,
       "Retrieves incorrect value."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

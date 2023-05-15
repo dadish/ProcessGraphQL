@@ -39,6 +39,6 @@ class CaseTwoTest extends GraphQLTestCase
       count($res->data->city->list[0]->children->list),
       "Returns empty list when has no access children pages."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

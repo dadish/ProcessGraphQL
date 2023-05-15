@@ -38,6 +38,6 @@ class SuperuserCanViewTest extends GraphqlTestCase
       $res->data->skyscraper->list[0]->url,
       "Retrieves the correct url."
     );
-    self::assertObjectNotHasProperty("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }
