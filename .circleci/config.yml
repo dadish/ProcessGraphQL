@@ -118,7 +118,7 @@ jobs:
 
   release:
     docker:
-      - image: dadish/processgraphql-primary:0.6.0
+      - image: dadish/processgraphql-primary:1.0.0
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
