@@ -1,3 +1,10 @@
+# [2.0.0-rc.2](https://github.com/dadish/ProcessGraphQL/compare/v2.0.0-rc.1...v2.0.0-rc.2) (2023-08-17)
+
+
+### Features
+
+* **deps:** upgrade webonyx/graphql-php to version 15.6.2 ([eb8939f](https://github.com/dadish/ProcessGraphQL/commit/eb8939fa3c1e8ac9026fdedb16a11f11f14a0359))
+
 # [2.0.0-rc.1](https://github.com/dadish/ProcessGraphQL/compare/v1.4.2...v2.0.0-rc.1) (2023-05-15)
 
 
