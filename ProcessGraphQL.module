@@ -15,13 +15,13 @@ class ProcessGraphQL extends Process implements Module {
 	{
 		return array(
 			'title' => 'GraphQL',
-			'version' => '1.4.2',
+			'version' => '2.0.0-rc.2',
 			'summary' => 'GraphQL for ProcessWire.',
 			'href' => 'https://github.com/dadish/ProcessGraphql',
 			'singular' => true,
 			'autoload' => 'process=ProcessTemplate',
 			'icon' => 'object-group',
-      'requires' => array("PHP>=7.2", "ProcessWire>=3.0.210"),
+      'requires' => array("PHP>=7.4", "ProcessWire>=3.0.210"),
 			);
 	}
 
@@ -164,9 +164,9 @@ class ProcessGraphQL extends Process implements Module {
 		} else {
 				$requestData = $_POST;
 		}
-		$payload = isset($requestData['query']) ? $requestData['query'] : null;
-		if (is_null($payload)) {
-			$payload = isset($requestData['payload']) ? $requestData['payload'] : null;
+		$payload = isset($requestData['query']) ? $requestData['query'] : "";
+		if (empty($payload)) {
+			$payload = isset($requestData['payload']) ? $requestData['payload'] : "";
 		}
 		$variables = isset($requestData['variables']) ? $requestData['variables'] : null;
 
@@ -184,7 +184,7 @@ class ProcessGraphQL extends Process implements Module {
    * Executes GraphQL api.
    * @return string GraphQL api JSON response.
    */
-	public function ___executeGraphQL($payload = null, $variables = null)
+	public function ___executeGraphQL($payload = "", $variables = null)
 	{
 		if (!$payload) {
 			$request = $this->getRequest();

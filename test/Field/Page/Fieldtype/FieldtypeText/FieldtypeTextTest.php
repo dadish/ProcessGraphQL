@@ -34,6 +34,6 @@ class FieldtypeTextTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->freebase_guid,
       "Retrieves freebase_guid value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

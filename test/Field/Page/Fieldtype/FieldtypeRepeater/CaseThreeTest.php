@@ -60,6 +60,6 @@ class CaseThreeTest extends GraphQLTestCase
       $res->data->updateListAll->slides->list[0]->id,
       "Removes the correct repeater items."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

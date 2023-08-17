@@ -34,6 +34,6 @@ class FieldtypeURLTest extends GraphQLTestCase
       $res->data->home->list[0]->sponsor,
       "Retrieves sponsor value."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

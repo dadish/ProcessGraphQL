@@ -109,7 +109,7 @@ class ThumbCaseFourTest extends GraphQLTestCase
 
     // execute graphql
     $res = self::execute($query);
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
 
     // the thumb created by graphql
     $actualThumb = $res->data->skyscraper->list[0]->images[0]->size;

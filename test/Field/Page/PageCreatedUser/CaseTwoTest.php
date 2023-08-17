@@ -48,6 +48,6 @@ class CaseTwoTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->createdUser->id,
       "`createdUser->id` is empty string when no access."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

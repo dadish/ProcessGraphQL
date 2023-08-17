@@ -28,7 +28,7 @@ class DbQueryCountFieldTest extends GraphQLTestCase
       dbQuery
     }';
     $res = self::execute($query);
-    self::assertObjectHasAttribute(
+    self::assertObjectHasPropertyOrAttribute(
       "errors",
       $res,
       "When debug turned off, `dbQueryCount` field must be unavailable."
@@ -52,6 +52,6 @@ class DbQueryCountFieldTest extends GraphQLTestCase
       count($res->data->dbQuery),
       "`dbQueryCount` must return the number of db query logs"
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

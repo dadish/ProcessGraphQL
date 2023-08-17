@@ -2,6 +2,7 @@
 
 namespace ProcessWire\GraphQL\Test;
 
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use ProcessWire\GraphQL\Utils;
 use ProcessWire\GraphQL\Schema;
@@ -301,5 +302,44 @@ abstract class GraphqlTestCase extends TestCase
     Schema::build();
     $res = Utils::module()->executeGraphQL($payload, $variables);
     return json_decode(json_encode($res), false);
+  }
+
+
+  /**
+   * Asserts that an object has a specified property.
+   * An alias to assertObjectHasProperty() or assertObjectHasAttribute()
+   * depending on the phpunit version.
+   *
+   * @throws ExpectationFailedException
+   */
+  public static function assertObjectHasPropertyOrAttribute(string $propertyName, object $object, string $message = ''): void {
+    $methodName = 'assertObjectHasProperty';
+    $legacyMethodName = 'assertObjectHasAttribute';
+    if ( method_exists(parent::class, $methodName) ) {
+      parent::$methodName($propertyName, $object, $message);
+    } else if ( method_exists(parent::class, $legacyMethodName) ) {
+      parent::$legacyMethodName($propertyName, $object, $message);
+    } else {
+      throw new ExpectationFailedException("Failed to invoke '$methodName' or '$legacyMethodName'.");
+    }
+  }
+
+  /**
+   * Asserts that an object does not have a specified property.
+   * An alias to assertObjectNotHasProperty() or assertObjectNotHasAttribute()
+   * depending on the phpunit version.
+   *
+   * @throws ExpectationFailedException
+   */
+  public static function assertObjectNotHasPropertyOrAttribute(string $propertyName, object $object, string $message = ''): void {
+    $methodName = 'assertObjectNotHasProperty';
+    $legacyMethodName = 'assertObjectNotHasAttribute';
+    if ( method_exists(parent::class, $methodName) ) {
+      parent::$methodName($propertyName, $object, $message);
+    } else if ( method_exists(parent::class, $legacyMethodName) ) {
+      parent::$legacyMethodName($propertyName, $object, $message);
+    } else {
+      throw new ExpectationFailedException("Failed to invoke '$methodName' or '$legacyMethodName'.");
+    }
   }
 }

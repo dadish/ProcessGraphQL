@@ -7,6 +7,7 @@ ob_start();
 ini_set('memory_limit', '512M');
 
 // paths
+global $pwDir;
 $baseDir = realpath(__DIR__ . "/../");
 $pwDir = realpath($baseDir . "/vendor/processwire/processwire/");
 $siteDir = realpath($baseDir . "/vendor/processwire/site-default/");

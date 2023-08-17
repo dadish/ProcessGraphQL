@@ -50,6 +50,6 @@ class CaseOneTest extends GraphQLTestCase
       $res->data->listAll->list[0]->slides->list[0]->title,
       "Returns correct title for the first repeater item"
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

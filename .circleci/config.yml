@@ -12,21 +12,21 @@ workflows:
   main:
     jobs:
       - test:
-          name: test-php-7.2
+          name: test-php-7.4
           context:
             - github-credentials
             - dockerhub-credentials
-          php: "7.2"
-          phpunit: "7.5"
+          php: "7.4"
+          phpunit: "9.6"
           mysql: "5.7.34"
 
       - test:
-          name: test-php-8.1
+          name: test-php-8.2
           context:
             - github-credentials
             - dockerhub-credentials
-          php: "8.1"
-          phpunit: "9.5.10"
+          php: "8.2"
+          phpunit: "10.1"
           mysql: "8.0.25"
 
       - approve_release:
@@ -34,8 +34,8 @@ workflows:
           <<: *release_branches
           type: approval
           requires:
-            - test-php-7.2
-            - test-php-8.1
+            - test-php-7.4
+            - test-php-8.2
 
       - release:
           name: release
@@ -118,7 +118,7 @@ jobs:
 
   release:
     docker:
-      - image: dadish/processgraphql-primary:0.6.0
+      - image: dadish/processgraphql-primary:1.0.0
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD

@@ -10,15 +10,15 @@
     }
   ],
   "require": {
-    "php": "^7.1||^8.0",
-    "webonyx/graphql-php": "^14.11.3"
+    "php": "^7.4||^8.0",
+    "webonyx/graphql-php": "^15.6.2"
   },
   "require-dev": {
     "processwire/processwire": "dev-dev",
     "processwire/site-default": "1.0.0",
     "ryancramerdesign/fieldtypemapmarker": "2.0.9",
     "dadish/graphqlfieldtypemapmarker": "2.0.0",
-    "phpunit/phpunit": "9.5.10"
+    "phpunit/phpunit": "10.1"
   },
   "repositories": [
     {

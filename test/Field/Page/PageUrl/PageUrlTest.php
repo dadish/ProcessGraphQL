@@ -29,6 +29,6 @@ class PageUrlTest extends GraphQLTestCase
       $res->data->skyscraper->list[0]->url,
       "Retrieves `url` field of the page."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

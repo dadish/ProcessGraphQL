@@ -52,6 +52,6 @@ class EditorCanViewFieldTest extends GraphqlTestCase
       $res->data->skyscraper->list[0]->height,
       "Editor can  view the height field if it has explicit access to it."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }

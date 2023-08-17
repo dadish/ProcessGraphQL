@@ -43,6 +43,6 @@ class CaseTwoTest extends GraphQLTestCase
       $res->data->city->list[0]->options_single->id,
       "Retrieves correct option id."
     );
-    self::assertObjectNotHasAttribute("errors", $res, "There are errors.");
+    self::assertObjectNotHasPropertyOrAttribute("errors", $res, "There are errors.");
   }
 }
