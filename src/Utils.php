@@ -200,10 +200,9 @@ class Utils
     // use third party field if available
     $thirdPartyFieldtypeClassName =
       "ProcessWire\\GraphQL\\Type\\Fieldtype\\FieldtypeThirdParty";
+    $thirdPartyFieldtypeClassNameExists = $thirdPartyFieldtypeClassName::getThirdPartyClassName($field);
     if (
-      class_exists(
-        $thirdPartyFieldtypeClassName::getThirdPartyClassName($field)
-      )
+      $thirdPartyFieldtypeClassNameExists && class_exists($thirdPartyFieldtypeClassNameExists)
     ) {
       return $thirdPartyFieldtypeClassName;
     }
